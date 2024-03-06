@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
             $table->string('username');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('foto');
-            $table->string('ttd');
-            $table->string('role');
+            $table->string('foto')->nullable();
+            $table->string('ttd')->nullable();
+            $table->enum('role', ['admin', 'user'])->default('user');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -27,15 +27,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      * Table users {
-  id integer [primary key]
-  username varchar
-  email varchar
-  password varchar
-  foto varchar
-  ttd varchar
-  role varchar
-  created_at timestamp
-}
+ 
      */
     public function down(): void
     {
