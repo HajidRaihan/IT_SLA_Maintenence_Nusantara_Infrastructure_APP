@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\ActivityController; // Add this line
 
 /*
 |--------------------------------------------------------------------------

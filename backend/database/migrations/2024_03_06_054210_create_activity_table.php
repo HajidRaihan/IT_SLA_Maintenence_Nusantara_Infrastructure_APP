@@ -28,7 +28,7 @@ return new class extends Migration
             $table->unsignedBigInteger('kategori_id');
             $table->string('kondisi_akhir');
             $table->integer('biaya');
-            $table->string('fotos');
+            $table->string('fotos')->default('default_value')->nullable();
             $table->enum('status', ['prosses', 'done']);
             $table->timestamp('ended_at');
             $table->timestamps();
