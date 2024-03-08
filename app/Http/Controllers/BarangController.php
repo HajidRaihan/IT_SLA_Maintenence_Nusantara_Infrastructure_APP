@@ -6,12 +6,11 @@ use Illuminate\Http\Request;
 
 class BarangController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        $lokasi = Barang::all();
+        return response()->json($lokasi);
     }
 
     /**
