@@ -1,167 +1,218 @@
-# [Flowbite Admin Dashboard](https://flowbite-admin-dashboard.vercel.app) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fthemesberg%2Fflowbite-admin-dashboard&text=Check%20out%20this%20open-source%20admin%20dashboard%20built%20with%20Flowbite%20and%20Tailwind%20CSS)
+# [Volt React Dashboard Bootstrap 5](https://demo.themesberg.com/volt-react-dashboard) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fthemesberg%2Fvolt-react-dashboard&via=themesberg&text=Check%20out%20this%20open%20source%20React%20Dashboard)
 
-[![version](https://img.shields.io/npm/v/flowbite-admin-dashboard)](https://www.npmjs.com/package/flowbite-admin-dashboard)
+[![version](https://img.shields.io/npm/v/@themesberg/volt-react-dashboard)](https://www.npmjs.com/package/@themesberg/volt-react-dashboard)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
-[![GitHub issues open](https://img.shields.io/github/issues/themesberg/flowbite-admin-dashboard.svg)](https://github.com/themesberg/flowbite-admin-dashboard/issues?q=is%3Aopen+is%3Aissue)
-[![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/themesberg/flowbite-admin-dashboard.svg)](https://github.com/themesberg/flowbite-admin-dashboard/issues?q=is%3Aissue+is%3Aclosed)
+[![GitHub issues open](https://img.shields.io/github/issues/themesberg/volt-react-dashboard.svg)](https://github.com/themesberg/volt-react-dashboard/issues?q=is%3Aopen+is%3Aissue)
+[![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/themesberg/volt-react-dashboard.svg)](https://github.com/themesberg/volt-react-dashboard/issues?q=is%3Aissue+is%3Aclosed)
 
-[![Flowbite Admin Dashboard Live Preview](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/flowbite-admin-dashboard-preview.png)](https://flowbite-admin-dashboard.vercel.app/)
+[![Volt React Dashboard Bootstrap 5](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-react-dashboard/thumbnail.png)](https://demo.themesberg.com/volt-react-dashboard)
 
-This project is a free and open-source UI admin dashboard template built with the components from [Flowbite](https://github.com/themesberg/flowbite) and based on the utility-first [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) framework featuring charts, tables, widgets, CRUD layouts, modals, drawers, and more.
+Volt React is a free and open source admin dashboard template built in React.js and based on the latest version of the Bootstrap 5 CSS framework. It features over 100 UI elements, plugins, and example based built with React components.
 
-This admin dashboard can quickly help you get started building an application for your project using the newest UI/UX development technologies in the open-source area including Tailwind CSS and Flowbite.
+## Powered by React.js
 
-## 🌀 Built with Flowbite
+Volt React is an extension of the popular [react-bootstrap](https://react-bootstrap.github.io/) library and it is based on the newest version of Bootstrap 5. 
 
-The interactive components such as the navbars, modals, drawers, and tooltips are all based on the popular [open-source component library called Flowbite](https://flowbite.com/) which enables us to use these elements by creating more complex set of pages and widgets inside a fully-fledged admin dashboard template.
+## Data-driven
 
-## 💨 Tailwind CSS utility classes
+This library has been built using a data driven methodology, meaning that a large part of data, such as tasks, messages, user notifications are passed to the components as an array of objects. This will make it easy to connect the UI interface with any back-end API.
 
-All of the pages, widgets, and components are solely based on the utility-first classes from Tailwind CSS and it is compatible with the latest `v3.x` of the technology by automatically purging all of the classes based on the template paths.
+## Bootstrap 5
 
-## 📊 15 example pages
+This library is based on the latest version of the [Bootstrap 5 CSS framework](https://getbootstrap.com/) which brought many improvements, such as [dropping dependency on jQuery](https://themesberg.com/blog/tutorial/bootstrap-5-tutorial), introducing RTL support, the utility API and many other style and markup improvements.
 
-Get started with 15 advanced examples pages including two different layouts of a dashboard's homepage full of charts widgets, tables, datepickers, and statistics and also with two CRUD layout pages for products, users, a settings page, authentication pages for login and register and even custom 404 and 500 error pages.
+## Over 100 React Components
 
-## 🧱 Advanced components
+Volt React included over 100 React UI elements such as buttons, form elements, alerts, modals, tabs, navigation bars, date pickers, and many more. They are all custom styled by professional designers as an extension of the base Bootstrap elements using Sass variables, mixins, and custom markup.
 
-This admin dashboard contains many advanced components both from Flowbite but also from other third-party libraries such as ApexCharts which have been customly tailored with Tailwind CSS classes and designed based on the [Flowbite Design System](https://flowbite.com/figma/).
+## 10 Example Dashboard Pages
 
-## 📚 Flowbite documentation
+Get started with 10 beautiful example pages for a dashboard which is based on the most popular dashboard template written in Bootstrap 5, called [Volt Dashboard](https://github.com/themesberg/volt-bootstrap-5-dashboard).
 
-If you want to use this project we recommend to also [study the component library](https://flowbite.com/docs/getting-started/introduction/) that we used to build this dashboard because you can use even more components from that library to enhance the examples that we've coded here already.
+## Getting Started and live code editor
 
-## ⚙️ Workflow
+Every component, plugin and getting started is thoroughly documented on our [online documentation](https://demo.themesberg.com/volt-react-dashboard/#/documentation/quick-start).
+
+## Tutorial
+
+We also [wrote a tutorial](https://themesberg.com/blog/tutorial/react-dashboard) on how you can install the project, explore the UI elements, create a new page, customize the Sass variables and upload the production code to the server.
+
+## Workflow
 
 This product is built using the following widely used technologies:
 
-- Tailwind CSS: [tailwindcss.com](https://tailwindcss.com/)
-- Flowbite: [flowbite.com](http://flowbite.com/)
-- HUGO [gohugo.io](https://gohugo.io/documentation/)
-- Webpack [webpack.js.org](https://webpack.js.org/)
+- React.js front-end library
+- Bootstrap 5 CSS Framework
+- Sass preprocessing language
+- NPM & Yarn
 
 ## Table of Contents
 
-- [Flowbite Admin Dashboard ](#flowbite-admin-dashboard-)
-  - [🌀 Built with Flowbite](#-built-with-flowbite)
-  - [💨 Tailwind CSS utility classes](#-tailwind-css-utility-classes)
-  - [📊 15 example pages](#-15-example-pages)
-  - [🧱 Advanced components](#-advanced-components)
-  - [📚 Flowbite documentation](#-flowbite-documentation)
-  - [⚙️ Workflow](#️-workflow)
-  - [Table of Contents](#table-of-contents)
-  - [Demo pages](#demo-pages)
-  - [Quick start](#quick-start)
-    - [JavaScript Frameworks](#javascript-frameworks)
-    - [Back-end Frameworks](#back-end-frameworks)
-  - [File Structure](#file-structure)
-  - [Browser Support](#browser-support)
-  - [Resources](#resources)
-  - [Reporting Issues](#reporting-issues)
-  - [Technical Support or Questions](#technical-support-or-questions)
-  - [Licensing](#licensing)
-  - [Useful Links](#useful-links)
-  - [Authors](#authors)
+* [Version](#versions)
+* [Demo](#demo)
+* [Quick Start](#quick-start)
+* [Documentation](#documentation)
+* [File Structure](#file-structure)
+* [Browser Support](#browser-support)
+* [Resources](#resources)
+* [Upgrade to PRO](#upgrade-to-pro)
+* [Reporting Issues](#reporting-issues)
+* [Technical Support or Questions](#technical-support-or-questions)
+* [Licensing](#licensing)
+* [Useful Links](#useful-links)
 
-## Demo pages
 
-| Dashboard | Stacked Layout | Products (CRUD)
-| --- | --- | --- |
-| [![Dashboard](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/homepage.jpg)](https://flowbite-admin-dashboard.vercel.app/) | [![Stacked Layout](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/stacked.jpg)](https://flowbite-admin-dashboard.vercel.app/layouts/stacked/) | [![Products (CRUD)](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/products-crud.jpg)](https://flowbite-admin-dashboard.vercel.app/crud/products/)
+## Versions
 
-| Users (CRUD) | Settings | Pricing page
-| --- | --- | --- |
-| [![Users (CRUD)](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/users.jpg)](https://flowbite-admin-dashboard.vercel.app/crud/users/) | [![Settings](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/settings.jpg)](https://flowbite-admin-dashboard.vercel.app/settings/) | [![Pricing page](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/pricing.jpg)](https://flowbite-admin-dashboard.vercel.app/pages/pricing/)
+[<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/html-logo.jpg?raw=true" width="60" height="60" />](https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard)[<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/react-logo.jpg?raw=true" width="60" height="60" />](https://themesberg.com/product/dashboard/volt-react)[<img src="https://themesberg.s3.us-east-2.amazonaws.com/public/github/technology/laravel-logo.jpeg" width="60" height="60" />](https://themesberg.com/product/laravel/volt-admin-dashboard-template).
 
-| Login page | Register page | Reset password
-| --- | --- | --- |
-| [![Login page](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/login.jpg)](https://flowbite-admin-dashboard.vercel.app/authentication/sign-in/) | [![Register page](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/register.jpg)](https://flowbite-admin-dashboard.vercel.app/authentication/sign-up/) | [![Reset password](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/reset-password.jpg)](https://flowbite-admin-dashboard.vercel.app/authentication/reset-password/)
+| HTML | React  |
+| --- | ---  |
+| [![Volt Bootstrap 5 Dashboard HTML](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-bootstrap-5-dashboard/volt-bootstrap-5-dashboard-preview.jpg)](https://github.com/themesberg/volt-bootstrap-5-dashboard) | [![Volt React Dashboard](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-react-dashboard/thumbnail.png)](https://demo.themesberg.com/volt-react-dashboard/)
 
-| Forgot password | Profile lock | Maintenance page
-| --- | --- | --- |
-| [![Forgot password](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/forgot-password.jpg)](https://flowbite-admin-dashboard.vercel.app/authentication/forgot-password/) | [![Profile lock](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/profile-lock.jpg)](https://flowbite-admin-dashboard.vercel.app/authentication/profile-lock/) | [![Maintenance page](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/maintenance.jpg)](https://flowbite-admin-dashboard.vercel.app/pages/maintenance/)
+## Demo
 
-| 404 not found | 500 server error | Playground
-| --- | --- | --- |
-| [![404 not found](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/404.jpg)](https://flowbite-admin-dashboard.vercel.app/pages/404/) | [![500 server error](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/500.jpg)](https://flowbite-admin-dashboard.vercel.app/pages/500/) | [![Playground](https://flowbite.s3.amazonaws.com/templates/flowbite-admin-dashboard/github/playground.jpg)](https://flowbite-admin-dashboard.vercel.app/playground/sidebar/)
+| Dashboard | Transactions | Settings | Forms |
+| --- | --- | --- | --- |
+| [![Dashboard](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-react-dashboard/github/overview.jpg)](https://demo.themesberg.com/volt-react-dashboard/#/dashboard/overview) | [![Transactions](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-react-dashboard/github/transactions.jpg)](https://demo.themesberg.com/volt-react-dashboard/#/transactions) | [![Settings](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-react-dashboard/github/settings.jpg)](https://demo.themesberg.com/volt-react-dashboard/#/settings) | [![Tables](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-react-dashboard/github/tables.jpg)](https://demo.themesberg.com/volt-react-dashboard/#/tables/bootstrap-tables)
 
--   [Live Preview](https://flowbite-admin-dashboard.vercel.app/)
+| Sign in | Sign up | Forgot password | Reset password |
+| --- | --- | --- | --- |
+| [![Sign in](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-react-dashboard/github/sign-in.jpg)](https://demo.themesberg.com/volt-react-dashboard/#/examples/sign-in) | [![Sign up](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-react-dashboard/github/sign-up.jpg)](https://demo.themesberg.com/volt-react-dashboard/#/examples/sign-up) | [![Forgot Password](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-react-dashboard/github/forgot-password.jpg)](https://demo.themesberg.com/volt-react-dashboard/#/examples/forgot-password) | [![Reset password](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-react-dashboard/github/reset-password.jpg)](https://demo.themesberg.com/volt-react-dashboard/#/examples/reset-password)
+
+| Lock Profile | 404 Not Found | 500 Server Error | Documentation |
+| --- | --- | --- | --- |
+| [![Lock Profile](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-react-dashboard/github/lock.jpg)](https://demo.themesberg.com/volt-react-dashboard/#/examples/lock) | [![404 Not Found](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-react-dashboard/github/404.jpg)](https://demo.themesberg.com/volt-react-dashboard/#/examples/404) | [![500 Server Error](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-react-dashboard/github/500.jpg)](https://demo.themesberg.com/volt-react-dashboard/#/examples/500) | [![Documentation](https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-react-dashboard/github/docs.jpg)](https://demo.themesberg.com/volt-react-dashboard/#/documentation/quick-start)
+
+-   [Live Demo](https://demo.themesberg.com/volt-react-dashboard)
+-   [Download](https://themesberg.com/product/dashboard/volt-react)
 
 ## Quick start
 
-1. Clone this repository or download the ZIP file
-2. Make sure that you have Node.js and NPM installed
-3. Install the project dependencies from the `package.json` file:
+1. Register and Download from [Themesberg](https://themesberg.com/product/dashboard/volt-react) or clone this repository
+2. Download the project's zip
+
+### Using Yarn
+
+3. Make sure you have [Yarn](https://yarnpkg.com/) installed.
+4. After installing `yarn`, open a terminal and run `yarn install` in the main volt folder to download all project dependencies.
+
+```
+yarn install
+```
+
+5. Then start the app in development mode by running the following command in terminal:
+
+```
+yarn start
+```
+
+6. Open http://localhost:3000 to view it in the browser. Any changes you make to the code will be automatically reflected in the browser.
+
+7. If you want to generate the production files, change the `homepage` value from the `package.json` to the domain name that the app will be hosted on, and then run the following command in the terminal:
+
+```
+yarn build
+```
+
+### Using NPM
+
+3. Make sure you have [Node.js](https://nodejs.org/en/) installed. Make sure the installed Node version is >= 8.10 and of npm >= 5.6
+
+4. After installing Node.js, open a terminal and run `npm install` in the main `volt-react-dashboard/` folder to download all project dependencies. You'll find them in the `node_modules/` folder.
 
 ```
 npm install
 ```
 
-4. Create a local server on `localhost:1313` by running the following command:
+5. Then start the app in development mode by running the following command in terminal:
 
 ```
 npm run start
 ```
 
-You can also build the project and get the distribution files inside the `public/` folder by running:
+6. Open http://localhost:3000 to view it in the browser. Any changes you make to the code will be automatically reflected in the browser.
+
+7. If you want to generate the production files, change the `homepage` value from the `package.json` to the domain name that the app will be hosted on, and then run the following command in the terminal:
 
 ```
 npm run build
 ```
 
-You can instantly upload your project to Vercel by selecting the default HUGO configuration, but depending on your own tech stack whether it's React.js, Vue, Nuxt.js, Next.js or a back-end framework you can also just copy the layouts from this project inside your own tech stack.
+## Documentation
 
-Here's a list of compatible technologies and guides for Flowbite and Tailwind CSS:
-
-### JavaScript Frameworks
-
-The awesome open-source community also built and currently maintains the following standalone libraries for React, Vue, Svelte, and Angular:
-
-- [🌀 Flowbite React Library](https://github.com/themesberg/flowbite-react)
-- [🍀 Flowbite Vue Library](https://github.com/themesberg/flowbite-vue)
-- [🎸 Flowbite Svelte Library](https://github.com/themesberg/flowbite-svelte)
-- [📕 Flowbite Angular Library](https://github.com/themesberg/flowbite-angular)
-
-We also wrote integration guides for the following front-end frameworks and libraries:
-
-- [📝 Flowbite with React guide](https://flowbite.com/docs/getting-started/react/)
-- [📝 Flowbite with Next.js guide](https://flowbite.com/docs/getting-started/next-js/)
-- [📝 Flowbite with Vue guide](https://flowbite.com/docs/getting-started/vue/)
-- [📝 Flowbite with Nuxt.js guide](https://flowbite.com/docs/getting-started/nuxt-js/)
-- [📝 Flowbite with Svelte guide](https://flowbite.com/docs/getting-started/svelte/)
-
-### Back-end Frameworks
-
-Flowbite has a great integration with most of the back-end frameworks because it relies on vanilla JavaScript:
-
-- [📚 Using Flowbite with Laravel](https://flowbite.com/docs/getting-started/laravel/)
-- [🚊 Using Flowbite with Ruby on Rails 7](https://flowbite.com/docs/getting-started/rails/)
-- [🐸 Using Flowbite with Django](https://flowbite.com/docs/getting-started/django/)
-- [🌶 Using Flowbite with Flask](https://flowbite.com/docs/getting-started/flask/)
+Every component, plugin and getting started is thoroughly documented on our [online documentation](https://demo.themesberg.com/volt-react-dashboard/#/documentation/quick-start).
 
 ## File Structure
 
 Within the download you'll find the following directories and files:
 
 ```
-Flowbite Admin Dashboard
+Volt React Dashboard
 .
-├── LICENSE
+├── LICENSE.md
 ├── README.md
-├── config.yml
-├── content
-├── data
-├── layouts
-├── node_modules
 ├── package-lock.json
 ├── package.json
-├── postcss.config.js
-├── resources
+├── public
+│   ├── android-chrome-192x192.png
+│   ├── android-chrome-512x512.png
+│   ├── apple-touch-icon.png
+│   ├── browserconfig.xml
+│   ├── favicon-16x16.png
+│   ├── favicon-32x32.png
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── manifest.json
+│   ├── mstile-150x150.png
+│   ├── robots.txt
+│   ├── safari-pinned-tab.svg
+│   └── site.webmanifest
 ├── src
-├── static
-├── tailwind.config.js
-├── webpack.config.js
+│   ├── assets
+│   │   ├── img
+│   │   └── syntax-themes
+│   ├── components
+│   │   ├── AccordionComponent.js
+│   │   ├── Charts.js
+│   │   ├── Code.js
+│   │   ├── CodeEditor.js
+│   │   ├── Documentation.js
+│   │   ├── Footer.js
+│   │   ├── Forms.js
+│   │   ├── Navbar.js
+│   │   ├── Preloader.js
+│   │   ├── Progress.js
+│   │   ├── ScrollToTop.js
+│   │   ├── Sidebar.js
+│   │   ├── Tables.js
+│   │   └── Widgets.js
+│   ├── data
+│   │   ├── charts.js
+│   │   ├── commands.js
+│   │   ├── features.js
+│   │   ├── notifications.js
+│   │   ├── pages.js
+│   │   ├── tables.js
+│   │   ├── teamMembers.js
+│   │   └── transactions.js
+│   ├── index.js
+│   ├── pages
+│   │   ├── HomePage.js
+│   │   ├── Presentation.js
+│   │   ├── Settings.js
+│   │   ├── Transactions.js
+│   │   ├── components
+│   │   ├── dashboard
+│   │   ├── documentation
+│   │   ├── examples
+│   │   └── tables
+│   ├── routes.js
+│   └── scss
+│       ├── volt
+│       └── volt.scss
 └── yarn.lock
+
 ```
 
 ## Browser Support
@@ -172,37 +223,45 @@ At present, we officially aim to support the last two versions of the following 
 
 ## Resources
 
-- Live preview: <https://flowbite-admin-dashboard.vercel.app/>
-- Flowbite documentation: <https://flowbite.com/docs/getting-started/introduction/>
-- Tailwind CSS documentation: <https://tailwindcss.com/>
-- License Agreement: <https://flowbite.com/docs/getting-started/license/>
-- Issues: [Github Issues Page](https://github.com/themesberg/flowbite-admin-dashboard/issues)
+- Demo: <https://demo.themesberg.com/volt-react-dashboard>
+- Download Page: <https://themesberg.com/product/dashboard/volt-react>
+- Documentation: <https://demo.themesberg.com/volt-react-dashboard/#/documentation/overview>
+- License Agreement: <https://themesberg.com/licensing>
+- Support: <https://themesberg.com/contact>
+- Issues: [Github Issues Page](https://github.com/themesberg/volt-react-dashboard/issues)
+
+## Upgrade to Pro
+
+If you'd like to support this open source software, we invite you to check out the premium version of this React dashboard called [Volt Pro React Dashboard](https://themesberg.com/product/dashboard/volt-pro-react). It features over 800 React components, customized pugins, and 20 example pages.
 
 ## Reporting Issues
 
-We use GitHub Issues as the official bug tracker for Flowbite Admin Dashboard. Here are some advices for our users that want to report an issue:
+We use GitHub Issues as the official bug tracker for Volt React Dashboard. Here are some advices for our users that want to report an issue:
 
-1. Make sure that you are using the latest version of Flowbite Admin Dashboard. Check the CHANGELOG from your dashboard on the [GitHub releases page](https://github.com/themesberg/flowbite-admin-dashboard/releases).
+1. Make sure that you are using the latest version of Volt React Dashboard. Check the CHANGELOG from your dashboard on our [website](https://themesberg.com/product/dashboard/volt-react#changelog).
 2. Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.
 3. Some issues may be browser specific, so specifying in what browser you encountered the issue might help.
 
 ## Technical Support or Questions
 
-If you have questions or need help integrating the product please [contact us](https://flowbite.com/contact/) instead of opening an issue.
+If you have questions or need help integrating the product please [contact us](https://themesberg.com/contact) instead of opening an issue.
 
 ## Licensing
 
-- Copyright 2019-2023 Bergside Inc. (https://flowbite.com)
-- Open-source under the [MIT License](https://github.com/themesberg/flowbite-admin-dashboard/blob/main/LICENSE)
+- Copyright 2021 Themesberg (Crafty Dwarf LLC) (https://themesberg.com)
+- Themesberg [license](https://themesberg.com/licensing#mit) (MIT License)
 
 ## Useful Links
 
-- 📚 [Flowbite Library](https://flowbite.com/) - Open-source components built with Tailwind CSS
-- 🎨 [Flowbite Figma](https://flowbite.com/figma/) - Design system built for Figma
-- 🧱 [Flowbite Blocks](https://flowbite.com/blocks/) - Building sections for website and applications
-- 💎 [Flowbite Pro](https://flowbite.com/pro/) - A larger collection of the open-source version of the latter three
+- [React themes](https://themesberg.com/templates/react) from Themesberg
+- [Affiliate Program](https://themesberg.com/affiliate)
 
-## Authors
+##### Social Media
 
-- [Zoltán Szőgyényi](https://twitter.com/zoltanszogyenyi)
-- [Robert Tanislav](https://twitter.com/roberttanislav)
+Twitter: <https://twitter.com/themesberg>
+
+Facebook: <https://www.facebook.com/themesberg/>
+
+Dribbble: <https://dribbble.com/themesberg>
+
+Instagram: <https://www.instagram.com/themesberg/>
