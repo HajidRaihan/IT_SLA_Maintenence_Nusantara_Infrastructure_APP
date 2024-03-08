@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthenticationController extends Controller
@@ -23,7 +24,7 @@ class AuthenticationController extends Controller
         }
 
         $token = $user->createToken('myapptoken')->plainTextToken;
-        return response([
+        return response()->json([
             'message' => 'Login success',
             'user' => $user,
             'token' => $token
@@ -48,14 +49,17 @@ class AuthenticationController extends Controller
             'role' => 'user'
         ]);
 
-        return response([
+        return response()->json([
             'message' => 'Register success',
             'user' => $user
         ], 200);
     }
 
-    public function logout() {
-
+    public function logout(Request $request) {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            'message' => 'Logout success'
+        ]);
     }
 
 }
