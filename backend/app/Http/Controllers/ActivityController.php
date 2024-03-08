@@ -8,7 +8,7 @@ use App\Models\Activity;
 
 class ActivityController extends Controller
 {
-     public function activity(Request $request)
+     public function addactivity_toll(Request $request)
     {
         $data = $request->validate([
             'user_id' => 'required|exists:users,id',
@@ -32,9 +32,18 @@ class ActivityController extends Controller
         
 
         $activity = Activity::create($data);
-
         return response()->json(['data' => $activity]);
     }
+
+
+
+    public function getactivity_toll()
+    {
+        $activity = Activity::all();
+        return response()->json(['data' => $activity]);
+    }
+
+    
 
     public function edit_activity(Request $request, $id)
 {
