@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\ActivityController; // Add this line
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +35,18 @@ Route::get('/tes', function () {
 
 Route::get('/users', [UserController::class, 'index']);
 Route::post('/users/update/{id}', [UserController::class, 'updateProfile']);
+
+Route::post('/toll', [ActivityController::class,'addactivity_toll']);
+Route::get('/toll', [ActivityController::class,'getactivity_toll']);
+Route::put('/toll/update/{id}', [ActivityController::class,'edit_activity']);
+Route::delete('/toll/delete/{id}', [ActivityController::class,'delete_activity']);
+Route::post('/nontoll', [ActivityController::class,'addactivity_nontoll']);
+Route::get('/nontoll', [ActivityController::class,'getactivity_nontoll']);
+Route::put('/nontoll/update/{id}', [ActivityController::class,'edit_activitynontoll']);
+Route::delete('/nontoll/delete/{id}', [ActivityController::class,'delete_activitynontoll']);
+
+
+
 
 
 
