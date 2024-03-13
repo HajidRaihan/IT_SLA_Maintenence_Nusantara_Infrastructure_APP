@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LokasiController;
+use App\Http\Controllers\BarangController;
 
 
 /*
@@ -46,6 +49,23 @@ Route::put('/nontoll/update/{id}', [ActivityController::class,'edit_activitynont
 Route::delete('/nontoll/delete/{id}', [ActivityController::class,'delete_activitynontoll']);
 
 
+Route::get('/kategori', [KategoriController::class, 'index']);
+Route::post('/kategori', [KategoriController::class, 'store']);
+Route::get('/kategori/{id}', [KategoriController::class, 'show']);
+Route::put('/kategori/{id}', [KategoriController::class, 'update']);
+Route::delete('/kategori/{id}', [KategoriController::class, 'destroy']);
+
+Route::get('/lokasi', [LokasiController::class, 'index']);
+Route::post('/lokasi', [LokasiController::class, 'store']);
+Route::get('/lokasi/{id}', [LokasiController::class, 'show']);
+Route::put('/lokasi/{id}', [LokasiController::class, 'update']);
+Route::delete('/lokasi/{id}', [LokasiController::class, 'destroy']);
+
+Route::get('/barang', [BarangController::class, 'index']);
+Route::post('/barang', [BarangController::class, 'store']);
+Route::get('/barang/{id}', [BarangController::class, 'show']);
+Route::put('/barang/{id}', [BarangController::class, 'update']);
+Route::delete('/barang/{id}', [BarangController::class, 'destroy']);
 
 
 
