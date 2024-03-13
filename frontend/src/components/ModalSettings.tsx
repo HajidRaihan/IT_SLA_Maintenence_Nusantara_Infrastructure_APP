@@ -31,7 +31,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           errorFields.push(key == 'id' ? 'Bond ID' : key);
         } else {
           if (key == 'id') {
-            if (!(Object.keys(dataJSON).includes(value) || value == 'ALL')) {
+            if (!(Object.keys(dataJSON).includes(value:String) || value == 'ALL')) {
               errorFields.push('INVALID_ID_' + value);
             }
           }
