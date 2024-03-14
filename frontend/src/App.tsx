@@ -11,6 +11,7 @@ import Chart from './pages/Chart';
 import ECommerce from './pages/Dashboard/ECommerce';
 import FormElements from './pages/Form/FormElements';
 import FormLayout from './pages/Form/FormLayout';
+import ListActivity from './pages/ListActivity';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Tables from './pages/Tables';
@@ -53,11 +54,21 @@ function App() {
           }
         />
         <Route
-          path="/add-activity"
+          path="/forms/add-activity"
           element={
             <>
               <PageTitle title="Add Acitvity" />
               <AddActivity />
+            </>
+          }
+        />
+
+        <Route
+          path="/list-activity"
+          element={
+            <>
+              <PageTitle title="Add Acitvity" />
+              <ListActivity />
             </>
           }
         />
