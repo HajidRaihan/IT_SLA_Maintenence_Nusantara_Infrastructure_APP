@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DatePickerOne from '../components/Forms/DatePicker/DatePickerOne';
@@ -7,11 +7,14 @@ import SelectCompany from '../components/Forms/SelectGroup/SelectCompany';
 import SelectGroupOne from '../components/Forms/SelectGroup/SelectGroupOne';
 import SelectStatus from '../components/Forms/SelectGroup/SelectStatus';
 import DefaultLayout from '../layout/DefaultLayout';
+import { getLokasi } from '../api/lokasiApi';
+import { getKategori } from '../api/kategoriApi';
+import { addActivity } from '../api/activityApi';
 
 const AddActivity = () => {
   const [company, setCompany] = useState('');
   const [tanggal, setTanggal] = useState('');
-  const [jenisHardware, setJenisHardware] = useState('');
+  const [jenisHardware, setJenisHardware] = useState([]);
   const [standartAplikasi, setStandartAplikasi] = useState('');
   const [uraianHardware, setUraianHardware] = useState('');
   const [uraianAplikasi, setUraianAplikasi] = useState('');
@@ -25,20 +28,40 @@ const AddActivity = () => {
   const [biaya, setBiaya] = useState('');
   const [foto, setFoto] = useState();
   const [status, setStatus] = useState('');
-  const [selectedValues, setSelectedValues] = useState([]);
+  const [lokasiData, setLokasiData] = useState();
+  const [kategoriData, setKategoriData] = useState();
+
+  useEffect(() => {
+    const fetchLokasi = async () => {
+      const res = await getLokasi();
+      console.log(res);
+      setLokasiData(res);
+    };
+    fetchLokasi();
+  }, []);
+
+  useEffect(() => {
+    const fetchKategori = async () => {
+      const res = await getKategori();
+      console.log(res);
+      setKategoriData(res);
+    };
+    fetchKategori();
+  }, []);
+
   const handleCompanyChange = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
     setCompany(e.target.value);
   };
 
-  const handleTanggalChange = (date: React.SetStateAction<string>) => {
-    setTanggal(date);
-    console.log(date);
+  const handleTanggalChange = (e) => {
+    setTanggal(e.target.value);
+    console.log(e.target.value);
   };
 
   const handleJenisHardwareChange = (selected) => {
-    setSelectedValues(selected);
+    setJenisHardware(selected);
     console.log(selected);
   };
 
@@ -98,28 +121,41 @@ const AddActivity = () => {
     e.preventDefault();
 
     const data = {
-      company,
-      tanggal,
-      jenisHardware,
-      standartAplikasi,
-      uraianHardware,
-      uraianAplikasi,
-      aplikasiItTol,
-      uraianItTol,
-      catatan,
-      shift,
-      lokasi,
-      kategori,
-      kondisiAkhir,
-      biaya,
-      foto,
-      status,
+      user_id: 1,
+      company: company,
+      tanggal: tanggal,
+      jenis_hardware: jenisHardware.join(', '),
+      standart_aplikasi: standartAplikasi,
+      uraian_hardware: uraianHardware,
+      uraian_aplikasi: uraianAplikasi,
+      aplikasi_it_tol: aplikasiItTol,
+      uraian_it_tol: uraianItTol,
+      catatan: catatan,
+      shift: shift,
+      lokasi_id: lokasi,
+      kategori_id: kategori,
+      kondisi_akhir: kondisiAkhir,
+      biaya: biaya,
+      fotos: foto,
+      status: status,
     };
 
     console.log(data);
+
+    const res = await addActivity(data);
+    console.log(res);
   };
 
-  const data = ['GTO', 'Gate barrier', 'LLA/OTL', 'CCTV', 'UPS', 'STB'];
+  const dataJenisHardware = [
+    'GTO',
+    'Gate barrier',
+    'LLA/OTL',
+    'CCTV',
+    'UPS',
+    'STB',
+  ];
+
+  const dataCompany = ['MMN', 'JTSE'];
 
   return (
     <DefaultLayout>
@@ -136,7 +172,14 @@ const AddActivity = () => {
             <form action="#">
               <div className="p-6.5">
                 <div className="mb-4.5 flex gap-6 flex-col">
+                  {/* <SelectCompany
+                    value={company}
+                    onChange={handleCompanyChange}
+                  /> */}
+
                   <SelectCompany
+                    label="Company"
+                    data={dataCompany}
                     value={company}
                     onChange={handleCompanyChange}
                   />
@@ -149,23 +192,11 @@ const AddActivity = () => {
 
                   <MultiSelect
                     id="multiSelect"
-                    data={data}
+                    data={dataJenisHardware}
                     label="Jenis Hardware"
                     value={jenisHardware}
                     onChange={handleJenisHardwareChange}
                   />
-
-                  <div className="w-full ">
-                    <label className="mb-2.5 block text-black dark:text-white">
-                      Jenis Hardware
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      value={jenisHardware}
-                      onChange={handleJenisHardwareChange}
-                    />
-                  </div>
 
                   <div className="w-full ">
                     <label className="mb-2.5 block text-black dark:text-white">
@@ -251,29 +282,19 @@ const AddActivity = () => {
                     />
                   </div>
 
-                  <div className="w-full ">
-                    <label className="mb-2.5 block text-black dark:text-white">
-                      Lokasi
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      value={lokasi}
-                      onChange={handleLokasiChange}
-                    />
-                  </div>
+                  <SelectGroupOne
+                    value={lokasi}
+                    onChange={handleLokasiChange}
+                    label="Lokasi"
+                    data={lokasiData}
+                  />
 
-                  <div className="w-full ">
-                    <label className="mb-2.5 block text-black dark:text-white">
-                      Kategori
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      onChange={handleKategoriChange}
-                      value={kategori}
-                    />
-                  </div>
+                  <SelectGroupOne
+                    value={kategori}
+                    onChange={handleKategoriChange}
+                    label="Kategori"
+                    data={kategoriData}
+                  />
 
                   <div className="w-full ">
                     <label className="mb-2.5 block text-black dark:text-white">

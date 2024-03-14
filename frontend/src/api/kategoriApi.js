@@ -1,25 +1,25 @@
 import Cookies from 'js-cookie';
 import { RequestApi } from '../helper/RequestApi';
 
-const addActivity = async (credentials) => {
+const getKategori = async () => {
   const headers = {
-    'Content-Type': 'multipart/form-data',
+    'Content-Type': 'application/json',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
   };
   try {
     const response = await RequestApi(
-      'POST',
-      'toll',
-      credentials,
+      'GET',
+      'kategori',
+      {},
       headers,
-      'Mencoba menambahkan acitvity',
+      'Mencoba menampilkan kategori',
     );
 
     return response.data;
   } catch (error) {
-    console.error('Terjadi kesalahan saat menambahkan activity', error);
+    console.error('Terjadi kesalahan saat menampilkan kategori', error);
     throw error;
   }
 };
 
-export { addActivity };
+export { getKategori };

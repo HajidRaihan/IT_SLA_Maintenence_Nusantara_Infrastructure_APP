@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SelectCompany: React.FC = ({ value, onChange }) => {
+const SelectCompany: React.FC = ({ value, onChange, data }) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
