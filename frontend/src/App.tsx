@@ -12,6 +12,7 @@ import Chart from './pages/Chart';
 import ECommerce from './pages/Dashboard/ECommerce';
 import FormElements from './pages/Form/FormElements';
 import FormLayout from './pages/Form/FormLayout';
+import ListActivity from './pages/ListActivity';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Tables from './pages/Tables';
@@ -54,7 +55,7 @@ function App() {
           }
         />
         <Route
-          path="/add-activity"
+          path="/forms/add-activity"
           element={
             <>
               <PageTitle title="Add Acitvity" />
@@ -62,12 +63,22 @@ function App() {
             </>
           }
         />
+<<<<<<< HEAD
           <Route
           path="/Kategori"
           element={
             <>
               <PageTitle title="kategori" />
               <Kategori />
+=======
+
+        <Route
+          path="/list-activity"
+          element={
+            <>
+              <PageTitle title="Add Acitvity" />
+              <ListActivity />
+>>>>>>> 6d5136276e51efea4fc9293cfb45bcb9f73ea7ba
             </>
           }
         />

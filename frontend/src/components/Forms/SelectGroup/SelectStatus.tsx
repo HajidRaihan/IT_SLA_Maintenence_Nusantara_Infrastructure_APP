@@ -26,8 +26,8 @@ const SelectStatus: React.FC = ({ value, onChange }) => {
           <option value="" disabled className="text-body dark:text-bodydark">
             Select status
           </option>
-          <option value="prosses" className="text-body dark:text-bodydark">
-            Prosess
+          <option value="process" className="text-body dark:text-bodydark">
+            Process
           </option>
           <option value="done" className="text-body dark:text-bodydark">
             Done

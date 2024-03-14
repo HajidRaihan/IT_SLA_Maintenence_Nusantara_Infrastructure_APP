@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('kondisi_akhir');
             $table->integer('biaya');
             $table->string('fotos')->default('default_value')->nullable();
-            $table->enum('status', ['prosses', 'done']);
+            $table->enum('status', ['process', 'done']);
             $table->timestamp('ended_at');
             $table->timestamps();
 

@@ -26,4 +26,46 @@ const addActivity = async (credentials) => {
   }
 };
 
-export { addActivity };
+const getAllActivity = async () => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${Cookies.get('access_token')}`,
+  };
+  try {
+    const response = await RequestApi(
+      'GET',
+      'toll',
+      {},
+      headers,
+      'Mencoba menampilkan acitvity',
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat menampilkan activity', error);
+    throw error;
+  }
+};
+
+const deleteActivity = async (id) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${Cookies.get('access_token')}`,
+  };
+  try {
+    const response = await RequestApi(
+      'DELETE',
+      `toll/delete/${id}`,
+      {},
+      headers,
+      'Mencoba delete acitvity',
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat delete activity', error);
+    throw error;
+  }
+};
+
+export { addActivity, getAllActivity, deleteActivity };
