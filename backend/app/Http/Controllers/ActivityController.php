@@ -27,7 +27,7 @@ class ActivityController extends Controller
             'kondisi_akhir' => 'required|string',
             'biaya' => 'required|integer',
             'fotos' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status' => 'required|in:prosses,done',
+            'status' => 'required|in:process,done',
         ]);
 
         if($request->hasFile('fotos')){
@@ -68,7 +68,7 @@ class ActivityController extends Controller
         'lokasi_id' => 'required|exists:lokasi,id',
         'biaya' => 'required|integer',
         'fotos' => 'required',
-        'status' => 'required|in:prosses,done',
+        'status' => 'required|in:process,done',
     ]);
 
     $activity = Activity::findOrFail($id);
@@ -76,7 +76,7 @@ class ActivityController extends Controller
 
     return response()->json(['data' => $activity]);
 }
-
+ 
 public function delete_activity($id)
 {
     $activity = Activity::findOrFail($id);
@@ -104,7 +104,7 @@ public function addactivity_nontoll(Request $request)
         'kondisi_akhir' => 'required|string',
         'biaya' => 'required|integer',
         'fotos' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'status' => 'required|in:prosses,done',
+        'status' => 'required|in:process,done',
     ]);
 
     if($request->hasFile('fotos')){
@@ -145,7 +145,7 @@ $data = $request->validate([
     'lokasi_id' => 'required|exists:lokasi,id',
     'biaya' => 'required|integer',
     'fotos' => 'required',
-    'status' => 'required|in:prosses,done',
+    'status' => 'required|in:process,done',
 ]);
 
 $activity = Activity::findOrFail($id);
