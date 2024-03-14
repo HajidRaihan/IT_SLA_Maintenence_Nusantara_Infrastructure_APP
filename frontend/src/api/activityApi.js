@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import { RequestApi } from '../helper/RequestApi';
 
-const addAcitvity = async (credentials) => {
+const addAcitvity = async (data) => {
   const headers = {
     'Content-Type': 'multipart/form-data',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
@@ -9,8 +9,8 @@ const addAcitvity = async (credentials) => {
   try {
     const response = await RequestApi(
       'POST',
-      'toll',
-      credentials,
+      `toll`,
+      data,
       headers,
       'Mencoba menambahkan acitvity',
     );

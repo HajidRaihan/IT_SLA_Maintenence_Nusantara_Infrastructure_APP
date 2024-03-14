@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import AddActivity from './pages/AddActivity';
+import Kategori from './pages/Kategori';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Calendar from './pages/Calendar';
@@ -58,6 +59,15 @@ function App() {
             <>
               <PageTitle title="Add Acitvity" />
               <AddActivity />
+            </>
+          }
+        />
+          <Route
+          path="/Kategori"
+          element={
+            <>
+              <PageTitle title="kategori" />
+              <Kategori />
             </>
           }
         />

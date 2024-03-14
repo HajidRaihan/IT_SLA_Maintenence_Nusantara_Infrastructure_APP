@@ -35,9 +35,9 @@ const SignIn: React.FC = () => {
 
     const res = await loginUser(credential);
 
-    // if (res) {
-    //   navigate('/');
-    // }
+    if (res) {
+      navigate('/');
+    }
 
     console.log(res);
   };
