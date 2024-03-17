@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import React, { Fragment } from 'react';
-import { getKategori, addKategori,updateKategori } from "../api/kategoriApi";
+import { getKategori, addKategori,updateKategori,deleteKategori } from "../api/kategoriApi";
 
 const Kategori = () => {
   const [data, setData] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [updateForm, setUpdateForm] = useState(false);
+  const [deleteForm, setDeleteForm] = useState(false);
   const [newCategory, setNewCategory] = useState('');
   const [updateCategory, setUpdateCategory] = useState('');
   const [kategoriId, setKategoriId] = useState()
@@ -31,7 +32,26 @@ const Kategori = () => {
   const handleupdateForm = (id) => {
      setUpdateForm(true);
      setKategoriId(id)
-  }
+  };
+
+  const handledeleteForm = (id) => {
+    setDeleteForm(true);
+    setKategoriId(id);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const res = await deleteKategori(kategoriId);
+      // Filter out the deleted category from the state
+      setData(data.filter(item => item.id !== kategoriId));
+      setDeleteForm(false);
+      console.log("Delete berhasil ",res)
+    } catch (error) {
+      console.error('Error deleting category:', error);
+    }
+  };
+
+  
 
   const handleupdatecloseForm = () => {
     setUpdateForm(false);
@@ -60,10 +80,12 @@ const Kategori = () => {
     handleCloseForm();
   };
 
+
   const handleUpdate = async () => {
       const data = {
       nama_kategori: updateCategory,
     };
+    
 
     console.log(data)
   
@@ -77,6 +99,9 @@ const Kategori = () => {
     }
     handleupdatecloseForm();
   };
+
+ 
+
   
 
   return (
@@ -113,15 +138,19 @@ const Kategori = () => {
             key={index}
           >
             <div className="col-span-3 flex items-center">
-              <p className="text-sm text-black dark:text-white">{item.id}</p>
+              <p className="font-medium mr-2 text-black dark:text-white">{item.id}</p>
             </div>
             <div className="col-span-3 flex items-center sm:flex">
-              <p className="text-sm text-black dark:text-white">{item.nama_kategori}</p>
+              <p className="font-medium mr-3 text-black dark:text-white">{item.nama_kategori}</p>
             </div>
             <div className="mb-10 flex items-center">
             <button  onClick = {() => handleupdateForm(item.id)} className="border border-stroke rounded-sm px-4 py-2 bg-green-500 dark:bg-boxdark shadow-default dark:border-strokedark text-black dark:text-white" >
   <h3 className="font-medium text-black dark:text-white text-sm">Update</h3>
 </button>
+<button onClick={() => handledeleteForm(item.id)} className="border border-stroke rounded-sm px-4 py-2 bg-red-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white">
+                Delete
+              </button>
+
             </div>
           </div>
         ))}
@@ -151,14 +180,39 @@ const Kategori = () => {
               >
                 Add
               </button>
+              
             </div>
           </div>
         </div>
       )}
 
+{deleteForm && (
+             <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
+             <div className="bg-white shadow-md rounded-md p-6">
+               <h2 className="text-lg font-semibold mb-4">Delete Kategori</h2>
+               <p>Are you sure you want to delete this category?</p>
+               <div className="flex justify-end mt-4">
+                 <button
+                   onClick={() => setDeleteForm(false)}
+                   className="mr-2 border border-stroke rounded-sm px-4 py-2 bg-red-500 text-white"
+                 >
+                   Cancel
+                 </button>
+                 <button
+                   onClick={handleDelete}
+                   className="border border-stroke rounded-sm px-4 py-2 bg-green-500 text-white"
+                 >
+                   Delete
+                 </button>
+               </div>
+             </div>
+           </div>
+)
+}
+
 {updateForm && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white shadow-md rounded-md p-6">
+          <div className="bg-black shadow-md rounded-md p-6">
             <h2 className="text-lg font-semibold mb-4">Add Kategori Form</h2>
             <input
               type="text"
