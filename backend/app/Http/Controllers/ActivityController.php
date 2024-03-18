@@ -46,11 +46,62 @@ class ActivityController extends Controller
 
     public function getactivity_toll()
     {
-        $activity = Activity::all();
-        return response()->json(['data' => $activity]);
+        $filters = $request->only(['company', 'status','location', 'category']);
+    
+        // Get activities based on filters and join with the category and lokasi tables
+        $activities = Activity::query()
+            ->select(
+                'activity.id',
+                'activity.user_id',
+                'activity.company',
+                'activity.tanggal',
+                'activity.jenis_hardware',
+                'activity.standart_aplikasi',
+                'activity.uraian_hardware',
+                'activity.uraian_aplikasi',
+                'activity.aplikasi_it_tol',
+                'activity.uraian_it_tol',
+                'activity.catatan',
+                'activity.shift',
+                'activity.kondisi_akhir',
+                'activity.biaya',
+                'activity.fotos',
+                'activity.status',
+                'activity.ended_at',
+                'activity.created_at',
+                'activity.updated_at',
+                'kategori.nama_kategori as category_name',
+                'lokasi.nama_lokasi as location_name'
+            )
+            ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
+            ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
+            ->when(isset($filters['company']), function ($query) use ($filters) {
+                $query->where('company', $filters['company']);
+            })
+            ->when(isset($filters['status']), function ($query) use ($filters) {
+                $query->where('status', $filters['status']);
+            })
+            ->when(isset($filters['location']), function ($query) use ($filters) {
+                $query->where('lokasi_id', $filters['location']);
+            })
+            ->when(isset($filters['category']), function ($query) use ($filters) {
+                $query->where('kategori_id', $filters['category']);
+            })
+            ->get();
+    
+        return response()->json(['data' => $activities]);
     }
 
-    
+    public function getactivity_toll_id($id)
+    {
+        $activity = Activity::findOrFail($id);
+        return response()->json(['data' => $activity]);
+    }
+//     public function getactivity_toll_by_user($UserId)
+// {
+//         $activity = Activity::where('user_id', $userId)->get();
+//         return response()->json(['data' => $activity]);
+// }
 
     public function edit_activity(Request $request, $id)
 {
@@ -123,14 +174,67 @@ public function addactivity_nontoll(Request $request)
 
 public function getactivity_nontoll()
 {
-    $activity = Activity::all();
+    $filters = $request->only(['company', 'status','location', 'category']);
+    
+    // Get activities based on filters and join with the category and lokasi tables
+    $activities = Activity::query()
+        ->select(
+            'activity.id',
+            'activity.user_id',
+            'activity.company',
+            'activity.tanggal',
+            'activity.jenis_hardware',
+            'activity.standart_aplikasi',
+            'activity.uraian_hardware',
+            'activity.uraian_aplikasi',
+            'activity.aplikasi_it_tol',
+            'activity.uraian_it_tol',
+            'activity.catatan',
+            'activity.shift',
+            'activity.kondisi_akhir',
+            'activity.biaya',
+            'activity.fotos',
+            'activity.status',
+            'activity.ended_at',
+            'activity.created_at',
+            'activity.updated_at',
+            'kategori.nama_kategori as category_name',
+            'lokasi.nama_lokasi as location_name'
+        )
+        ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
+        ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
+        ->when(isset($filters['company']), function ($query) use ($filters) {
+            $query->where('company', $filters['company']);
+        })
+        ->when(isset($filters['status']), function ($query) use ($filters) {
+            $query->where('status', $filters['status']);
+        })
+        ->when(isset($filters['location']), function ($query) use ($filters) {
+            $query->where('lokasi_id', $filters['location']);
+        })
+        ->when(isset($filters['category']), function ($query) use ($filters) {
+            $query->where('kategori_id', $filters['category']);
+        })
+        ->get();
+
+    return response()->json(['data' => $activities]);
+}
+
+public function getactivity_nontoll_id($id)
+{
+    $activity = Activity::findOrFail($id);
     return response()->json(['data' => $activity]);
 }
 
+// public function getactivity_nontoll_by_user($userId)
+// {
+//     $activity = Activity::where('user_id', $userId)->get();
+//     return response()->json(['data' => $activity]);
+// }
 
 
-public function edit_activitynontoll(Request $request, $id)
-{
+
+public function edit_activitynontoll(Request $request, $id) {
 $data = $request->validate([
     'company' => 'required|in:jtse,mmn',
     'tanggal' => 'required|date',
@@ -148,19 +252,30 @@ $data = $request->validate([
     'status' => 'required|in:process,done',
 ]);
 
-$activity = Activity::findOrFail($id);
-$activity->update($data);
+        $activity = Activity::findOrFail($id);
+        $activity->update($data);
 
-return response()->json(['data' => $activity]);
+        return response()->json(['data' => $activity]);
 }
 
-public function delete_activitynontoll($id)
-{
-$activity = Activity::findOrFail($id);
-$activity->delete();
+        public function delete_activitynontoll($id) {
+        $activity = Activity::findOrFail($id);
+        $activity->delete();
+        return response()->json(['message' => 'Activity deleted successfully']);
+        
+    }
+    public function changeStatus(Request $request, $id)
+    {
+        $data = $request->validate([
+            'status' => 'required|in:process,done',
+        ]);
 
-return response()->json(['message' => 'Activity deleted successfully']);
-}
+        $activity = Activity::findOrFail($id);
+        $activity->status = $data['status'];
+        $activity->save();
+
+        return response()->json(['data' => $activity]);
+    }
 
 
 }

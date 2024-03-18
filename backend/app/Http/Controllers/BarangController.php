@@ -9,11 +9,18 @@ use Illuminate\Support\Facades\Validator;
 class BarangController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $barang = Barang::all();
-        return response()->json($barang);
+            $perusahaan = $request->query('perusahaan');
+            $barangQuery = Barang::query();
+            if ($perusahaan) {
+                $barangQuery->where('perusahaan', $perusahaan);
+            }
+
+            $barang = $barangQuery->get();
+            return response()->json($barang);
     }
+
 
     public function store(Request $request)
     {

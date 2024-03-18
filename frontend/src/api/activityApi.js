@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 import { RequestApi } from '../helper/RequestApi';
 
 const addActivity = async (credentials) => {
+
   const headers = {
     'Content-Type': 'multipart/form-data',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
@@ -9,8 +10,8 @@ const addActivity = async (credentials) => {
   try {
     const response = await RequestApi(
       'POST',
-      'toll',
-      credentials,
+      `toll`,
+      data,
       headers,
       'Mencoba menambahkan acitvity',
     );
@@ -83,6 +84,7 @@ const deleteActivity = async (id) => {
     console.error('Terjadi kesalahan saat delete activity', error);
     throw error;
   }
-};
+}
+
 
 export { addActivity, getAllActivity, deleteActivity };

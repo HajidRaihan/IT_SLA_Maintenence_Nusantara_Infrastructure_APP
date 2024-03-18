@@ -9,23 +9,21 @@ return new class extends Migration
   
     public function up(): void
     {
-        Schema::create('barang',function (Blueprint $table) {
+        Schema::create('jadwal', function (Blueprint $table){
             $table->id();
-            $table->string('nama_equipment');
+            $table->string('nama_kegiatan')->nullable();
+            $table->date('tanggal_mulai')->nullable();
+            $table->date('tanggal_selesai')->nullable();
             $table->enum('perusahaan', ['PT Makassar Metro Network', 'PT Jalan Tol Seksi Empat'])->nullable();
-            $table->string('unit')->nullable();
-            $table->string('merk')->nullable();
-            $table->integer('stock')->nullable();
-            $table->string('gambar');
+            $table->string('lokasi')->nullable();
+            $table->time('waktu_mulai')->nullable();
+            $table->time('waktu_selesai')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('barang');
+        Schema::dropIfExists('jadwal');
     }
 };
