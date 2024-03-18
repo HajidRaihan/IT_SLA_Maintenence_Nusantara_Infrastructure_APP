@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\JadwalController;
 
 
 /*
@@ -66,6 +67,12 @@ Route::post('/barang', [BarangController::class, 'store']);
 Route::get('/barang/{id}', [BarangController::class, 'show']);
 Route::put('/barang/{id}', [BarangController::class, 'update']);
 Route::delete('/barang/{id}', [BarangController::class, 'destroy']);
+
+Route::get('/jadwal', [JadwalController::class, 'index']);
+Route::post('/jadwal', [JadwalController::class, 'store']);
+Route::get('/jadwal/{id}', [JadwalController::class, 'show']);
+Route::put('/jadwal/{id}', [JadwalController::class, 'update']);
+Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy']);
 
 
 
