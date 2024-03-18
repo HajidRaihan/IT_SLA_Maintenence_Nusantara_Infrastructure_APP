@@ -3,6 +3,8 @@ import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import React, { Fragment } from 'react';
 import { getKategori, addKategori,updateKategori,deleteKategori } from "../api/kategoriApi";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash,faPen,faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Kategori = () => {
   const [data, setData] = useState([]);
@@ -100,7 +102,8 @@ const Kategori = () => {
     handleupdatecloseForm();
   };
 
- 
+
+  
 
   
 
@@ -110,13 +113,13 @@ const Kategori = () => {
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="py-6 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Kategori
+            Add Kategori
           </h4>
           <button
             onClick={handleShowForm}
             className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
           >
-            Add Kategori
+           <FontAwesomeIcon icon={faPlus} className="green-light-icon text-lg" />
           </button>
         </div>
 
@@ -143,22 +146,22 @@ const Kategori = () => {
             <div className="col-span-3 flex items-center sm:flex">
               <p className="font-medium mr-3 text-black dark:text-white">{item.nama_kategori}</p>
             </div>
-            <div className="mb-10 flex items-center">
-            <button  onClick = {() => handleupdateForm(item.id)} className="border border-stroke rounded-sm px-4 py-2 bg-green-500 dark:bg-boxdark shadow-default dark:border-strokedark text-black dark:text-white" >
-  <h3 className="font-medium text-black dark:text-white text-sm">Update</h3>
+            <div className="mb-3  flex items-center">
+            <button onClick={() => handleupdateForm(item.id)} className="border border-stroke rounded-sm px-4 py-2 bg-green-600 dark:bg-boxdark shadow-default dark:border-strokedark text-black dark:text-white flex items-center justify-center">
+  <FontAwesomeIcon icon={faPen} className="green-light-icon text-lg" />
 </button>
-<button onClick={() => handledeleteForm(item.id)} className="border border-stroke rounded-sm px-4 py-2 bg-red-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white">
-                Delete
-              </button>
 
-            </div>
+<button onClick={() => handledeleteForm(item.id)} className="border border-stroke rounded-sm px-4 py-2 bg-red-700 dark:bg-boxdark shadow-default dark:border-strokedark text-white flex items-center justify-center">
+  <FontAwesomeIcon icon={faTrash} className="text-lg" />
+</button>
+    </div>
           </div>
         ))}
       </div>
       {/* Add Kategori Form */}
       {showForm && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white shadow-md rounded-md p-6">
+          <div className="bg-black shadow-md rounded-md p-6">
             <h2 className="text-lg font-semibold mb-4">Add Kategori Form</h2>
             <input
               type="text"
@@ -213,7 +216,7 @@ const Kategori = () => {
 {updateForm && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
           <div className="bg-black shadow-md rounded-md p-6">
-            <h2 className="text-lg font-semibold mb-4">Add Kategori Form</h2>
+            <h2 className="text-lg font-semibold mb-4">Update Form</h2>
             <input
               type="text"
               className="border border-stroke rounded-sm px-4 py-2 mb-4 w-full"
