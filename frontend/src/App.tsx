@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
+import ActivityDetail from './pages/ActivityDetail';
 import AddActivity from './pages/AddActivity';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
@@ -69,6 +70,16 @@ function App() {
             <>
               <PageTitle title="Add Acitvity" />
               <ListActivity />
+            </>
+          }
+        />
+
+        <Route
+          path="/detail/activity"
+          element={
+            <>
+              <PageTitle title="Detail Acitvity" />
+              <ActivityDetail />
             </>
           }
         />

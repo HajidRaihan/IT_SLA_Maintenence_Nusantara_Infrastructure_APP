@@ -43,6 +43,27 @@ const getAllActivity = async () => {
   }
 };
 
+const getDetailActivity = async () => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${Cookies.get('access_token')}`,
+  };
+  try {
+    const response = await RequestApi(
+      'GET',
+      'toll',
+      {},
+      headers,
+      'Mencoba menampilkan acitvity',
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat menampilkan activity', error);
+    throw error;
+  }
+};
+
 const deleteActivity = async (id) => {
   const headers = {
     'Content-Type': 'application/json',

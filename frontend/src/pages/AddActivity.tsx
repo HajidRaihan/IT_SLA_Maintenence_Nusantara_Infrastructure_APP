@@ -10,15 +10,17 @@ import DefaultLayout from '../layout/DefaultLayout';
 import { getLokasi } from '../api/lokasiApi';
 import { getKategori } from '../api/kategoriApi';
 import { addActivity } from '../api/activityApi';
+import MultiSelectAplikasi from '../components/Forms/MultiSelectAplikasi';
+import CheckboxTwo from '../components/Checkboxes/CheckboxTwo';
 
 const AddActivity = () => {
   const [company, setCompany] = useState('');
   const [tanggal, setTanggal] = useState('');
   const [jenisHardware, setJenisHardware] = useState([]);
-  const [standartAplikasi, setStandartAplikasi] = useState('');
+  const [standartAplikasi, setStandartAplikasi] = useState([]);
   const [uraianHardware, setUraianHardware] = useState('');
   const [uraianAplikasi, setUraianAplikasi] = useState('');
-  const [aplikasiItTol, setAplikasiItTol] = useState('');
+  const [aplikasiItTol, setAplikasiItTol] = useState([]);
   const [uraianItTol, setUraianItTol] = useState('');
   const [catatan, setCatatan] = useState('');
   const [shift, setShift] = useState('');
@@ -60,13 +62,36 @@ const AddActivity = () => {
     console.log(e.target.value);
   };
 
-  const handleJenisHardwareChange = (selected) => {
-    setJenisHardware(selected);
-    console.log(selected);
+  // const handleJenisHardwareChange = (selected) => {
+  //   setJenisHardware(selected);
+  //   console.log(selected);
+  // };
+  const handleJenisHardwareChange = (value) => {
+    console.log(value);
+    console.log(jenisHardware);
+    // Cek apakah value sudah ada dalam array checkedValues
+    if (jenisHardware.includes(value)) {
+      // Jika sudah ada, hapus dari array
+      console.log(true);
+      setJenisHardware(jenisHardware.filter((item) => item !== value));
+    } else {
+      // Jika belum ada, tambahkan ke array
+      setJenisHardware([...jenisHardware, value]);
+    }
   };
 
-  const handleStandartAplikasiChange = (e) => {
-    setStandartAplikasi(e.target.value);
+  const handleStandartAplikasiChange = (value) => {
+    console.log(value);
+    console.log(jenisHardware);
+    // Cek apakah value sudah ada dalam array checkedValues
+    if (standartAplikasi.includes(value)) {
+      // Jika sudah ada, hapus dari array
+      console.log(true);
+      setStandartAplikasi(standartAplikasi.filter((item) => item !== value));
+    } else {
+      // Jika belum ada, tambahkan ke array
+      setStandartAplikasi([...standartAplikasi, value]);
+    }
   };
 
   const handleUraianHardwareChange = (e) => {
@@ -77,8 +102,18 @@ const AddActivity = () => {
     setUraianAplikasi(e.target.value);
   };
 
-  const handleAplikasiItTolChange = (e) => {
-    setAplikasiItTol(e.target.value);
+  // const handleAplikasiItTolChange = (selected) => {
+  //   setAplikasiItTol(selected);
+  // };
+
+  const handleAplikasiItTolChange = (value) => {
+    if (aplikasiItTol.includes(value)) {
+      // Jika sudah ada, hapus dari array
+      setAplikasiItTol(aplikasiItTol.filter((item) => item !== value));
+    } else {
+      // Jika belum ada, tambahkan ke array
+      setAplikasiItTol([...aplikasiItTol, value]);
+    }
   };
 
   const handleUraianItTolChange = (e) => {
@@ -125,10 +160,10 @@ const AddActivity = () => {
       company: company,
       tanggal: tanggal,
       jenis_hardware: jenisHardware.join(', '),
-      standart_aplikasi: standartAplikasi,
+      standart_aplikasi: standartAplikasi.join(', '),
       uraian_hardware: uraianHardware,
       uraian_aplikasi: uraianAplikasi,
-      aplikasi_it_tol: aplikasiItTol,
+      aplikasi_it_tol: aplikasiItTol.join(', '),
       uraian_it_tol: uraianItTol,
       catatan: catatan,
       shift: shift,
@@ -147,13 +182,22 @@ const AddActivity = () => {
   };
 
   const dataJenisHardware = [
-    'GTO',
+    // 'GTO',
     'Gate barrier',
     'LLA/OTL',
     'CCTV',
     'UPS',
     'STB',
   ];
+
+  const dataAplikasiTol = [
+    'Program LTCS/TFI',
+    'Program PCS',
+    'Program RTM',
+    'Program CCTV/VMS',
+  ];
+
+  const dataStandartAplikasi = ['Sistem Operasi', 'Microsoft Office'];
 
   const dataCompany = ['MMN', 'JTSE'];
 
@@ -190,15 +234,44 @@ const AddActivity = () => {
                     onChange={handleTanggalChange}
                   />
 
-                  <MultiSelect
+                  {/* <MultiSelect
                     id="multiSelect"
                     data={dataJenisHardware}
                     label="Jenis Hardware"
                     value={jenisHardware}
                     onChange={handleJenisHardwareChange}
-                  />
+                  /> */}
+
+                  <div>
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Jenis Hardware
+                    </label>
+                    <div className="flex gap-10 flex-wrap">
+                      {dataJenisHardware.map((data, index) => {
+                        return (
+                          <CheckboxTwo
+                            label={data}
+                            key={index}
+                            isChecked={jenisHardware.includes(data)} // Pass nilai isChecked berdasarkan apakah label ada dalam checkedValues
+                            onChange={() => handleJenisHardwareChange(data)} // Gunakan handleCheckboxChange sebagai onChange handler
+                            options={dataJenisHardware}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
 
                   <div className="w-full ">
+                    <textarea
+                      // type="text-area"
+                      className="w-full h-40 rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      placeholder="Penjabaran Masalah Hardware"
+                      value={uraianHardware}
+                      onChange={handleUraianHardwareChange}
+                    />
+                  </div>
+
+                  {/* <div className="w-full ">
                     <label className="mb-2.5 block text-black dark:text-white">
                       Standart Aplikasi
                     </label>
@@ -208,33 +281,37 @@ const AddActivity = () => {
                       value={standartAplikasi}
                       onChange={handleStandartAplikasiChange}
                     />
+                  </div> */}
+
+                  <div>
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Standard Aplikasi
+                    </label>
+                    <div className="flex gap-10 flex-wrap">
+                      {dataStandartAplikasi.map((data, index) => {
+                        return (
+                          <CheckboxTwo
+                            label={data}
+                            key={index}
+                            isChecked={standartAplikasi.includes(data)} // Pass nilai isChecked berdasarkan apakah label ada dalam checkedValues
+                            onChange={() => handleStandartAplikasiChange(data)} // Gunakan handleCheckboxChange sebagai onChange handler
+                            options={dataStandartAplikasi}
+                          />
+                        );
+                      })}
+                    </div>
                   </div>
 
                   <div className="w-full ">
-                    <label className="mb-2.5 block text-black dark:text-white">
-                      Uraian Hardware
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      value={uraianHardware}
-                      onChange={handleUraianHardwareChange}
-                    />
-                  </div>
-
-                  <div className="w-full ">
-                    <label className="mb-2.5 block text-black dark:text-white">
-                      Uraian Aplikasi
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    <textarea
+                      className="h-40 w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      placeholder="Penjabaran Masalah Sistem"
                       value={uraianAplikasi}
                       onChange={handleUraianAplikasiChange}
                     />
                   </div>
 
-                  <div className="w-full ">
+                  {/* <div className="w-full ">
                     <label className="mb-2.5 block text-black dark:text-white">
                       Aplikasi IT Tol
                     </label>
@@ -244,6 +321,44 @@ const AddActivity = () => {
                       value={aplikasiItTol}
                       onChange={handleAplikasiItTolChange}
                     />
+                  </div> */}
+
+                  {/* <MultiSelectAplikasi
+                    id="multiSelect"
+                    data={dataAplikasiTol}
+                    label="Aplikasi IT dan Peralatan Tol"
+                    value={aplikasiItTol}
+                    onChange={handleAplikasiItTolChange}
+                  /> */}
+                  {/* 
+                  <div>
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Jenis Hardware
+                    </label>
+                    <div className="flex gap-10 flex-wrap">
+                      {dataAplikasiTol.map((data, index) => {
+                        return <CheckboxTwo label={data} key={index} />;
+                      })}
+                    </div>
+                  </div> */}
+
+                  <div>
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Aplikasi IT dan Peralatan Tol
+                    </label>
+                    <div className="flex gap-10 flex-wrap">
+                      {dataAplikasiTol.map((data, index) => {
+                        return (
+                          <CheckboxTwo
+                            label={data}
+                            key={index}
+                            isChecked={aplikasiItTol.includes(data)} // Perbarui prop isChecked
+                            onChange={() => handleAplikasiItTolChange(data)} // Perbarui prop onChange
+                            options={aplikasiItTol}
+                          />
+                        );
+                      })}
+                    </div>
                   </div>
 
                   <div className="w-full ">
@@ -265,6 +380,7 @@ const AddActivity = () => {
                     <input
                       type="text"
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      placeholder="Catatan jika diperlukan"
                       value={catatan}
                       onChange={handleCatatanChange}
                     />
@@ -300,9 +416,9 @@ const AddActivity = () => {
                     <label className="mb-2.5 block text-black dark:text-white">
                       Kondisi Akhir
                     </label>
-                    <input
-                      type="text"
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    <textarea
+                      className="h-40 w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      placeholder="Kondisi Akhir"
                       value={kondisiAkhir}
                       onChange={handleKondisiAkhirChange}
                     />
@@ -315,6 +431,7 @@ const AddActivity = () => {
                     <input
                       type="text"
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      placeholder="example: 80.000"
                       value={biaya}
                       onChange={handleBiayaChange}
                     />
