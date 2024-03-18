@@ -11,8 +11,8 @@ return new class extends Migration
     {
         Schema::create('barang',function (Blueprint $table) {
             $table->id();
-            $table->string('nama_equipment')->unique();
-            $table->enum('perusahaan', ['PT Makassar Metro Network', 'PT Jalan Tol Sesi Empat'])->nullable();
+            $table->string('nama_equipment');
+            $table->enum('perusahaan', ['PT Makassar Metro Network', 'PT Jalan Tol Seksi Empat'])->nullable();
             $table->string('unit')->nullable();
             $table->string('merk')->nullable();
             $table->integer('stock')->nullable();

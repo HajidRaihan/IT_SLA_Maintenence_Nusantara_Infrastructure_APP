@@ -42,12 +42,17 @@ Route::post('/users/update/{id}', [UserController::class, 'updateProfile']);
 
 Route::post('/toll', [ActivityController::class,'addactivity_toll']);
 Route::get('/toll', [ActivityController::class,'getactivity_toll']);
+Route::get('/toll/{id}', [ActivityController::class, 'getactivity_toll_id']);
+// Route::get('/toll/user/{userId}', [ActivityController::class, 'getactivity_toll_by_user']);
 Route::put('/toll/update/{id}', [ActivityController::class,'edit_activity']);
 Route::delete('/toll/delete/{id}', [ActivityController::class,'delete_activity']);
 Route::post('/nontoll', [ActivityController::class,'addactivity_nontoll']);
 Route::get('/nontoll', [ActivityController::class,'getactivity_nontoll']);
+Route::get('/nontoll/{id}', [ActivityController::class, 'getactivity_nontoll_id']);
+// Route::get('/nontoll/user/{userId}', [ActivityController::class, 'getactivity_nontoll_by_user']);
 Route::put('/nontoll/update/{id}', [ActivityController::class,'edit_activitynontoll']);
 Route::delete('/nontoll/delete/{id}', [ActivityController::class,'delete_activitynontoll']);
+Route::put('/toll/{id}/status', [ActivityController::class,'changeStatus']);
 
 
 Route::get('/kategori', [KategoriController::class, 'index']);

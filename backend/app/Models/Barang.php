@@ -24,7 +24,12 @@ class Barang extends Model
     {
         return [
             'nama_equipment' => 'required|string|max:255',
-            'perusahaan' => 'required|string|max:255',
+            'perusahaan' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::in(['PT Makassar Metro Network', 'PT Jalan Tol Seksi Empat']),
+            ],
             'unit' => 'required|string|max:255',
             'merk' => 'required|string|max:255',
             'stock' => 'required|integer|min:0',

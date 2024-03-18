@@ -50,7 +50,16 @@ class ActivityController extends Controller
         return response()->json(['data' => $activity]);
     }
 
-    
+    public function getactivity_toll_id($id)
+    {
+        $activity = Activity::findOrFail($id);
+        return response()->json(['data' => $activity]);
+    }
+//     public function getactivity_toll_by_user($UserId)
+// {
+//         $activity = Activity::where('user_id', $userId)->get();
+//         return response()->json(['data' => $activity]);
+// }
 
     public function edit_activity(Request $request, $id)
 {
@@ -127,10 +136,21 @@ public function getactivity_nontoll()
     return response()->json(['data' => $activity]);
 }
 
-
-
-public function edit_activitynontoll(Request $request, $id)
+public function getactivity_nontoll_id($id)
 {
+    $activity = Activity::findOrFail($id);
+    return response()->json(['data' => $activity]);
+}
+
+// public function getactivity_nontoll_by_user($userId)
+// {
+//     $activity = Activity::where('user_id', $userId)->get();
+//     return response()->json(['data' => $activity]);
+// }
+
+
+
+public function edit_activitynontoll(Request $request, $id) {
 $data = $request->validate([
     'company' => 'required|in:jtse,mmn',
     'tanggal' => 'required|date',
@@ -148,19 +168,30 @@ $data = $request->validate([
     'status' => 'required|in:process,done',
 ]);
 
-$activity = Activity::findOrFail($id);
-$activity->update($data);
+        $activity = Activity::findOrFail($id);
+        $activity->update($data);
 
-return response()->json(['data' => $activity]);
+        return response()->json(['data' => $activity]);
 }
 
-public function delete_activitynontoll($id)
-{
-$activity = Activity::findOrFail($id);
-$activity->delete();
+        public function delete_activitynontoll($id) {
+        $activity = Activity::findOrFail($id);
+        $activity->delete();
+        return response()->json(['message' => 'Activity deleted successfully']);
+        
+    }
+    public function changeStatus(Request $request, $id)
+    {
+        $data = $request->validate([
+            'status' => 'required|in:process,done',
+        ]);
 
-return response()->json(['message' => 'Activity deleted successfully']);
-}
+        $activity = Activity::findOrFail($id);
+        $activity->status = $data['status'];
+        $activity->save();
+
+        return response()->json(['data' => $activity]);
+    }
 
 
 }

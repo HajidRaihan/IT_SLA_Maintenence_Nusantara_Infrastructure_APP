@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('nama_kegiatan')->nullable();
             $table->date('tanggal_mulai')->nullable();
             $table->date('tanggal_selesai')->nullable();
-            $table->enum('perusahaan', ['PT Makassar Metro Network', 'PT Jalan Tol Sesi Empat'])->nullable();
+            $table->enum('perusahaan', ['PT Makassar Metro Network', 'PT Jalan Tol Seksi Empat'])->nullable();
             $table->string('lokasi')->nullable();
             $table->time('waktu_mulai')->nullable();
             $table->time('waktu_selesai')->nullable();
