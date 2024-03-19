@@ -83,21 +83,66 @@ class ActivityController extends Controller
                 $query->where('status', $filters['status']);
             })
             ->when(isset($filters['location']), function ($query) use ($filters) {
-                $query->where('lokasi_id', $filters['location']);
+                $query->where('lokasi_name', $filters['location']);
             })
             ->when(isset($filters['category']), function ($query) use ($filters) {
-                $query->where('kategori_id', $filters['category']);
+                $query->where('kategori_name', $filters['category']);
             })
             ->get();
     
         return response()->json(['data' => $activities]);
     }
 
-    public function getactivity_toll_id($id)
+    public function getactivity_toll_id(Request $request, $id)
     {
-        $activity = Activity::findOrFail($id);
+        $filters = $request->only(['company', 'status', 'location', 'category']);
+    
+        // Get the activity based on ID and join with the category and lokasi tables
+        $activity = Activity::query()
+            ->select(
+                'activity.id',
+                'users.username as nama_user',
+                'activity.company',
+                'activity.tanggal',
+                'activity.jenis_hardware',
+                'activity.standart_aplikasi',
+                'activity.uraian_hardware',
+                'activity.uraian_aplikasi',
+                'activity.aplikasi_it_tol',
+                'activity.uraian_it_tol',
+                'activity.catatan',
+                'activity.shift',
+                'activity.kondisi_akhir',
+                'activity.biaya',
+                'activity.fotos',
+                'activity.status',
+                'activity.ended_at',
+                'activity.created_at',
+                'activity.updated_at',
+                'kategori.nama_kategori as category_name',
+                'lokasi.nama_lokasi as location_name'
+            )
+            ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
+            ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
+            ->leftjoin('users', 'activity.user_id', '=', 'users.id')
+            ->where('activity.id', $id)
+            ->when(isset($filters['company']), function ($query) use ($filters) {
+                $query->where('company', $filters['company']);
+            })
+            ->when(isset($filters['status']), function ($query) use ($filters) {
+                $query->where('status', $filters['status']);
+            })
+            ->when(isset($filters['location']), function ($query) use ($filters) {
+                $query->where('lokasi_name', $filters['location']);
+            })
+            ->when(isset($filters['category']), function ($query) use ($filters) {
+                $query->where('kategori_name', $filters['category']);
+            })
+            ->findOrFail($id);
+    
         return response()->json(['data' => $activity]);
     }
+    
 //     public function getactivity_toll_by_user($UserId)
 // {
 //         $activity = Activity::where('user_id', $userId)->get();
@@ -212,10 +257,10 @@ public function getactivity_nontoll(Request $request)
             $query->where('status', $filters['status']);
         })
         ->when(isset($filters['location']), function ($query) use ($filters) {
-            $query->where('lokasi_id', $filters['location']);
+            $query->where('lokasi_name', $filters['location']);
         })
         ->when(isset($filters['category']), function ($query) use ($filters) {
-            $query->where('kategori_id', $filters['category']);
+            $query->where('kategori_name', $filters['category']);
         })
         ->get();
 
@@ -224,7 +269,51 @@ public function getactivity_nontoll(Request $request)
 
 public function getactivity_nontoll_id($id)
 {
-    $activity = Activity::findOrFail($id);
+    $filters = $request->only(['company', 'status', 'location', 'category']);
+    
+    // Get the activity based on ID and join with the category and lokasi tables
+    $activity = Activity::query()
+        ->select(
+            'activity.id',
+            'users.username as nama_user',
+            'activity.company',
+            'activity.tanggal',
+            'activity.jenis_hardware',
+            'activity.standart_aplikasi',
+            'activity.uraian_hardware',
+            'activity.uraian_aplikasi',
+            'activity.aplikasi_it_tol',
+            'activity.uraian_it_tol',
+            'activity.catatan',
+            'activity.shift',
+            'activity.kondisi_akhir',
+            'activity.biaya',
+            'activity.fotos',
+            'activity.status',
+            'activity.ended_at',
+            'activity.created_at',
+            'activity.updated_at',
+            'kategori.nama_kategori as category_name',
+            'lokasi.nama_lokasi as location_name'
+        )
+        ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
+        ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
+        ->leftjoin('users', 'activity.user_id', '=', 'users.id')
+        ->where('activity.id', $id)
+        ->when(isset($filters['company']), function ($query) use ($filters) {
+            $query->where('company', $filters['company']);
+        })
+        ->when(isset($filters['status']), function ($query) use ($filters) {
+            $query->where('status', $filters['status']);
+        })
+        ->when(isset($filters['location']), function ($query) use ($filters) {
+            $query->where('lokasi_name', $filters['location']);
+        })
+        ->when(isset($filters['category']), function ($query) use ($filters) {
+            $query->where('kategori_name', $filters['category']);
+        })
+        ->findoOrFail($id);
+
     return response()->json(['data' => $activity]);
 }
 
