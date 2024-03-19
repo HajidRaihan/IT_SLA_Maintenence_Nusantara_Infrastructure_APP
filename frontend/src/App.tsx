@@ -18,7 +18,7 @@ import Settings from './pages/Settings';
 import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
-import ListActivity from './pages/ListActivity';
+import Lokasi from './pages/Lokasi';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -84,7 +84,7 @@ function App() {
         />
 
         <Route
-          path="/detail/activity/:id"
+          path="/detail/activity"
           element={
             <>
               <PageTitle title="Detail Acitvity" />
