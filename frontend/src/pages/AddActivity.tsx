@@ -176,9 +176,12 @@ const AddActivity = () => {
     };
 
     console.log(data);
-
-    const res = await addActivity(data);
-    console.log(res);
+    try {
+      const res = await addActivity(data);
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const dataJenisHardware = [

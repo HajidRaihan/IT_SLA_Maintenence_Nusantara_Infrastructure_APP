@@ -23,8 +23,13 @@ const SelectCompany: React.FC = ({ value, onChange, data }) => {
             isOptionSelected ? 'text-black dark:text-white' : ''
           }`}
         >
-          <option value="" disabled className="text-body dark:text-bodydark">
-            Select your company
+          <option
+            value=""
+            disabled
+            selected
+            className="text-body dark:text-bodydark"
+          >
+            Select company
           </option>
           <option value="mmn" className="text-body dark:text-bodydark">
             MMN

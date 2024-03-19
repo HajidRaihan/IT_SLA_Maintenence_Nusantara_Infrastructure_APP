@@ -23,7 +23,12 @@ const SelectStatus: React.FC = ({ value, onChange }) => {
             isOptionSelected ? 'text-black dark:text-white' : ''
           }`}
         >
-          <option value="" disabled className="text-body dark:text-bodydark">
+          <option
+            value=""
+            selected
+            disabled
+            className="text-body dark:text-bodydark"
+          >
             Select status
           </option>
           <option value="process" className="text-body dark:text-bodydark">

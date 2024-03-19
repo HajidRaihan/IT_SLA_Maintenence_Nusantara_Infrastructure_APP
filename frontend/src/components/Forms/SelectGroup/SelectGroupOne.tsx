@@ -26,9 +26,10 @@ const SelectGroupOne: React.FC = ({ label, value, onChange, data }) => {
           <option
             value=""
             disabled
+            selected
             className="text-body dark:text-bodydark lowercase"
           >
-            Select your {label}
+            Select {label}
           </option>
           {data?.map((option, index) => (
             <option

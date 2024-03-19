@@ -18,6 +18,7 @@ import Settings from './pages/Settings';
 import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
+import ListActivity from './pages/ListActivity';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -55,7 +56,7 @@ function App() {
           }
         />
         <Route
-          path="/add-activity"
+          path="/forms/add-activity"
           element={
             <>
               <PageTitle title="Add Acitvity" />
@@ -63,7 +64,16 @@ function App() {
             </>
           }
         />
-          <Route
+        <Route
+          path="/list-activity"
+          element={
+            <>
+              <PageTitle title="List Acitvity" />
+              <ListActivity />
+            </>
+          }
+        />
+        <Route
           path="/Kategori"
           element={
             <>
@@ -74,7 +84,7 @@ function App() {
         />
 
         <Route
-          path="/detail/activity"
+          path="/detail/activity/:id"
           element={
             <>
               <PageTitle title="Detail Acitvity" />

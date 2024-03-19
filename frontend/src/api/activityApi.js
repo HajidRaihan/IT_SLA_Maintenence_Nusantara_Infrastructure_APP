@@ -1,8 +1,7 @@
 import Cookies from 'js-cookie';
 import { RequestApi } from '../helper/RequestApi';
 
-const addActivity = async (credentials) => {
-
+const addActivity = async (data) => {
   const headers = {
     'Content-Type': 'multipart/form-data',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
@@ -10,7 +9,7 @@ const addActivity = async (credentials) => {
   try {
     const response = await RequestApi(
       'POST',
-      `toll`,
+      'toll',
       data,
       headers,
       'Mencoba menambahkan acitvity',
@@ -23,15 +22,34 @@ const addActivity = async (credentials) => {
   }
 };
 
-const getAllActivity = async () => {
+const getAllActivity = async (lokasi, kategori, company, status) => {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
   };
+  console.log(lokasi, kategori);
+  let params = [];
+  if (lokasi) {
+    params.push(`lokasi=${lokasi}`);
+  }
+  if (kategori) {
+    params.push(`kategori=${kategori}`);
+  }
+  if (company) {
+    params.push(`company=${company}`);
+  }
+  if (status) {
+    params.push(`status=${status}`);
+  }
+  if (params.length > 0) {
+    params = '?' + params.join('&');
+  }
+  console.log(params);
+
   try {
     const response = await RequestApi(
       'GET',
-      'toll',
+      `toll${params}`,
       {},
       headers,
       'Mencoba menampilkan acitvity',
@@ -44,7 +62,7 @@ const getAllActivity = async () => {
   }
 };
 
-const getDetailActivity = async () => {
+const getDetailActivity = async (id) => {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
@@ -52,7 +70,7 @@ const getDetailActivity = async () => {
   try {
     const response = await RequestApi(
       'GET',
-      'toll',
+      `toll/${id}`,
       {},
       headers,
       'Mencoba menampilkan acitvity',
@@ -84,7 +102,6 @@ const deleteActivity = async (id) => {
     console.error('Terjadi kesalahan saat delete activity', error);
     throw error;
   }
-}
+};
 
-
-export { addActivity, getAllActivity, deleteActivity };
+export { addActivity, getAllActivity, deleteActivity, getDetailActivity };
