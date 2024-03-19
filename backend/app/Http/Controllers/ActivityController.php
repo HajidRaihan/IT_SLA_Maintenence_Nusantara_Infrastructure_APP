@@ -44,7 +44,7 @@ class ActivityController extends Controller
 
 
 
-    public function getactivity_toll()
+    public function getactivity_toll(Request $request)
     {
         $filters = $request->only(['company', 'status','location', 'category']);
     
