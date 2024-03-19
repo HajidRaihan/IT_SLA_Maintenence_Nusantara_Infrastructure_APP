@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import React, { Fragment } from 'react';
-import { getKategori, addKategori,updateKategori,deleteKategori } from "../api/kategoriApi";
+import { getKategori, addKategori, updateKategori, deleteKategori } from "../api/kategoriApi";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash,faPen,faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Kategori = () => {
   const [data, setData] = useState([]);
@@ -13,7 +13,9 @@ const Kategori = () => {
   const [deleteForm, setDeleteForm] = useState(false);
   const [newCategory, setNewCategory] = useState('');
   const [updateCategory, setUpdateCategory] = useState('');
-  const [kategoriId, setKategoriId] = useState()
+  const [kategoriId, setKategoriId] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5); // Change this value to set the number of items per page
 
   useEffect(() => {
     getKategori().then(res => {
@@ -21,7 +23,12 @@ const Kategori = () => {
     });
   }, []);
 
-  
+  // Pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const handleShowForm = () => {
     setShowForm(true);
@@ -32,8 +39,8 @@ const Kategori = () => {
   };
 
   const handleupdateForm = (id) => {
-     setUpdateForm(true);
-     setKategoriId(id)
+    setUpdateForm(true);
+    setKategoriId(id);
   };
 
   const handledeleteForm = (id) => {
@@ -47,18 +54,16 @@ const Kategori = () => {
       // Filter out the deleted category from the state
       setData(data.filter(item => item.id !== kategoriId));
       setDeleteForm(false);
-      console.log("Delete berhasil ",res)
+      console.log("Delete berhasil ", res)
     } catch (error) {
       console.error('Error deleting category:', error);
     }
   };
 
-  
-
   const handleupdatecloseForm = () => {
     setUpdateForm(false);
     setUpdateCategory('');
- }
+  };
 
   const handleCloseForm = () => {
     setShowForm(false);
@@ -71,7 +76,7 @@ const Kategori = () => {
 
   const handleAddCategory = async () => {
     const data = {
-        nama_kategori: newCategory,
+      nama_kategori: newCategory,
     }
 
     console.log(data)
@@ -84,13 +89,13 @@ const Kategori = () => {
 
 
   const handleUpdate = async () => {
-      const data = {
+    const data = {
       nama_kategori: updateCategory,
     };
-    
+
 
     console.log(data)
-  
+
     try {
       const res = await updateKategori(kategoriId, data);
       console.log('Category updated successfully:', res);
@@ -101,11 +106,6 @@ const Kategori = () => {
     }
     handleupdatecloseForm();
   };
-
-
-  
-
-  
 
   return (
     <DefaultLayout>
@@ -119,7 +119,7 @@ const Kategori = () => {
             onClick={handleShowForm}
             className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
           >
-           <FontAwesomeIcon icon={faPlus} className="green-light-icon text-lg" />
+            <FontAwesomeIcon icon={faPlus} className="green-light-icon text-lg" />
           </button>
         </div>
 
@@ -135,7 +135,7 @@ const Kategori = () => {
           </div>
         </div>
 
-        {data?.map((item, index) => (
+        {currentItems.map((item, index) => (
           <div
             className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
             key={index}
@@ -147,17 +147,36 @@ const Kategori = () => {
               <p className="font-medium mr-3 text-black dark:text-white">{item.nama_kategori}</p>
             </div>
             <div className="mb-3  flex items-center">
-            <button onClick={() => handleupdateForm(item.id)} className="border border-stroke rounded-sm px-4 py-2 bg-green-600 dark:bg-boxdark shadow-default dark:border-strokedark text-black dark:text-white flex items-center justify-center">
-  <FontAwesomeIcon icon={faPen} className="green-light-icon text-lg" />
-</button>
+              <button onClick={() => handleupdateForm(item.id)} className="border border-stroke rounded-sm px-4 py-2 bg-green-600 dark:bg-boxdark shadow-default dark:border-strokedark text-black dark:text-white flex items-center justify-center">
+                <FontAwesomeIcon icon={faPen} className="green-light-icon text-lg" />
+              </button>
 
-<button onClick={() => handledeleteForm(item.id)} className="border border-stroke rounded-sm px-4 py-2 bg-red-700 dark:bg-boxdark shadow-default dark:border-strokedark text-white flex items-center justify-center">
-  <FontAwesomeIcon icon={faTrash} className="text-lg" />
-</button>
-    </div>
+              <button onClick={() => handledeleteForm(item.id)} className="border border-stroke rounded-sm px-4 py-2 bg-red-700 dark:bg-boxdark shadow-default dark:border-strokedark text-white flex items-center justify-center">
+                <FontAwesomeIcon icon={faTrash} className="text-lg" />
+              </button>
+            </div>
           </div>
         ))}
       </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center mt-4">
+        <button
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 text-white mr-2"
+        >
+          Previous
+        </button>
+        <button
+          onClick={() => paginate(currentPage + 1)}
+          disabled={indexOfLastItem >= data.length}
+          className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 text-white"
+        >
+          Next
+        </button>
+      </div>
+
       {/* Add Kategori Form */}
       {showForm && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
@@ -183,37 +202,36 @@ const Kategori = () => {
               >
                 Add
               </button>
-              
+
             </div>
           </div>
         </div>
       )}
 
-{deleteForm && (
-             <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
-             <div className="bg-white shadow-md rounded-md p-6">
-               <h2 className="text-lg font-semibold mb-4">Delete Kategori</h2>
-               <p>Are you sure you want to delete this category?</p>
-               <div className="flex justify-end mt-4">
-                 <button
-                   onClick={() => setDeleteForm(false)}
-                   className="mr-2 border border-stroke rounded-sm px-4 py-2 bg-red-500 text-white"
-                 >
-                   Cancel
-                 </button>
-                 <button
-                   onClick={handleDelete}
-                   className="border border-stroke rounded-sm px-4 py-2 bg-green-500 text-white"
-                 >
-                   Delete
-                 </button>
-               </div>
-             </div>
-           </div>
-)
-}
+      {deleteForm && (
+        <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white shadow-md rounded-md p-6">
+            <h2 className="text-lg font-semibold mb-4">Delete Kategori</h2>
+            <p>Are you sure you want to delete this category?</p>
+            <div className="flex justify-end mt-4">
+              <button
+                onClick={() => setDeleteForm(false)}
+                className="mr-2 border border-stroke rounded-sm px-4 py-2 bg-red-500 text-white"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="border border-stroke rounded-sm px-4 py-2 bg-green-500 text-white"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
-{updateForm && (
+      {updateForm && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
           <div className="bg-black shadow-md rounded-md p-6">
             <h2 className="text-lg font-semibold mb-4">Update Form</h2>
