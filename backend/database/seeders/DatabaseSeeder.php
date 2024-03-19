@@ -11,14 +11,17 @@ use Database\Seeders\BarangTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-
         $this->call(UsersTableSeeder::class);
         $this->call(BarangTableSeeder::class);
+        $this->call(LokasiTableSeeder::class);
+        $this->call(KategoriTableSeeder::class);
+        $this->call(JadwalTableSeeder::class);
+        $this->call(ActivityTableSeeder::class);
+
+
+
 
     }
 }
