@@ -18,6 +18,7 @@ import Settings from './pages/Settings';
 import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
+import Lokasi from './pages/Lokasi'
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -69,6 +70,16 @@ function App() {
             <>
               <PageTitle title="kategori" />
               <Kategori />
+            </>
+          }
+        />
+
+<Route
+          path="/lokasi"
+          element={
+            <>
+              <PageTitle title="lokasi" />
+              <Lokasi />
             </>
           }
         />

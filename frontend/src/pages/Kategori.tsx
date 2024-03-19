@@ -5,6 +5,7 @@ import React, { Fragment } from 'react';
 import { getKategori, addKategori, updateKategori, deleteKategori } from "../api/kategoriApi";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {getLokasi} from "../api/lokasiApi";
 
 const Kategori = () => {
   const [data, setData] = useState([]);
