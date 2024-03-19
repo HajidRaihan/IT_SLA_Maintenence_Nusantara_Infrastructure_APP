@@ -44,7 +44,7 @@ class ActivityController extends Controller
 
 
 
-    public function getactivity_toll()
+    public function getactivity_toll(Request $request)
     {
         $filters = $request->only(['company', 'status','location', 'category']);
     
@@ -52,7 +52,7 @@ class ActivityController extends Controller
         $activities = Activity::query()
             ->select(
                 'activity.id',
-                'activity.user_id',
+                'users.username as nama_user',
                 'activity.company',
                 'activity.tanggal',
                 'activity.jenis_hardware',
@@ -75,6 +75,7 @@ class ActivityController extends Controller
             )
             ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
             ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
+            ->leftjoin('users', 'activity.user_id' , '=', 'users.id')
             ->when(isset($filters['company']), function ($query) use ($filters) {
                 $query->where('company', $filters['company']);
             })
@@ -172,7 +173,7 @@ public function addactivity_nontoll(Request $request)
 
 
 
-public function getactivity_nontoll()
+public function getactivity_nontoll(Request $request)
 {
     $filters = $request->only(['company', 'status','location', 'category']);
     
@@ -180,7 +181,7 @@ public function getactivity_nontoll()
     $activities = Activity::query()
         ->select(
             'activity.id',
-            'activity.user_id',
+            'users.username as nama_user ',
             'activity.company',
             'activity.tanggal',
             'activity.jenis_hardware',
@@ -203,6 +204,7 @@ public function getactivity_nontoll()
         )
         ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
         ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
+        ->leftJoin('users', 'activity.user_id', '=', 'users.id')
         ->when(isset($filters['company']), function ($query) use ($filters) {
             $query->where('company', $filters['company']);
         })
