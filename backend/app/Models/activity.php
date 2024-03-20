@@ -26,6 +26,7 @@ class activity extends Model
     'kondisi_akhir',
     'biaya',
     'fotos',
+    'kategori_activity',
     'status'
     ];
 }
