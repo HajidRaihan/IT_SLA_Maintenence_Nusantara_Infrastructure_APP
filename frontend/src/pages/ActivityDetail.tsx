@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DefaultLayout from '../layout/DefaultLayout';
 import { getDetailActivity } from '../api/activityApi';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import TableDetailActivity from '../components/Tables/TableDetailActivity';
 
 const ActivityDetail = () => {
@@ -26,9 +26,21 @@ const ActivityDetail = () => {
             <img
               src={`http://127.0.0.1:8000/images/${detail.fotos}`}
               alt="sdsd"
-              className="w-1/3"
+              className="w-1/3 h-full"
             />
-            <TableDetailActivity data={detail} />
+            <div>
+              <TableDetailActivity data={detail} />
+              <Link
+                to="#"
+                className={`my-5 w-full inline-flex items-center justify-center rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 ${
+                  detail.status === 'done'
+                    ? 'cursor-not-allowed opacity-50'
+                    : 'cursor-pointer'
+                }`}
+              >
+                {detail.status === 'done' ? 'Aproved' : 'Approve'}
+              </Link>
+            </div>
           </div>
         </div>
       ) : (

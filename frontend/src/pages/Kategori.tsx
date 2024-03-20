@@ -2,10 +2,15 @@ import { useState, useEffect } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import React, { Fragment } from 'react';
-import { getKategori, addKategori, updateKategori, deleteKategori } from "../api/kategoriApi";
+import {
+  getKategori,
+  addKategori,
+  updateKategori,
+  deleteKategori,
+} from '../api/kategoriApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
-import {getLokasi} from "../api/lokasiApi";
+import { getLokasi } from '../api/lokasiApi';
 
 const Kategori = () => {
   const [data, setData] = useState([]);
@@ -19,7 +24,7 @@ const Kategori = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5); // Change this value to set the number of items per page
 
   useEffect(() => {
-    getKategori().then(res => {
+    getKategori().then((res) => {
       setData(res);
     });
   }, []);
@@ -29,7 +34,7 @@ const Kategori = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
-  const paginate = pageNumber => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleShowForm = () => {
     setShowForm(true);
@@ -53,9 +58,9 @@ const Kategori = () => {
     try {
       const res = await deleteKategori(kategoriId);
       // Filter out the deleted category from the state
-      setData(data.filter(item => item.id !== kategoriId));
+      setData(data.filter((item) => item.id !== kategoriId));
       setDeleteForm(false);
-      console.log("Delete berhasil ", res)
+      console.log('Delete berhasil ', res);
     } catch (error) {
       console.error('Error deleting category:', error);
     }
@@ -78,24 +83,22 @@ const Kategori = () => {
   const handleAddCategory = async () => {
     const data = {
       nama_kategori: newCategory,
-    }
+    };
 
-    console.log(data)
+    console.log(data);
 
     const res = await addKategori(data);
-    console.log(res)
+    console.log(res);
 
     handleCloseForm();
   };
-
 
   const handleUpdate = async () => {
     const data = {
       nama_kategori: updateCategory,
     };
 
-
-    console.log(data)
+    console.log(data);
 
     try {
       const res = await updateKategori(kategoriId, data);
@@ -120,7 +123,10 @@ const Kategori = () => {
             onClick={handleShowForm}
             className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
           >
-            <FontAwesomeIcon icon={faPlus} className="green-light-icon text-lg" />
+            <FontAwesomeIcon
+              icon={faPlus}
+              className="green-light-icon text-lg"
+            />
           </button>
         </div>
 
@@ -142,17 +148,30 @@ const Kategori = () => {
             key={index}
           >
             <div className="col-span-3 flex items-center">
-              <p className="font-medium mr-2 text-black dark:text-white">{item.id}</p>
+              <p className="font-medium mr-2 text-black dark:text-white">
+                {item.id}
+              </p>
             </div>
             <div className="col-span-3 flex items-center sm:flex">
-              <p className="font-medium mr-3 text-black dark:text-white">{item.nama_kategori}</p>
+              <p className="font-medium mr-3 text-black dark:text-white">
+                {item.nama_kategori}
+              </p>
             </div>
             <div className="mb-3  flex items-center">
-              <button onClick={() => handleupdateForm(item.id)} className="border border-stroke rounded-sm px-4 py-2 bg-green-600 dark:bg-boxdark shadow-default dark:border-strokedark text-black dark:text-white flex items-center justify-center">
-                <FontAwesomeIcon icon={faPen} className="green-light-icon text-lg" />
+              <button
+                onClick={() => handleupdateForm(item.id)}
+                className="border border-stroke rounded-sm px-4 py-2 bg-green-600 dark:bg-boxdark shadow-default dark:border-strokedark text-black dark:text-white flex items-center justify-center"
+              >
+                <FontAwesomeIcon
+                  icon={faPen}
+                  className="green-light-icon text-lg"
+                />
               </button>
 
-              <button onClick={() => handledeleteForm(item.id)} className="border border-stroke rounded-sm px-4 py-2 bg-red-700 dark:bg-boxdark shadow-default dark:border-strokedark text-white flex items-center justify-center">
+              <button
+                onClick={() => handledeleteForm(item.id)}
+                className="border border-stroke rounded-sm px-4 py-2 bg-red-700 dark:bg-boxdark shadow-default dark:border-strokedark text-white flex items-center justify-center"
+              >
                 <FontAwesomeIcon icon={faTrash} className="text-lg" />
               </button>
             </div>
@@ -180,7 +199,7 @@ const Kategori = () => {
 
       {/* Add Kategori Form */}
       {showForm && (
-        <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
+        <div className="fixed top-0 left-0 w-full h-full  flex justify-center items-center ">
           <div className="bg-black shadow-md rounded-md p-6">
             <h2 className="text-lg font-semibold mb-4">Add Kategori Form</h2>
             <input
@@ -203,7 +222,6 @@ const Kategori = () => {
               >
                 Add
               </button>
-
             </div>
           </div>
         </div>

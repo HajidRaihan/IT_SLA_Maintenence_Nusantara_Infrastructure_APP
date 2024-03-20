@@ -1,6 +1,10 @@
 import { Package } from '../../types/package';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UpdateActivityModal from '../Modals/UpdateActivityModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import AddActivityModal from '../Modals/AddActivityModal';
 
 const packageData: Package[] = [
   {
@@ -31,9 +35,29 @@ const packageData: Package[] = [
 
 const ListActivityTable = ({ data, deleteHandler }) => {
   const navigate = useNavigate();
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [activityId, setActivityId] = useState('');
+
+  const openEditModalHandler = (id) => {
+    setActivityId(id);
+    setOpenEditModal(true);
+  };
+
   return (
-    <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <div className="max-w-full overflow-x-auto">
+    <div className="rounded-sm border  border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <div className="pb-6 px-4  flex justify-between items-center">
+        <h4 className="text-xl font-semibold text-black dark:text-white">
+          List Activity
+        </h4>
+        <button
+          className="border border-stroke rounded-lg px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
+          onClick={() => setOpenAddModal(true)}
+        >
+          <FontAwesomeIcon icon={faPlus} className="green-light-icon text-lg" />
+        </button>
+      </div>
+      <div className="max-w-full h-fit overflow-x-auto">
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
@@ -53,7 +77,7 @@ const ListActivityTable = ({ data, deleteHandler }) => {
                 Kategori
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                User_id
+                Nama
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                 Status
@@ -67,7 +91,7 @@ const ListActivityTable = ({ data, deleteHandler }) => {
             {data?.map((item, key) => (
               <tr key={key}>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                  <div className="h-12.5 w-15 rounded-md">
+                  <div className=" w-15 rounded-md">
                     <img
                       src={`http://127.0.0.1:8000/images/${item.fotos}`}
                       alt="actyvitis"
@@ -95,7 +119,7 @@ const ListActivityTable = ({ data, deleteHandler }) => {
                   </p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">{item.user_id}</p>
+                  <p className="text-black dark:text-white">{item.nama_user}</p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p
@@ -132,7 +156,10 @@ const ListActivityTable = ({ data, deleteHandler }) => {
                         />
                       </svg>
                     </button>
-                    <button className="hover:text-primary">
+                    <button
+                      className="hover:text-primary"
+                      onClick={() => openEditModalHandler(item.id)}
+                    >
                       <svg
                         className="fill-current"
                         width="20"
@@ -218,6 +245,16 @@ const ListActivityTable = ({ data, deleteHandler }) => {
           </tbody>
         </table>
       </div>
+
+      {openEditModal && (
+        <UpdateActivityModal
+          close={() => setOpenEditModal(false)}
+          id={activityId}
+        />
+      )}
+      {openAddModal && (
+        <AddActivityModal close={() => setOpenAddModal(false)} />
+      )}
     </div>
   );
 };

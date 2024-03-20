@@ -19,6 +19,7 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Lokasi from './pages/Lokasi';
+import ListActivity from './pages/ListActivity';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -74,17 +75,26 @@ function App() {
           }
         />
         <Route
-          path="/Kategori"
+          path="/kategori"
           element={
             <>
-              <PageTitle title="kategori" />
+              <PageTitle title="Kategori" />
               <Kategori />
+            </>
+          }
+        />
+        <Route
+          path="/lokasi"
+          element={
+            <>
+              <PageTitle title="Lokasi" />
+              <Lokasi />
             </>
           }
         />
 
         <Route
-          path="/detail/activity"
+          path="/detail/activity/:id"
           element={
             <>
               <PageTitle title="Detail Acitvity" />

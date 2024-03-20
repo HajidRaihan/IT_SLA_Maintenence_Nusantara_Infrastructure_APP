@@ -67,11 +67,13 @@ const ListActivity = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="List Activity" />
+      {/* <Breadcrumb pageName="List Activity" /> */}
 
       <div className="flex flex-col">
-        <h1 className="text-xl dark:text-white text-black">Filter</h1>
-        <div className="flex gap-5 w-full ">
+        <h2 className="text-title-md2 font-semibold text-black  dark:text-white mb-5">
+          Filter
+        </h2>
+        <div className="flex gap-5 w-full bg-white border-stroke dark:border-strokedark dark:bg-boxdark p-5 mb-5 ">
           <SelectCompany
             label="Company"
             data={dataCompany}

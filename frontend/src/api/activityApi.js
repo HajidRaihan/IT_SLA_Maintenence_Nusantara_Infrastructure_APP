@@ -27,6 +27,7 @@ const getAllActivity = async (lokasi, kategori, company, status) => {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
   };
+
   console.log(lokasi, kategori);
   let params = [];
   if (lokasi) {
@@ -104,4 +105,33 @@ const deleteActivity = async (id) => {
   }
 };
 
-export { addActivity, getAllActivity, deleteActivity, getDetailActivity };
+const editActivity = async (data, id) => {
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+    Authorization: `Bearer ${Cookies.get('access_token')}`,
+  };
+
+  console.log('ini data edit', data);
+  try {
+    const response = await RequestApi(
+      'PUT',
+      `toll/update/${id}`,
+      data,
+      headers,
+      'Mencoba edit acitvity',
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat edit activity', error);
+    throw error;
+  }
+};
+
+export {
+  addActivity,
+  getAllActivity,
+  deleteActivity,
+  getDetailActivity,
+  editActivity,
+};

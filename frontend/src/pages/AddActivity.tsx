@@ -12,6 +12,8 @@ import { getKategori } from '../api/kategoriApi';
 import { addActivity } from '../api/activityApi';
 import MultiSelectAplikasi from '../components/Forms/MultiSelectAplikasi';
 import CheckboxTwo from '../components/Checkboxes/CheckboxTwo';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const AddActivity = () => {
   const [company, setCompany] = useState('');
@@ -211,11 +213,6 @@ const AddActivity = () => {
         <div className="flex flex-col gap-9">
           {/* <!-- Contact Form --> */}
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Contact Form
-              </h3>
-            </div>
             <form action="#">
               <div className="p-6.5">
                 <div className="mb-4.5 flex gap-6 flex-col">

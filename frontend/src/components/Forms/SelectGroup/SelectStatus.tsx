@@ -15,7 +15,7 @@ const SelectStatus: React.FC = ({ value, onChange }) => {
         Status{' '}
       </label>
 
-      <div className="relative z-20 bg-transparent dark:bg-form-input">
+      <div className="relative z-20 w-50 bg-transparent dark:bg-form-input">
         <select
           value={value}
           onChange={onChange}
