@@ -5,6 +5,19 @@ import UpdateActivityModal from '../Modals/UpdateActivityModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import AddActivityModal from '../Modals/AddActivityModal';
+import { motion, AnimatePresence } from 'framer-motion';
+
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+} from '@nextui-org/react';
+import SuccessModal from '../Modals/SuccessModal';
+import ActionModal from '../Modals/ActionModal';
 
 const packageData: Package[] = [
   {
@@ -38,24 +51,53 @@ const ListActivityTable = ({ data, deleteHandler }) => {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
   const [activityId, setActivityId] = useState('');
+  const {
+    isOpen: isOpenAddModal,
+    onOpen: onOpenAddModal,
+    onOpenChange: onOpenChangeAddModal,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenEditModal,
+    onOpen: onOpenEditModal,
+    onOpenChange: onOpenChangeEditModal,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenSuccessModal,
+    onOpen: onOpenSuccessModal,
+    onOpenChange: onOpenChangeSuccessModal,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenDeleteModal,
+    onOpen: onOpenDeleteModal,
+    onOpenChange: onOpenChangeDeleteModal,
+  } = useDisclosure();
 
   const openEditModalHandler = (id) => {
     setActivityId(id);
     setOpenEditModal(true);
   };
 
+  const openDeleteModal = (id) => {
+    setActivityId(id);
+    onOpenDeleteModal();
+  };
+
   return (
-    <div className="rounded-sm border  border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+    <div
+      className={`rounded-sm border  border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1`}
+    >
       <div className="pb-6 px-4  flex justify-between items-center">
         <h4 className="text-xl font-semibold text-black dark:text-white">
           List Activity
         </h4>
-        <button
+        <Button
           className="border border-stroke rounded-lg px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
-          onClick={() => setOpenAddModal(true)}
+          onPress={onOpenAddModal}
         >
           <FontAwesomeIcon icon={faPlus} className="green-light-icon text-lg" />
-        </button>
+        </Button>
       </div>
       <div className="max-w-full h-fit overflow-x-auto">
         <table className="w-full table-auto">
@@ -158,7 +200,7 @@ const ListActivityTable = ({ data, deleteHandler }) => {
                     </button>
                     <button
                       className="hover:text-primary"
-                      onClick={() => openEditModalHandler(item.id)}
+                      onClick={onOpenEditModal}
                     >
                       <svg
                         className="fill-current"
@@ -191,7 +233,7 @@ const ListActivityTable = ({ data, deleteHandler }) => {
                     </button>
                     <button
                       className="hover:text-primary"
-                      onClick={() => deleteHandler(item.id)}
+                      onClick={() => openDeleteModal(item.id)}
                     >
                       <svg
                         className="fill-current"
@@ -246,15 +288,31 @@ const ListActivityTable = ({ data, deleteHandler }) => {
         </table>
       </div>
 
-      {openEditModal && (
-        <UpdateActivityModal
-          close={() => setOpenEditModal(false)}
-          id={activityId}
-        />
-      )}
-      {openAddModal && (
-        <AddActivityModal close={() => setOpenAddModal(false)} />
-      )}
+      <UpdateActivityModal
+        isOpen={isOpenEditModal}
+        onOpen={onOpenEditModal}
+        onOpenChange={onOpenChangeEditModal}
+        id={activityId}
+      />
+
+      <AddActivityModal
+        isOpen={isOpenAddModal}
+        onOpen={onOpenAddModal}
+        onOpenChange={onOpenChangeAddModal}
+        // isOpenSuccessModal={isOpenSuccessModal}
+        onOpenSuccessModal={onOpenSuccessModal}
+        // onOpenChangeSuccessModal={onOpenChangeSuccessModal}
+      />
+
+      <SuccessModal
+        isOpen={isOpenSuccessModal}
+        onOpenChange={onOpenChangeSuccessModal}
+      />
+      <ActionModal
+        isOpen={isOpenDeleteModal}
+        onOpenChange={onOpenChangeDeleteModal}
+        handler={() => deleteHandler(activityId)}
+      />
     </div>
   );
 };

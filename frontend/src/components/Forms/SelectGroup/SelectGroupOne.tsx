@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const SelectGroupOne: React.FC = ({ label, value, onChange, data }) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
-  const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
+  const [isOptionSelected, setIsOptionSelected] = useState<boolean>(true);
 
   const changeTextColor = () => {
     setIsOptionSelected(true);

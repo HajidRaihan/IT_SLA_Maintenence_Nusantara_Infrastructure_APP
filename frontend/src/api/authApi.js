@@ -22,4 +22,43 @@ const loginUser = async (credentials) => {
   }
 };
 
-export { loginUser };
+const registerUser = async (data) => {
+  try {
+    const responseLogin = await RequestApi(
+      'POST',
+      'register',
+      data,
+      {},
+      'Mencoba regis',
+    );
+
+    return responseLogin.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat mencoba regist ', error);
+    throw error;
+  }
+};
+
+const getUserLogin = async () => {
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+    Authorization: `Bearer ${Cookies.get('access_token')}`,
+  };
+
+  try {
+    const response = await RequestApi(
+      'GET',
+      `user`,
+      {},
+      headers,
+      'Mencoba mengambil user login',
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat user login', error);
+    throw error;
+  }
+};
+
+export { loginUser, registerUser, getUserLogin };

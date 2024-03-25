@@ -12,13 +12,13 @@ const CheckboxTwo = ({ label, isChecked, onChange, options }) => {
     <div>
       <label
         htmlFor={label}
-        className="flex cursor-pointer select-none items-center"
+        className="flex cursor-pointer select-none items-center dark:text-white"
       >
         <div className="relative">
           <input
             type="checkbox"
             id={label}
-            className="sr-only"
+            className="sr-only "
             checked={isChecked} // Menyertakan prop isChecked untuk mengontrol status checkbox
             onChange={handleChange} // Menyertakan prop onChange untuk menangani perubahan pada checkbox
           />
