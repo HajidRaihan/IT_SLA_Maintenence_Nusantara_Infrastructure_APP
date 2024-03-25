@@ -27,7 +27,7 @@ class ActivityController extends Controller
             'kondisi_akhir' => 'required|string',
             'biaya' => 'required|integer',
             'fotos' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status' => 'required|in:process,done',
+            'status' => 'required|in:process,done,waiting',
         ]);
 
         if($request->hasFile('fotos')){
@@ -201,7 +201,7 @@ public function addactivity_nontoll(Request $request)
         'kondisi_akhir' => 'required|string',
         'biaya' => 'required|integer',
         'fotos' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'status' => 'required|in:process,done',
+        'status' => 'required|in:process,done,waiting',
     ]);
 
     if($request->hasFile('fotos')){
@@ -340,7 +340,7 @@ $data = $request->validate([
     'lokasi_id' => 'required|exists:lokasi,id',
     'biaya' => 'required|integer',
     'fotos' => 'required',
-    'status' => 'required|in:process,done',
+    'status' => 'required|in:process,done,waiting',
 ]);
 
         $activity = Activity::findOrFail($id);
@@ -358,7 +358,7 @@ $data = $request->validate([
     public function changeStatus(Request $request, $id)
     {
         $data = $request->validate([
-            'status' => 'required|in:process,done',
+            'status' => 'required|in:process,done,waiting',
         ]);
 
         $activity = Activity::findOrFail($id);
