@@ -62,7 +62,7 @@ class ActivityController extends Controller
             ->when(isset($filters['category']), function ($query) use ($filters) {
                 $query->where('kategori_name', $filters['category']);
             })
-            ->get();
+            ->paginate(5);
 
         return response()->json(['data' => $activities]);
     }
@@ -90,7 +90,7 @@ class ActivityController extends Controller
             ->when(isset($filters['category']), function ($query) use ($filters) {
                 $query->where('kategori_name', $filters['category']);
             })
-            ->findOrFail($id);
+            ->findOrFail($id)->paginate(5);
 
         return response()->json(['data' => $activity]);
     }
@@ -189,7 +189,7 @@ public function addactivity_nontoll(Request $request)
             ->when(isset($filters['category']), function ($query) use ($filters) {
                 $query->where('kategori_name', $filters['category']);
             })
-            ->get();
+            ->paginate(5);
 
         return response()->json(['data' => $activities]);
     }
@@ -217,14 +217,14 @@ public function addactivity_nontoll(Request $request)
             ->when(isset($filters['category']), function ($query) use ($filters) {
                 $query->where('kategori_name', $filters['category']);
             })
-            ->findoOrFail($id);
+            ->findoOrFail($id)->paginate(5);
 
         return response()->json(['data' => $activity]);
     }
 
     // public function getactivity_nontoll_by_user($userId)
     // {
-    //     $activity = Activity::where('user_id', $userId)->get();
+    //     $activity = Activity::where('user_id', $userId)->paginate(5);
     //     return response()->json(['data' => $activity]);
     // }
 
