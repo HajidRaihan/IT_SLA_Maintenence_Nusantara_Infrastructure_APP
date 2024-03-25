@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const SelectStatus: React.FC = ({ value, onChange }) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
-  const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
+  const [isOptionSelected, setIsOptionSelected] = useState<boolean>(true);
 
   const changeTextColor = () => {
     setIsOptionSelected(true);

@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 import DefaultLayout from '../../layout/DefaultLayout';
+import { registerUser } from '../../api/authApi';
 
 const SignUp: React.FC = () => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const regisHandler = async (e) => {
+    e.preventDefault();
+
+    const data = {
+      username: username,
+      email: email,
+      password: password,
+    };
+
+    try {
+      const res = await registerUser(data);
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Sign Up" />
@@ -155,7 +177,7 @@ const SignUp: React.FC = () => {
                 Sign Up to TailAdmin
               </h2>
 
-              <form>
+              <form onSubmit={regisHandler}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Name
@@ -165,6 +187,8 @@ const SignUp: React.FC = () => {
                       type="text"
                       placeholder="Enter your full name"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
 
                     <span className="absolute right-4 top-4">
@@ -200,6 +224,8 @@ const SignUp: React.FC = () => {
                       type="email"
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
 
                     <span className="absolute right-4 top-4">
@@ -231,6 +257,8 @@ const SignUp: React.FC = () => {
                       type="password"
                       placeholder="Enter your password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
 
                     <span className="absolute right-4 top-4">
@@ -257,7 +285,7 @@ const SignUp: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mb-6">
+                {/* <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Re-type Password
                   </label>
@@ -290,7 +318,7 @@ const SignUp: React.FC = () => {
                       </svg>
                     </span>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="mb-5">
                   <input
