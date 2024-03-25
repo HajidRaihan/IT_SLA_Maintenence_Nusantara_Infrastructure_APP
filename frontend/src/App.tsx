@@ -20,6 +20,7 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import Lokasi from './pages/Lokasi';
 import ListActivity from './pages/ListActivity';
+import ListBarang from './pages/ListBarang';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -80,6 +81,15 @@ function App() {
             <>
               <PageTitle title="Kategori" />
               <Kategori />
+            </>
+          }
+        />
+         <Route
+          path="/listbarang"
+          element={
+            <>
+              <PageTitle title="ListBarang" />
+              <ListBarang />
             </>
           }
         />

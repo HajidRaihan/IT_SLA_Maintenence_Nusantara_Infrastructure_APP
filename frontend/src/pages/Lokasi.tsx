@@ -4,7 +4,7 @@ import DefaultLayout from '../layout/DefaultLayout';
 import React, { Fragment } from 'react';
 import { getLokasi, addLokasi, updateLokasi, deleteLokasi } from "../api/lokasiApi";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {faPlus } from '@fortawesome/free-solid-svg-icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -260,7 +260,7 @@ const Lokasi = () => {
                 onClick={handleAddlokasi}
                 className="border border-stroke rounded-sm px-4 py-2 bg-green-500 text-white"
               >
-                Update
+                Add
               </button>
 
             </div>
@@ -313,7 +313,7 @@ const Lokasi = () => {
                 onClick={handleUpdate}
                 className="border border-stroke rounded-sm px-4 py-2 bg-green-500 text-white"
               >
-                Add
+                Update
               </button>
             </div>
           </div>
