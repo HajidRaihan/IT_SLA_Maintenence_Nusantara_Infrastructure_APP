@@ -1,33 +1,10 @@
 import React from 'react';
-import { Package } from '../../types/package';
+import { useDisclosure } from '@nextui-org/react';
+import ChangeStatusModal from '../Modals/ChangeStatusModal';
 
-const packageData: Package[] = [
-  {
-    name: 'Free package',
-    price: 0.0,
-    invoiceDate: `Jan 13,2023`,
-    status: 'Paid',
-  },
-  {
-    name: 'Standard Package',
-    price: 59.0,
-    invoiceDate: `Jan 13,2023`,
-    status: 'Paid',
-  },
-  {
-    name: 'Business Package',
-    price: 99.0,
-    invoiceDate: `Jan 13,2023`,
-    status: 'Unpaid',
-  },
-  {
-    name: 'Standard Package',
-    price: 59.0,
-    invoiceDate: `Jan 13,2023`,
-    status: 'Pending',
-  },
-];
 const TableDetailActivity = ({ data }) => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   return (
     <div className="w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -192,11 +169,12 @@ const TableDetailActivity = ({ data }) => {
             </td>
             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
               <p
-                className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
+                className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium cursor-pointer ${
                   data.status === 'done'
                     ? 'bg-success text-success'
                     : 'bg-warning text-warning'
                 }`}
+                onClick={onOpen}
               >
                 {data.status}
               </p>
@@ -204,6 +182,7 @@ const TableDetailActivity = ({ data }) => {
           </tr>
         </table>
       </div>
+      <ChangeStatusModal isOpen={isOpen} onOpenChange={onOpenChange} />
     </div>
   );
 };

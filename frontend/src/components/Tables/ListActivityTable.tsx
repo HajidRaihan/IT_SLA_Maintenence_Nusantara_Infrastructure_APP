@@ -18,6 +18,7 @@ import {
 } from '@nextui-org/react';
 import SuccessModal from '../Modals/SuccessModal';
 import ActionModal from '../Modals/ActionModal';
+import { ToastContainer } from 'react-toastify';
 
 const packageData: Package[] = [
   {
@@ -46,7 +47,7 @@ const packageData: Package[] = [
   },
 ];
 
-const ListActivityTable = ({ data, deleteHandler }) => {
+const ListActivityTable = ({ data, deleteHandler, toastSuccess }) => {
   const navigate = useNavigate();
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
@@ -135,7 +136,7 @@ const ListActivityTable = ({ data, deleteHandler }) => {
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <div className=" w-15 rounded-md">
                     <img
-                      src={`http://127.0.0.1:8000/images/${item.fotos}`}
+                      src={`http://127.0.0.1:8000/images/${item.foto_awal}`}
                       alt="actyvitis"
                     />
                   </div>
@@ -301,6 +302,7 @@ const ListActivityTable = ({ data, deleteHandler }) => {
         onOpenChange={onOpenChangeAddModal}
         // isOpenSuccessModal={isOpenSuccessModal}
         onOpenSuccessModal={onOpenSuccessModal}
+        toastSuccess={toastSuccess}
         // onOpenChangeSuccessModal={onOpenChangeSuccessModal}
       />
 

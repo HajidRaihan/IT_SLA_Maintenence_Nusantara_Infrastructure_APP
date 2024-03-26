@@ -128,10 +128,33 @@ const editActivity = async (data, id) => {
   }
 };
 
+const changeStatus = async (data, id) => {
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+    Authorization: `Bearer ${Cookies.get('access_token')}`,
+  };
+
+  try {
+    const response = await RequestApi(
+      'PUT',
+      `toll/${id}/status`,
+      data,
+      headers,
+      'Mencoba change status activity',
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat change status activity', error);
+    throw error;
+  }
+};
+
 export {
   addActivity,
   getAllActivity,
   deleteActivity,
   getDetailActivity,
   editActivity,
+  changeStatus,
 };
