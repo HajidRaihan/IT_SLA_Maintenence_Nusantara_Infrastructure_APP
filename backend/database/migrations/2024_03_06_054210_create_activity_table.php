@@ -28,9 +28,10 @@ return new class extends Migration
             $table->unsignedBigInteger('kategori_id');
             $table->string('kondisi_akhir');
             $table->integer('biaya');
-            $table->string('fotos');
+            $table->string('foto_awal');
+            $table->string('foto_akhir');
             $table->enum('kategori_activity', ['toll', 'nontoll']);
-            $table->enum('status', ['process', 'waiting','done']);
+            $table->enum('status', ['process','done']);
             $table->timestamp('ended_at');
             $table->timestamps();
 
