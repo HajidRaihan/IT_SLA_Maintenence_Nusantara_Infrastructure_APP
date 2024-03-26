@@ -308,16 +308,17 @@ $data = $request->validate([
     $request->validate([
         'status' => 'required|in:process,done',
         'foto_akhir' => 'required_if:status,done|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'kondisi_akhir' => 'required_if:status,done|string',
     ]);
 
-    // Temukan aktivitas berdasarkan ID
+  
     $activity = Activity::findOrFail($id);
 
     // Jika status yang diminta adalah "done"
     if ($request->status === 'done') {
         // Periksa apakah ada file foto_akhir yang diunggah
         if (!$request->hasFile('foto_akhir')) {
-            return response()->json(['error' => 'Please upload foto_akhir before changing the status to done'], 400);
+            return response()->json(['error' => 'Please upload foto akhir before changing the status to done'], 400);
         }
 
         // Simpan foto_akhir
