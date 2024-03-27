@@ -11,6 +11,7 @@ import SelectStatus from '../components/Forms/SelectGroup/SelectStatus';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { toast, ToastContainer } from 'react-toastify';
+import { Pagination } from '@nextui-org/react';
 
 const ListActivity = () => {
   const [activity, setActivity] = useState([]);
@@ -21,6 +22,7 @@ const ListActivity = () => {
   const [company, setCompany] = useState();
   const [status, setStatus] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
 
   const navigate = useNavigate();
 
@@ -33,8 +35,9 @@ const ListActivity = () => {
           kategori,
           company,
           status,
+          page,
         );
-        console.log('actyivity', response.data.data);
+        console.log('actyivity', response);
         setActivity(response.data.data);
         if (response) {
           setIsLoading(false);
@@ -45,7 +48,7 @@ const ListActivity = () => {
       }
     };
     fetchActivity();
-  }, [lokasi, kategori, company, status]);
+  }, [lokasi, kategori, company, status, page]);
 
   useEffect(() => {
     const fetchLokasi = async () => {
@@ -122,11 +125,22 @@ const ListActivity = () => {
         <ToastContainer autoClose={2000} />
 
         {!isLoading ? (
-          <ListActivityTable
-            data={activity}
-            deleteHandler={deleteHandler}
-            toastSuccess={() => toast.success('success menambahkan activity')}
-          />
+          <>
+            <ListActivityTable
+              data={activity}
+              deleteHandler={deleteHandler}
+              toastSuccess={() => toast.success('success menambahkan activity')}
+            />
+            <div className="w-full flex justify-center mt-5">
+              <Pagination
+                showControls
+                total={10}
+                initialPage={page}
+                showShadow
+                onChange={(e) => setPage(e)}
+              />
+            </div>
+          </>
         ) : (
           <Loader />
         )}

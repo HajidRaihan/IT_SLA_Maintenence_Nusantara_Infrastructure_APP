@@ -202,7 +202,7 @@ const AddActivityModal = ({
       kategori_id: kategori,
       kondisi_akhir: kondisiAkhir,
       biaya: biaya,
-      fotos: foto,
+      foto_awal: foto,
       status: status,
     };
 
@@ -524,7 +524,6 @@ const AddActivityModal = ({
                     </Button>
                   </div>
                 </form>
-                <Button onPress={toastSuccess}></Button>
               </div>
             </ModalBody>
           </>
