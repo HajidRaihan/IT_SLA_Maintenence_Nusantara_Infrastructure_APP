@@ -211,7 +211,6 @@ const AddActivity = () => {
       <Breadcrumb pageName="Add Activity" />
       <div className="">
         <div className="flex flex-col gap-9">
-          {/* <!-- Contact Form --> */}
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <form action="#">
               <div className="p-6.5">

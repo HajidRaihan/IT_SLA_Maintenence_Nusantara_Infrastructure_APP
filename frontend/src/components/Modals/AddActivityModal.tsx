@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import CheckboxTwo from '../Checkboxes/CheckboxTwo';
 import { getUserLogin } from '../../api/authApi';
-
 import {
   Modal,
   ModalContent,
@@ -20,7 +19,6 @@ import {
   Button,
   useDisclosure,
 } from '@nextui-org/react';
-import { toast, ToastContainer } from 'react-toastify';
 
 const AddActivityModal = ({
   isOpen,
@@ -28,7 +26,6 @@ const AddActivityModal = ({
   onOpenChange,
   // isOpenSuccessModal,
   onOpenSuccessModal,
-  toastSuccess,
   // onOpenChangeSuccessModal,
 }) => {
   const [company, setCompany] = useState('');
@@ -211,10 +208,7 @@ const AddActivityModal = ({
       const res = await addActivity(data);
 
       if (res) {
-        // onOpenSuccessModal();
-        // toast.success('Success Menambahkan activity');
-        toastSuccess();
-
+        onOpenSuccessModal();
         close();
         console.log(res);
       }
@@ -251,13 +245,13 @@ const AddActivityModal = ({
       size="2xl"
       placement="bottom"
       scrollBehavior="inside"
-      className="border-stroke fixed bg-whiter shadow-default dark:border-strokedark dark:bg-black h-[500px] z-99999"
+      className="border-stroke bg-whiter shadow-default dark:border-strokedark dark:bg-black h-[500px] "
     >
       <ModalContent>
         {(close) => (
           <>
             <ModalHeader className="text-xl font-semibold text-black dark:text-white mx-6 mt-3 ">
-              Add Activityqsedasdasd
+              Add Activity
             </ModalHeader>
             <ModalBody className="overflow-y-scroll">
               <div className="rounded-sm">
