@@ -33,4 +33,36 @@ function LokasiModal({ isOpen, onClose, onAdd, value, onChange }) {
   );
 }
 
-export default LokasiModal;
+function KategoriModal({ isOpen, onClose, onAdd, value, onChange }) {
+  return (
+    <>
+      <Modal isOpen={isOpen} onClose={onClose} placement="top-center">
+        <ModalContent>
+          <>
+            <ModalHeader className="flex flex-col gap-1">Add Kategori</ModalHeader>
+            <ModalBody>
+              <Input
+                autoFocus
+                value={value}
+                onChange={onChange}
+                label="Kategori"
+                placeholder="Enter your kategori"
+                variant="bordered"
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="flat" onPress={onClose}>
+                Close
+              </Button>
+              <Button color="primary" onPress={onAdd}>
+                Add
+              </Button>
+            </ModalFooter>
+          </>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+}
+
+export {LokasiModal,KategoriModal};

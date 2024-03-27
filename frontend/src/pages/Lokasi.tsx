@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPlus } from '@fortawesome/free-solid-svg-icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import LokasiModal from '../components/Modals/LokasiModal';
+import {LokasiModal} from '../components/Modals/AddModal';
 import { useDisclosure } from "@nextui-org/react";
 import UpdateLokasiModal from '../components/Modals/UpdateLokasiModal';
 import DeleteLokasiModal from '../components/Modals/DeleteLokasiModal';
@@ -15,8 +15,6 @@ import Paginate from '../components/Pagination/paginate';
 
 const Lokasi = () => {
   const [data, setData] = useState([]);
-
- 
   const [newlokasi, setNewlokasi] = useState('');
   const [updatelokasi, setUpdatelokasi] = useState('');
   const [lokasiId, setlokasiId] = useState();
@@ -228,8 +226,9 @@ const Lokasi = () => {
           </div>
         ))}
 
+
 <Paginate
-        totalPages={totalPages}
+        
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />

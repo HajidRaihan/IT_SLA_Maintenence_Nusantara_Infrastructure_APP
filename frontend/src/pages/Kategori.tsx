@@ -2,151 +2,137 @@ import { useState, useEffect } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import React, { Fragment } from 'react';
-import {
-  getKategori,
-  addKategori,
-  updateKategori,
-  deleteKategori,
-} from '../api/kategoriApi';
+import { getKategori, addKategori, updateKategori, deleteKategori } from "../api/kategoriApi";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import {faPlus } from '@fortawesome/free-solid-svg-icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Modal, Input, Button} from '@nextui-org/react';
-
+import {KategoriModal} from '../components/Modals/AddModal';
+import { useDisclosure } from "@nextui-org/react";
+import Paginate from '../components/Pagination/paginate';
 
 const Kategori = () => {
   const [data, setData] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-  const [updateForm, setUpdateForm] = useState(false);
-  const [deleteForm, setDeleteForm] = useState(false);
   const [newCategory, setNewCategory] = useState('');
   const [updateCategory, setUpdateCategory] = useState('');
-  const [kategoriId, setKategoriId] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5); // Change this value to set the number of items per page
+  const [CategoryId, setCategoryId] = useState('');
+  const { isOpen: addModalOpen, onOpen: onAddModalOpen, onClose: onAddModalClose } = useDisclosure();
+ 
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const itemsPerPage = 5; // Number of data items per page
 
+  // Calculate total number of pages
+  const startIndex = (currentPage-1) * itemsPerPage ;
+  const endIndex = Math.min(startIndex + itemsPerPage, data.length);
+
+  // Filter the data to display only the items for the current page
+  const currentItems = data.slice(startIndex, endIndex);
+
+
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page); // Update the current page
+  };
+
+
+  const handleAddForm = () => {
+    setNewCategory('');
+    onAddModalOpen(); // Open the add modal
+  };
+
+  const handleUpdateForm = (id) => {
+    setUpdateCategory('');
+    setCategoryId(id);
+    // Open the update modal
+  };
+
+  const handleDeleteForm = (id) => {
+  
+    setCategoryId(id);
+    
+  }
   useEffect(() => {
-    getKategori().then((res) => {
+    getKategori().then(res => {
       setData(res);
     });
   }, []);
 
-  // Pagination
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+ 
 
-  const handleShowForm = () => {
-    setShowForm(true);
-  };
+  
 
-  const handleChangeUpdate = (e) => {
-    setUpdateCategory(e.target.value);
-  };
-
-  const handleupdateForm = (id) => {
-    setUpdateForm(true);
-    setKategoriId(id);
-  };
-
-  const handledeleteForm = (id) => {
-    setDeleteForm(true);
-    setKategoriId(id);
-  };
+ 
 
   const handleDelete = async () => {
-    try {
-      const res = await deleteKategori(kategoriId);
-      // Filter out the deleted category from the state
-      setData(data.filter((item) => item.id !== kategoriId));
-      setDeleteForm(false);
-      toast.success('Delete successfully ', res);
-    } catch (error) {
-      toast.error('Error deleting category:', error);
-    }
-  };
+  try {
+    const res = await deleteKategori(CategoryId);
+    // Filter out the deleted location from the state
+    setData(data.filter(item => item.id !== CategoryId));
+    toast.success("Delete successfully ", res);
+  } catch (error) {
+    toast.error('Error deleting location:', error);
+  }
+};
 
-  const handleupdatecloseForm = () => {
-    setUpdateForm(false);
-    setUpdateCategory('');
-  };
 
-  const handleCloseForm = () => {
-    setShowForm(false);
-    setNewCategory('');
-  };
 
-  const handleChange = (e) => {
-    setNewCategory(e.target.value);
-  };
 
-  const handleAddCategory = async () => {
-    const newCategoryData = { nama_kategori: newCategory };
+
+  const handleAddKategori = async () => {
+    const newKategoriData = { nama_kategori: newCategory };
   
     try {
-      const res = await addKategori(newCategoryData);
-      const addedCategory = res.data; 
-      setData(prevData => [...prevData, addedCategory]);
-  
-      toast.success('Category added successfully!', res);
-      setShowForm(false);
+      const res = await addKategori(newKategoriData);
+      const addedKategori = res.data;
+      setData(prevData => [...prevData, addedKategori]);
+      toast.success('Category added successfully');
+      
     } catch (error) {
-      toast.error('Failed to add category');
+      toast.error('Failed to add Category');
     }
   };
   
-  
+
+ 
   const handleUpdate = async () => {
     const dataToUpdate = {
       nama_kategori: updateCategory,
     };
     try {
-      const res = await updateKategori(kategoriId, dataToUpdate);
-      const updatedCategory = res.data;
-  
-      // Find the index of the updated category in the data array
-      const updatedIndex = data.findIndex(item => item.id === kategoriId);
-  
-      // Update the existing category with the new values
-      if (updatedIndex !== -1) {
+      const res = await updateKategori(CategoryId, dataToUpdate);
+      const updatedKategori = res.data;
+      const updatedIndex = data.findIndex(item => item.id === CategoryId);
+      if(updatedIndex !== -1) {
         setData(prevData => {
           const newData = [...prevData];
-          newData[updatedIndex] = updatedCategory;
+          newData[updatedIndex] = updatedKategori;
           return newData;
-        });
+        })
       }
-  
-      toast.success('Category updated successfully:', res);
-      // Optionally, you can update the state or perform any other action after updating the category
+         toast.success('Category updated successfully :', res);
     } catch (error) {
-      toast.error('Error updating category:', error);
+      toast.error('Error updating location:', error);
       // Handle the error gracefully (e.g., display an error message to the user)
     }
-    handleupdatecloseForm();
+  
   };
-  
-  
 
   return (
     <DefaultLayout>
-       <ToastContainer />
-      <Breadcrumb pageName="Kategori" />
+      <ToastContainer />
+      <Breadcrumb pageName="Lokasi" />
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="py-6 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
             Add Kategori
           </h4>
           <button
-            onClick={handleShowForm}
+             onClick={handleAddForm} 
             className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
           >
-            <FontAwesomeIcon
-              icon={faPlus}
-              className="green-light-icon text-lg"
-            />
+            <FontAwesomeIcon icon={faPlus} className="green-light-icon text-lg" />
           </button>
         </div>
 
@@ -168,21 +154,14 @@ const Kategori = () => {
             key={index}
           >
             <div className="col-span-3 flex items-center">
-              <p className="font-medium mr-2 text-black dark:text-white">
-                {item.id}
-              </p>
+              <p className="font-medium mr-2 text-black dark:text-white">{item.id}</p>
             </div>
             <div className="col-span-3 flex items-center sm:flex">
-              <p className="font-medium mr-3 text-black dark:text-white">
-                {item.nama_kategori}
-              </p>
+              <p className="font-medium mr-3 text-black dark:text-white">{item.nama_kategori}</p>
             </div>
             <div className="mb-3  flex items-center">
-            <button
-                      className="hover:text-primary"
-                      onClick={() => handleupdateForm(item.id)}
-                    >
-                      <svg
+              <button   onClick={() => handleUpdateForm(item.id)}  className="hover:text-primary">
+              <svg
                         className="fill-current"
                         width="20"
                         height="20"
@@ -210,13 +189,10 @@ const Kategori = () => {
                           </clipPath>
                         </defs>
                       </svg>
-                    </button>
+              </button>
 
-              <button
-                onClick={() => handledeleteForm(item.id)}
-                className="hover:text-primary"
-              >
-                  <svg
+              <button onClick={() => handleDeleteForm(item.id)} className="hover:text-primary">
+              <svg
                         className="fill-current"
                         width="18"
                         height="18"
@@ -245,86 +221,20 @@ const Kategori = () => {
             </div>
           </div>
         ))}
+
+
+<Paginate
+        
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
       </div>
 
-      {/* Pagination */}
-      <div className="flex justify-center mt-4">
-        <button
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 text-white mr-2"
-        >
-          Previous
-        </button>
-        <button
-          onClick={() => paginate(currentPage + 1)}
-          disabled={indexOfLastItem >= data.length}
-          className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 text-white"
-        >
-          Next
-        </button>
-      </div>
+    
+      <KategoriModal isOpen={addModalOpen}  onAdd={handleAddKategori} onChange={(e) => setNewCategory(e.target.value)} value={newCategory} onClose={onAddModalClose}/>
+     
+     
 
-      {/* Add Kategori Form */}
-      {showForm && (
-        <div className="fixed top-0 left-0 w-full h-full  flex justify-center items-center ">
-          <div className="bg-black shadow-md rounded-md p-6">
-            <h2 className="text-lg font-semibold mb-4">Add Kategori Form</h2>
-            <input
-              type="text"
-              className="border border-stroke rounded-sm px-4 py-2 mb-4 w-full"
-              placeholder="Enter category name"
-              value={newCategory}
-              onChange={handleChange}
-            />
-            <div className="flex justify-end">
-              <button
-                onClick={handleCloseForm}
-                className="mr-2 border border-stroke rounded-sm px-4 py-2 bg-red-500 text-white"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleAddCategory}
-                className="border border-stroke rounded-sm px-4 py-2 bg-green-500 text-white"
-              >
-                Add
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {deleteForm && (
-        <Modal closeButton aria-labelledby="modal-title" open={showForm} onClose={handleCloseForm}>
-        <Modal.Header>
-          <h3 id="modal-title">
-            {updateForm ? 'Update Category' : 'Add New Category'}
-          </h3>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            clearable
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Category Name"
-            value={updateForm ? updateCategory : newCategory}
-            onChange={updateForm ? handleChangeUpdate : handleChange}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onClick={handleCloseForm}>
-            Cancel
-          </Button>
-          <Button auto onClick={updateForm ? handleUpdate : handleAddCategory}>
-            {updateForm ? 'Update' : 'Add'}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      
-      )}
     </DefaultLayout>
   );
 };
