@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react';
 import DefaultLayout from '../layout/DefaultLayout';
 import { getDetailActivity } from '../api/activityApi';
 import { Link, useParams } from 'react-router-dom';
+import { changeStatus } from '../api/activityApi';
+import ChangeStatusModal from '../components/Modals/ChangeStatusModal';
+import { toast } from 'react-toastify';
+import { useDisclosure } from '@nextui-org/react';
 import TableDetailActivity from '../components/Tables/TableDetailActivity';
 
 const ActivityDetail = () => {
   const [detail, setDetail] = useState();
+  const [fotoAkhir, setfotoAkhir] = useState();
+  const [kondisiAkhir, setKondisiAkhir] = useState();
 
   const { id } = useParams();
 
@@ -18,13 +24,27 @@ const ActivityDetail = () => {
     fetchActivity();
   }, []);
 
+  const handleApprove = async () => {
+    const data = {
+      status: 'done',
+      foto_akhir: fotoAkhir,
+      kondisi_akhir: kondisiAkhir,
+    };
+    try {
+      const res = await changeStatus(id, data);
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <DefaultLayout>
       {detail ? (
         <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="flex gap-5">
             <img
-              src={`http://127.0.0.1:8000/images/${detail.fotos}`}
+              src={`http://127.0.0.1:8000/images/${detail.foto_awal}`}
               alt="sdsd"
               className="w-1/3 h-full"
             />
@@ -46,6 +66,8 @@ const ActivityDetail = () => {
       ) : (
         ''
       )}
+
+      <ChangeStatusModal />
     </DefaultLayout>
   );
 };
