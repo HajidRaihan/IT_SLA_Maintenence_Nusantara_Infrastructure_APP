@@ -9,9 +9,10 @@ import {
   deleteKategori,
 } from '../api/kategoriApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Modal, Input, Button} from '@nextui-org/react';
 
 
 const Kategori = () => {
@@ -295,55 +296,34 @@ const Kategori = () => {
       )}
 
       {deleteForm && (
-        <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white shadow-md rounded-md p-6">
-            <h2 className="text-lg font-semibold mb-4">Delete Kategori</h2>
-            <p>Are you sure you want to delete this category?</p>
-            <div className="flex justify-end mt-4">
-              <button
-                onClick={() => setDeleteForm(false)}
-                className="mr-2 border border-stroke rounded-sm px-4 py-2 bg-red-500 text-white"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDelete}
-                className="border border-stroke rounded-sm px-4 py-2 bg-green-500 text-white"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {updateForm && (
-        <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-black shadow-md rounded-md p-6">
-            <h2 className="text-lg font-semibold mb-4">Update Form</h2>
-            <input
-              type="text"
-              className="border border-stroke rounded-sm px-4 py-2 mb-4 w-full"
-              placeholder="Enter Update name"
-              value={updateCategory}
-              onChange={handleChangeUpdate}
-            />
-            <div className="flex justify-end">
-              <button
-                onClick={handleupdatecloseForm}
-                className="mr-2 border border-stroke rounded-sm px-4 py-2 bg-red-500 text-white"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleUpdate}
-                className="border border-stroke rounded-sm px-4 py-2 bg-green-500 text-white"
-              >
-                Add
-              </button>
-            </div>
-          </div>
-        </div>
+        <Modal closeButton aria-labelledby="modal-title" open={showForm} onClose={handleCloseForm}>
+        <Modal.Header>
+          <h3 id="modal-title">
+            {updateForm ? 'Update Category' : 'Add New Category'}
+          </h3>
+        </Modal.Header>
+        <Modal.Body>
+          <Input
+            clearable
+            bordered
+            fullWidth
+            color="primary"
+            size="lg"
+            placeholder="Category Name"
+            value={updateForm ? updateCategory : newCategory}
+            onChange={updateForm ? handleChangeUpdate : handleChange}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button auto flat color="error" onClick={handleCloseForm}>
+            Cancel
+          </Button>
+          <Button auto onClick={updateForm ? handleUpdate : handleAddCategory}>
+            {updateForm ? 'Update' : 'Add'}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      
       )}
     </DefaultLayout>
   );
