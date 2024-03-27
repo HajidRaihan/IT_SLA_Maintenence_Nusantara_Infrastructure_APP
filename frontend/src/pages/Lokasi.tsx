@@ -11,7 +11,7 @@ import LokasiModal from '../components/Modals/LokasiModal';
 import { useDisclosure } from "@nextui-org/react";
 import UpdateLokasiModal from '../components/Modals/UpdateLokasiModal';
 import DeleteLokasiModal from '../components/Modals/DeleteLokasiModal';
-
+import Paginate from '../components/Pagination/paginate';
 
 const Lokasi = () => {
   const [data, setData] = useState([]);
@@ -20,12 +20,26 @@ const Lokasi = () => {
   const [newlokasi, setNewlokasi] = useState('');
   const [updatelokasi, setUpdatelokasi] = useState('');
   const [lokasiId, setlokasiId] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5); 
   const { isOpen: addModalOpen, onOpen: onAddModalOpen, onClose: onAddModalClose } = useDisclosure();
   const { isOpen: updateModalOpen, onOpen: onUpdateModalOpen, onClose: onUpdateModalClose } = useDisclosure();
   const { isOpen: deleteModalOpen, onOpen: onDeleteModalOpen, onClose: onDeleteModalClose } = useDisclosure();
- 
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const itemsPerPage = 5; // Number of data items per page
+
+  // Calculate total number of pages
+  const startIndex = (currentPage-1) * itemsPerPage ;
+  const endIndex = Math.min(startIndex + itemsPerPage, data.length);
+
+  // Filter the data to display only the items for the current page
+  const currentItems = data.slice(startIndex, endIndex);
+
+  // Calculate total number of pages
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page); // Update the current page
+  };
+
 
   const handleAddForm = () => {
     setNewlokasi('');
@@ -49,12 +63,7 @@ const Lokasi = () => {
     });
   }, []);
 
-  // Pagination
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-
-  const paginate = pageNumber => setCurrentPage(pageNumber);
+  
 
  
 
@@ -85,6 +94,7 @@ const Lokasi = () => {
       const addedLokasi = res.data;
       setData(prevData => [...prevData, addedLokasi]);
       toast.success('Location added successfully');
+      
     } catch (error) {
       toast.error('Failed to add Location');
     }
@@ -217,29 +227,19 @@ const Lokasi = () => {
             </div>
           </div>
         ))}
+
+<Paginate
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
       </div>
 
-      {/* Pagination */}
-      <div className="flex justify-center mt-4">
-        <button
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 text-white mr-2"
-        >
-          Previous
-        </button>
-        <button
-          onClick={() => paginate(currentPage + 1)}
-          disabled={indexOfLastItem >= data.length}
-          className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 text-white"
-        >
-          Next
-        </button>
-      </div>
+    
       <LokasiModal isOpen={addModalOpen}  onAdd={handleAddlokasi} onChange={(e) => setNewlokasi(e.target.value)} value={newlokasi} onClose={onAddModalClose}/>
       <UpdateLokasiModal isUpdateOpen={updateModalOpen}  onAdd={handleUpdate} onChange={(e) => setUpdatelokasi(e.target.value)} value={updatelokasi} onUpdateClose={onUpdateModalClose}/>
       <DeleteLokasiModal isDeleteOpen={deleteModalOpen}  onDelete={handleDelete} onDeleteClose={onDeleteModalClose}/>
-
+     
 
     </DefaultLayout>
   );
