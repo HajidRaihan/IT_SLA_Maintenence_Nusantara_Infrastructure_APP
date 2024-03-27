@@ -7,74 +7,82 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPlus } from '@fortawesome/free-solid-svg-icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {LokasiModal} from '../components/Modals/AddModal';
+import { useDisclosure } from "@nextui-org/react";
+import UpdateLokasiModal from '../components/Modals/UpdateLokasiModal';
+import DeleteLokasiModal from '../components/Modals/DeleteLokasiModal';
+import Paginate from '../components/Pagination/paginate';
 
 const Lokasi = () => {
   const [data, setData] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-  const [updateForm, setUpdateForm] = useState(false);
-  const [deleteForm, setDeleteForm] = useState(false);
   const [newlokasi, setNewlokasi] = useState('');
   const [updatelokasi, setUpdatelokasi] = useState('');
   const [lokasiId, setlokasiId] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5); // Change this value to set the number of items per page
+  const { isOpen: addModalOpen, onOpen: onAddModalOpen, onClose: onAddModalClose } = useDisclosure();
+  const { isOpen: updateModalOpen, onOpen: onUpdateModalOpen, onClose: onUpdateModalClose } = useDisclosure();
+  const { isOpen: deleteModalOpen, onOpen: onDeleteModalOpen, onClose: onDeleteModalClose } = useDisclosure();
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const itemsPerPage = 5; // Number of data items per page
 
+  // Calculate total number of pages
+  const startIndex = (currentPage-1) * itemsPerPage ;
+  const endIndex = Math.min(startIndex + itemsPerPage, data.length);
+
+  // Filter the data to display only the items for the current page
+  const currentItems = data.slice(startIndex, endIndex);
+
+  // Calculate total number of pages
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page); // Update the current page
+  };
+
+
+  const handleAddForm = () => {
+    setNewlokasi('');
+    onAddModalOpen(); // Open the add modal
+  };
+
+  const handleUpdateForm = (id) => {
+    setUpdatelokasi('');
+    setlokasiId(id);
+    onUpdateModalOpen(); // Open the update modal
+  };
+
+  const handleDeleteForm = (id) => {
+  
+    setlokasiId(id);
+    onDeleteModalOpen();
+  }
   useEffect(() => {
     getLokasi().then(res => {
       setData(res);
     });
   }, []);
 
-  // Pagination
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  
 
-  const paginate = pageNumber => setCurrentPage(pageNumber);
+ 
 
-  const handleShowForm = () => {
-    setShowForm(true);
-  };
+  
 
-  const handleChangeUpdate = (e) => {
-    setUpdatelokasi(e.target.value);
-  };
-
-  const handleupdateForm = (id) => {
-    setUpdateForm(true);
-    setlokasiId(id);
-  };
-
-  const handledeleteForm = (id) => {
-    setDeleteForm(true);
-    setlokasiId(id);
-  };
+ 
 
   const handleDelete = async () => {
-    try {
-      const res = await deleteLokasi(lokasiId);
-      // Filter out the deleted lokasi from the state
-      setData(data.filter(item => item.id !== lokasiId));
-      setDeleteForm(false);
-      toast.success("Delete successfully ", res)
-    } catch (error) {
-      toast.error('Error deleting lokasi:', error);
-    }
-  };
+  try {
+    const res = await deleteLokasi(lokasiId);
+    // Filter out the deleted location from the state
+    setData(data.filter(item => item.id !== lokasiId));
+    toast.success("Delete successfully ", res);
+  } catch (error) {
+    toast.error('Error deleting location:', error);
+  }
+};
 
-  const handleupdatecloseForm = () => {
-    setUpdateForm(false);
-    setUpdatelokasi('');
-  };
 
-  const handleCloseForm = () => {
-    setShowForm(false);
-    setNewlokasi('');
-  };
 
-  const handleChange = (e) => {
-    setNewlokasi(e.target.value);
-  };
+
 
   const handleAddlokasi = async () => {
     const newLokasiData = { nama_lokasi: newlokasi };
@@ -84,14 +92,14 @@ const Lokasi = () => {
       const addedLokasi = res.data;
       setData(prevData => [...prevData, addedLokasi]);
       toast.success('Location added successfully');
-      setShowForm(false);
+      
     } catch (error) {
       toast.error('Failed to add Location');
     }
   };
   
 
-
+ 
   const handleUpdate = async () => {
     const dataToUpdate = {
       nama_lokasi: updatelokasi,
@@ -112,7 +120,7 @@ const Lokasi = () => {
       toast.error('Error updating location:', error);
       // Handle the error gracefully (e.g., display an error message to the user)
     }
-    handleupdatecloseForm();
+  
   };
 
   return (
@@ -125,7 +133,7 @@ const Lokasi = () => {
             Add Lokasi
           </h4>
           <button
-            onClick={handleShowForm}
+             onClick={handleAddForm} 
             className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
           >
             <FontAwesomeIcon icon={faPlus} className="green-light-icon text-lg" />
@@ -156,7 +164,7 @@ const Lokasi = () => {
               <p className="font-medium mr-3 text-black dark:text-white">{item.nama_lokasi}</p>
             </div>
             <div className="mb-3  flex items-center">
-              <button onClick={() => handleupdateForm(item.id)} className="hover:text-primary">
+              <button   onClick={() => handleUpdateForm(item.id)}  className="hover:text-primary">
               <svg
                         className="fill-current"
                         width="20"
@@ -187,7 +195,7 @@ const Lokasi = () => {
                       </svg>
               </button>
 
-              <button onClick={() => handledeleteForm(item.id)} className="hover:text-primary">
+              <button onClick={() => handleDeleteForm(item.id)} className="hover:text-primary">
               <svg
                         className="fill-current"
                         width="18"
@@ -217,108 +225,21 @@ const Lokasi = () => {
             </div>
           </div>
         ))}
+
+
+<Paginate
+        
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
       </div>
 
-      {/* Pagination */}
-      <div className="flex justify-center mt-4">
-        <button
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 text-white mr-2"
-        >
-          Previous
-        </button>
-        <button
-          onClick={() => paginate(currentPage + 1)}
-          disabled={indexOfLastItem >= data.length}
-          className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 text-white"
-        >
-          Next
-        </button>
-      </div>
+    
+      <LokasiModal isOpen={addModalOpen}  onAdd={handleAddlokasi} onChange={(e) => setNewlokasi(e.target.value)} value={newlokasi} onClose={onAddModalClose}/>
+      <UpdateLokasiModal isUpdateOpen={updateModalOpen}  onAdd={handleUpdate} onChange={(e) => setUpdatelokasi(e.target.value)} value={updatelokasi} onUpdateClose={onUpdateModalClose}/>
+      <DeleteLokasiModal isDeleteOpen={deleteModalOpen}  onDelete={handleDelete} onDeleteClose={onDeleteModalClose}/>
+     
 
-      {/* Add Lokasi Form */}
-      {showForm && (
-        <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-black shadow-md rounded-md p-6">
-            <h2 className="text-lg font-semibold mb-4">Add Lokasi Form</h2>
-            <input
-              type="text"
-              className="border border-stroke rounded-sm px-4 py-2 mb-4 w-full"
-              placeholder="Enter location name"
-              value={newlokasi}
-              onChange={handleChange}
-            />
-            <div className="flex justify-end">
-              <button
-                onClick={handleCloseForm}
-                className="mr-2 border border-stroke rounded-sm px-4 py-2 bg-red-500 text-white"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleAddlokasi}
-                className="border border-stroke rounded-sm px-4 py-2 bg-green-500 text-white"
-              >
-                Add
-              </button>
-
-            </div>
-          </div>
-        </div>
-      )}
-
-      {deleteForm && (
-        <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white shadow-md rounded-md p-6">
-            <h2 className="text-lg font-semibold mb-4">Delete Lokasi</h2>
-            <p>Are you sure you want to delete this location?</p>
-            <div className="flex justify-end mt-4">
-              <button
-                onClick={() => setDeleteForm(false)}
-                className="mr-2 border border-stroke rounded-sm px-4 py-2 bg-red-500 text-white"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDelete}
-                className="border border-stroke rounded-sm px-4 py-2 bg-green-500 text-white"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {updateForm && (
-        <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-black shadow-md rounded-md p-6">
-            <h2 className="text-lg font-semibold mb-4">Update Form</h2>
-            <input
-              type="text"
-              className="border border-stroke rounded-sm px-4 py-2 mb-4 w-full"
-              placeholder="Enter Update name"
-              value={updatelokasi}
-              onChange={handleChangeUpdate}
-            />
-            <div className="flex justify-end">
-              <button
-                onClick={handleupdatecloseForm}
-                className="mr-2 border border-stroke rounded-sm px-4 py-2 bg-red-500 text-white"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleUpdate}
-                className="border border-stroke rounded-sm px-4 py-2 bg-green-500 text-white"
-              >
-                Update
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </DefaultLayout>
   );
 };

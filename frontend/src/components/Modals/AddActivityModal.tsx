@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import CheckboxTwo from '../Checkboxes/CheckboxTwo';
 import { getUserLogin } from '../../api/authApi';
-
 import {
   Modal,
   ModalContent,
@@ -200,7 +199,7 @@ const AddActivityModal = ({
       kategori_id: kategori,
       kondisi_akhir: kondisiAkhir,
       biaya: biaya,
-      fotos: foto,
+      foto_awal: foto,
       status: status,
     };
 

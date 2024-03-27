@@ -22,7 +22,7 @@ const addActivity = async (data) => {
   }
 };
 
-const getAllActivity = async (lokasi, kategori, company, status) => {
+const getAllActivity = async (lokasi, kategori, company, status, page) => {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
@@ -30,6 +30,9 @@ const getAllActivity = async (lokasi, kategori, company, status) => {
 
   console.log(lokasi, kategori);
   let params = [];
+  if (page) {
+    params.push(`page=${page}`);
+  }
   if (lokasi) {
     params.push(`lokasi=${lokasi}`);
   }
@@ -128,10 +131,33 @@ const editActivity = async (data, id) => {
   }
 };
 
+const changeStatus = async (data, id) => {
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+    Authorization: `Bearer ${Cookies.get('access_token')}`,
+  };
+
+  try {
+    const response = await RequestApi(
+      'PUT',
+      `toll/${id}/status`,
+      data,
+      headers,
+      'Mencoba change status activity',
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat change status activity', error);
+    throw error;
+  }
+};
+
 export {
   addActivity,
   getAllActivity,
   deleteActivity,
   getDetailActivity,
   editActivity,
+  changeStatus,
 };
