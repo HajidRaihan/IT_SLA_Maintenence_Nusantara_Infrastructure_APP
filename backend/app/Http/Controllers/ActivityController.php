@@ -23,10 +23,10 @@ class ActivityController extends Controller
             'shift' => 'required|string',
             'lokasi_id' => 'required|exists:lokasi,id',
             'kategori_id' => 'required|exists:kategori,id',
-            'kondisi_akhir' => 'required|string',
+            'kondisi_akhir' => 'nullable|string',
             'biaya' => 'required|integer',
             'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:process,done',
         ]);
 
@@ -142,8 +142,9 @@ class ActivityController extends Controller
             'shift' => 'required|string',
             'lokasi_id' => 'required|exists:lokasi,id',
             'biaya' => 'required|integer',
+            'kondisi_akhir' => 'nullable|string',
             'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:process,done',
         ]);
 
@@ -177,10 +178,10 @@ public function addactivity_nontoll(Request $request)
         'shift' => 'required|string',
         'lokasi_id' => 'required|exists:lokasi,id',
         'kategori_id' => 'required|exists:kategori,id',
-        'kondisi_akhir' => 'required|string',
+        'kondisi_akhir' => 'nullable|string',
         'biaya' => 'required|integer',
         'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         'status' => 'required|in:process,done',
     ]);
 
@@ -293,8 +294,9 @@ $data = $request->validate([
     'shift' => 'required|string',
     'lokasi_id' => 'required|exists:lokasi,id',
     'biaya' => 'required|integer',
+    'kondisi_akhir' => 'nullable|string',
     'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     'status' => 'required|in:process,done',
 ]);
 
