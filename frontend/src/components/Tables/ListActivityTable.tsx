@@ -15,6 +15,7 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Pagination,
 } from '@nextui-org/react';
 import SuccessModal from '../Modals/SuccessModal';
 import ActionModal from '../Modals/ActionModal';
@@ -286,6 +287,9 @@ const ListActivityTable = ({ data, deleteHandler, toastSuccess }) => {
               </tr>
             ))}
           </tbody>
+          {/* <div className="w-full flex justify-center mt-10">
+            <Pagination showControls total={10} initialPage={1} showShadow />
+          </div> */}
         </table>
       </div>
 

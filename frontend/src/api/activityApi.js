@@ -22,7 +22,7 @@ const addActivity = async (data) => {
   }
 };
 
-const getAllActivity = async (lokasi, kategori, company, status) => {
+const getAllActivity = async (lokasi, kategori, company, status, page) => {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
@@ -30,6 +30,9 @@ const getAllActivity = async (lokasi, kategori, company, status) => {
 
   console.log(lokasi, kategori);
   let params = [];
+  if (page) {
+    params.push(`page=${page}`);
+  }
   if (lokasi) {
     params.push(`lokasi=${lokasi}`);
   }

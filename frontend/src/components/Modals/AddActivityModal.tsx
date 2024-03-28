@@ -199,7 +199,7 @@ const AddActivityModal = ({
       kategori_id: kategori,
       kondisi_akhir: kondisiAkhir,
       biaya: biaya,
-      fotos: foto,
+      foto_awal: foto,
       status: status,
     };
 
