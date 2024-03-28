@@ -9,8 +9,6 @@ import { getKategori } from '../api/kategoriApi';
 import SelectCompany from '../components/Forms/SelectGroup/SelectCompany';
 import SelectStatus from '../components/Forms/SelectGroup/SelectStatus';
 import { useNavigate } from 'react-router-dom';
-import Loader from '../common/Loader';
-import { toast, ToastContainer } from 'react-toastify';
 
 const ListActivity = () => {
   const [activity, setActivity] = useState([]);
@@ -20,29 +18,14 @@ const ListActivity = () => {
   const [kategoriData, setKategoriData] = useState();
   const [company, setCompany] = useState();
   const [status, setStatus] = useState();
-  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchActivity = async () => {
-      setIsLoading(true);
-      try {
-        const response = await getAllActivity(
-          lokasi,
-          kategori,
-          company,
-          status,
-        );
-        console.log('actyivity', response.data.data);
-        setActivity(response.data.data);
-        if (response) {
-          setIsLoading(false);
-        }
-      } catch (error) {
-        setIsLoading(false);
-        throw error;
-      }
+      const response = await getAllActivity(lokasi, kategori, company, status);
+      console.log(response);
+      setActivity(response.data);
     };
     fetchActivity();
   }, [lokasi, kategori, company, status]);
@@ -84,14 +67,14 @@ const ListActivity = () => {
 
   return (
     <DefaultLayout>
-      {/* <Breadcrumb pageName="List Activity" /> */}
+      <Breadcrumb pageName="List Activity" />
 
       <div className="flex flex-col">
         <h2 className="text-title-md2 font-semibold text-black  dark:text-white mb-5">
           Filter
         </h2>
         <div className="flex gap-5 w-full bg-white border-stroke dark:border-strokedark dark:bg-boxdark p-5 mb-5 ">
-          {/* <SelectCompany
+          <SelectCompany
             label="Company"
             data={dataCompany}
             value={company}
@@ -116,20 +99,9 @@ const ListActivity = () => {
             onChange={(e) => setKategori(e.target.value)}
             label="Kategori"
             data={kategoriData}
-          /> */}
-        </div>
-
-        <ToastContainer autoClose={2000} />
-
-        {!isLoading ? (
-          <ListActivityTable
-            data={activity}
-            deleteHandler={deleteHandler}
-            toastSuccess={() => toast.success('success menambahkan activity')}
           />
-        ) : (
-          <Loader />
-        )}
+        </div>
+        <ListActivityTable data={activity} deleteHandler={deleteHandler} />
       </div>
     </DefaultLayout>
   );

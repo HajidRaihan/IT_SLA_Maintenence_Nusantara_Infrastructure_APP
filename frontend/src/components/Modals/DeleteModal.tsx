@@ -1,7 +1,7 @@
 import React from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@nextui-org/react";
 
-function DeleteLokasiModal({ isDeleteOpen, onDeleteClose, onDelete }) {
+function DeleteModal({ isDeleteOpen, onDeleteClose, onDelete }) {
   return (
     <>
       <Modal isOpen={isDeleteOpen} onClose={onDeleteClose} placement="top-center">
@@ -26,4 +26,4 @@ function DeleteLokasiModal({ isDeleteOpen, onDeleteClose, onDelete }) {
   );
 }
 
-export default DeleteLokasiModal;
+export default DeleteModal;

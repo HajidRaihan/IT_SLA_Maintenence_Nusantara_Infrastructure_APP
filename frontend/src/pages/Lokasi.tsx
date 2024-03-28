@@ -9,8 +9,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {LokasiModal} from '../components/Modals/AddModal';
 import { useDisclosure } from "@nextui-org/react";
-import UpdateLokasiModal from '../components/Modals/UpdateLokasiModal';
-import DeleteLokasiModal from '../components/Modals/DeleteLokasiModal';
+import {UpdateLokasiModal} from '../components/Modals/UpdateLokasiModal';
+import DeleteModal from '../components/Modals/DeleteModal';
 import Paginate from '../components/Pagination/paginate';
 
 const Lokasi = () => {
@@ -155,10 +155,10 @@ const Lokasi = () => {
         {currentItems.map((item, index) => (
           <div
             className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
-            key={index}
+            key={startIndex+index}
           >
             <div className="col-span-3 flex items-center">
-              <p className="font-medium mr-2 text-black dark:text-white">{item.id}</p>
+              <p className="font-medium mr-2 text-black dark:text-white">{startIndex+index+1}</p>
             </div>
             <div className="col-span-3 flex items-center sm:flex">
               <p className="font-medium mr-3 text-black dark:text-white">{item.nama_lokasi}</p>
@@ -225,19 +225,13 @@ const Lokasi = () => {
             </div>
           </div>
         ))}
-
-
-<Paginate
-        
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
       </div>
 
-    
+      <div className="flex justify-center mt-4">  
+      <Paginate currentPage={currentPage} onPageChange={handlePageChange}/></div> 
       <LokasiModal isOpen={addModalOpen}  onAdd={handleAddlokasi} onChange={(e) => setNewlokasi(e.target.value)} value={newlokasi} onClose={onAddModalClose}/>
       <UpdateLokasiModal isUpdateOpen={updateModalOpen}  onAdd={handleUpdate} onChange={(e) => setUpdatelokasi(e.target.value)} value={updatelokasi} onUpdateClose={onUpdateModalClose}/>
-      <DeleteLokasiModal isDeleteOpen={deleteModalOpen}  onDelete={handleDelete} onDeleteClose={onDeleteModalClose}/>
+      <DeleteModal isDeleteOpen={deleteModalOpen}  onDelete={handleDelete} onDeleteClose={onDeleteModalClose}/>
      
 
     </DefaultLayout>
