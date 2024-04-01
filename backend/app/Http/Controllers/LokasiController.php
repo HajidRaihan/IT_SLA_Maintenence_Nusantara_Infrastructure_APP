@@ -24,7 +24,7 @@ class LokasiController extends Controller
 
         return response()->json([
             'message' => 'yeay dpt tambah lokasi uhuy',
-            'data' => $lokasi,
+            'data' => $lokasi, 
         ]);
     }
 
