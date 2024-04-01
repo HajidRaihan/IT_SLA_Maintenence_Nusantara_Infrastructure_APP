@@ -133,7 +133,7 @@ const editActivity = async (data, id) => {
 
 const changeStatus = async (data, id) => {
   const headers = {
-    'Content-Type': 'multipart/form-data',
+    'Content-Type': 'application/json',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
   };
 

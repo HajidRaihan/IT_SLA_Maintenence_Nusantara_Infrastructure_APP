@@ -24,7 +24,6 @@ const ListActivity = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
 
-
   useEffect(() => {
     const fetchActivity = async () => {
       setIsLoading(true);
@@ -92,7 +91,7 @@ const ListActivity = () => {
         <h2 className="text-title-md2 font-semibold text-black  dark:text-white mb-5">
           Filter
         </h2>
-        <div className="flex gap-5 w-full bg-white border-stroke dark:border-strokedark dark:bg-boxdark p-5 mb-5 ">
+        {/* <div className="flex gap-5 w-full bg-white border-stroke dark:border-strokedark dark:bg-boxdark p-5 mb-5 ">
           <SelectCompany
             label= 'Company'
             data={dataCompany}
@@ -119,7 +118,7 @@ const ListActivity = () => {
             label="Kategori"
             data={kategoriData}
           /> 
-        </div>
+        </div> */}
 
         <ToastContainer autoClose={2000} />
 
@@ -127,6 +126,7 @@ const ListActivity = () => {
           <>
             <ListActivityTable
               data={activity}
+              setData={setActivity}
               deleteHandler={deleteHandler}
               toastSuccess={() => toast.success('success menambahkan activity')}
             />

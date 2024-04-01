@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import { changeStatus } from '../api/activityApi';
 import ChangeStatusModal from '../components/Modals/ChangeStatusModal';
 import { toast } from 'react-toastify';
-import { useDisclosure } from '@nextui-org/react';
+import { useDisclosure, Button } from '@nextui-org/react';
 import TableDetailActivity from '../components/Tables/TableDetailActivity';
 
 const ActivityDetail = () => {
@@ -13,13 +13,15 @@ const ActivityDetail = () => {
   const [fotoAkhir, setfotoAkhir] = useState();
   const [kondisiAkhir, setKondisiAkhir] = useState();
 
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   const { id } = useParams();
 
   useEffect(() => {
     const fetchActivity = async () => {
       const res = await getDetailActivity(id);
-      console.log(res);
-      setDetail(res.data);
+      console.log(res.data.data);
+      setDetail(res.data.data[0]);
     };
     fetchActivity();
   }, []);
@@ -50,8 +52,8 @@ const ActivityDetail = () => {
             />
             <div>
               <TableDetailActivity data={detail} />
-              <Link
-                to="#"
+              <Button
+                onPress={onOpen}
                 className={`my-5 w-full inline-flex items-center justify-center rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 ${
                   detail.status === 'done'
                     ? 'cursor-not-allowed opacity-50'
@@ -59,7 +61,7 @@ const ActivityDetail = () => {
                 }`}
               >
                 {detail.status === 'done' ? 'Aproved' : 'Approve'}
-              </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -67,7 +69,7 @@ const ActivityDetail = () => {
         ''
       )}
 
-      <ChangeStatusModal />
+      <ChangeStatusModal isOpen={isOpen} onOpenChange={onOpenChange} id={id} />
     </DefaultLayout>
   );
 };
