@@ -10,13 +10,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import {KategoriModal} from '../components/Modals/AddModal';
 import { useDisclosure } from "@nextui-org/react";
 import Paginate from '../components/Pagination/paginate';
-
+import DeleteModal from '../components/Modals/DeleteModal';
+import { UpdateKategoriModal } from '../components/Modals/UpdateLokasiModal';
 const Kategori = () => {
   const [data, setData] = useState([]);
   const [newCategory, setNewCategory] = useState('');
   const [updateCategory, setUpdateCategory] = useState('');
   const [CategoryId, setCategoryId] = useState('');
+  const { isOpen: deleteModalOpen, onOpen: onDeleteModalOpen, onClose: onDeleteModalClose } = useDisclosure();
   const { isOpen: addModalOpen, onOpen: onAddModalOpen, onClose: onAddModalClose } = useDisclosure();
+  const { isOpen: updateModalOpen, onOpen: onUpdateModalOpen, onClose: onUpdateModalClose } = useDisclosure();
  
   const [currentPage, setCurrentPage] = useState(1); // Current page state
   const itemsPerPage = 5; // Number of data items per page
@@ -43,12 +46,12 @@ const Kategori = () => {
   const handleUpdateForm = (id) => {
     setUpdateCategory('');
     setCategoryId(id);
-    // Open the update modal
+    onUpdateModalOpen()
   };
 
   const handleDeleteForm = (id) => {
-  
     setCategoryId(id);
+    onDeleteModalOpen();
     
   }
   useEffect(() => {
@@ -151,10 +154,10 @@ const Kategori = () => {
         {currentItems.map((item, index) => (
           <div
             className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
-            key={index}
+            key={startIndex+index}
           >
             <div className="col-span-3 flex items-center">
-              <p className="font-medium mr-2 text-black dark:text-white">{item.id}</p>
+              <p className="font-medium mr-2 text-black dark:text-white">{startIndex+index+1}</p>
             </div>
             <div className="col-span-3 flex items-center sm:flex">
               <p className="font-medium mr-3 text-black dark:text-white">{item.nama_kategori}</p>
@@ -221,18 +224,13 @@ const Kategori = () => {
             </div>
           </div>
         ))}
-
-
-<Paginate
-        
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
-      </div>
-
-    
+        </div>
+      <div className='flex justify-center mt-4'>
+      <Paginate currentPage={currentPage} onPageChange={handlePageChange}/></div>
       <KategoriModal isOpen={addModalOpen}  onAdd={handleAddKategori} onChange={(e) => setNewCategory(e.target.value)} value={newCategory} onClose={onAddModalClose}/>
-     
+      <UpdateKategoriModal isUpdateOpen={updateModalOpen}  onAdd={handleUpdate} onChange={(e) => setUpdateCategory(e.target.value)} value={updateCategory} onUpdateClose={onUpdateModalClose}/>
+      <DeleteModal isDeleteOpen={deleteModalOpen}  onDelete={handleDelete} onDeleteClose={onDeleteModalClose}/>
+      
      
 
     </DefaultLayout>
