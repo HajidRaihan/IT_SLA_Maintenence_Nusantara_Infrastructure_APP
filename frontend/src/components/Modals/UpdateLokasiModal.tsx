@@ -68,4 +68,72 @@ function UpdateKategoriModal({ isUpdateOpen, onUpdateClose, onAdd, value, onChan
   );
 }
 
-export  {UpdateKategoriModal,UpdateLokasiModal};
+function UpdateBarangModal({ isUpdateOpen, onUpdateClose, onAdd, valueUpdateStock, onUpdateStock }) {
+  return (
+    <>
+      <Modal isOpen={isUpdateOpen} onClose={onUpdateClose} placement="top-center">
+        <ModalContent>
+          <>
+            <ModalHeader className="flex flex-col gap-1">Update Stock</ModalHeader>
+            <ModalBody>
+              <Input
+                autoFocus
+                value={valueUpdateStock}
+                onChange={onUpdateStock}
+                label="Stock"
+                className=" bg-transparent p text-black  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                placeholder="Update your Stock"
+                type="number"
+                min="0"
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="flat" onPress={onUpdateClose}>
+                Close
+              </Button>
+              <Button color="primary" onPress={onAdd}>
+                Update
+              </Button>
+            </ModalFooter>
+          </>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+}
+
+function UpdateBarangModalMin({ isUpdateOpen, onUpdateClose, onAdd, valueUpdateStock, onUpdateStock }) {
+  return (
+    <>
+      <Modal isOpen={isUpdateOpen} onClose={onUpdateClose} placement="top-center">
+        <ModalContent>
+          <>
+            <ModalHeader className="flex flex-col gap-1">Update Stock</ModalHeader>
+            <ModalBody>
+              <Input
+                autoFocus
+                value={valueUpdateStock}
+                onChange={onUpdateStock}
+                label="Stock"
+                className=" bg-transparent p text-black  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                placeholder="Update your Stock"
+                type="number"
+                min="0"
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="flat" onPress={onUpdateClose}>
+                Close
+              </Button>
+              <Button color="primary" onPress={onAdd}>
+                Update
+              </Button>
+            </ModalFooter>
+          </>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+}
+
+export  {UpdateKategoriModal,UpdateLokasiModal,UpdateBarangModal,UpdateBarangModalMin};

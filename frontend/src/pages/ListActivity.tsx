@@ -8,7 +8,7 @@ import { getLokasi } from '../api/lokasiApi';
 import { getKategori } from '../api/kategoriApi';
 import SelectCompany from '../components/Forms/SelectGroup/SelectCompany';
 import SelectStatus from '../components/Forms/SelectGroup/SelectStatus';
-
+import { useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { toast, ToastContainer } from 'react-toastify';
 import { Pagination } from '@nextui-org/react';
@@ -24,6 +24,7 @@ const ListActivity = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchActivity = async () => {
@@ -86,15 +87,15 @@ const ListActivity = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="List Activity" />
+      {/* <Breadcrumb pageName="List Activity" /> */}
 
       <div className="flex flex-col">
         <h2 className="text-title-md2 font-semibold text-black  dark:text-white mb-5">
           Filter
         </h2>
         <div className="flex gap-5 w-full bg-white border-stroke dark:border-strokedark dark:bg-boxdark p-5 mb-5 ">
-          <SelectCompany
-            label= 'Company'
+          {/* <SelectCompany
+            label="Company"
             data={dataCompany}
             value={company}
             onChange={(e) => setCompany(e.target.value)}
@@ -118,7 +119,7 @@ const ListActivity = () => {
             onChange={(e) => setKategori(e.target.value)}
             label="Kategori"
             data={kategoriData}
-          /> 
+          /> */}
         </div>
 
         <ToastContainer autoClose={2000} />
@@ -148,4 +149,4 @@ const ListActivity = () => {
   );
 };
 
-export default ListActivity;
+export default ListActivity;
