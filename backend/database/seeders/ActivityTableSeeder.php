@@ -31,7 +31,7 @@ class ActivityTableSeeder extends Seeder
                 'kondisi_akhir'=> 'firaa',
                 'biaya'=> '123',
                 'foto_awal'=> '1710815317.jpeg',
-                'foto_akhir' => '1710815317.jpeg',
+                'foto_akhir'=> '1710815317.jpeg',
                 'status'=> 'done',
                 'created_at' => now(),
                 'updated_at' => now(),
