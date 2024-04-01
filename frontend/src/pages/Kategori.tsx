@@ -75,7 +75,7 @@ const Kategori = () => {
     setData(data.filter(item => item.id !== CategoryId));
     toast.success("Delete successfully ", res);
   } catch (error) {
-    toast.error('Error deleting location:', error);
+    toast.error('Error deleting Category:', error);
   }
 };
 
@@ -96,7 +96,7 @@ const Kategori = () => {
       toast.error('Failed to add Category');
     }
   };
-  
+  []
 
  
   const handleUpdate = async () => {
@@ -116,7 +116,7 @@ const Kategori = () => {
       }
          toast.success('Category updated successfully :', res);
     } catch (error) {
-      toast.error('Error updating location:', error);
+      toast.error('Error updating category', error);
       // Handle the error gracefully (e.g., display an error message to the user)
     }
   
@@ -125,11 +125,11 @@ const Kategori = () => {
   return (
     <DefaultLayout>
       <ToastContainer />
-      <Breadcrumb pageName="Lokasi" />
+      <Breadcrumb pageName="Category" />
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="py-6 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Add Kategori
+            Add Category
           </h4>
           <button
              onClick={handleAddForm} 

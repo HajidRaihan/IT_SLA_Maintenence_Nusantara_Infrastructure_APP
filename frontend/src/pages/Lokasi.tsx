@@ -61,13 +61,7 @@ const Lokasi = () => {
     });
   }, []);
 
-  
 
- 
-
-  
-
- 
 
   const handleDelete = async () => {
   try {

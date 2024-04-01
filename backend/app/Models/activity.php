@@ -19,14 +19,13 @@ class activity extends Model
     'uraian_aplikasi',
     'aplikasi_it_tol',
     'uraian_it_tol',
-    'catatan',
+    'catatan', 
     'shift',
     'lokasi_id',
     'kategori_id',
     'kondisi_akhir',
     'biaya',
-    'foto_awal',
-    'foto_akhir',
+    'fotos',
     'kategori_activity',
     'status'
     ];
