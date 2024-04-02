@@ -133,13 +133,13 @@ const editActivity = async (data, id) => {
 
 const changeStatus = async (data, id) => {
   const headers = {
-    'Content-Type': 'application/json',
+    'Content-Type': 'multipart/form-data',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
   };
 
   try {
     const response = await RequestApi(
-      'PUT',
+      'POST',
       `toll/${id}/status`,
       data,
       headers,

@@ -48,7 +48,13 @@ const packageData: Package[] = [
   },
 ];
 
-const ListActivityTable = ({ data, deleteHandler, toastSuccess, setData }) => {
+const ListActivityTable = ({
+  data,
+  deleteHandler,
+  toastSuccess,
+  setData,
+  hapusLoading,
+}) => {
   const navigate = useNavigate();
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
@@ -319,6 +325,8 @@ const ListActivityTable = ({ data, deleteHandler, toastSuccess, setData }) => {
         isOpen={isOpenDeleteModal}
         onOpenChange={onOpenChangeDeleteModal}
         handler={() => deleteHandler(activityId)}
+        toastSuccess={toastSuccess}
+        hapusLoading={hapusLoading}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Modal,
   ModalContent,
@@ -9,7 +9,18 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 
-const ActionModal = ({ isOpen, onOpenChange, handler }) => {
+const ActionModal = ({ isOpen, onOpenChange, handler, hapusLoading }) => {
+  // const { close } = useDisclosure();
+
+  // useEffect(() => {
+  //   if (!hapusLoading && isOpen) {
+  //     close();
+  //   }
+  // }, [hapusLoading, isOpen, close]);
+  const deleteHandler = () => {
+    handler();
+    onOpenChange(false);
+  };
   return (
     <>
       <Modal
@@ -29,7 +40,11 @@ const ActionModal = ({ isOpen, onOpenChange, handler }) => {
                 <Button color="primary" onPress={onClose}>
                   Tutup
                 </Button>
-                <Button color="danger" onPress={handler}>
+                <Button
+                  color="danger"
+                  onPress={deleteHandler}
+                  isLoading={hapusLoading}
+                >
                   Hapus
                 </Button>
               </ModalFooter>

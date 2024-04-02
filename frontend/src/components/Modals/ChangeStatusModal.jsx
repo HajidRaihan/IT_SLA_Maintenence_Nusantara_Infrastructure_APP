@@ -35,7 +35,7 @@ const ChangeStatusModal = ({ isOpen, onOpenChange, id }) => {
     console.log(formData);
 
     try {
-      const res = await changeStatus(formData, id);
+      const res = await changeStatus(data, id);
       console.log(res);
     } catch (error) {
       console.error(error);
