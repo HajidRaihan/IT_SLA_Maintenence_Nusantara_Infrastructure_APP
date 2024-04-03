@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -33,8 +34,9 @@ class ActivityTableSeeder extends Seeder
                 'foto_awal'=> '1710815317.jpeg',
                 'foto_akhir'=> '1710815317.jpeg',
                 'status'=> 'done',
-                'created_at' => now(),
-                'updated_at' => now(),
+                // 'ended'
+                // 'created_at' => Carbon::now(),
+                // 'updated_at' => Carbon::now(),
             ],
             
         ]);

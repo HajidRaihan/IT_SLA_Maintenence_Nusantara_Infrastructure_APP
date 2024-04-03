@@ -47,7 +47,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Route::get('/nontoll/user/{userId}', [ActivityController::class, 'getactivity_nontoll_by_user']);
     Route::put('/nontoll/update/{id}', [ActivityController::class, 'edit_activitynontoll']);
     Route::delete('/nontoll/delete/{id}', [ActivityController::class, 'delete_activitynontoll']);
-    Route::put('/toll/{id}/status', [ActivityController::class, 'changeStatus']);
+    Route::post('/toll/{id}/status', [ActivityController::class, 'changeStatus']);
 
     Route::get('/kategori', [KategoriController::class, 'index']);
     Route::post('/kategori', [KategoriController::class, 'store']);

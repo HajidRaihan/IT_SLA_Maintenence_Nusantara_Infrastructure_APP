@@ -19,10 +19,8 @@ class UserController extends Controller
     public function updateProfile(Request $request, $id)
     {
         $validate = $request->validate([
-            'username' => 'required',
-            'email' => 'required',
-            'foto' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048', // Sesuaikan dengan tipe file yang diizinkan dan batas ukuran file
-            'ttd' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048', // Sesuaikan dengan tipe file yang diizinkan dan batas ukuran file
+            'foto' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048', // Sesuaikan dengan tipe file yang diizinkan dan batas ukuran file
+            'ttd' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048', // Sesuaikan dengan tipe file yang diizinkan dan batas ukuran file
         ]);
 
         $ttdName = null;
