@@ -26,14 +26,15 @@ return new class extends Migration
             $table->string('shift');
             $table->unsignedBigInteger('lokasi_id');
             $table->unsignedBigInteger('kategori_id');
-            $table->string('kondisi_akhir');
+            $table->string('kondisi_akhir')->nullable();
             $table->integer('biaya');
             $table->string('foto_awal');
-            $table->string('foto_akhir');
+            $table->string('foto_akhir')->nullable();
             $table->enum('kategori_activity', ['toll', 'nontoll']);
-            $table->enum('status', ['process','done']);
-            $table->timestamp('ended_at');
-            $table->timestamps();
+            $table->enum('status', ['process','done']); 
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamp('ended_at')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
             $table->foreign('lokasi_id')->references('id')->on('lokasi')->onUpdate('cascade');

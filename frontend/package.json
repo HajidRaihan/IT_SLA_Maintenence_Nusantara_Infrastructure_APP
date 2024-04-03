@@ -23,6 +23,7 @@
     "@nextui-org/react": "^2.2.10",
     "apexcharts": "^3.41.0",
     "axios": "^1.6.7",
+    "date-fns": "^3.6.0",
     "flatpickr": "^4.6.13",
     "framer-motion": "^11.0.20",
     "headlessui": "^0.0.0",

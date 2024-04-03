@@ -139,7 +139,7 @@ const changeStatus = async (data, id) => {
 
   try {
     const response = await RequestApi(
-      'PUT',
+      'POST',
       `toll/${id}/status`,
       data,
       headers,

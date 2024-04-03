@@ -25,7 +25,9 @@ class activity extends Model
     'kategori_id',
     'kondisi_akhir',
     'biaya',
-    'fotos',
+    'foto_awal',
+    'foto_akhir',
+    'kondisi_akhir',
     'kategori_activity',
     'status'
     ];

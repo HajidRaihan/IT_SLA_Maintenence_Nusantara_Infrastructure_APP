@@ -23,6 +23,7 @@ const ListActivity = () => {
   const [status, setStatus] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [hapusLoading, setHapusLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -70,15 +71,18 @@ const ListActivity = () => {
 
   const deleteHandler = async (id) => {
     console.log('delete', id);
-
+    setHapusLoading(true);
     try {
       const res = await deleteActivity(id);
       if (res) {
         const updatedData = activity.filter((item) => item.id !== id);
         setActivity(updatedData);
+        setHapusLoading(false);
+        toast.success('success menambahkan activity');
       }
       console.log(res);
     } catch (error) {
+      setHapusLoading(false);
       throw error;
     }
   };
@@ -128,7 +132,9 @@ const ListActivity = () => {
           <>
             <ListActivityTable
               data={activity}
+              setData={setActivity}
               deleteHandler={deleteHandler}
+              hapusLoading={hapusLoading}
               toastSuccess={() => toast.success('success menambahkan activity')}
             />
             <div className="w-full flex justify-center mt-5">
@@ -149,4 +155,4 @@ const ListActivity = () => {
   );
 };
 
-export default ListActivity;
+export default ListActivity;

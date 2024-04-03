@@ -9,6 +9,7 @@ import { addActivity } from '../../api/activityApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import CheckboxTwo from '../Checkboxes/CheckboxTwo';
+import ButtonSubmit from '../Button/ButtonSubmit';
 import { getUserLogin } from '../../api/authApi';
 import {
   Modal,
@@ -27,6 +28,8 @@ const AddActivityModal = ({
   // isOpenSuccessModal,
   onOpenSuccessModal,
   // onOpenChangeSuccessModal,
+  toastSuccess,
+  setData,
 }) => {
   const [company, setCompany] = useState('');
   const [tanggal, setTanggal] = useState('');
@@ -47,6 +50,7 @@ const AddActivityModal = ({
   const [lokasiData, setLokasiData] = useState();
   const [kategoriData, setKategoriData] = useState();
   const [dataUser, setDataUser] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -204,16 +208,21 @@ const AddActivityModal = ({
     };
 
     console.log(data);
+    setIsLoading(true);
     try {
       const res = await addActivity(data);
 
       if (res) {
         onOpenSuccessModal();
+        toastSuccess();
         close();
+        setIsLoading(false);
         console.log(res);
+        setData((prev) => [...prev, res.data]);
       }
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
   };
 
@@ -241,11 +250,11 @@ const AddActivityModal = ({
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      backdrop="blur"
+      // backdrop="blur"
       size="2xl"
       placement="bottom"
       scrollBehavior="inside"
-      className="border-stroke bg-whiter shadow-default dark:border-strokedark dark:bg-black h-[500px] "
+      className="border-stroke bg-whiter shadow-default dark:border-strokedark dark:bg-black h-[400px] "
     >
       <ModalContent>
         {(close) => (
@@ -513,9 +522,14 @@ const AddActivityModal = ({
                     <Button
                       className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
                       onClick={() => handleAddActivity(close)}
+                      isLoading={isLoading}
                     >
                       Submit
                     </Button>
+                    {/* <ButtonSubmit
+                      handler={() => handleAddActivity(close)}
+                      isLoading={true}
+                    /> */}
                   </div>
                 </form>
               </div>
