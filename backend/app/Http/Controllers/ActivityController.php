@@ -63,7 +63,7 @@ class ActivityController extends Controller
 
     public function getactivity_toll(Request $request)
     {
-        $filters = $request->only(['company', 'status', 'location', 'category']);
+        $filters = $request->only(['company', 'status', 'lokasi_id', 'kategori_id']);
 
         // Get activities based on filters and join with the category and lokasi tables
         $activities = Activity::query()
@@ -77,11 +77,11 @@ class ActivityController extends Controller
         ->when(isset($filters['status']), function ($query) use ($filters) {
             $query->where('activity.status', $filters['status']); 
         })
-        ->when(isset($filters['location']), function ($query) use ($filters) {
-            $query->where('activity.lokasi_id', $filters['location']);
+        ->when(isset($filters['lokasi_id']), function ($query) use ($filters) {
+            $query->where('activity.lokasi_id', $filters['lokasi_id']);
                 })
-        ->when(isset($filters['category']), function ($query) use ($filters) {
-            $query->where('activity.kategori_id', $filters['category']); 
+        ->when(isset($filters['kategori_id']), function ($query) use ($filters) {
+            $query->where('activity.kategori_id', $filters['kategori_id']); 
                 })
         ->paginate(5);
     
