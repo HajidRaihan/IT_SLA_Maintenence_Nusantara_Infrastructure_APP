@@ -64,7 +64,10 @@ class BarangController extends Controller
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
-            'stock' => 'required|integer|min:0',
+            'adddata' => 'integer|min:0',
+            'mindata' => 'integer|min:0',
+            'stock' => 'integer|min:0',
+            'adddata_string' => 'string|in:masuk,keluar'
            
         ]);
 

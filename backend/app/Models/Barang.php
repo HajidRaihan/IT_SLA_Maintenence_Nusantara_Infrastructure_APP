@@ -17,7 +17,10 @@ class Barang extends Model
         'unit',
         'merk',
         'stock',
-        'gambar'
+        'gambar',
+        'adddata',
+        'mindata',
+        'adddata_string'
     ];
 
     public static function rules($id = null)
@@ -30,9 +33,17 @@ class Barang extends Model
                 'max:255',
                 Rule::in(['PT Makassar Metro Network', 'PT Jalan Tol Seksi Empat']),
             ],
+            'adddata_string' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::in(['masuk', 'keluar']),
+            ],
             'unit' => 'required|string|max:255',
             'merk' => 'required|string|max:255',
             'stock' => 'required|integer|min:0',
+            'adddata' => 'required|integer|min:0',
+            'mindata' => 'required|integer|min:0',
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'id' => [
                 'nullable',

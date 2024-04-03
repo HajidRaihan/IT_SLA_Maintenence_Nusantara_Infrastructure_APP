@@ -6,10 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-  
     public function up(): void
     {
-        Schema::create('barang',function (Blueprint $table) {
+        Schema::create('barang', function (Blueprint $table) {
             $table->id();
             $table->string('nama_equipment');
             $table->enum('perusahaan', ['PT Makassar Metro Network', 'PT Jalan Tol Seksi Empat'])->nullable();
@@ -17,6 +16,9 @@ return new class extends Migration
             $table->string('merk')->nullable();
             $table->integer('stock')->nullable();
             $table->string('gambar');
+            $table->integer('adddata')->nullable()->default(0);
+            $table->integer('mindata')->nullable();
+            $table->enum('adddata_string', ['masuk', 'keluar'])->nullable();
             $table->timestamps();
         });  
     }
@@ -29,3 +31,4 @@ return new class extends Migration
         Schema::dropIfExists('barang');
     }
 };
+ 
