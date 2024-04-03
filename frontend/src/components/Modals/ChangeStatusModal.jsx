@@ -6,39 +6,36 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  useDisclosure,
-  RadioGroup,
-  Radio,
 } from '@nextui-org/react';
 import SelectStatus from '../Forms/SelectGroup/SelectStatus';
 import { changeStatus } from '../../api/activityApi';
 
-const ChangeStatusModal = ({ isOpen, onOpenChange, id }) => {
+const ChangeStatusModal = ({
+  isOpen,
+  onOpenChange,
+  id,
+  toastSuccess,
+  toastError,
+}) => {
   const [status, setStatus] = useState();
   const [kondisiAkhir, setKondisiAkhir] = useState();
   const [fotoAkhir, setFotoAkhir] = useState();
 
-  const changeStatusHandler = async (e) => {
-    e.preventDefault();
-
+  const changeStatusHandler = async (close) => {
     const data = {
       status: status,
       kondisi_akhir: kondisiAkhir,
       foto_akhir: fotoAkhir,
     };
 
-    const formData = new FormData();
-    formData.append('status', status);
-    formData.append('kondisi_akhir', kondisiAkhir);
-    formData.append('foto_akhir', fotoAkhir);
-
-    console.log(formData);
-
     try {
       const res = await changeStatus(data, id);
+      toastSuccess();
+      close();
       console.log(res);
     } catch (error) {
       console.error(error);
+      toastError(error.response.data.message);
     }
   };
 
@@ -55,7 +52,7 @@ const ChangeStatusModal = ({ isOpen, onOpenChange, id }) => {
   return (
     <>
       <Modal
-        className="border-stroke bg-whiter shadow-default dark:border-strokedark dark:bg-black h-[500px] "
+        className="border-stroke bg-whiter shadow-default dark:border-strokedark dark:bg-black h-fit "
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         size="2xl"
@@ -68,12 +65,13 @@ const ChangeStatusModal = ({ isOpen, onOpenChange, id }) => {
               </ModalHeader>
 
               <ModalBody>
-                <form action="">
+                <form className="flex flex-col gap-5">
                   <div className="w-full ">
                     <label className="mb-2.5 block text-black dark:text-white">
                       Kondisi Akhir
                     </label>
-                    <input
+                    <textarea
+                      rows={4}
                       type="text"
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       placeholder="Catatan jika diperlukan"
@@ -81,8 +79,6 @@ const ChangeStatusModal = ({ isOpen, onOpenChange, id }) => {
                       onChange={(e) => setKondisiAkhir(e.target.value)}
                     />
                   </div>
-
-                  <SelectStatus value={status} onChange={statusOnChange} />
 
                   <div>
                     <label className="mb-3 block text-black dark:text-white">
@@ -101,10 +97,10 @@ const ChangeStatusModal = ({ isOpen, onOpenChange, id }) => {
                 <Button
                   color="danger"
                   // onPress={onClose}
-                  onClick={changeStatusHandler}
+                  onClick={() => changeStatusHandler(onClose)}
                   className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray"
                 >
-                  Tutup
+                  Submit
                 </Button>
               </ModalFooter>
             </>

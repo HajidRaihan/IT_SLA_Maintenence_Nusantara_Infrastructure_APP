@@ -54,6 +54,7 @@ const ListActivityTable = ({
   toastSuccess,
   setData,
   hapusLoading,
+  toastError,
 }) => {
   const navigate = useNavigate();
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -313,6 +314,7 @@ const ListActivityTable = ({
         // isOpenSuccessModal={isOpenSuccessModal}
         onOpenSuccessModal={onOpenSuccessModal}
         toastSuccess={toastSuccess}
+        toastError={toastError}
         setData={setData}
         // onOpenChangeSuccessModal={onOpenChangeSuccessModal}
       />
@@ -325,7 +327,6 @@ const ListActivityTable = ({
         isOpen={isOpenDeleteModal}
         onOpenChange={onOpenChangeDeleteModal}
         handler={() => deleteHandler(activityId)}
-        toastSuccess={toastSuccess}
         hapusLoading={hapusLoading}
       />
     </div>

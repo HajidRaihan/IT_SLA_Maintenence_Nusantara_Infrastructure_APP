@@ -11,7 +11,7 @@ import SelectStatus from '../components/Forms/SelectGroup/SelectStatus';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { toast, ToastContainer } from 'react-toastify';
-import { Pagination } from '@nextui-org/react';
+import { Pagination, Button } from '@nextui-org/react';
 
 const ListActivity = () => {
   const [activity, setActivity] = useState([]);
@@ -69,6 +69,10 @@ const ListActivity = () => {
     fetchKategori();
   }, []);
 
+  const toastErrorMessage = (message) => {
+    toast.error('Error: ' + message);
+  };
+
   const deleteHandler = async (id) => {
     console.log('delete', id);
     setHapusLoading(true);
@@ -87,6 +91,13 @@ const ListActivity = () => {
     }
   };
 
+  const clearFilter = () => {
+    setLokasi(null);
+    setKategori(null);
+    setCompany(null);
+    setStatus(null);
+  };
+
   const dataCompany = ['mmn', 'jtse'];
 
   return (
@@ -94,36 +105,43 @@ const ListActivity = () => {
       {/* <Breadcrumb pageName="List Activity" /> */}
 
       <div className="flex flex-col">
-        <h2 className="text-title-md2 font-semibold text-black  dark:text-white mb-5">
+        {/* <h2 className="text-title-md2 font-semibold text-black  dark:text-white mb-5">
           Filter
-        </h2>
-        <div className="flex gap-5 w-full bg-white border-stroke dark:border-strokedark dark:bg-boxdark p-5 mb-5 ">
-          {/* <SelectCompany
-            label="Company"
-            data={dataCompany}
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-          />
+        </h2> */}
+        <div className="rounded-sm border  border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark p-5 mb-5">
+          <div className="flex gap-5 w-full">
+            <SelectCompany
+              label="Company"
+              data={dataCompany}
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+            />
 
-          <SelectStatus
-            label="Status"
-            data={['process, done']}
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          />
+            <SelectStatus
+              label="Status"
+              data={['process, done']}
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            />
 
-          <SelectGroupOne
-            value={lokasi}
-            onChange={(e) => setLokasi(e.target.value)}
-            label="Lokasi"
-            data={lokasiData}
-          />
-          <SelectGroupOne
-            value={kategori}
-            onChange={(e) => setKategori(e.target.value)}
-            label="Kategori"
-            data={kategoriData}
-          /> */}
+            <SelectGroupOne
+              value={lokasi}
+              onChange={(e) => setLokasi(e.target.value)}
+              label="Lokasi"
+              data={lokasiData}
+            />
+            <SelectGroupOne
+              value={kategori}
+              onChange={(e) => setKategori(e.target.value)}
+              label="Kategori"
+              data={kategoriData}
+            />
+          </div>
+          <div>
+            <Button onPress={clearFilter} color="danger" className="">
+              Clear Filter
+            </Button>
+          </div>
         </div>
 
         <ToastContainer autoClose={2000} />
@@ -136,6 +154,7 @@ const ListActivity = () => {
               deleteHandler={deleteHandler}
               hapusLoading={hapusLoading}
               toastSuccess={() => toast.success('success menambahkan activity')}
+              toastError={toastErrorMessage}
             />
             <div className="w-full flex justify-center mt-5">
               <Pagination

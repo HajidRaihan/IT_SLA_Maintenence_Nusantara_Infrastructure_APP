@@ -6,29 +6,22 @@ import SelectStatus from '../Forms/SelectGroup/SelectStatus';
 import { getLokasi } from '../../api/lokasiApi';
 import { getKategori } from '../../api/kategoriApi';
 import { addActivity } from '../../api/activityApi';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
 import CheckboxTwo from '../Checkboxes/CheckboxTwo';
-import ButtonSubmit from '../Button/ButtonSubmit';
 import { getUserLogin } from '../../api/authApi';
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Button,
-  useDisclosure,
 } from '@nextui-org/react';
 
 const AddActivityModal = ({
   isOpen,
-  onOpen,
   onOpenChange,
-  // isOpenSuccessModal,
   onOpenSuccessModal,
-  // onOpenChangeSuccessModal,
   toastSuccess,
+  toastError,
   setData,
 }) => {
   const [company, setCompany] = useState('');
@@ -222,6 +215,7 @@ const AddActivityModal = ({
       }
     } catch (error) {
       console.error(error);
+      toastError(error.response.data.message);
       setIsLoading(false);
     }
   };
@@ -252,7 +246,7 @@ const AddActivityModal = ({
       onOpenChange={onOpenChange}
       // backdrop="blur"
       size="2xl"
-      placement="bottom"
+      // placement="bottom"
       scrollBehavior="inside"
       className="border-stroke bg-whiter shadow-default dark:border-strokedark dark:bg-black h-[400px] "
     >
@@ -456,7 +450,7 @@ const AddActivityModal = ({
                           Shift
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           value={shift}
                           onChange={handleShiftChange}
@@ -477,7 +471,7 @@ const AddActivityModal = ({
                         data={kategoriData}
                       />
 
-                      <div className="w-full ">
+                      {/* <div className="w-full ">
                         <label className="mb-2.5 block text-black dark:text-white">
                           Kondisi Akhir
                         </label>
@@ -488,14 +482,14 @@ const AddActivityModal = ({
                           value={kondisiAkhir}
                           onChange={handleKondisiAkhirChange}
                         />
-                      </div>
+                      </div> */}
 
                       <div className="w-full ">
                         <label className="mb-2.5 block text-black dark:text-white">
                           Biaya
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           placeholder="example: 80.000"
                           value={biaya}

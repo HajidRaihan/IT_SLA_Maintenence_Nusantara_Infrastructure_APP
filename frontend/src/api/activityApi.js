@@ -34,10 +34,10 @@ const getAllActivity = async (lokasi, kategori, company, status, page) => {
     params.push(`page=${page}`);
   }
   if (lokasi) {
-    params.push(`lokasi=${lokasi}`);
+    params.push(`lokasi_id=${lokasi}`);
   }
   if (kategori) {
-    params.push(`kategori=${kategori}`);
+    params.push(`kategori_id=${kategori}`);
   }
   if (company) {
     params.push(`company=${company}`);

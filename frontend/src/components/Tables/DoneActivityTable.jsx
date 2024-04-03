@@ -45,27 +45,28 @@ const DoneActivityTable = ({ data }) => {
   return (
     <div className="w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
-        <table className="w-full table-auto">
+        <table className="w-full table-fixed">
           <tr>
             <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
               <h5 className="font-medium text-black dark:text-white">
-                Handled Date
-              </h5>
-            </td>
-            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-              <p className="text-black dark:text-white">{tanggalSelesai}</p>
-            </td>
-          </tr>
-          <tr>
-            <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-              <h5 className="font-medium text-black dark:text-white">
-                tanggal handle
+                Tanggal Report
               </h5>
             </td>
             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
               <p className="text-black dark:text-white">{tanggalMulai}</p>
             </td>
           </tr>
+          <tr>
+            <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+              <h5 className="font-medium text-black dark:text-white">
+                Tanggal Selesai
+              </h5>
+            </td>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <p className="text-black dark:text-white">{tanggalSelesai}</p>
+            </td>
+          </tr>
+
           <tr>
             <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
               <h5 className="font-medium text-black dark:text-white">

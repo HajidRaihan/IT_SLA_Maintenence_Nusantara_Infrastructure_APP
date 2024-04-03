@@ -4,7 +4,7 @@ import { getDetailActivity } from '../api/activityApi';
 import { Link, useParams } from 'react-router-dom';
 import { changeStatus } from '../api/activityApi';
 import ChangeStatusModal from '../components/Modals/ChangeStatusModal';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useDisclosure, Button } from '@nextui-org/react';
 import TableDetailActivity from '../components/Tables/TableDetailActivity';
 import DoneActivityTable from '../components/Tables/DoneActivityTable';
@@ -39,6 +39,10 @@ const ActivityDetail = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const toastErrorMessage = (message) => {
+    toast.error(message);
   };
 
   return (
@@ -90,8 +94,15 @@ const ActivityDetail = () => {
       ) : (
         ''
       )}
+      <ToastContainer autoClose={2000} />
 
-      <ChangeStatusModal isOpen={isOpen} onOpenChange={onOpenChange} id={id} />
+      <ChangeStatusModal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        id={id}
+        toastSuccess={() => toast.success('Success Approve Activity')}
+        toastError={toastErrorMessage}
+      />
     </DefaultLayout>
   );
 };
