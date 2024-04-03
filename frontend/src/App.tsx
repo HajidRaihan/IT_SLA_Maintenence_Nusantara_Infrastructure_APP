@@ -21,6 +21,7 @@ import Buttons from './pages/UiElements/Buttons';
 import Lokasi from './pages/Lokasi';
 import ListActivity from './pages/ListActivity';
 import ListBarang from './pages/ListBarang';
+import LogBarang from './pages/LogBarang';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -88,8 +89,17 @@ function App() {
           path="/listbarang"
           element={
             <>
-              <PageTitle title="ListBarang" />
+              <PageTitle title="Barang" />
               <ListBarang />
+            </>
+          }
+        />
+          <Route
+          path="/logbarang"
+          element={
+            <>
+              <PageTitle title="Barang" />
+              <LogBarang />
             </>
           }
         />
