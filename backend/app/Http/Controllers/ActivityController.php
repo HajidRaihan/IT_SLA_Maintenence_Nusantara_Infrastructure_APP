@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
     public function addactivity_toll(Request $request)
     {
         $data = $request->validate([
-            'user_id' => 'required|exists:users,id',
+            // 'user_id' => 'required|exists:users,id',
             'company' => 'required|in:jtse,mmn',
             'tanggal' => 'required|date',
             'jenis_hardware' => 'required|string',
@@ -30,6 +31,9 @@ class ActivityController extends Controller
             'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:process,done',
         ]);
+
+        $user = Auth::user()->id;
+        $data['user_id'] = $user;
 
         // Simpan foto_awal
         if ($request->hasFile('foto_awal')) {

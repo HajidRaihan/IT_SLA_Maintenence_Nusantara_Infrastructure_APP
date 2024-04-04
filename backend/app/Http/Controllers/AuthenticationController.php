@@ -65,5 +65,4 @@ class AuthenticationController extends Controller
     public function user() {
         return response(Auth::user());
     }
-
 }
