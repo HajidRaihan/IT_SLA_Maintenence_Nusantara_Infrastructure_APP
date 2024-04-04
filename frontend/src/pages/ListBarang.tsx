@@ -17,8 +17,10 @@
                 const [newMerk, setNewMerk] = useState('');
                 const [BarangId, setBarangId] = useState('');
                 const [updateStock, setUpdateStock] = useState(0);
+                const [updateStockMin, setUpdateStockMin] = useState(0);
                 const { isOpen: addModalOpen, onOpen: onAddModalOpen, onClose: onAddModalClose } = useDisclosure();
                 const { isOpen: updateModalOpen, onOpen: onUpdateModalOpen, onClose: onUpdateModalClose } = useDisclosure();
+                const { isOpen: updateModalMinOpen, onOpen: onUpdateModalMinOpen, onClose: onUpdateModalMinClose } = useDisclosure();
                 const [newStock, setNewStock] = useState(0);
                 const [newPicture, setNewPicture] = useState();
                 const [newUnit, setNewUnit] = useState('');
@@ -44,6 +46,11 @@
                     setBarangId(id);
                     onUpdateModalOpen();
                 };
+
+                const handleUpdateFormMin = (id) => {
+                    setBarangId(id);
+                    onUpdateModalMinOpen();
+                };
             
                 const handleUpdateStock = async () => {
                     if (updateStock <= 0) {
@@ -58,9 +65,11 @@
                       }
                   
                       const updatedStock = itemToUpdate.stock + updateStock;
+                      const log_barang = String('masuk');
                   
                       const dataToUpdate = {
                         stock: updatedStock,
+                        adddata_string:log_barang
                       };
                   
                       const res = await updateBarang(BarangId, dataToUpdate);
@@ -84,7 +93,7 @@
 
 
                   const handleUpdateMinStock = async () => {
-                    if (updateStock <= 0) {
+                    if (updateStockMin <= 0) {
                       toast.error('Error: Stock should be a positive number');
                       return;
                     }
@@ -95,10 +104,12 @@
                         throw new Error('Error: Barang not found');
                       }
                   
-                      const updatedStock = itemToUpdate.stock - updateStock;
+                      const updatedStock = itemToUpdate.stock - updateStockMin;
+                      const log_barang = String('keluar');
                   
                       const dataToUpdate = {
                         stock: updatedStock,
+                        adddata_string:log_barang
                       };
                   
                       const res = await updateBarang(BarangId, dataToUpdate);
@@ -156,6 +167,12 @@
                     setUpdateStock(newValue);
                   };
 
+
+                  const UpdatehandleStockMin = (e) => {
+                    const newValue = parseInt(e.target.value); // Parse input value to integer
+                    setUpdateStockMin(newValue);
+                  };
+
                 const handleAddBarang = async() => {
                 // Prevent default form submission behavior
 
@@ -175,7 +192,7 @@
                         toast.success('Barang added successfully!', res);
                 
                     } catch (error) {
-                        toast.error('Failed to add category');
+                        toast.error('Failed to add ');
                     }
                 };
 
@@ -310,7 +327,7 @@
 
                         <button
                             className="hover:text-primary"
-                            onClick={() => handleUpdateForm(item.id)} 
+                            onClick={() => handleUpdateFormMin(item.id)} 
                         >
                             <svg
                                     className="fill-current"
@@ -364,7 +381,7 @@
             <UpdateBarangModal  isUpdateOpen={updateModalOpen} onAdd = {handleUpdateStock} onUpdateStock={UpdatehandleStock} valueUpdateStock={updateStock} onUpdateClose={onUpdateModalClose}
                   />
 
-            <UpdateBarangModalMin  isUpdateOpen={updateModalOpen} onAdd = {handleUpdateMinStock} onUpdateStock={UpdatehandleStock} valueUpdateStock={updateStock} onUpdateClose={onUpdateModalClose}
+            <UpdateBarangModalMin  isUpdateOpen={updateModalMinOpen} onAdd = {handleUpdateMinStock} onUpdateStock={UpdatehandleStockMin} valueUpdateStock={updateStockMin} onUpdateClose={onUpdateModalMinClose}
                   />
             </DefaultLayout>
                 );
