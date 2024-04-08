@@ -27,19 +27,19 @@ const ActivityDetail = () => {
     fetchActivity();
   }, []);
 
-  const handleApprove = async () => {
-    const data = {
-      status: 'done',
-      foto_akhir: fotoAkhir,
-      kondisi_akhir: kondisiAkhir,
-    };
-    try {
-      const res = await changeStatus(id, data);
-      console.log(res);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleApprove = async () => {
+  //   const data = {
+  //     status: 'done',
+  //     foto_akhir: fotoAkhir,
+  //     kondisi_akhir: kondisiAkhir,
+  //   };
+  //   try {
+  //     const res = await changeStatus(id, data);
+  //     console.log(res);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const toastErrorMessage = (message) => {
     toast.error(message);

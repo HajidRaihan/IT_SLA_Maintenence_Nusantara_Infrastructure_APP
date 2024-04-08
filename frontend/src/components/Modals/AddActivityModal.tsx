@@ -181,7 +181,7 @@ const AddActivityModal = ({
     }
 
     const data = {
-      user_id: dataUser.id,
+      // user_id: dataUser.id,
       company: company,
       tanggal: tanggal,
       jenis_hardware: jenisHardware.join(', '),
@@ -321,11 +321,12 @@ const AddActivityModal = ({
 
                       <div className="w-full ">
                         <textarea
-                          className="w-full h-40 rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          className="disabled:cursor-not-allowed w-full h-40 rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           placeholder="Penjabaran Masalah Hardware"
                           rows={5}
                           value={uraianHardware}
                           onChange={handleUraianHardwareChange}
+                          disabled={jenisHardware.length === 0}
                         />
                       </div>
 
@@ -364,11 +365,12 @@ const AddActivityModal = ({
 
                       <div className="w-full ">
                         <textarea
-                          className="h-40 w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          className="disabled:cursor-not-allowed h-40 w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           placeholder="Penjabaran Masalah Sistem"
                           rows={5}
                           value={uraianAplikasi}
                           onChange={handleUraianAplikasiChange}
+                          disabled={standartAplikasi.length === 0}
                         />
                       </div>
 
@@ -426,9 +428,10 @@ const AddActivityModal = ({
                         <textarea
                           placeholder="Penjabaran Masalah Aplikasi IT & Peralatan Tol"
                           rows={5}
-                          className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          className="disabled:cursor-not-allowed w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           value={uraianItTol}
                           onChange={handleUraianItTolChange}
+                          disabled={aplikasiItTol.length === 0}
                         />
                       </div>
 
@@ -507,10 +510,10 @@ const AddActivityModal = ({
                         />
                       </div>
 
-                      <SelectStatus
+                      {/* <SelectStatus
                         value={status}
                         onChange={handleStatusChange}
-                      />
+                      /> */}
                     </div>
 
                     <Button

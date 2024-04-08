@@ -105,10 +105,10 @@ const ListActivity = () => {
       {/* <Breadcrumb pageName="List Activity" /> */}
 
       <div className="flex flex-col">
-        {/* <h2 className="text-title-md2 font-semibold text-black  dark:text-white mb-5">
+        <h2 className="text-title-md2 font-semibold text-black  dark:text-white mb-5">
           Filter
-        </h2> */}
-        <div className="rounded-sm border  border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark p-5 mb-5">
+        </h2>
+        {/* <div className="rounded-sm border  border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark p-5 mb-5">
           <div className="flex gap-5 w-full">
             <SelectCompany
               label="Company"
@@ -142,7 +142,7 @@ const ListActivity = () => {
               Clear Filter
             </Button>
           </div>
-        </div>
+        </div> */}
 
         <ToastContainer autoClose={2000} />
 
