@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('kondisi_akhir')->nullable();
             $table->integer('biaya');
             $table->string('foto_awal');
-            $table->string('foto_akhir')->nullable();
+            $table->string('foto_akhir')->nullable()->default('png');
             $table->enum('kategori_activity', ['toll', 'nontoll']);
             $table->enum('status', ['process','done']); 
             $table->timestamp('created_at')->useCurrent();
