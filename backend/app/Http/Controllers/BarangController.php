@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Barang;   
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class BarangController extends Controller
 {
@@ -105,4 +107,86 @@ class BarangController extends Controller
             'data' => $barang,
         ]);
     }
+
+    public function logbarang(Request $request) {
+        $pagination = 10;
+        $logbarang = DB::table('log_barang')->latest('tanggal')->paginate($pagination);
+    
+        // Ubah format tanggal menjadi 'd F Y' untuk setiap log barang
+        foreach ($logbarang as $barang) {
+            $barang->tanggal = Carbon::parse($barang->tanggal)->format('d F Y');
+        }
+    
+        // Mengembalikan data log barang dalam format JSON
+        return response()->json([
+            'logbarang' => $logbarang,
+        ]);
+    }
+    
+    public function updatestock(Request $request, $id)
+    {
+        $product = Barang::find($id);
+        if (!$product) {
+            return response()->json(['error' => 'Barang tidak ditemukan'], 404);
+        }
+    
+        // Simpan stok sebelum perubahan
+        $stok_sebelum = $product->stock;
+    
+        // Menambahkan jumlah stok barang
+        $product->stock += $request->input('stock');
+        $product->save();
+    
+        // Tambahkan entri ke log barang
+        DB::table('log_barang')->insert([
+            'tanggal' => Carbon::now(),
+            'nama_equipment' => $product->nama_equipment,
+            'perusahaan' => $product->perusahaan,
+            'unit' => $product->unit,
+            'merk' => $product->merk,
+            // 'stock_sebelum' => $stok_sebelum,
+            // 'stock_setelah' => $product->stock,
+            'activity' => 'masuk', // Aktivitas penambahan stok
+        ]);
+    
+        // Mengembalikan respons JSON yang memberi tahu keberhasilan
+        return response()->json([
+            'message' => 'Stock berhasil ditambahkan',
+            'data' => $product,
+        ]);
+    }
+    
+    public function minusstock(Request $request, $id)
+    {
+        $product = Barang::find($id);
+        if (!$product) {
+            return response()->json(['error' => 'Barang tidak ditemukan'], 404);
+        }
+    
+        // Simpan stok sebelum perubahan
+        $stok_sebelum = $product->stock;
+    
+        // Mengurangi jumlah stok barang
+        $product->stock -= $request->input('stock');
+        $product->save();
+    
+        // Tambahkan entri ke log barang
+        DB::table('log_barang')->insert([
+            'tanggal' => Carbon::now(),
+            'nama_equipment' => $product->nama_equipment,
+            'perusahaan' => $product->perusahaan,
+            'unit' => $product->unit,
+            'merk' => $product->merk,
+            // 'stock_sebelum' => $stok_sebelum,
+            // 'stock_setelah' => $product->stock,
+            'activity' => 'keluar', // Aktivitas pengurangan stok
+        ]);
+    
+        // Mengembalikan respons JSON yang memberi tahu keberhasilan
+        return response()->json([
+            'message' => 'Stock berhasil dikurangkan',
+            'data' => $product,
+        ]);
+    }
 }
+

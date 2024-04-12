@@ -8,18 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('kategori', function (Blueprint $table) {
+        Schema::create('jenis_hardware', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_kategori');
+            $table->string('nama_hardware');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('kategori');
+        Schema::dropIfExists('jenis_hardware');
     }
 };

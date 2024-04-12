@@ -6,20 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     public function up(): void
     {
-        Schema::create('kategori', function (Blueprint $table) {
+        Schema::create('aplikasi_tol', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_kategori');
+            $table->string('nama_aplikasitol');
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('kategori');
+        Schema::dropIfExists('aplikasi_tol');
+        
     }
 };

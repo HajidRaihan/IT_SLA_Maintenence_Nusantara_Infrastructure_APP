@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-class Barang extends Model
+class LogBarang extends Model
 {
-    protected $table = 'barang';
+    protected $table = 'log_barang';
     use HasFactory;
     protected $fillable = [
+        'tanggal',
         'nama_equipment',
         'perusahaan',
         'unit',
         'merk',
         'stock',
-        'gambar',
+        'activity',
     ];
 }

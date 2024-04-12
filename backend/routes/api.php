@@ -66,6 +66,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/barang/{id}', [BarangController::class, 'show']);
     Route::put('/barang/{id}', [BarangController::class, 'update']);
     Route::delete('/barang/{id}', [BarangController::class, 'destroy']);
+    Route::get('/logbarang', [BarangController::class, 'logbarang']);
+    Route::put('/barang/{id}/updatestock', [BarangController::class, 'updatestock']);
+    Route::put('/barang/{id}/minusstock', [BarangController::class, 'minusstock']);
 
     Route::get('/jadwal', [JadwalController::class, 'index']);
     Route::post('/jadwal', [JadwalController::class, 'store']);
