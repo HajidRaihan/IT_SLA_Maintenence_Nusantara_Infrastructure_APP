@@ -5,21 +5,13 @@ import UpdateActivityModal from '../Modals/UpdateActivityModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import AddActivityModal from '../Modals/AddActivityModal';
-import { motion, AnimatePresence } from 'framer-motion';
 
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
+
   Button,
   useDisclosure,
-  Pagination,
 } from '@nextui-org/react';
-import SuccessModal from '../Modals/SuccessModal';
 import ActionModal from '../Modals/ActionModal';
-import { ToastContainer } from 'react-toastify';
 
 const packageData: Package[] = [
   {

@@ -115,7 +115,7 @@ function BarangModal({ isOpen, onClose, onAdd, onChangeEquipment, onChangeMerk, 
 }
 
 
-function KategoriModal({ isOpen, onClose, onAdd, value, onChange }) {
+function KategoriModal({ isOpen, onClose, onAdd, valueduration,valuecategory, onChangeKategori,OnChangeDuration }) {
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} placement="top-center">
@@ -125,11 +125,20 @@ function KategoriModal({ isOpen, onClose, onAdd, value, onChange }) {
             <ModalBody>
               <Input
                 autoFocus
-                value={value}
-                onChange={onChange}
+                value={valuecategory}
+                onChange={onChangeKategori}
                 className=" bg-transparent p text-black  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 label="Kategori"
                 placeholder="Enter your kategori"
+                variant="bordered"
+              />
+                <Input
+                autoFocus
+                value={valueduration}
+                onChange={OnChangeDuration}
+                className=" bg-transparent p text-black  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                label="Duration"
+                placeholder="Enter duration (e.g., 7 minutes/hours/days/weeks/months)"
                 variant="bordered"
               />
             </ModalBody>

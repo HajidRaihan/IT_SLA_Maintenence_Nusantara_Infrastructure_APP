@@ -17,6 +17,7 @@ const SuccessModal = ({ isOpen, onOpenChange }) => {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         size="sm"
+        
       >
         <ModalContent>
           {(onClose) => (
