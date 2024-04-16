@@ -1,46 +1,12 @@
-import React ,{useState}from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input,select,Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
+import { Modal, ModalHeader, ModalBody, ModalFooter, ModalContent } from "@nextui-org/react";
+import { Input, Button } from "@nextui-org/react";
+import React,{useState} from "react";
 
 
-function LokasiModal({ isOpen, onClose, onAdd, value, onChange }) {
- 
- 
-  return (
-    <>
-      <Modal isOpen={isOpen} onClose={onClose} placement="top-center">
-        <ModalContent>
-          <>
-            <ModalHeader className="mb-2.5 block text-black dark:text-white">Add Lokasi</ModalHeader>
-            <ModalBody>
-              <Input
-                autoFocus
-                value={value}
-                onChange={onChange}
-                className=" bg-transparent p text-black  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                label="Lokasi"
-                placeholder="Enter your lokasi"
-                variant="bordered"
-              />
-            </ModalBody>
-            <ModalFooter>
-              <Button color="danger" variant="flat" onPress={onClose}>
-                Close
-              </Button>
-              <Button color="primary" onPress={onAdd}>
-                Add
-              </Button>
-            </ModalFooter>
-          </>
-        </ModalContent>
-      </Modal>
-    </>
-  );
-}
+
 
 function BarangModal({ isOpen, onClose, onAdd, onChangeEquipment, onChangeMerk, onChangeUnit, onChangeStock, onChangePicture, onChangeCompany, valueEquipment, valueMerk, valueUnit, valueStock, valuePicture, valueCompany }) {
-
-
-  return (
+ return (
       <>
           <Modal isOpen={isOpen} onClose={onClose} placement="top-center">
               <ModalContent>
@@ -156,5 +122,41 @@ function KategoriModal({ isOpen, onClose, onAdd, valueduration,valuecategory, on
     </>
   );
 }
+
+
+function LokasiModal({ isOpen, onClose, onAdd, value, onChange }) {
+ 
+ 
+  return (
+    <>
+      <Modal isOpen={isOpen} onClose={onClose} placement="top-center">
+        <ModalContent>
+          <>
+            <ModalHeader className="mb-2.5 block text-black dark:text-white">Add Lokasi</ModalHeader>
+            <ModalBody>
+              <Input
+                autoFocus
+                value={value}
+                onChange={onChange}
+                className=" bg-transparent p text-black  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                label="Lokasi"
+                placeholder="Enter your lokasi"
+                variant="bordered"
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="flat" onPress={onClose}>
+                Close
+              </Button>
+              <Button color="primary" onPress={onAdd}>
+                Add
+              </Button>
+            </ModalFooter>
+          </>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+}  
 
 export {LokasiModal,KategoriModal,BarangModal};

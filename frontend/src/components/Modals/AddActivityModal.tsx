@@ -510,10 +510,10 @@ const AddActivityModal = ({
                         />
                       </div>
 
-                      {/* <SelectStatus
+                      <SelectStatus
                         value={status}
                         onChange={handleStatusChange}
-                      /> */}
+                      />
                     </div>
 
                     <Button

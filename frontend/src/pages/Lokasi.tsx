@@ -12,6 +12,8 @@ import { useDisclosure } from "@nextui-org/react";
 import {UpdateLokasiModal} from '../components/Modals/UpdateLokasiModal';
 import DeleteModal from '../components/Modals/DeleteModal';
 import Paginate from '../components/Pagination/paginate';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+
 
 const Lokasi = () => {
   const [data, setData] = useState([]);

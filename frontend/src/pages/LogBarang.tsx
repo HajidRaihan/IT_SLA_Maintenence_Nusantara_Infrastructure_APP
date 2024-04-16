@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DefaultLayout from '../layout/DefaultLayout';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import { getBarang } from '../api/BarangApi';
+import { getlogBarang } from '../api/BarangApi';
 import 'react-toastify/dist/ReactToastify.css';
 import Paginate from '../components/Pagination/paginate';
 import moment from 'moment-timezone';
@@ -24,16 +24,8 @@ setCurrentPage(page); // Update the current page
 };
 
     
-    
-
-   
-
-      
-    
-    
-    
-    useEffect(() => {
-        getBarang()
+      useEffect(() => {
+        getlogBarang()
             .then(res => {
                 setData(res);
             })
@@ -45,12 +37,6 @@ setCurrentPage(page); // Update the current page
 
 
     
-    
-    
-
-
-
-
     return (
         <DefaultLayout>
             <Breadcrumb pageName="Barang" />
@@ -95,13 +81,13 @@ setCurrentPage(page); // Update the current page
                         <p>{item.nama_equipment}</p>
                     </div>
                     <div className="p-2.5  xl:p-3">
-                    <p>{moment(item.updated_at).tz("Asia/Makassar").format("DD-MM-YYYY ")}</p>
+                    <p>{moment(item.created_at).tz("Asia/Makassar").format("DD-MM-YYYY ")}</p>
                     </div>
                     <div className="p-2.5 text-center xl:p-5">
                         <p>{item.perusahaan}</p>
                     </div>
                     <div className="p-2.5 text-center xl:p-5">
-                        <p>{item.unit}</p>
+                        <p>{item.addata}</p>
                     </div>
                     <div className="p-2.5 text-center xl:p-5">
                         <p>{item.merk}</p>
@@ -109,7 +95,7 @@ setCurrentPage(page); // Update the current page
                     <div className="mb-3 justify-center flex items-center">
          <button style={{ 
         backgroundColor: item.adddata_string === 'masuk' ? 'green' : 'red',
-        color: 'white', 
+        color: 'black', 
         border: 'none', 
         padding: '8px 16px', 
         borderRadius: '4px' 
