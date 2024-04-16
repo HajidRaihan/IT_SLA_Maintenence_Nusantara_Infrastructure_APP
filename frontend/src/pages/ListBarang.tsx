@@ -16,7 +16,7 @@
                 const [newEquipment, setNewEquipment] = useState('');
                 const [newMerk, setNewMerk] = useState('');
                 const [BarangId, setBarangId] = useState('');
-                const [updateStock, setUpdateStock] = useState(0);
+                const [updateStock, setUpdateStock] = useState<number>(0);
                 const [updateStockMin, setUpdateStockMin] = useState(0);
                 const { isOpen: addModalOpen, onOpen: onAddModalOpen, onClose: onAddModalClose } = useDisclosure();
                 const { isOpen: updateModalOpen, onOpen: onUpdateModalOpen, onClose: onUpdateModalClose } = useDisclosure();
@@ -53,44 +53,49 @@
                 };
             
                 const handleUpdateStock = async () => {
-                    if (updateStock <= 0) {
-                      toast.error('Error: Stock should be a positive number');
-                      return;
+                    // Ensure updateStock is parsed as an integer
+                    const stockToAdd = updateStock;
+                
+                    if (isNaN(stockToAdd) || stockToAdd <= 0) {
+                        toast.error('Error: Stock should be a positive number');
+                        return;
                     }
-                  
+                
                     try {
-                      const itemToUpdate = data.find(item => item.id === BarangId);
-                      if (!itemToUpdate) {
-                        throw new Error('Error: Barang not found');
-                      }
-                  
-                      const updatedStock = itemToUpdate.stock + updateStock;
-                      const log_barang = String('masuk');
-                  
-                      const dataToUpdate = {
-                        stock: updatedStock,
-                        adddata_string:log_barang
-                      };
-                  
-                      const res = await updateBarang(BarangId, dataToUpdate);
-                      const updatedBarang = res.data;
-                  
-                      const updatedIndex = data.findIndex(item => item.id === BarangId);
-                      if (updatedIndex !== -1) {
-                        setData(prevData => {
-                          const newData = [...prevData];
-                          newData[updatedIndex] = updatedBarang;
-                          return newData;
-                        });
-                      }
-                  
-                      toast.success(`Stock updated successfully: ${updatedStock}`);
+                        const itemToUpdate = data.find(item => item.id === BarangId);
+                        if (!itemToUpdate) {
+                            throw new Error('Error: Barang not found');
+                        }
+                
+                        const updatedStock = itemToUpdate.stock + stockToAdd;
+                        const log_barang = 'masuk'; // No need to convert string to String object
+                
+                        const dataToUpdate = {
+                            stock: updatedStock,
+                            adddata_string: log_barang,
+                            addata: stockToAdd,
+                        };
+                
+                        const res = await updateBarang(BarangId, dataToUpdate);
+                        const updatedBarang = res.data;
+                
+                        const updatedIndex = data.findIndex(item => item.id === BarangId);
+                        if (updatedIndex !== -1) {
+                            setData(prevData => {
+                                const newData = [...prevData];
+                                newData[updatedIndex] = updatedBarang;
+                                return newData;
+                            });
+                        }
+                
+                        toast.success(`Stock updated successfully: ${updatedStock}`);
                     } catch (error) {
-                      toast.error('Error updating stock:', error.message);
-                      // Handle the error gracefully (e.g., display an error message to the user)
+                        toast.error('Error updating stock:', error.message);
+                        // Handle the error gracefully (e.g., display an error message to the user)
                     }
-                  };
-
+                };
+                
+                
 
                   const handleUpdateMinStock = async () => {
                     if (updateStockMin <= 0) {
@@ -175,7 +180,7 @@
 
                 const handleAddBarang = async() => {
                 // Prevent default form submission behavior
-
+ 
                     const newBarangData = {
                         nama_equipment: newEquipment,
                         merk: newMerk,
@@ -196,14 +201,16 @@
                     }
                 };
 
+
+                
+
                 const handlePictureChange = (e) => {
                 setNewPicture(e.target.files[0]);
 
                 };
 
 
-              ;
-         
+                       
 
               
 
