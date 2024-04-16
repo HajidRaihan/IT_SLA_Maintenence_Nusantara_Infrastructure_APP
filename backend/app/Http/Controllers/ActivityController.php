@@ -29,11 +29,12 @@ class ActivityController extends Controller
             'biaya' => 'required|integer',
             'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status' => 'required|in:process,done',
+            // 'status' => 'required|in:process,done',
         ]);
 
         $user = Auth::user()->id;
         $data['user_id'] = $user;
+        // $data['status'] = 'process';
 
         // Simpan foto_awal
         if ($request->hasFile('foto_awal')) {
