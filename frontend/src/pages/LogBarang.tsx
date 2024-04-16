@@ -40,60 +40,57 @@ setCurrentPage(page); // Update the current page
     return (
         <DefaultLayout>
             <Breadcrumb pageName="Barang" />
-            <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-                <div className='flex items-center'>
-                <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-                    Log Barang
-                </h4>
-        </div>
-                <div className="flex flex-col">
-                    <div className="grid grid-cols-7 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-7">
-                        <div className="p-2.5 xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">No</h5>
-                        </div>
-                        <div className="pt-2.5 pr-2.5 pb-2.5 pl-0 xl:pl-0">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">Nama Equipment</h5>
-                        </div> 
-                        <div className="pt-2.5 pr-2.5 pb-2.5 pl-0 xl:pl-0">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">Tanggal Update</h5>
-                        </div><div className="hidden p-2.5 text-center sm:block xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">Company</h5>
-                        </div>
+            <div className="max-w-full overflow-x-auto">
+        <table className="w-full table-auto">
+          <thead>
+            <tr className="bg-gray-2 text-left dark:bg-meta-4">
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                NO
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                Nama Equipment
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                Tanggal Activity
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                Company
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                Stock Value
+              </th>
 
-                        <div className="p-2.5 text-center xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">Unit</h5>
-                        </div>
-                        <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">Merk</h5>
-                        </div>
-                        <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                            <h5 className="text-sm font-medium uppercase xsm:text-base">Action</h5>
-                        </div>
-                    
-                    </div>
-
-                    {currentItems.map((item, index) => (
-                    <div className="grid grid-cols-7 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-7" key={startIndex + index}>
-                    <div className="p-2.5 xl:p-5">
-                        <p>{startIndex + index + 1}</p>
-                    </div>
-                    <div className="p-2.5  xl:p-3">
-                        <p>{item.nama_equipment}</p>
-                    </div>
-                    <div className="p-2.5  xl:p-3">
-                    <p>{moment(item.created_at).tz("Asia/Makassar").format("DD-MM-YYYY ")}</p>
-                    </div>
-                    <div className="p-2.5 text-center xl:p-5">
-                        <p>{item.perusahaan}</p>
-                    </div>
-                    <div className="p-2.5 text-center xl:p-5">
-                        <p>{item.addata}</p>
-                    </div>
-                    <div className="p-2.5 text-center xl:p-5">
-                        <p>{item.merk}</p>
-                    </div>
-                    <div className="mb-3 justify-center flex items-center">
-         <button style={{ 
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                Action Value
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems.map((item, index) => (
+              <tr key={startIndex + index}>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark ">
+                    <p className="text-sm"> {startIndex + index + 1}</p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.nama_equipment}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                <p>{moment(item.created_at).tz("Asia/Makassar").format("DD-MM-YYYY ")}</p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.perusahaan}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                <p className="text-black dark:text-white">
+                 {item.adddata !== null ? item.addata : item.mindata}
+                </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                <button style={{ 
         backgroundColor: item.adddata_string === 'masuk' ? 'green' : 'red',
         color: 'black', 
         border: 'none', 
@@ -102,13 +99,15 @@ setCurrentPage(page); // Update the current page
     }}>
         {item.adddata_string}
     </button>
-</div>
-
-
-                </div>
-                    ))}
-                </div>
-            </div>
+             
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+  
+    
                 
 <div className='flex justify-center mt-4'>
 <Paginate currentPage={currentPage} onPageChange={handlePageChange}/></div>

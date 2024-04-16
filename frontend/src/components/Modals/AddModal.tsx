@@ -31,12 +31,22 @@ function BarangModal({ isOpen, onClose, onAdd, onChangeEquipment, onChangeMerk, 
                                       placeholder="Enter merk"
                                   />
                               </div>
+                             
+                              <div className="w-full sm:w-1/2 md:w-1/3">
+                                  <ModalHeader className="mb-2.5 block text-black dark:text-white">Picture</ModalHeader>
+                                  <Input
+                                      onChange={onChangePicture}
+                                      type="file"
+                                  />
+                              </div>
                               <div className="w-full sm:w-1/2 md:w-1/3">
                                   <ModalHeader className="mb-2.5 block text-black dark:text-white">Unit</ModalHeader>
                                   <Input
-                                      value={valueUnit}
-                                      onChange={onChangeUnit}
+                                      value={valueStock}
+                                      onChange={onChangeStock}
                                       placeholder="Enter unit"
+                                      type="number"
+                                      min="0"
                                   />
                               </div>
                               <div className="w-full sm:w-1/2 md:w-1/3">
@@ -46,23 +56,6 @@ function BarangModal({ isOpen, onClose, onAdd, onChangeEquipment, onChangeMerk, 
                                         <option value="PT Jalan Tol Seksi Empat">PT Jalan Tol Seksi Empat</option>
                                     </select>
                                 </div>
-                              <div className="w-full sm:w-1/2 md:w-1/3">
-                                  <ModalHeader className="mb-2.5 block text-black dark:text-white">Picture</ModalHeader>
-                                  <Input
-                                      onChange={onChangePicture}
-                                      type="file"
-                                  />
-                              </div>
-                              <div className="w-full sm:w-1/2 md:w-1/3">
-                                  <ModalHeader className="mb-2.5 block text-black dark:text-white">Stock</ModalHeader>
-                                  <Input
-                                      value={valueStock}
-                                      onChange={onChangeStock}
-                                      placeholder="Enter unit"
-                                      type="number"
-                                      min="0"
-                                  />
-                              </div>
                           </div>
                       </ModalBody>
                       <ModalFooter>

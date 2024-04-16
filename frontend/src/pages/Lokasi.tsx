@@ -136,30 +136,29 @@ const Lokasi = () => {
           </button>
         </div>
 
-        <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-          <div className="col-span-3 flex items-center">
-            <p className="font-medium mr-2">No</p>
-          </div>
-          <div className="col-span-3 flex items-center sm:flex">
-            <p className="font-medium">Nama</p>
-          </div>
-          <div className="col-span-1 flex items-center">
-            <p className="font-medium">Status</p>
-          </div>
-        </div>
-
-        {currentItems.map((item, index) => (
+        <div className="grid grid-cols-3 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5">
+  <div className="col-span-1 flex items-center">
+    <p className="font-medium">NO</p>
+  </div>
+  <div className="col-span-1 flex items-center">
+    <p className="font-medium">Lokasi</p>
+  </div>
+  <div className="col-span-1 flex items-center">
+    <p className="font-medium">Action</p>
+  </div>
+</div>
+ {currentItems.map((item, index) => (
           <div
-            className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
+            className="grid grid-cols-3 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5"
             key={startIndex+index}
           >
-            <div className="col-span-3 flex items-center">
+            <div className="col-span-1 flex items-center">
               <p className="font-medium mr-2 text-black dark:text-white">{startIndex+index+1}</p>
             </div>
-            <div className="col-span-3 flex items-center sm:flex">
+            <div className="col-span-1 flex items-center">
               <p className="font-medium mr-3 text-black dark:text-white">{item.nama_lokasi}</p>
             </div>
-            <div className="mb-3  flex items-center">
+            <div className="col-span-1 flex items-center">
               <button   onClick={() => handleUpdateForm(item.id)}  className="hover:text-primary">
               <svg
                         className="fill-current"
