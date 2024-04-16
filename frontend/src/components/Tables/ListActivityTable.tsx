@@ -6,11 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import AddActivityModal from '../Modals/AddActivityModal';
 
-import {
-
-  Button,
-  useDisclosure,
-} from '@nextui-org/react';
+import { Button, useDisclosure } from '@nextui-org/react';
 import ActionModal from '../Modals/ActionModal';
 
 const packageData: Package[] = [

@@ -22,6 +22,8 @@ import Lokasi from './pages/Lokasi';
 import ListActivity from './pages/ListActivity';
 import ListBarang from './pages/ListBarang';
 import LogBarang from './pages/LogBarang';
+import JenisHardware from './pages/JenisHardware';
+import JenisSoftware from './pages/JenisSoftware';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -85,7 +87,7 @@ function App() {
             </>
           }
         />
-         <Route
+        <Route
           path="/listbarang"
           element={
             <>
@@ -94,7 +96,7 @@ function App() {
             </>
           }
         />
-          <Route
+        <Route
           path="/logbarang"
           element={
             <>
@@ -109,6 +111,26 @@ function App() {
             <>
               <PageTitle title="Lokasi" />
               <Lokasi />
+            </>
+          }
+        />
+
+        <Route
+          path="/jenis-hardware"
+          element={
+            <>
+              <PageTitle title="Jenis Hardware" />
+              <JenisHardware />
+            </>
+          }
+        />
+
+        <Route
+          path="/jenis-software"
+          element={
+            <>
+              <PageTitle title="Jenis Hardware" />
+              <JenisSoftware />
             </>
           }
         />

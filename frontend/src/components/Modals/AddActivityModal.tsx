@@ -4,6 +4,8 @@ import SelectCompany from '../Forms/SelectGroup/SelectCompany';
 import SelectGroupOne from '../Forms/SelectGroup/SelectGroupOne';
 import SelectStatus from '../Forms/SelectGroup/SelectStatus';
 import { getLokasi } from '../../api/lokasiApi';
+import { getJenisHardware } from '../../api/jenisHardwareApi';
+import { getJenisSoftware } from '../../api/jenisSoftwareApi';
 import { getKategori } from '../../api/kategoriApi';
 import { addActivity } from '../../api/activityApi';
 import CheckboxTwo from '../Checkboxes/CheckboxTwo';
@@ -26,7 +28,9 @@ const AddActivityModal = ({
 }) => {
   const [company, setCompany] = useState('');
   const [tanggal, setTanggal] = useState('');
+  const [jenisHardwareData, setJenisHardwareData] = useState([]);
   const [jenisHardware, setJenisHardware] = useState([]);
+  const [jenisSoftwareData, setJenisSoftwareData] = useState([]);
   const [standartAplikasi, setStandartAplikasi] = useState([]);
   const [uraianHardware, setUraianHardware] = useState('');
   const [uraianAplikasi, setUraianAplikasi] = useState('');
@@ -72,6 +76,31 @@ const AddActivityModal = ({
     fetchKategori();
   }, []);
 
+  useEffect(() => {
+    const fetchHardware = async () => {
+      const res = await getJenisHardware();
+      console.log({ res });
+      // Menggunakan Set untuk menyaring nilai-nilai unik
+      const uniqueHardwareNames = [
+        ...new Set(res.map((item) => item.nama_hardware)),
+      ];
+      setJenisHardwareData(uniqueHardwareNames);
+    };
+    fetchHardware();
+  }, []);
+
+  useEffect(() => {
+    const fetchSoftware = async () => {
+      const res = await getJenisSoftware();
+      console.log({ res });
+      // Menggunakan Set untuk menyaring nilai-nilai unik
+      const uniqueSoftwareNames = [
+        ...new Set(res.map((item) => item.nama_software)),
+      ];
+      setJenisSoftwareData(uniqueSoftwareNames);
+    };
+    fetchSoftware();
+  }, []);
   const handleCompanyChange = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
@@ -305,14 +334,14 @@ const AddActivityModal = ({
                           Jenis Hardware
                         </label>
                         <div className="flex gap-10 flex-wrap">
-                          {dataJenisHardware.map((data, index) => {
+                          {jenisHardwareData?.map((data, index) => {
                             return (
                               <CheckboxTwo
                                 label={data}
                                 key={index}
                                 isChecked={jenisHardware.includes(data)} // Pass nilai isChecked berdasarkan apakah label ada dalam checkedValues
                                 onChange={() => handleJenisHardwareChange(data)} // Gunakan handleCheckboxChange sebagai onChange handler
-                                options={dataJenisHardware}
+                                options={jenisHardwareData}
                               />
                             );
                           })}
@@ -347,7 +376,7 @@ const AddActivityModal = ({
                           Standard Aplikasi
                         </label>
                         <div className="flex gap-10 flex-wrap">
-                          {dataStandartAplikasi.map((data, index) => {
+                          {jenisSoftwareData.map((data, index) => {
                             return (
                               <CheckboxTwo
                                 label={data}
@@ -356,7 +385,7 @@ const AddActivityModal = ({
                                 onChange={() =>
                                   handleStandartAplikasiChange(data)
                                 } // Gunakan handleCheckboxChange sebagai onChange handler
-                                options={dataStandartAplikasi}
+                                options={jenisSoftwareData}
                               />
                             );
                           })}
