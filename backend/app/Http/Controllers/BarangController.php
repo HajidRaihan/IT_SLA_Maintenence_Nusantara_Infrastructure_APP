@@ -39,7 +39,6 @@ class BarangController extends Controller
     $validator = Validator::make($request->all(), [
         'nama_equipment' => 'required|string|max:255',
         'perusahaan' => 'string|in:PT Makassar Metro Network,PT Jalan Tol Seksi Empat',
-        'unit' => 'required|string|max:255',
         'merk' => 'required|string|max:255',
         'stock' => 'required|integer|min:0',
         'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048|nullable',
