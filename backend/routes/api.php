@@ -9,7 +9,9 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\JadwalController;
-
+use App\Http\Controllers\JenisSoftwareController;
+use App\Http\Controllers\JenisHardtwareController;
+use App\Http\Controllers\AplikasiItTolController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -75,6 +77,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/jadwal/{id}', [JadwalController::class, 'show']);
     Route::put('/jadwal/{id}', [JadwalController::class, 'update']);
     Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy']);
+
+    Route::get('/jenisSoftware', [JenisSoftwareController::class, 'index']);
+    Route::post('/jenisSoftware', [JenisSoftwareController::class, 'store']);
+    Route::get('/jenisSoftware/{id}', [JenisSoftwareController::class, 'show']);
+    Route::delete('/jenisSoftware/{id}', [JenisSoftwareController::class, 'destroy']);
+
+    Route::get('/jenisHardware', [JenisHardwareController::class, 'index']);
+    Route::post('/jenisHardware', [JenisHardwareController::class, 'store']);
+    Route::get('/jenisHardware/{id}', [JenisHardwareController::class, 'show']);
+    Route::delete('/jenisHardware/{id}', [JenisHardwareController::class, 'destroy']);
+
+    Route::get('/aplikasi_it_tol', [AplikasiItTolController::class, 'index']);
+    Route::post('/aplikasi_it_tol', [AplikasiItTolController::class, 'store']);
+    Route::get('/aplikasi_it_tol/{id}', [AplikasiItTolController::class, 'show']);
+    Route::delete('/aplikasi_it_tol/{id}', [AplikasiItTolController::class, 'destroy']);
 });
 Route::get('/tes', function () {
     return 'tes';

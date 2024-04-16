@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\JenisHardware;
 
 class JenisHardwareController extends Controller
 {
@@ -34,7 +35,7 @@ class JenisHardwareController extends Controller
 
     public function update(Request $request, string $id)
     {
-
+        //
     }
     
     public function destroy(string $id)
