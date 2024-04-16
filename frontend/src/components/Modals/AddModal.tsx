@@ -31,7 +31,13 @@ function BarangModal({ isOpen, onClose, onAdd, onChangeEquipment, onChangeMerk, 
                                       placeholder="Enter merk"
                                   />
                               </div>
-                             
+                              <div className="w-full sm:w-1/2 md:w-1/3">
+                                    <ModalHeader className="mb-2.5 block text-black dark:text-white">Company</ModalHeader>
+                                    <select value={valueCompany} onChange={onChangeCompany}>
+                                        <option value="PT Makassar Metro Network">PT Makassar Metro Network</option>
+                                        <option value="PT Jalan Tol Seksi Empat">PT Jalan Tol Seksi Empat</option>
+                                    </select>
+                                </div>
                               <div className="w-full sm:w-1/2 md:w-1/3">
                                   <ModalHeader className="mb-2.5 block text-black dark:text-white">Picture</ModalHeader>
                                   <Input
@@ -40,7 +46,7 @@ function BarangModal({ isOpen, onClose, onAdd, onChangeEquipment, onChangeMerk, 
                                   />
                               </div>
                               <div className="w-full sm:w-1/2 md:w-1/3">
-                                  <ModalHeader className="mb-2.5 block text-black dark:text-white">Unit</ModalHeader>
+                                  <ModalHeader className="mb-2.5 block text-black dark:text-white">Stock</ModalHeader>
                                   <Input
                                       value={valueStock}
                                       onChange={onChangeStock}
@@ -49,13 +55,6 @@ function BarangModal({ isOpen, onClose, onAdd, onChangeEquipment, onChangeMerk, 
                                       min="0"
                                   />
                               </div>
-                              <div className="w-full sm:w-1/2 md:w-1/3">
-                                    <ModalHeader className="mb-2.5 block text-black dark:text-white">Company</ModalHeader>
-                                    <select value={valueCompany} onChange={onChangeCompany}>
-                                        <option value="PT Makassar Metro Network">PT Makassar Metro Network</option>
-                                        <option value="PT Jalan Tol Seksi Empat">PT Jalan Tol Seksi Empat</option>
-                                    </select>
-                                </div>
                           </div>
                       </ModalBody>
                       <ModalFooter>

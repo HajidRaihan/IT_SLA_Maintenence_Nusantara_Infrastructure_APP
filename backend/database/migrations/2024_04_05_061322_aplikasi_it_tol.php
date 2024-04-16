@@ -11,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('aplikasi_tol', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_aplikasitol');
+            $table->string('nama_aplikasiTol');
             $table->timestamps();
         });
     }

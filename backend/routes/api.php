@@ -10,7 +10,7 @@ use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\JenisSoftwareController;
-use App\Http\Controllers\JenisHardtwareController;
+use App\Http\Controllers\JenisHardwareController;
 use App\Http\Controllers\AplikasiItTolController;
 /*
 |--------------------------------------------------------------------------

@@ -224,8 +224,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               {/* <!-- Menu Item Calendar --> */}
 
-             
-
               {/* <!-- Menu Item Forms --> */}
               <SidebarLinkGroup
                 activeCondition={
@@ -346,8 +344,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               {/* <!-- Menu Item Forms --> */}
 
-              
-
               {/* <!-- Menu Item Tables --> */}
               <li>
                 <NavLink
@@ -385,9 +381,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </li>
               {/* <!-- Menu Item Tables --> */}
-
-
-               
 
               {/* <!-- Menu Item list activity --> */}
               <li>
@@ -472,60 +465,132 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Settings --> */}
 
               <h3 className="mb-1 ml-4 text-sm font-semibold text-bodydark2">
-              Information Schema
-            </h3>
+                Information Schema
+              </h3>
 
               <li>
-  <NavLink
-    to="/kategori"
-    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-      pathname.includes('kategori') && 'bg-graydark dark:bg-meta-4'
-    }`}
-  >
-    <svg
-      className="fill-current"
-      width="18"
-      height="18"
-      viewBox="0 0 24 24" 
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-    
-      <path
-        d="M3 5H9V11H3V5ZM3 13H9V19H3V13ZM11 5H17V11H11V5ZM11 13H17V19H11V13Z"
-        fill="currentColor" 
-      />
-      
-    </svg>
-    Kategori
-  </NavLink>
-</li>
-
+                <NavLink
+                  to="/kategori"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('kategori') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 5H9V11H3V5ZM3 13H9V19H3V13ZM11 5H17V11H11V5ZM11 13H17V19H11V13Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  Kategori
+                </NavLink>
+              </li>
 
               <li>
-  <NavLink
-    to="/lokasi"
-    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-      pathname.includes('kategori') && 'bg-graydark dark:bg-meta-4'
-    }`}
-  >
-    <svg
-      className="fill-current"
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      
-      <path
-        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"
-        fill="currentColor"
-      />
-    </svg>
-    Lokasi
-  </NavLink>
-</li>
+                <NavLink
+                  to="/jenis-hardware"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('jenis-hardware') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 5H9V11H3V5ZM3 13H9V19H3V13ZM11 5H17V11H11V5ZM11 13H17V19H11V13Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  Jenis Hardware
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  to="/jenis-software"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('jenis-software') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 5H9V11H3V5ZM3 13H9V19H3V13ZM11 5H17V11H11V5ZM11 13H17V19H11V13Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  Jenis software
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  to="/aplikasi-tol"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('aplikasi-tol') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 5H9V11H3V5ZM3 13H9V19H3V13ZM11 5H17V11H11V5ZM11 13H17V19H11V13Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  Aplikasi IT Tol
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  to="/lokasi"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('lokasi') && 'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  Lokasi
+                </NavLink>
+              </li>
 
               {/* <!-- Menu Item Barang --> */}
               <SidebarLinkGroup
@@ -550,29 +615,35 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             : setSidebarExpanded(true);
                         }}
                       >
-                       <svg className="fill-current" width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21 8l-3 -3V4a1 1 0 0 0 -1 -1h-4a1 1 0 0 0 -1 1v1L3 8v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2 -2zM6.414 7l4.293 -4.293a1 1 0 0 1 1.414 0L16.414 7H6.414zM5 9h14l-3 -3h-8zM19 19H5a1 1 0 0 1 -1 -1V9h16v9a1 1 0 0 1 -1 1z"/>
-            <path d="M10 14h4v4h-4z"/>
-          </svg>
-          Barang
-          <svg
-            className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
-              open && 'rotate-180'
-            }`}
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-              fill=""
-            />
-          </svg>
-        </NavLink>
+                        <svg
+                          className="fill-current"
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path d="M21 8l-3 -3V4a1 1 0 0 0 -1 -1h-4a1 1 0 0 0 -1 1v1L3 8v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2 -2zM6.414 7l4.293 -4.293a1 1 0 0 1 1.414 0L16.414 7H6.414zM5 9h14l-3 -3h-8zM19 19H5a1 1 0 0 1 -1 -1V9h16v9a1 1 0 0 1 -1 1z" />
+                          <path d="M10 14h4v4h-4z" />
+                        </svg>
+                        Barang
+                        <svg
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                            open && 'rotate-180'
+                          }`}
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                            fill=""
+                          />
+                        </svg>
+                      </NavLink>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
                         className={`translate transform overflow-hidden ${
