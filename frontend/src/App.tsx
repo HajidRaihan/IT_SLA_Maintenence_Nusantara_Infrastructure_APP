@@ -24,6 +24,7 @@ import ListBarang from './pages/ListBarang';
 import LogBarang from './pages/LogBarang';
 import JenisHardware from './pages/JenisHardware';
 import JenisSoftware from './pages/JenisSoftware';
+import AplikasiItTol from './pages/AplikasiItTol';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -129,8 +130,18 @@ function App() {
           path="/jenis-software"
           element={
             <>
-              <PageTitle title="Jenis Hardware" />
+              <PageTitle title="Jenis Software" />
               <JenisSoftware />
+            </>
+          }
+        />
+
+        <Route
+          path="/aplikasi-tol"
+          element={
+            <>
+              <PageTitle title="Aplikasi IT Tol" />
+              <AplikasiItTol />
             </>
           }
         />

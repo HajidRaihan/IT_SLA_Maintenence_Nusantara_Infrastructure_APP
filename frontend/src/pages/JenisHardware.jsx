@@ -24,7 +24,6 @@ import {
 } from '../api/jenisHardwareApi';
 
 const JenisHardware = () => {
-  const [data, setData] = useState([]);
   const [jenisHardware, setJenisHardware] = useState();
   const [newJenisHardware, setNewJenisHardware] = useState('');
   const [newlokasi, setNewlokasi] = useState('');
@@ -55,11 +54,11 @@ const JenisHardware = () => {
     });
   }, []);
 
-  const handleDelete = async () => {
+  const handleDelete = async (id) => {
     try {
-      const res = await deleteJenisHardware(jenisHardwareId);
+      const res = await deleteJenisHardware(id);
       // Filter out the deleted location from the state
-      setJenisHardware(data.filter((item) => item.id !== jenisHardwareId));
+      setJenisHardware(jenisHardware.filter((item) => item.id !== id));
       toast.success('Delete successfully ', res);
     } catch (error) {
       toast.error(`error deleting: ${error.response.data.message}`);
@@ -105,6 +104,7 @@ const JenisHardware = () => {
   //   };
 
   const handlerUpdateOpen = (id) => {
+    console.log({ id });
     setJenisHardwareId(id);
     onUpdateModalOpen();
   };
@@ -191,7 +191,10 @@ const JenisHardware = () => {
                 </svg>
               </button>
 
-              <button className="hover:text-primary" onClick={handleDelete}>
+              <button
+                className="hover:text-primary"
+                onClick={() => handleDelete(item.id)}
+              >
                 <svg
                   className="fill-current"
                   width="18"

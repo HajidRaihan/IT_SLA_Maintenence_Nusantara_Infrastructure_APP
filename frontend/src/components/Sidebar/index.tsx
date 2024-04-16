@@ -545,6 +545,31 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <li>
                 <NavLink
+                  to="/aplikasi-tol"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('aplikasi-tol') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 5H9V11H3V5ZM3 13H9V19H3V13ZM11 5H17V11H11V5ZM11 13H17V19H11V13Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  Aplikasi IT Tol
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
                   to="/lokasi"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('lokasi') && 'bg-graydark dark:bg-meta-4'

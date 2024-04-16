@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import { RequestApi } from '../helper/RequestApi';
 
-const getJenisHardware = async () => {
+const getAplikasiTol = async () => {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
@@ -9,20 +9,20 @@ const getJenisHardware = async () => {
   try {
     const response = await RequestApi(
       'GET',
-      'jenisHardware',
+      'aplikasi_it_tol',
       {},
       headers,
-      'Mencoba menampilkan jenis hardware',
+      'Mencoba menampilkan aplikasi IT Tol',
     );
 
     return response.data;
   } catch (error) {
-    console.error('Terjadi kesalahan saat menampilkan jenis hardware', error);
+    console.error('Terjadi kesalahan saat menampilkan aplikasi IT Tol', error);
     throw error;
   }
 };
 
-const addJenisHardware = async (data) => {
+const addAplikasiTol = async (data) => {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
@@ -30,20 +30,20 @@ const addJenisHardware = async (data) => {
   try {
     const response = await RequestApi(
       'POST',
-      'jenisHardware',
+      'aplikasi_it_tol',
       data,
       headers,
-      'Mencoba menambahkan jenis hardware',
+      'Mencoba menambahkan aplikasi IT Tol',
     );
 
     return response.data;
   } catch (error) {
-    console.error('Terjadi kesalahan saat menambahkan jenis hardware', error);
+    console.error('Terjadi kesalahan saat menambahkan aplikasi IT Tol', error);
     throw error;
   }
 };
 
-const deleteJenisHardware = async (id) => {
+const deleteAplikasiTol = async (id) => {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
@@ -51,17 +51,17 @@ const deleteJenisHardware = async (id) => {
   try {
     const response = await RequestApi(
       'DELETE',
-      `jenisHardware/${id}`,
+      `aplikasi_it_tol/${id}`,
       {},
       headers,
-      'Mencoba hapus jenis hardware',
+      'Mencoba hapus aplikasi IT Tol',
     );
 
     return response.data;
   } catch (error) {
-    console.error('Terjadi kesalahan saat hapus jenis hardware', error);
+    console.error('Terjadi kesalahan saat hapus aplikasi IT Tol', error);
     throw error;
   }
 };
 
-export { getJenisHardware, addJenisHardware, deleteJenisHardware };
+export { getAplikasiTol, addAplikasiTol, deleteAplikasiTol };

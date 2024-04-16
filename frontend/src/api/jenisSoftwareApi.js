@@ -43,7 +43,7 @@ const addJenisSoftware = async (data) => {
   }
 };
 
-const deleteJenisSoftware = async (data, id) => {
+const deleteJenisSoftware = async (id) => {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
@@ -52,7 +52,7 @@ const deleteJenisSoftware = async (data, id) => {
     const response = await RequestApi(
       'DELETE',
       `jenisSoftware/${id}`,
-      data,
+      {},
       headers,
       'Mencoba hapus jenis Software',
     );

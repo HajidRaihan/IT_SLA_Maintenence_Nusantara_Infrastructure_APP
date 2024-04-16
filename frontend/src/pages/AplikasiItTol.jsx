@@ -18,16 +18,20 @@ import { UpdateLokasiModal } from '../components/Modals/UpdateLokasiModal';
 import DeleteModal from '../components/Modals/DeleteModal';
 import Paginate from '../components/Pagination/paginate';
 import {
-  addJenisSoftware,
-  deleteJenisSoftware,
-  getJenisSoftware,
-} from '../api/jenisSoftwareApi';
+  addJenisHardware,
+  deleteJenisHardware,
+  getJenisHardware,
+} from '../api/jenisHardwareApi';
+import {
+  addAplikasiTol,
+  deleteAplikasiTol,
+  getAplikasiTol,
+} from '../api/aplikasiTolApi';
 
-const JenisSoftware = () => {
-  const [data, setData] = useState([]);
-  const [jenisSoftware, setJenisSoftware] = useState();
-  const [newJenisSoftware, setNewJenisSoftware] = useState('');
-  const [jenisSoftwareId, setJenisSoftwareId] = useState();
+const AplikasiItTol = () => {
+  const [aplikasiTol, setAplikasiTol] = useState();
+  const [newAplikasiTol, setNewAplikasiTol] = useState();
+  const [aplikasiId, setAplikasiId] = useState();
   const {
     isOpen: addModalOpen,
     onOpen: onAddModalOpen,
@@ -45,16 +49,16 @@ const JenisSoftware = () => {
   } = useDisclosure();
 
   useEffect(() => {
-    getJenisSoftware().then((res) => {
-      setJenisSoftware(res);
+    getAplikasiTol().then((res) => {
+      setAplikasiTol(res);
       console.log(res);
     });
   }, []);
 
   const handleDelete = async (id) => {
     try {
-      const res = await deleteJenisSoftware(id);
-      setJenisSoftware(jenisSoftware.filter((item) => item.id !== id));
+      const res = await deleteAplikasiTol(id);
+      setAplikasiTol(aplikasiTol?.filter((item) => item.id !== id));
       toast.success('Delete successfully ', res);
     } catch (error) {
       toast.error(`error deleting: ${error.response.data.message}`);
@@ -62,56 +66,32 @@ const JenisSoftware = () => {
     }
   };
 
-  const handleAddJenisSoftware = async () => {
-    const data = { nama_software: newJenisSoftware };
+  const handleAddAplikasiTol = async () => {
+    const data = { nama_aplikasiTol: newAplikasiTol };
 
     try {
-      const res = await addJenisSoftware(data);
-      setJenisSoftware((prevData) => [...prevData, res.data]);
-      toast.success('software added successfully');
+      const res = await addAplikasiTol(data);
+      console.log(res);
+      setAplikasiTol((prevData) => [...prevData, res]);
+      toast.success('aplikasi tol added successfully');
     } catch (error) {
-      toast.error('Failed to add software');
+      toast.error('Failed to add aplikasi tol');
     }
   };
 
-  //   const handleUpdate = async () => {
-  //     const data = {
-  //       nama_Software: updateJenisSoftware,
-  //     };
-  //     try {
-  //       const res = await editJenisSoftware(data, jenisSoftwareId);
-  //       const updatedJenisSoftware = res.data;
-  //       const updatedIndex = jenisSoftware.findIndex(
-  //         (item) => item.id === jenisSoftwareId,
-  //       );
-  //       if (updatedIndex !== -1) {
-  //         setJenisSoftware((prevData) => {
-  //           const newData = [...prevData];
-  //           newData[updatedIndex] = updatedJenisSoftware;
-  //           return newData;
-  //         });
-  //       }
-  //       toast.success('Jenis Software Berhasil di Update :', res);
-  //     } catch (error) {
-  //       toast.error('Error saat mengupdate Jenis Software:', error);
-  //       // Handle the error gracefully (e.g., display an error message to the user)
-  //       console.error(error);
-  //     }
-  //   };
-
   const handlerUpdateOpen = (id) => {
-    setJenisSoftwareId(id);
+    setAplikasiId(id);
     onUpdateModalOpen();
   };
 
   return (
     <DefaultLayout>
       <ToastContainer />
-      <Breadcrumb pageName="Jenis Software" />
+      <Breadcrumb pageName="Jenis Hardware" />
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="py-6 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Jenis Software
+            Jenis Hardware
           </h4>
           <button
             className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
@@ -136,7 +116,7 @@ const JenisSoftware = () => {
           </div>
         </div>
 
-        {jenisSoftware?.map((item, index) => (
+        {aplikasiTol?.map((item, index) => (
           <div
             className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
             key={index}
@@ -148,7 +128,7 @@ const JenisSoftware = () => {
             </div>
             <div className="col-span-3 flex items-center sm:flex">
               <p className="font-medium mr-3 text-black dark:text-white">
-                {item.nama_software}
+                {item.nama_aplikasitol}
               </p>
             </div>
             <div className="mb-3  flex items-center">
@@ -225,19 +205,19 @@ const JenisSoftware = () => {
         {/* <Paginate currentPage={currentPage} onPageChange={handlePageChange} /> */}
       </div>
       <AddStuffModal
-        title="Jenis Software"
+        title="Aplikasi IT Tol"
         isOpen={addModalOpen}
-        onAdd={handleAddJenisSoftware}
-        onChange={(e) => setNewJenisSoftware(e.target.value)}
-        value={newJenisSoftware}
+        onAdd={handleAddAplikasiTol}
+        onChange={(e) => setNewAplikasiTol(e.target.value)}
+        value={newAplikasiTol}
         onClose={onAddModalClose}
       />
       {/* <AddStuffModal
-        title="Update Jenis Software"
+        title="Update Jenis Hardware"
         isOpen={updateModalOpen}
         onAdd={handleUpdate}
-        onChange={(e) => setUpdateJenisSoftware(e.target.value)}
-        value={updateJenisSoftware}
+        onChange={(e) => setUpdateJenisHardware(e.target.value)}
+        value={updateJenisHardware}
         onClose={onUpdateModalClose}
       /> */}
       {/* <UpdateLokasiModal
@@ -256,4 +236,4 @@ const JenisSoftware = () => {
   );
 };
 
-export default JenisSoftware;
+export default AplikasiItTol;
