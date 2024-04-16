@@ -6,6 +6,29 @@ const DoneActivityTable = ({ data }) => {
   const [tanggalMulai, setTanggalMulai] = useState();
   const [lamaHandle, setLamaHandle] = useState();
 
+  
+  const convertsecondsToReadableString = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const weeks = Math.floor(days / 7);
+  
+    if (weeks > 0) {
+      return `${weeks} week${weeks > 1 ? 's' : ''}`;
+    } else if (days > 0) {
+      return `${days} day${days > 1 ? 's' : ''}`;
+    } else if (hours > 0) {
+      return `${hours} hour${hours > 1 ? 's' : ''}`;
+    } else if (minutes > 0) {
+      return `${minutes} minute${minutes > 1 ? 's' : ''}`;
+    
+    }
+  };
+
+  function totalSeconds({ hari, jam, menit, detik }) {
+    return hari * 24 * 60 * 60 + jam * 60 * 60 + menit * 60 + detik;
+  }
+
   useEffect(() => {
     const tanggalMulaiFormat = data.created_at
       //   .replace('T', ' ')
@@ -97,6 +120,32 @@ const DoneActivityTable = ({ data }) => {
               <p className="text-black dark:text-white">{data.kondisi_akhir}</p>
             </td>
           </tr>
+          <tr>
+            <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+              <h5 className="font-medium text-black dark:text-white">
+                duration
+              </h5>
+            </td>
+            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+              <p className="text-black dark:text-white">{convertsecondsToReadableString(data.category_deadline)}</p>
+            </td>
+          </tr>
+          <tr>
+  <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+    <h5 className="font-medium text-black dark:text-white">
+      Duration Result
+    </h5>
+  </td>
+  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+    {lamaHandle && totalSeconds(lamaHandle) <= data.category_deadline ? (
+      <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded shadow">On Time</button>
+    ) : (
+      <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded shadow">Late</button>
+    )}
+  </td>
+</tr>
+
+
         </table>
       </div>
     </div>

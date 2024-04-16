@@ -12,6 +12,7 @@ class Kategori extends Model
     protected $fillable = [
         'id',
         'nama_kategori',
+        'deadline_duration',
     ];
     use HasFactory;
 }
