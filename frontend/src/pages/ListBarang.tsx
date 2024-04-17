@@ -23,7 +23,6 @@
                 const { isOpen: updateModalMinOpen, onOpen: onUpdateModalMinOpen, onClose: onUpdateModalMinClose } = useDisclosure();
                 const [newStock, setNewStock] = useState(0);
                 const [newPicture, setNewPicture] = useState();
-                const [newUnit, setNewUnit] = useState('');
                 const [selectedCompany, setSelectedCompany] = useState('');
                 const [currentPage, setCurrentPage] = useState(1); // Current page state
                 const itemsPerPage = 5; // Number of data items per page
@@ -161,9 +160,7 @@
                     setSelectedCompany(e.target.value);
                 };
 
-                const handleUnit = e => {
-                    setNewUnit(e.target.value);
-                };
+               
                 const handleStock = e => {
                     setNewStock(parseInt(e.target.value)); // Parse input value to integer
                 };
@@ -188,7 +185,6 @@
                             perusahaan: selectedCompany,
                             stock: newStock,
                             gambar: newPicture,
-                            unit:newUnit
                         };
 
                         try {
@@ -365,15 +361,12 @@
             onAdd={handleAddBarang} 
             onChangeEquipment={handleEquipment}
             onChangeMerk={handleMerk}
-            onChangeUnit={handleUnit}
             onChangeStock={handleStock}
             onChangePicture={handlePictureChange}
             onChangeCompany={handleCompany}
             valueEquipment={newEquipment}
             valueMerk={newMerk}
-            valueUnit={newUnit}
             valueStock={newStock}
-            valuePicture={newPicture}
             valueCompany={selectedCompany}
             onClose={onAddModalClose}/>
             <div className='flex justify-center mt-4'>

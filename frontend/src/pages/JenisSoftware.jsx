@@ -74,30 +74,30 @@ const JenisSoftware = () => {
     }
   };
 
-  //   const handleUpdate = async () => {
-  //     const data = {
-  //       nama_Software: updateJenisSoftware,
-  //     };
-  //     try {
-  //       const res = await editJenisSoftware(data, jenisSoftwareId);
-  //       const updatedJenisSoftware = res.data;
-  //       const updatedIndex = jenisSoftware.findIndex(
-  //         (item) => item.id === jenisSoftwareId,
-  //       );
-  //       if (updatedIndex !== -1) {
-  //         setJenisSoftware((prevData) => {
-  //           const newData = [...prevData];
-  //           newData[updatedIndex] = updatedJenisSoftware;
-  //           return newData;
-  //         });
-  //       }
-  //       toast.success('Jenis Software Berhasil di Update :', res);
-  //     } catch (error) {
-  //       toast.error('Error saat mengupdate Jenis Software:', error);
-  //       // Handle the error gracefully (e.g., display an error message to the user)
-  //       console.error(error);
-  //     }
-  //   };
+    const handleUpdate = async () => {
+      const data = {
+        nama_Software: updateJenisSoftware,
+      };
+      try {
+        const res = await editJenisSoftware(data, jenisSoftwareId);
+        const updatedJenisSoftware = res.data;
+        const updatedIndex = jenisSoftware.findIndex(
+          (item) => item.id === jenisSoftwareId,
+        );
+        if (updatedIndex !== -1) {
+          setJenisSoftware((prevData) => {
+            const newData = [...prevData];
+            newData[updatedIndex] = updatedJenisSoftware;
+            return newData;
+          });
+        }
+        toast.success('Jenis Software Berhasil di Update :', res);
+      } catch (error) {
+        toast.error('Error saat mengupdate Jenis Software:', error);
+        // Handle the error gracefully (e.g., display an error message to the user)
+        console.error(error);
+      }
+    };
 
   const handlerUpdateOpen = (id) => {
     setJenisSoftwareId(id);
@@ -232,21 +232,21 @@ const JenisSoftware = () => {
         value={newJenisSoftware}
         onClose={onAddModalClose}
       />
-      {/* <AddStuffModal
+      <AddStuffModal
         title="Update Jenis Software"
         isOpen={updateModalOpen}
         onAdd={handleUpdate}
         onChange={(e) => setUpdateJenisSoftware(e.target.value)}
-        value={updateJenisSoftware}
+        // value={updateJenisSoftware}
         onClose={onUpdateModalClose}
-      /> */}
-      {/* <UpdateLokasiModal
+      />
+      <UpdateLokasiModal
         isUpdateOpen={updateModalOpen}
         onAdd={handleUpdate}
         onChange={(e) => setUpdatelokasi(e.target.value)}
-        value={updatelokasi}
+        // value={updatelokasi}
         onUpdateClose={onUpdateModalClose}
-      /> */}
+      />
       <DeleteModal
         isDeleteOpen={deleteModalOpen}
         onDelete={handleDelete}
