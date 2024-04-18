@@ -114,7 +114,7 @@
                       const dataToUpdate = {
                         stock: updatedStock,
                         adddata_string:log_barang,
-                        mindata:updateStockMin
+                        addata:updateStockMin
                       };
                   
                       const res = await updateBarang(BarangId, dataToUpdate);

@@ -7,11 +7,6 @@ import {
   ModalFooter,
   Button,
   Input,
-  select,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
 } from '@nextui-org/react';
 
 
@@ -99,19 +94,6 @@ function BarangModal({
                 </div>
                 <div className="w-full sm:w-1/2 md:w-1/3">
                   <ModalHeader className="mb-2.5 block text-black dark:text-white">
-                    Company
-                  </ModalHeader>
-                  <select value={valueCompany} onChange={onChangeCompany}>
-                    <option value="PT Makassar Metro Network">
-                      PT Makassar Metro Network
-                    </option>
-                    <option value="PT Jalan Tol Seksi Empat">
-                      PT Jalan Tol Seksi Empat
-                    </option>
-                  </select>
-                </div>
-                <div className="w-full sm:w-1/2 md:w-1/3">
-                  <ModalHeader className="mb-2.5 block text-black dark:text-white">
                     Picture
                   </ModalHeader>
                   <Input onChange={onChangePicture} type="file" />
@@ -127,6 +109,19 @@ function BarangModal({
                     type="number"
                     min="0"
                   />
+                </div>
+                <div className="w-full sm:w-1/2 md:w-1/3">
+                  <ModalHeader className="mb-2.5 block text-black dark:text-white">
+                    Company
+                  </ModalHeader>
+                  <select value={valueCompany} onChange={onChangeCompany}>
+                    <option value="PT Makassar Metro Network">
+                      PT Makassar Metro Network
+                    </option>
+                    <option value="PT Jalan Tol Seksi Empat">
+                      PT Jalan Tol Seksi Empat
+                    </option>
+                  </select>
                 </div>
               </div>
             </ModalBody>

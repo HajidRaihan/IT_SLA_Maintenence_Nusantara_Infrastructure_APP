@@ -91,14 +91,26 @@ setCurrentPage(page); // Update the current page
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                 <button style={{ 
-        backgroundColor: item.adddata_string === 'masuk' ? 'green' : 'red',
-        color: 'black', 
-        border: 'none', 
-        padding: '8px 16px', 
-        borderRadius: '4px' 
-    }}>
-        {item.adddata_string}
-    </button>
+    backgroundColor: item.adddata_string === 'masuk' ? '#4CAF50' : '#F44336', // Using material colors for better visual
+    color: 'white', // Better contrast for readability
+    border: 'none',
+    padding: '10px 20px', // Increased padding for a better touch area
+    borderRadius: '5px', // Slightly more rounded corners
+    cursor: 'pointer', // Cursor pointer to indicate it's clickable
+    outline: 'none', // Removes outline but ensure to manage :focus for accessibility
+    boxShadow: '0 2px 4px rgba(0,0,0,0.2)', // Subtle shadow to lift the button off the page
+    transition: 'all 0.3s ease' // Smooth transition for hover and active states
+}}
+onFocus={e => {
+    e.target.style.borderColor = 'rgba(255, 255, 255, 0.5)'; // Adding a focus style for accessibility
+    e.target.style.outline = 'none'; // Ensures outline doesn't appear
+}}
+onBlur={e => {
+    e.target.style.borderColor = 'transparent'; // Resets border when not focused
+}}>
+    {item.adddata_string}
+</button>
+
              
                 </td>
               </tr>
