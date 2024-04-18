@@ -15,4 +15,19 @@ class Kategori extends Model
         'deadline_duration',
     ];
     use HasFactory;
+
+    public function getDeadlineDurationStringAttribute()
+    {
+        $deadlineDuration = $this->attributes['deadline_duration'];
+
+        // Konversi nilai integer menjadi string dengan format tertentu
+        switch ($deadlineDuration) {
+            case 3:
+                return 'Tiga hari';
+            case 6:
+                return 'Enam hari';
+            default:
+                return 'Format tidak valid';
+        }
+    }
 }

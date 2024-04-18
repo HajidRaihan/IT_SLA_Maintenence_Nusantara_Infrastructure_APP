@@ -25,6 +25,7 @@ import LogBarang from './pages/LogBarang';
 import JenisHardware from './pages/JenisHardware';
 import JenisSoftware from './pages/JenisSoftware';
 import AplikasiItTol from './pages/AplikasiItTol';
+import Jadwal from './pages/Jadwal';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -89,6 +90,17 @@ function App() {
           }
         />
         <Route
+          path="/jadwal"
+          element={
+            <>
+              <PageTitle title="jadwal" />
+              <Jadwal />
+            </>
+          }
+        />
+
+        
+        <Route
           path="/listbarang"
           element={
             <>
@@ -126,7 +138,7 @@ function App() {
           }
         />
 
-        <Route
+<Route
           path="/jenis-software"
           element={
             <>
@@ -164,6 +176,17 @@ function App() {
             </>
           }
         />
+
+        <Route
+          path="/jadwal"
+          element={
+            <>
+              <PageTitle title="Jadwal" />
+              <Jadwal />
+            </>
+          }
+        />
+
         <Route
           path="/forms/form-elements"
           element={
