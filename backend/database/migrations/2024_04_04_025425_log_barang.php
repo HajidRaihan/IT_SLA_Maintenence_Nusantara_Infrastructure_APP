@@ -15,7 +15,6 @@ return new class extends Migration
             $table->enum('perusahaan', ['PT Makassar Metro Network', 'PT Jalan Tol Seksi Empat'])->nullable();
             $table->string('merk')->nullable();
             $table->integer('addata')->nullable();
-            $table->integer('mindata')->nullable();
             $table->string('adddata_string')->nullable();
             $table->timestamps();
         });  

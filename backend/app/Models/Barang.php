@@ -18,7 +18,6 @@ class Barang extends Model
         'gambar',
         'adddata_string',
         'addata',
-        'mindata',
     ];
 
     protected static function booted() {
@@ -38,10 +37,10 @@ class Barang extends Model
         
             if (isset($changes['mindata'])) {
                 LogBarang::create([
+                    'addata' => $barang->addata,
                     'merk' => $barang->merk,
                     'nama_equipment' => $barang->nama_equipment,
                     'perusahaan' => $barang->perusahaan,
-                    'mindata' => $barang->mindata,
                     'adddata_string' => $barang->adddata_string
                 ]);
             }

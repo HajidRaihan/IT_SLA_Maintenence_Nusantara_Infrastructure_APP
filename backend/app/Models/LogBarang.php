@@ -18,7 +18,6 @@ class LogBarang extends Model
         'merk',
         'adddata_string',
         'addata',
-        'mindata',
     ];
 }
 
