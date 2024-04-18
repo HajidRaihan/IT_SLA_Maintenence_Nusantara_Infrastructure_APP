@@ -22,6 +22,7 @@ import Lokasi from './pages/Lokasi';
 import ListActivity from './pages/ListActivity';
 import ListBarang from './pages/ListBarang';
 import LogBarang from './pages/LogBarang';
+import Jadwal from './pages/Jadwal';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -131,6 +132,17 @@ function App() {
             </>
           }
         />
+
+        <Route
+          path="/jadwal"
+          element={
+            <>
+              <PageTitle title="Jadwal" />
+              <Jadwal />
+            </>
+          }
+        />
+
         <Route
           path="/forms/form-elements"
           element={

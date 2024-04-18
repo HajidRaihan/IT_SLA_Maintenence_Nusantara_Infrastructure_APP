@@ -12,6 +12,8 @@ import { useDisclosure } from "@nextui-org/react";
 import Paginate from '../components/Pagination/paginate';
 import DeleteModal from '../components/Modals/DeleteModal';
 import { UpdateKategoriModal } from '../components/Modals/UpdateLokasiModal';
+
+
 const Kategori = () => {
   const [data, setData] = useState([]);
   const [newCategory, setNewCategory] = useState('');

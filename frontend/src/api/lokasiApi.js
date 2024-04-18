@@ -81,7 +81,7 @@ const deleteLokasi = async(id) =>{
           {},
           headers,
           'Mencoba delete kategori',
-        );
+        );  
     
         return response.data;
       } catch (error) {

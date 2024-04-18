@@ -142,7 +142,7 @@ const Lokasi = () => {
             <p className="font-medium">Nama</p>
           </div>
           <div className="col-span-1 flex items-center">
-            <p className="font-medium">Status</p>
+            <p className="font-medium">Aksi</p>
           </div>
         </div>
 
