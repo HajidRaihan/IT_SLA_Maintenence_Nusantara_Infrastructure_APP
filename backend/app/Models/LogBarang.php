@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class LogBarang extends Model
 {
-    protected $table = 'log_barang';
     use HasFactory;
+
+    protected $table = 'log_barang';
+
     protected $fillable = [
-        'tanggal',
+        'id',
         'nama_equipment',
         'perusahaan',
-        'unit',
         'merk',
-        'stock',
-        'activity',
+        'adddata_string',
+        'addata',
+        'mindata',
     ];
 }
+

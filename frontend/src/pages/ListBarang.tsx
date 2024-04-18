@@ -16,14 +16,13 @@
                 const [newEquipment, setNewEquipment] = useState('');
                 const [newMerk, setNewMerk] = useState('');
                 const [BarangId, setBarangId] = useState('');
-                const [updateStock, setUpdateStock] = useState(0);
+                const [updateStock, setUpdateStock] = useState<number>(0);
                 const [updateStockMin, setUpdateStockMin] = useState(0);
                 const { isOpen: addModalOpen, onOpen: onAddModalOpen, onClose: onAddModalClose } = useDisclosure();
                 const { isOpen: updateModalOpen, onOpen: onUpdateModalOpen, onClose: onUpdateModalClose } = useDisclosure();
                 const { isOpen: updateModalMinOpen, onOpen: onUpdateModalMinOpen, onClose: onUpdateModalMinClose } = useDisclosure();
                 const [newStock, setNewStock] = useState(0);
                 const [newPicture, setNewPicture] = useState();
-                const [newUnit, setNewUnit] = useState('');
                 const [selectedCompany, setSelectedCompany] = useState('');
                 const [currentPage, setCurrentPage] = useState(1); // Current page state
                 const itemsPerPage = 5; // Number of data items per page
@@ -53,44 +52,49 @@
                 };
             
                 const handleUpdateStock = async () => {
-                    if (updateStock <= 0) {
-                      toast.error('Error: Stock should be a positive number');
-                      return;
+                    // Ensure updateStock is parsed as an integer
+                    const stockToAdd = updateStock;
+                
+                    if (isNaN(stockToAdd) || stockToAdd <= 0) {
+                        toast.error('Error: Stock should be a positive number');
+                        return;
                     }
-                  
+                
                     try {
-                      const itemToUpdate = data.find(item => item.id === BarangId);
-                      if (!itemToUpdate) {
-                        throw new Error('Error: Barang not found');
-                      }
-                  
-                      const updatedStock = itemToUpdate.stock + updateStock;
-                      const log_barang = String('masuk');
-                  
-                      const dataToUpdate = {
-                        stock: updatedStock,
-                        adddata_string:log_barang
-                      };
-                  
-                      const res = await updateBarang(BarangId, dataToUpdate);
-                      const updatedBarang = res.data;
-                  
-                      const updatedIndex = data.findIndex(item => item.id === BarangId);
-                      if (updatedIndex !== -1) {
-                        setData(prevData => {
-                          const newData = [...prevData];
-                          newData[updatedIndex] = updatedBarang;
-                          return newData;
-                        });
-                      }
-                  
-                      toast.success(`Stock updated successfully: ${updatedStock}`);
+                        const itemToUpdate = data.find(item => item.id === BarangId);
+                        if (!itemToUpdate) {
+                            throw new Error('Error: Barang not found');
+                        }
+                
+                        const updatedStock = itemToUpdate.stock + stockToAdd;
+                        const log_barang = 'masuk'; // No need to convert string to String object
+                
+                        const dataToUpdate = {
+                            stock: updatedStock,
+                            adddata_string: log_barang,
+                            addata: stockToAdd,
+                        };
+                
+                        const res = await updateBarang(BarangId, dataToUpdate);
+                        const updatedBarang = res.data;
+                
+                        const updatedIndex = data.findIndex(item => item.id === BarangId);
+                        if (updatedIndex !== -1) {
+                            setData(prevData => {
+                                const newData = [...prevData];
+                                newData[updatedIndex] = updatedBarang;
+                                return newData;
+                            });
+                        }
+                
+                        toast.success(`Stock updated successfully: ${updatedStock}`);
                     } catch (error) {
-                      toast.error('Error updating stock:', error.message);
-                      // Handle the error gracefully (e.g., display an error message to the user)
+                        toast.error('Error updating stock:', error.message);
+                        // Handle the error gracefully (e.g., display an error message to the user)
                     }
-                  };
-
+                };
+                
+                
 
                   const handleUpdateMinStock = async () => {
                     if (updateStockMin <= 0) {
@@ -109,7 +113,8 @@
                   
                       const dataToUpdate = {
                         stock: updatedStock,
-                        adddata_string:log_barang
+                        adddata_string:log_barang,
+                        mindata:updateStockMin
                       };
                   
                       const res = await updateBarang(BarangId, dataToUpdate);
@@ -155,9 +160,7 @@
                     setSelectedCompany(e.target.value);
                 };
 
-                const handleUnit = e => {
-                    setNewUnit(e.target.value);
-                };
+               
                 const handleStock = e => {
                     setNewStock(parseInt(e.target.value)); // Parse input value to integer
                 };
@@ -173,51 +176,38 @@
                     setUpdateStockMin(newValue);
                   };
 
-                const handleAddBarang = async() => {
-                // Prevent default form submission behavior
+                    const handleAddBarang = async() => {
+                    // Prevent default form submission behavior
+    
+                        const newBarangData = {
+                            nama_equipment: newEquipment,
+                            merk: newMerk,
+                            perusahaan: selectedCompany,
+                            stock: newStock,
+                            gambar: newPicture,
+                        };
 
-                    const newBarangData = {
-                        nama_equipment: newEquipment,
-                        merk: newMerk,
-                        perusahaan: selectedCompany,
-                        stock: newStock,
-                        gambar: newPicture,
-                        unit:newUnit
+                        try {
+                            const res = await addBarang(newBarangData);
+                            const addedBarang = res.data;
+                            setData(prevData => [...prevData, addedBarang]);
+                            toast.success('Barang added successfully!', res);
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1500);
+                    
+                        } catch (error) {
+                            toast.error('Failed to add ');
+                        }
                     };
-
-                    try {
-                        const res = await addBarang(newBarangData);
-                        const addedBarang = res.data;
-                        setData(prevData => [...prevData, addedBarang]);
-                        toast.success('Barang added successfully!', res);
-                
-                    } catch (error) {
-                        toast.error('Failed to add ');
-                    }
-                };
-
                 const handlePictureChange = (e) => {
                 setNewPicture(e.target.files[0]);
 
                 };
-
-
-              ;
-         
-
-              
-
-                const handleAddForm = () => {
+                 const handleAddForm = () => {
                     
                     onAddModalOpen();
                 }
-
-                
-                
-
-
-            
-
                 return (
                     <DefaultLayout>
                         <ToastContainer/>
@@ -237,61 +227,64 @@
                         />
                     </button>
                     </div>
-                            <div className="flex flex-col">
-                                <div className="grid grid-cols-8rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-8">
-                                    <div className="p-2.5 xl:p-5">
-                                        <h5 className="text-sm font-medium uppercase xsm:text-base">No</h5>
-                                    </div>
-                                    <div className="pt-2.5 pr-2.5 pb-2.5 pl-0 xl:pl-0">
-                                        <h5 className="text-sm font-medium uppercase xsm:text-base">Nama Equipment</h5>
-                                    </div> <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                                        <h5 className="text-sm font-medium uppercase xsm:text-base">Company</h5>
-                                    </div>
-
-                                    <div className="p-2.5 text-center xl:p-5">
-                                        <h5 className="text-sm font-medium uppercase xsm:text-base">Unit</h5>
-                                    </div>
-                                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                                        <h5 className="text-sm font-medium uppercase xsm:text-base">Merk</h5>
-                                    </div>
-                                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                                        <h5 className="text-sm font-medium uppercase xsm:text-base">Stock</h5>
-                                    </div>
-                                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                                        <h5 className="text-sm font-medium uppercase xsm:text-base">Gambar</h5>
-                                    </div>
-                                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                                        <h5 className="text-sm font-medium uppercase xsm:text-base">Action</h5>
-                                    </div>
-                                
-                                </div>
-
-                                {currentItems.map((item, index) => (
-                                <div className="grid grid-cols-8 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-8" key={startIndex + index}>
-                                <div className="p-2.5 xl:p-5">
-                                    <p>{startIndex + index + 1}</p>
-                                </div>
-                                <div className="p-2.5  xl:p-3">
-                                    <p>{item.nama_equipment}</p>
-                                </div>
-                            
-                                <div className="p-2.5 text-center xl:p-5">
-                                    <p>{item.perusahaan}</p>
-                                </div>
-                                <div className="p-2.5 text-center xl:p-5">
-                                    <p>{item.unit}</p>
-                                </div>
-                                <div className="p-2.5 text-center xl:p-5">
-                                    <p>{item.merk}</p>
-                                </div>
-                                <div className="p-2.5 text-center xl:p-5">
-                                    <p>{item.stock}</p>
-                                </div>
-                                <div className="p-2.5 xl:p-5">
-                                    <img src={`http://127.0.0.1:8000/images/${item.gambar}`} alt="Descriptive text" style={{ width: '200px', height: '100px' }} />
-                                </div>
-                                <div className="mb-3  justify-center flex items-center">
-                                <button
+                    <div className="max-w-full overflow-x-auto">
+        <table className="w-full table-auto">
+          <thead>
+            <tr className="bg-gray-2 text-left dark:bg-meta-4">
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                NO
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                Nama Equipment
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                Company
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                Merk
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                Stock
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                Gambar
+              </th>
+              <th className="py-4 px-4 font-medium text-black dark:text-white">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems.map((item, index) => (
+              <tr key={startIndex + index}>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark ">
+                    <p className="text-sm"> {startIndex + index + 1}</p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.nama_equipment}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.perusahaan}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.merk}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {item.stock}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                <img src={`http://127.0.0.1:8000/images/${item.gambar}`} alt="Descriptive text" style={{ width: '200px', height: '100px' }} />
+                </td>
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                <button
                                 className="hover:text-primary"
                                 onClick={() => handleUpdateForm(item.id)} 
                                 >
@@ -354,26 +347,26 @@
                                     fill=""
                                     />
                                 </svg>
-                        </button>
-                        </div>
-                            </div>
-                                ))}
-                            </div>
-                        </div>
+                        </button> 
+             
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
                             <BarangModal 
             isOpen={addModalOpen}  
             onAdd={handleAddBarang} 
             onChangeEquipment={handleEquipment}
             onChangeMerk={handleMerk}
-            onChangeUnit={handleUnit}
             onChangeStock={handleStock}
             onChangePicture={handlePictureChange}
             onChangeCompany={handleCompany}
             valueEquipment={newEquipment}
             valueMerk={newMerk}
-            valueUnit={newUnit}
             valueStock={newStock}
-            valuePicture={newPicture}
             valueCompany={selectedCompany}
             onClose={onAddModalClose}/>
             <div className='flex justify-center mt-4'>

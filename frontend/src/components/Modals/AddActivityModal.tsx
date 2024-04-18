@@ -4,6 +4,9 @@ import SelectCompany from '../Forms/SelectGroup/SelectCompany';
 import SelectGroupOne from '../Forms/SelectGroup/SelectGroupOne';
 import SelectStatus from '../Forms/SelectGroup/SelectStatus';
 import { getLokasi } from '../../api/lokasiApi';
+import { getJenisHardware } from '../../api/jenisHardwareApi';
+import { getJenisSoftware } from '../../api/jenisSoftwareApi';
+import { getAplikasiTol } from '../../api/aplikasiTolApi';
 import { getKategori } from '../../api/kategoriApi';
 import { addActivity } from '../../api/activityApi';
 import CheckboxTwo from '../Checkboxes/CheckboxTwo';
@@ -26,11 +29,14 @@ const AddActivityModal = ({
 }) => {
   const [company, setCompany] = useState('');
   const [tanggal, setTanggal] = useState('');
+  const [jenisHardwareData, setJenisHardwareData] = useState([]);
   const [jenisHardware, setJenisHardware] = useState([]);
+  const [jenisSoftwareData, setJenisSoftwareData] = useState([]);
   const [standartAplikasi, setStandartAplikasi] = useState([]);
   const [uraianHardware, setUraianHardware] = useState('');
   const [uraianAplikasi, setUraianAplikasi] = useState('');
   const [aplikasiItTol, setAplikasiItTol] = useState([]);
+  const [aplikasiItTolData, setAplikasiItTolData] = useState([]);
   const [uraianItTol, setUraianItTol] = useState('');
   const [catatan, setCatatan] = useState('');
   const [shift, setShift] = useState('');
@@ -72,6 +78,44 @@ const AddActivityModal = ({
     fetchKategori();
   }, []);
 
+  useEffect(() => {
+    const fetchHardware = async () => {
+      const res = await getJenisHardware();
+      console.log({ res });
+      // Menggunakan Set untuk menyaring nilai-nilai unik
+      const uniqueHardwareNames = [
+        ...new Set(res.map((item) => item.nama_hardware)),
+      ];
+      setJenisHardwareData(uniqueHardwareNames);
+    };
+    fetchHardware();
+  }, []);
+
+  useEffect(() => {
+    const fetchSoftware = async () => {
+      const res = await getJenisSoftware();
+      console.log({ res });
+      // Menggunakan Set untuk menyaring nilai-nilai unik
+      const uniqueSoftwareNames = [
+        ...new Set(res.map((item) => item.nama_software)),
+      ];
+      setJenisSoftwareData(uniqueSoftwareNames);
+    };
+    fetchSoftware();
+  }, []);
+
+  useEffect(() => {
+    const fetchAplikasi = async () => {
+      const res = await getAplikasiTol();
+      console.log({ res });
+      // Menggunakan Set untuk menyaring nilai-nilai unik
+      const uniqueAplikasiNames = [
+        ...new Set(res.map((item) => item.nama_aplikasitol)),
+      ];
+      setAplikasiItTolData(uniqueAplikasiNames);
+    };
+    fetchAplikasi();
+  }, []);
   const handleCompanyChange = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
@@ -305,14 +349,14 @@ const AddActivityModal = ({
                           Jenis Hardware
                         </label>
                         <div className="flex gap-10 flex-wrap">
-                          {dataJenisHardware.map((data, index) => {
+                          {jenisHardwareData?.map((data, index) => {
                             return (
                               <CheckboxTwo
                                 label={data}
                                 key={index}
                                 isChecked={jenisHardware.includes(data)} // Pass nilai isChecked berdasarkan apakah label ada dalam checkedValues
                                 onChange={() => handleJenisHardwareChange(data)} // Gunakan handleCheckboxChange sebagai onChange handler
-                                options={dataJenisHardware}
+                                options={jenisHardwareData}
                               />
                             );
                           })}
@@ -347,7 +391,7 @@ const AddActivityModal = ({
                           Standard Aplikasi
                         </label>
                         <div className="flex gap-10 flex-wrap">
-                          {dataStandartAplikasi.map((data, index) => {
+                          {jenisSoftwareData.map((data, index) => {
                             return (
                               <CheckboxTwo
                                 label={data}
@@ -356,7 +400,7 @@ const AddActivityModal = ({
                                 onChange={() =>
                                   handleStandartAplikasiChange(data)
                                 } // Gunakan handleCheckboxChange sebagai onChange handler
-                                options={dataStandartAplikasi}
+                                options={jenisSoftwareData}
                               />
                             );
                           })}
@@ -365,7 +409,7 @@ const AddActivityModal = ({
 
                       <div className="w-full ">
                         <textarea
-                          className="disabled:cursor-not-allowed h-40 w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          className="disabled:cursor-not-allowed h-40 w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           placeholder="Penjabaran Masalah Sistem"
                           rows={5}
                           value={uraianAplikasi}
@@ -410,7 +454,7 @@ const AddActivityModal = ({
                           Aplikasi IT dan Peralatan Tol
                         </label>
                         <div className="flex gap-10 flex-wrap">
-                          {dataAplikasiTol.map((data, index) => {
+                          {aplikasiItTolData.map((data, index) => {
                             return (
                               <CheckboxTwo
                                 label={data}
@@ -428,7 +472,7 @@ const AddActivityModal = ({
                         <textarea
                           placeholder="Penjabaran Masalah Aplikasi IT & Peralatan Tol"
                           rows={5}
-                          className="disabled:cursor-not-allowed w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          className="disabled:cursor-not-allowed w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           value={uraianItTol}
                           onChange={handleUraianItTolChange}
                           disabled={aplikasiItTol.length === 0}
@@ -510,10 +554,10 @@ const AddActivityModal = ({
                         />
                       </div>
 
-                      {/* <SelectStatus
+                      <SelectStatus
                         value={status}
                         onChange={handleStatusChange}
-                      /> */}
+                      />
                     </div>
 
                     <Button

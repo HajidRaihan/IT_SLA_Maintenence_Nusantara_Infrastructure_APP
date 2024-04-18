@@ -12,9 +12,11 @@ return new class extends Migration
             $table->id();
             $table->string('nama_equipment');
             $table->enum('perusahaan', ['PT Makassar Metro Network', 'PT Jalan Tol Seksi Empat'])->nullable();
-            $table->string('unit')->nullable();
             $table->string('merk')->nullable();
             $table->integer('stock')->nullable();
+            $table->integer('addata')->nullable();
+            $table->integer('mindata')->nullable();
+            $table->string('adddata_string')->nullable();
             $table->string('gambar');
             $table->timestamps();
         });  

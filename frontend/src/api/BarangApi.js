@@ -23,6 +23,28 @@ const getBarang = async () => {
 };
 
 
+const getlogBarang = async () => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${Cookies.get('access_token')}`,
+  };
+  try {
+    const response = await RequestApi(
+      'GET',
+      'logbarang',
+      {},
+      headers,
+      'Mencoba mengambil barang',
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat mengambil barang', error);
+    throw error;
+  }
+};
+
+
 
 
 const addBarang = async (data) => {
@@ -46,6 +68,27 @@ const addBarang = async (data) => {
     }
   };
 
+
+  const addnewBarang = async (data) => {
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${Cookies.get('access_token')}`,
+    };
+    try {
+      const response = await RequestApi(
+        'POST',
+        'barang/updatestock',
+        data,
+        headers,
+        'Mencoba mengirim barang baru',
+      );
+  
+      return response.data;
+    } catch (error) {
+      console.error('Terjadi kesalahan saat mengambil barang', error);
+      throw error;
+    }
+  };
   const updateBarang = async(id,data) => {
     const headers = {
         'Content-Type' : 'application/json',
@@ -92,7 +135,7 @@ const deleteBarang = async(id) =>{
   
   
   
-  export { addBarang, getBarang,updateBarang,deleteBarang };
+  export { addBarang,getlogBarang, getBarang,updateBarang,deleteBarang };
 
 
 

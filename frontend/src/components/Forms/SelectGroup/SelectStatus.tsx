@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 
-const SelectStatus: React.FC = ({ value, onChange }) => {
+interface SelectStatusProps {
+  value?: any; // Adjust the type according to your data
+  onChange?: (value: any) => void; // Adjust the type according to your event handler
+}
+
+const SelectStatus: React.FC<SelectStatusProps> = ({ value, onChange }) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(true);
 
