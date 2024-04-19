@@ -78,30 +78,30 @@ const JenisHardware = () => {
     }
   };
 
-  //   const handleUpdate = async () => {
-  //     const data = {
-  //       nama_hardware: updateJenisHardware,
-  //     };
-  //     try {
-  //       const res = await editJenisHardware(data, jenisHardwareId);
-  //       const updatedJenisHardware = res.data;
-  //       const updatedIndex = jenisHardware.findIndex(
-  //         (item) => item.id === jenisHardwareId,
-  //       );
-  //       if (updatedIndex !== -1) {
-  //         setJenisHardware((prevData) => {
-  //           const newData = [...prevData];
-  //           newData[updatedIndex] = updatedJenisHardware;
-  //           return newData;
-  //         });
-  //       }
-  //       toast.success('Jenis Hardware Berhasil di Update :', res);
-  //     } catch (error) {
-  //       toast.error('Error saat mengupdate Jenis Hardware:', error);
-  //       // Handle the error gracefully (e.g., display an error message to the user)
-  //       console.error(error);
-  //     }
-  //   };
+    const handleUpdate = async () => {
+      const data = {
+        nama_hardware: updateJenisHardware,
+      };
+      try {
+        const res = await editJenisHardware(data, jenisHardwareId);
+        const updatedJenisHardware = res.data;
+        const updatedIndex = jenisHardware.findIndex(
+          (item) => item.id === jenisHardwareId,
+        );
+        if (updatedIndex !== -1) {
+          setJenisHardware((prevData) => {
+            const newData = [...prevData];
+            newData[updatedIndex] = updatedJenisHardware;
+            return newData;
+          });
+        }
+        toast.success('Jenis Hardware Berhasil di Update :', res);
+      } catch (error) {
+        toast.error('Error saat mengupdate Jenis Hardware:', error);
+        // Handle the error gracefully (e.g., display an error message to the user)
+        console.error(error);
+      }
+    };
 
   const handlerUpdateOpen = (id) => {
     console.log({ id });
@@ -237,21 +237,21 @@ const JenisHardware = () => {
         value={newJenisHardware}
         onClose={onAddModalClose}
       />
-      {/* <AddStuffModal
+      <AddStuffModal
         title="Update Jenis Hardware"
         isOpen={updateModalOpen}
         onAdd={handleUpdate}
         onChange={(e) => setUpdateJenisHardware(e.target.value)}
         value={updateJenisHardware}
         onClose={onUpdateModalClose}
-      /> */}
-      {/* <UpdateLokasiModal
+      />
+      <UpdateLokasiModal
         isUpdateOpen={updateModalOpen}
         onAdd={handleUpdate}
         onChange={(e) => setUpdatelokasi(e.target.value)}
         value={updatelokasi}
         onUpdateClose={onUpdateModalClose}
-      /> */}
+      />
       <DeleteModal
         isDeleteOpen={deleteModalOpen}
         onDelete={handleDelete}

@@ -7,7 +7,7 @@ function DeleteModal({ isDeleteOpen, onDeleteClose, onDelete }) {
       <Modal isOpen={isDeleteOpen} onClose={onDeleteClose} placement="top-center">
         <ModalContent>
           <>
-            <ModalHeader className="flex flex-col gap-1">Update Lokasi</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">Delete Data </ModalHeader>
             <ModalBody>
               <p>Are you sure want to delete this ?</p>
             </ModalBody>
