@@ -3,15 +3,16 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ActivityController;
-use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\JadwalController;
-use App\Http\Controllers\JenisSoftwareController;
-use App\Http\Controllers\JenisHardwareController;
+use App\Http\Controllers\LokasiController;
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\AplikasiItTolController;
+use App\Http\Controllers\JenisHardwareController;
+use App\Http\Controllers\JenisSoftwareController;
+use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\ActivityWorkersController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -92,6 +93,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/aplikasi_it_tol', [AplikasiItTolController::class, 'store']);
     Route::get('/aplikasi_it_tol/{id}', [AplikasiItTolController::class, 'show']);
     Route::delete('/aplikasi_it_tol/{id}', [AplikasiItTolController::class, 'destroy']);
+
+    Route::post('/activity_workers', [ActivityWorkersController::class, 'store']);
+    Route::put('/activity_workers/end/{id}', [ActivityWorkersController::class, 'add_end_time']);
+    Route::get('/activity_workers', [ActivityWorkersController::class, 'index']);
+    Route::get('/activity_workers/{id}', [ActivityWorkersController::class, 'getByActivityId']);
 });
 Route::get('/tes', function () {
     return 'tes';
