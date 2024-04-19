@@ -110,7 +110,7 @@ const AddActivityModal = ({
       console.log({ res });
       // Menggunakan Set untuk menyaring nilai-nilai unik
       const uniqueAplikasiNames = [
-        ...new Set(res.map((item) => item.nama_aplikasitol)),
+        ...new Set(res.map((item) => item.nama_aplikasiTol)),
       ];
       setAplikasiItTolData(uniqueAplikasiNames);
     };
@@ -330,11 +330,11 @@ const AddActivityModal = ({
                         onChange={handleCompanyChange}
                       />
 
-                      <DatePickerOne
+                      {/* <DatePickerOne
                         label={'Tanggal'}
                         value={tanggal}
                         onChange={handleTanggalChange}
-                      />
+                      /> */}
 
                       {/* <MultiSelect
                     id="multiSelect"
@@ -554,10 +554,10 @@ const AddActivityModal = ({
                         />
                       </div>
 
-                      <SelectStatus
+                      {/* <SelectStatus
                         value={status}
                         onChange={handleStatusChange}
-                      />
+                      /> */}
                     </div>
 
                     <Button

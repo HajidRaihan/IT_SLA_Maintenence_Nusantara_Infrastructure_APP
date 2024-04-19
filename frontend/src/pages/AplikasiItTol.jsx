@@ -128,7 +128,7 @@ const AplikasiItTol = () => {
             </div>
             <div className="col-span-3 flex items-center sm:flex">
               <p className="font-medium mr-3 text-black dark:text-white">
-                {item.nama_aplikasitol}
+                {item.nama_aplikasiTol}
               </p>
             </div>
             <div className="mb-3  flex items-center">
