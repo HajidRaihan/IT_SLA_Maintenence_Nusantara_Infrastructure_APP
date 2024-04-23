@@ -110,7 +110,7 @@ const AddActivityModal = ({
       console.log({ res });
       // Menggunakan Set untuk menyaring nilai-nilai unik
       const uniqueAplikasiNames = [
-        ...new Set(res.map((item) => item.nama_aplikasitol)),
+        ...new Set(res.map((item) => item.nama_aplikasiTol)),
       ];
       setAplikasiItTolData(uniqueAplikasiNames);
     };

@@ -11,6 +11,7 @@ return new class extends Migration
     {
         Schema::create('log_barang', function (Blueprint $table) {
             $table->id();
+            $table->string('id_barang');
             $table->string('nama_equipment');
             $table->enum('perusahaan', ['PT Makassar Metro Network', 'PT Jalan Tol Seksi Empat'])->nullable();
             $table->string('merk')->nullable();

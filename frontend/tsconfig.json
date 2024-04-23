@@ -27,7 +27,7 @@
   },
   "include": [
     "src/**/*.ts",  
-    "src/**/*.tsx", "src/components/Modals/AddActivityModal.jsx", "src/components/Tables/TableDetailActivity.jsx", "src/pages/ActivityDetail.jsx", "src/pages/Jadwal.jsx", // Add your non-TS file here
+    "src/**/*.tsx", "src/components/Modals/AddActivityModal.jsx", "src/components/Tables/TableDetailActivity.jsx", "src/pages/ActivityDetail.jsx", "src/pages/Jadwal.jsx", "src/pages/Regisbarang.jsx", "src/pages/Regisbarang.jsx", "src/pages/Regisbarang.jsx", // Add your non-TS file here
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -24,15 +24,35 @@ class BarangController extends Controller
 
     public function logbarang(Request $request)
     {
-            $perusahaan = $request->query('perusahaan');
-            $barangQuery = LogBarang::query();
-            if ($perusahaan) {
-                $barangQuery->where('perusahaan', $perusahaan);
-            }
-
-            $barang = $barangQuery->get();
-            return response()->json($barang);
+        $perusahaan = $request->query('perusahaan');
+        $start_date = $request->query('start_date');
+        $end_date = $request->query('end_date');
+    
+        $barangQuery = LogBarang::query();
+    
+        // Filter by perusahaan if it's provided
+        if ($perusahaan) {
+            $barangQuery->where('perusahaan', $perusahaan);
+        }
+    
+        // Filter by date range if both start_date and end_date are provided
+        if ($start_date && $end_date) {
+            $barangQuery->whereDate('created_at', '>=', $start_date)
+                        ->whereDate('created_at', '<=', $end_date);
+        }
+    
+        $barang = $barangQuery->get();
+    
+        return response()->json($barang);
     }
+    
+
+    public function logbarang_byid($barangId)
+{
+    $logbarang = Logbarang::where('id_barang', $barangId)->paginate(5);
+    return response()->json(['data' => $logbarang]);
+}
+
 
     public function store(Request $request)
 {

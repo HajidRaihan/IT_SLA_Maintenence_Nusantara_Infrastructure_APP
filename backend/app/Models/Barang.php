@@ -27,6 +27,7 @@ class Barang extends Model
         
             if (isset($changes['addata'])) {
                 LogBarang::create([
+                    'id_barang'=> $barang->id,
                     'addata' => $barang->addata,
                     'merk' => $barang->merk,
                     'nama_equipment' => $barang->nama_equipment,
