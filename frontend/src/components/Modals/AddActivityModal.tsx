@@ -330,11 +330,11 @@ const AddActivityModal = ({
                         onChange={handleCompanyChange}
                       />
 
-                      <DatePickerOne
+                      {/* <DatePickerOne
                         label={'Tanggal'}
                         value={tanggal}
                         onChange={handleTanggalChange}
-                      />
+                      /> */}
 
                       {/* <MultiSelect
                     id="multiSelect"
@@ -554,10 +554,10 @@ const AddActivityModal = ({
                         />
                       </div>
 
-                      <SelectStatus
+                      {/* <SelectStatus
                         value={status}
                         onChange={handleStatusChange}
-                      />
+                      /> */}
                     </div>
 
                     <Button

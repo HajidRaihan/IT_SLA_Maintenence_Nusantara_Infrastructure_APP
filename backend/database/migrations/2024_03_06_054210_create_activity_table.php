@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->enum('company', ['jtse', 'mmn']);
-            $table->date('tanggal');
+            // $table->date('tanggal');
             $table->string('jenis_hardware');
             $table->string('standart_aplikasi');
             $table->string('uraian_hardware');

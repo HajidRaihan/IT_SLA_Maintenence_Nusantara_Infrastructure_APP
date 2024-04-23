@@ -18,7 +18,7 @@ class ActivityTableSeeder extends Seeder
             [
                 'user_id'=> '1',
                 'company'=> 'mmn',
-                'tanggal'=> '2024-03-30',
+                // 'tanggal'=> '2024-03-30',
                 'jenis_hardware'=> 'komputer2',
                 'standart_aplikasi'=> 'standar',
                 'uraian_hardware'=> 'firaa',

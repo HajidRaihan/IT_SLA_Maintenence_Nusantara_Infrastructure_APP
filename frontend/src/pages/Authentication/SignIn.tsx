@@ -1,14 +1,15 @@
 import React, { SetStateAction, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
-import DefaultLayout from '../../layout/DefaultLayout';
 import { loginUser } from '../../api/authApi';
+import { Button } from '@nextui-org/react';
+import { toast, ToastContainer } from 'react-toastify';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -28,24 +29,34 @@ const SignIn: React.FC = () => {
 
   const loginHandler = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const credential = {
-      email: email,
-      password: password,
-    };
+    setIsLoading(true);
+    try {
+      const credential = {
+        email: email,
+        password: password,
+      };
 
-    const res = await loginUser(credential);
+      const res = await loginUser(credential);
 
-    if (res) {
-      navigate('/');
+      if (res) {
+        navigate('/');
+        setIsLoading(false);
+        toast.success('success login');
+      }
+
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+      toast.error('email atau password');
+      setIsLoading(false);
     }
-
-    console.log(res);
   };
   return (
     <div className="mx-32 mt-5">
       {/* <Breadcrumb pageName="Sign In" /> */}
+      <ToastContainer />
 
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="rounded-sm border border-stroke bg-white shadow-default ">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
@@ -263,12 +274,19 @@ const SignIn: React.FC = () => {
                 </div>
 
                 <div className="mb-5">
-                  <button
+                  {/* <button
                     className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                     onClick={loginHandler}
                   >
                     Submit
-                  </button>
+                  </button> */}
+                  <Button
+                    className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
+                    onClick={loginHandler}
+                    isLoading={isLoading}
+                  >
+                    Submit
+                  </Button>
                 </div>
 
                 <div className="mt-6 text-center">
