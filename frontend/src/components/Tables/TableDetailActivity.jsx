@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDisclosure } from '@nextui-org/react';
 import ChangeStatusModal from '../Modals/ChangeStatusModal';
+import { format } from 'date-fns';
 
 const TableDetailActivity = ({ data }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -36,7 +37,9 @@ const TableDetailActivity = ({ data }) => {
               </h5>
             </td>
             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-              <p className="text-black dark:text-white">{data.tanggal}</p>
+              <p className="text-black dark:text-white">
+                {format(new Date(data.created_at), 'yyyy-MM-dd')}
+              </p>
             </td>
           </tr>
           <tr>

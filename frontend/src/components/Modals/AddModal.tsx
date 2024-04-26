@@ -30,7 +30,7 @@ function AddStuffModal({ isOpen, onClose, onAdd, value, onChange, title }) {
                 onChange={onChange}
                 className=" bg-transparent p text-black  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 label={title}
-                placeholder={`Enter your  + ${title}`}
+                placeholder={`Enter your ${title}`}
                 variant="bordered"
               />
             </ModalBody>
