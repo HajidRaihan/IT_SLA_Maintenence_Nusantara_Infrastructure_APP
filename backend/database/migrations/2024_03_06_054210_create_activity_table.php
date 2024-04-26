@@ -31,8 +31,9 @@ return new class extends Migration
             $table->string('foto_awal');
             $table->string('foto_akhir')->nullable()->default('png');
             $table->enum('kategori_activity', ['toll', 'nontoll']);
-            $table->enum('status', ['process','done']); 
+            $table->enum('status', ['masuk','process','pending','done']); 
             $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('process_at')->nullables();
             $table->timestamp('updated_at')->useCurrent();
             $table->timestamp('ended_at')->nullable();
 

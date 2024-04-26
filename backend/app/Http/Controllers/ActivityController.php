@@ -63,7 +63,7 @@ class ActivityController extends Controller
         }
 
         $activity = Activity::create($data);
-        return response()->json(['data' => $activity]);
+       return response()->json(['message' => 'Add Activity success', 'data'=>$activity]);
     }
 
     public function getactivity_toll(Request $request)
@@ -120,11 +120,25 @@ class ActivityController extends Controller
         return response()->json(['data' => $activity]);
     }
 
-    //     public function getactivity_toll_by_user($UserId)
-    // {
-    //         $activity = Activity::where('user_id', $userId)->get();
-    //         return response()->json(['data' => $activity]);
-    // }
+    public function getactivity_toll_by_user($userId)
+    {
+        // Lakukan query untuk mendapatkan data aktivitas tol berdasarkan ID pengguna
+        $activities = Activity::select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
+            ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
+            ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
+            ->leftJoin('users', 'activity.user_id', '=', 'users.id')
+            ->where('activity.user_id', $userId)
+            ->get();
+    
+        // Periksa apakah data ditemukan atau tidak
+        if ($activities->isEmpty()) {
+            // Jika tidak ditemukan, kembalikan respons JSON kosong dengan kode status 404 (Not Found)
+            return response()->json(['message' => 'No activities found for the user with the provided ID.'], 404);
+        }
+    
+        // Jika ditemukan, kembalikan data aktivitas tol dalam bentuk respons JSON dengan kode status 200 (OK)
+        return response()->json(['message' => 'Activities retrieved successfully.', 'data' => $activities], 200);
+    }
 
     public function edit_activity(Request $request, $id)
     {
@@ -146,6 +160,8 @@ class ActivityController extends Controller
             'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:process,done',
         ]);
+
+        
 
         $activity = Activity::findOrFail($id);
         $activity->update($data);
