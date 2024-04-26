@@ -65,3 +65,4 @@ const deleteJenisSoftware = async (id) => {
 };
 
 export { getJenisSoftware, addJenisSoftware, deleteJenisSoftware };
+ 

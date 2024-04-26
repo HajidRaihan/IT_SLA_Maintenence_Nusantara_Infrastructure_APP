@@ -13,6 +13,7 @@ use App\Http\Controllers\JenisHardwareController;
 use App\Http\Controllers\JenisSoftwareController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ActivityWorkersController;
+use App\Http\Controllers\RegisbarangController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -68,6 +69,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/barang', [BarangController::class, 'index']);
     Route::post('/barang', [BarangController::class, 'store']);
     Route::get('/barang/{id}', [BarangController::class, 'show']);
+    Route::get('/logbarang/{id}', [BarangController::class, 'logbarang_byid']);
     Route::put('/barang/{id}', [BarangController::class, 'update']);
     Route::delete('/barang/{id}', [BarangController::class, 'destroy']);
     Route::get('/logbarang', [BarangController::class, 'logbarang']);
@@ -99,6 +101,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/activity_workers/end/{id}', [ActivityWorkersController::class, 'add_end_time']);
     Route::get('/activity_workers', [ActivityWorkersController::class, 'index']);
     Route::get('/activity_workers/{id}', [ActivityWorkersController::class, 'getByActivityId']);
+
+    Route::get('/item', [RegisbarangController::class, 'get_regisbarang']);
+    Route::post('/regisbarang', [RegisbarangController::class, 'add_regisbarang']);
+    Route::put('/regisbarang/{id}', [RegisbarangController::class, 'update_barang']);
+    Route::get('/regisbarang/{id}', [RegisbarangController::class, 'get_regisbarangid']);
+    Route::delete('/regisbarang/{id}', [RegisbarangController::class, 'deletebarang']);
 });
 Route::get('/tes', function () {
     return 'tes';

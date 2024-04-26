@@ -234,13 +234,13 @@ const AddActivity = () => {
                     onChange={handleTanggalChange}
                   />
 
-                  {/* <MultiSelect
+                  <MultiSelect
                     id="multiSelect"
                     data={dataJenisHardware}
                     label="Jenis Hardware"
                     value={jenisHardware}
                     onChange={handleJenisHardwareChange}
-                  /> */}
+                  />
 
                   <div>
                     <label className="mb-2.5 block text-black dark:text-white">
@@ -271,7 +271,7 @@ const AddActivity = () => {
                     />
                   </div>
 
-                  {/* <div className="w-full ">
+                  <div className="w-full ">
                     <label className="mb-2.5 block text-black dark:text-white">
                       Standart Aplikasi
                     </label>
@@ -281,7 +281,7 @@ const AddActivity = () => {
                       value={standartAplikasi}
                       onChange={handleStandartAplikasiChange}
                     />
-                  </div> */}
+                  </div>
 
                   <div>
                     <label className="mb-2.5 block text-black dark:text-white">
@@ -311,7 +311,7 @@ const AddActivity = () => {
                     />
                   </div>
 
-                  {/* <div className="w-full ">
+                  <div className="w-full ">
                     <label className="mb-2.5 block text-black dark:text-white">
                       Aplikasi IT Tol
                     </label>
@@ -321,16 +321,16 @@ const AddActivity = () => {
                       value={aplikasiItTol}
                       onChange={handleAplikasiItTolChange}
                     />
-                  </div> */}
+                  </div>
 
-                  {/* <MultiSelectAplikasi
+                  <MultiSelectAplikasi
                     id="multiSelect"
                     data={dataAplikasiTol}
                     label="Aplikasi IT dan Peralatan Tol"
                     value={aplikasiItTol}
                     onChange={handleAplikasiItTolChange}
-                  /> */}
-                  {/* 
+                  />
+                  
                   <div>
                     <label className="mb-2.5 block text-black dark:text-white">
                       Jenis Hardware
@@ -340,7 +340,7 @@ const AddActivity = () => {
                         return <CheckboxTwo label={data} key={index} />;
                       })}
                     </div>
-                  </div> */}
+                  </div>
 
                   <div>
                     <label className="mb-2.5 block text-black dark:text-white">

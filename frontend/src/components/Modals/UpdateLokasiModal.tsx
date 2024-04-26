@@ -266,4 +266,36 @@ function UpdateJadwalModal({ isUpdateOpen, onUpdateClose, onAdd, valueUpdateNama
   );
 }
 
-export  {UpdateKategoriModal,UpdateLokasiModal,UpdateBarangModal,UpdateBarangModalMin,UpdateJadwalModal};
+function UpdateRegisbarangModal({ isUpdateOpen, onUpdateClose, onAdd, value, onChange }) {
+  return (
+    <>
+      <Modal isOpen={isUpdateOpen} onClose={onUpdateClose} placement="top-center">
+        <ModalContent>
+          <>
+            <ModalHeader className="mb-2.5 block text-black dark:text-white">Update Lokasi</ModalHeader>
+            <ModalBody>
+              <Input
+                autoFocus
+                value={value}
+                onChange={onChange}
+                className=" bg-transparent p text-black  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                label="Barang"
+                placeholder="Update your barang"
+                variant="bordered"
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="flat" onPress={onUpdateClose}>
+                Close
+              </Button>
+              <Button color="primary" onPress={onAdd}>
+                Update
+              </Button>
+            </ModalFooter>
+          </>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+}
+export  {UpdateKategoriModal,UpdateLokasiModal,UpdateBarangModal,UpdateBarangModalMin,UpdateJadwalModal,UpdateRegisbarangModal};

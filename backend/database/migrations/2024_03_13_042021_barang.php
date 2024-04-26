@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('merk')->nullable();
             $table->integer('stock')->nullable();
             $table->integer('addata')->nullable();
-            $table->integer('mindata')->nullable();
             $table->string('adddata_string')->nullable();
             $table->string('gambar');
             $table->timestamps();

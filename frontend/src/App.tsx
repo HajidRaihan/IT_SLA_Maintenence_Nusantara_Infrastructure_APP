@@ -26,6 +26,9 @@ import JenisHardware from './pages/JenisHardware';
 import JenisSoftware from './pages/JenisSoftware';
 import AplikasiItTol from './pages/AplikasiItTol';
 import Jadwal from './pages/Jadwal';
+import YourNewComponent from './pages/LogallBarangt';
+import AddBarang from './pages/tes';
+import HistoryBarang from './pages/historybarang';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -62,6 +65,15 @@ function App() {
             </>
           }
         />
+          <Route
+          path="/calendar"
+          element={
+            <>
+              <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <Calendar />
+            </>
+          }
+        />
         <Route
           path="/forms/add-activity"
           element={
@@ -89,7 +101,7 @@ function App() {
             </>
           }
         />
-        <Route
+        {/* <Route
           path="/jadwal"
           element={
             <>
@@ -97,18 +109,39 @@ function App() {
               <Jadwal />
             </>
           }
-        />
+        /> */}
 
         
         <Route
           path="/listbarang"
           element={
             <>
-              <PageTitle title="Barang" />
+              <PageTitle title="ListBarang" />
               <ListBarang />
             </>
           }
         />
+
+<Route
+          path="/regisbarang"
+          element={
+            <>
+              <PageTitle title="Barang" />
+              <AddBarang/>
+            </>
+          }
+        />
+
+<Route
+          path="listbarang/historybarang/:id"
+          element={
+            <>
+              <PageTitle title="Historybarang" />
+              <HistoryBarang/>
+            </>
+          }
+        />
+
         <Route
           path="/logbarang"
           element={
@@ -183,6 +216,16 @@ function App() {
             <>
               <PageTitle title="Jadwal" />
               <Jadwal />
+            </>
+          }
+        />
+
+<Route
+          path="/logallbarang"
+          element={
+            <>
+              <PageTitle title="LogallBarang" />
+              <YourNewComponent/>
             </>
           }
         />
