@@ -98,7 +98,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/aplikasi_it_tol/{id}', [AplikasiItTolController::class, 'destroy']);
 
     Route::post('/activity_workers', [ActivityWorkersController::class, 'store']);
-    Route::put('/activity_workers/end/{id}', [ActivityWorkersController::class, 'add_end_time']);
+    Route::post('/activity_workers/end/{id}', [ActivityWorkersController::class, 'done_activity']);
     Route::get('/activity_workers', [ActivityWorkersController::class, 'index']);
     Route::get('/activity_workers/{id}', [ActivityWorkersController::class, 'getByActivityId']);
 

@@ -33,7 +33,7 @@ class ActivityTableSeeder extends Seeder
                 'biaya'=> '123',
                 'foto_awal'=> '1710815317.jpeg',
                 'foto_akhir'=> '1710815317.jpeg',
-                'status'=> 'done',
+                'status'=> 'process',
                 // 'ended'
                 // 'created_at' => Carbon::now(),
                 // 'updated_at' => Carbon::now(),

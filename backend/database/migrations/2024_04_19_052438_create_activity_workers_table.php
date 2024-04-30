@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('activity_id');
-            $table->enum('status', ['process','pending'])->default('pending');
+            $table->enum('status', ['process','pending', 'done'])->default('process');
+            $table->string('deskripsi_pending')->nullable();
+
             $table->timestamp('start_time')->nullable();
             $table->timestamp('end_time')->nullable();
             $table->string('work_duration')->nullable();

@@ -63,6 +63,20 @@ class ActivityController extends Controller
         }
 
         $activity = Activity::create($data);
+
+        $activityWorkerData = [
+            'user_id' => $user,
+            'activity_id' => $activity->id,
+            'status' => 'process', // sesuaikan dengan nilai default yang Anda inginkan
+            // Isi kolom lain sesuai kebutuhan, seperti 'start_time', 'end_time', 'work_duration', dst.
+        ];
+        
+        try {
+            $activityWorker = ActivityWorker::create($activityWorkerData);
+        } catch (\Exception $e) {
+            // Penanganan kesalahan jika gagal membuat entri baru dalam tabel activity_workers
+            return response()->json(['error' => 'Failed to create activity worker entry'], 500);
+        }
        return response()->json(['message' => 'Add Activity success', 'data'=>$activity]);
     }
 
@@ -120,23 +134,24 @@ class ActivityController extends Controller
         return response()->json(['data' => $activity]);
     }
 
-    public function getactivity_toll_by_user($userId)
+    public function getactivity_toll_by_user(Request $request = null, $userId)
     {
+        // Mendapatkan filter dari permintaan HTTP
+        $filters = $request->only(['lokasi_id']);
+        
         // Lakukan query untuk mendapatkan data aktivitas tol berdasarkan ID pengguna
-        $activities = Activity::select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
-            ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
-            ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
-            ->leftJoin('users', 'activity.user_id', '=', 'users.id')
-            ->where('activity.user_id', $userId)
-            ->get();
-    
-        // Periksa apakah data ditemukan atau tidak
-        if ($activities->isEmpty()) {
-            // Jika tidak ditemukan, kembalikan respons JSON kosong dengan kode status 404 (Not Found)
-            return response()->json(['message' => 'No activities found for the user with the provided ID.'], 404);
-        }
-    
-        // Jika ditemukan, kembalikan data aktivitas tol dalam bentuk respons JSON dengan kode status 200 (OK)
+        $activities = Activity::query()
+        ->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
+        ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
+        ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
+        ->leftJoin('users', 'activity.user_id', '=', 'users.id')
+        ->where('activity.user_id', $userId)
+        ->when(isset($filters['lokasi_id']), function ($query) use ($filters) {
+            $query->where('activity.lokasi_id', $filters['lokasi_id']);
+        })
+        ->paginate(5);
+
+        // Mengembalikan data dalam format JSON
         return response()->json(['message' => 'Activities retrieved successfully.', 'data' => $activities], 200);
     }
 
@@ -293,6 +308,7 @@ class ActivityController extends Controller
         $data = $request->validate([
             'company' => 'required|in:jtse,mmn',
             // 'tanggal' => 'required|date',
+            'kategori_activity' => 'required|string',
             'jenis_hardware' => 'required|string',
             'standart_aplikasi' => 'required|string',
             'uraian_hardware' => 'required|string',
