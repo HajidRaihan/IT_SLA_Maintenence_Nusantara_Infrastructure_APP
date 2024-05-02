@@ -42,7 +42,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/toll', [ActivityController::class, 'addactivity_toll']);
     Route::get('/toll', [ActivityController::class, 'getactivity_toll']);
     Route::get('/toll/{id}', [ActivityController::class, 'getactivity_toll_id']);
-    // Route::get('/toll/user/{userId}', [ActivityController::class, 'getactivity_toll_by_user']);
+    Route::get('/toll/user/{userId}', [ActivityController::class, 'getactivity_toll_by_user']);
+
     Route::put('/toll/update/{id}', [ActivityController::class, 'edit_activity']);
     Route::delete('/toll/delete/{id}', [ActivityController::class, 'delete_activity']);
     Route::post('/nontoll', [ActivityController::class, 'addactivity_nontoll']);
@@ -97,7 +98,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/aplikasi_it_tol/{id}', [AplikasiItTolController::class, 'destroy']);
 
     Route::post('/activity_workers', [ActivityWorkersController::class, 'store']);
-    Route::put('/activity_workers/end/{id}', [ActivityWorkersController::class, 'add_end_time']);
+    Route::post('/activity_workers/end/{id}', [ActivityWorkersController::class, 'done_activity']);
     Route::get('/activity_workers', [ActivityWorkersController::class, 'index']);
     Route::get('/activity_workers/{id}', [ActivityWorkersController::class, 'getByActivityId']);
 

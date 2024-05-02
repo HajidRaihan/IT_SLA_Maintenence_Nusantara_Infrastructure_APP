@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('activity', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->enum('company', ['jtse', 'mmn']);
+            $table->enum('company', ['man', 'mmn']);
             // $table->date('tanggal');
             $table->string('jenis_hardware');
             $table->string('standart_aplikasi');
@@ -31,8 +31,9 @@ return new class extends Migration
             $table->string('foto_awal');
             $table->string('foto_akhir')->nullable()->default('png');
             $table->enum('kategori_activity', ['toll', 'nontoll']);
-            $table->enum('status', ['process','done']); 
+            $table->enum('status', ['process','pending','done'])->default('process'); 
             $table->timestamp('created_at')->useCurrent();
+            // $table->timestamp('process_at')->nullable();
             $table->timestamp('updated_at')->useCurrent();
             $table->timestamp('ended_at')->nullable();
 

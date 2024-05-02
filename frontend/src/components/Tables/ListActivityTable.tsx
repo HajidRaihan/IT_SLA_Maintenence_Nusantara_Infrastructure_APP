@@ -5,6 +5,7 @@ import UpdateActivityModal from '../Modals/UpdateActivityModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import AddActivityModal from '../Modals/AddActivityModal';
+import { format } from 'date-fns';
 
 import { Button, useDisclosure } from '@nextui-org/react';
 import ActionModal from '../Modals/ActionModal';
@@ -81,6 +82,11 @@ const ListActivityTable = ({
     onOpenDeleteModal();
   };
 
+  const openAddModalHandler = () => {
+    setOpenAddModal(true);
+    onOpenAddModal();
+  };
+
   return (
     <div
       className={`rounded-sm border  border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1`}
@@ -91,7 +97,7 @@ const ListActivityTable = ({
         </h4>
         <Button
           className="border border-stroke rounded-lg px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
-          onPress={onOpenAddModal}
+          onPress={openAddModalHandler}
         >
           <FontAwesomeIcon icon={faPlus} className="green-light-icon text-lg" />
         </Button>
@@ -140,7 +146,7 @@ const ListActivityTable = ({
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
-                    {item.created_at}
+                    {format(new Date(item.created_at), 'yyyy-MM-dd')}
                   </h5>
                   {/* <p className="text-sm">${item.biaya}</p> */}
                 </td>
@@ -288,24 +294,25 @@ const ListActivityTable = ({
         </table>
       </div>
 
-      <UpdateActivityModal
+      {/* <UpdateActivityModal
         isOpen={isOpenEditModal}
         onOpen={onOpenEditModal}
         onOpenChange={onOpenChangeEditModal}
         id={activityId}
-      />
-
-      <AddActivityModal
-        isOpen={isOpenAddModal}
-        onOpen={onOpenAddModal}
-        onOpenChange={onOpenChangeAddModal}
-        // isOpenSuccessModal={isOpenSuccessModal}
-        onOpenSuccessModal={onOpenSuccessModal}
-        toastSuccess={toastSuccess}
-        toastError={toastError}
-        setData={setData}
-        // onOpenChangeSuccessModal={onOpenChangeSuccessModal}
-      />
+      /> */}
+      {openAddModal && (
+        <AddActivityModal
+          isOpen={isOpenAddModal}
+          // onOpen={onOpenAddModal}
+          onOpenChange={onOpenChangeAddModal}
+          // isOpenSuccessModal={isOpenSuccessModal}
+          onOpenSuccessModal={onOpenSuccessModal}
+          toastSuccess={toastSuccess}
+          toastError={toastError}
+          setData={setData}
+          // onOpenChangeSuccessModal={onOpenChangeSuccessModal}
+        />
+      )}
 
       {/* <SuccessModal
         isOpen={isOpenSuccessModal}

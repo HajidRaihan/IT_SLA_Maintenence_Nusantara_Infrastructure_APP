@@ -17,48 +17,67 @@ class UserController extends Controller
     }
 
     public function updateProfile(Request $request, $id)
-    {
-        $validate = $request->validate([
-            'username' => 'nullable|string',
-            'foto' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048', // Sesuaikan dengan tipe file yang diizinkan dan batas ukuran file
-            'ttd' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048', // Sesuaikan dengan tipe file yang diizinkan dan batas ukuran file
-        ]);
+{
+    $validate = $request->validate([
+        'username' => 'nullable|string',
+        'foto' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048', 
+        'ttd' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+    ]);
 
-        $ttdName = null;
+    // Periksa apakah username telah diisi
+    if (!$request->filled('username')) {
+        return response()->json([
+            'message' => 'Username is required',
+        ], 400); // Bad Request
+    }
 
-        if ($request->ttd->isValid()) {
-            $originalName = $request->ttd->getClientOriginalName();
-            $fileExtension = $request->ttd->getClientOriginalExtension();
-            $ttdName = Date::now()->format('YmdHis') . '-' . $originalName;
-            Storage::putFileAs('image', $request->ttd, $ttdName);
-        }
+    $user = User::find($id);
 
-        $fileName = null;
+    if (!$user) {
+        return response()->json([
+            'message' => 'User not found',
+        ], 404);
+    }
 
+    // Update fields if provided in the request
+    if ($request->hasFile('foto')) {
         if ($request->foto->isValid()) {
             $originalName = $request->foto->getClientOriginalName();
             $fileExtension = $request->foto->getClientOriginalExtension();
             $fileName = Date::now()->format('YmdHis') . '-' . $originalName;
-            Storage::putFileAs('image', $request->foto, $fileName);
-        }
-
-        $user = User::where('id', $id)->update([
-            'username' => $request->username,
-            'email' => $request->email,
-            'foto' => $fileName,
-            'ttd' => $ttdName,
-        ]);
-
-        if (!$user) {
+            $request->foto->move(public_path('images'), $fileName);
+            $user->foto = $fileName;
+        } else {
             return response()->json([
-                'message' => 'Update failed',
-            ], 404);
+                'message' => 'Invalid photo file',
+            ], 400); // Bad Request
         }
-
-        return response()->json([
-            'message' => 'Update success',
-        ], 200);
     }
+
+    if ($request->hasFile('ttd')) {
+        if ($request->ttd->isValid()) {
+            $originalName = $request->ttd->getClientOriginalName();
+            $fileExtension = $request->ttd->getClientOriginalExtension();
+            $ttdName = Date::now()->format('YmdHis') . '-' . $originalName;
+            $request->ttd->move(public_path('images'), $ttdName);
+            $user->ttd = $ttdName;
+        } else {
+            return response()->json([
+                'message' => 'Invalid signature file',
+            ], 400); // Bad Request
+        }
+    }
+
+    // Update the username if provided
+    $user->username = $request->username;
+
+    // Save the changes to the database
+    $user->save();
+
+    return response()->json([
+        'message' => 'Update success',
+    ], 200);
+}
 
     
     
