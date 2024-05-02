@@ -11,12 +11,13 @@ return new class extends Migration
         Schema::create('barang', function (Blueprint $table) {
             $table->id();
             $table->string('nama_equipment');
-            $table->enum('perusahaan', ['PT Makassar Metro Network', 'PT Jalan Tol Seksi Empat'])->nullable();
+            $table->enum('perusahaan', ['PT Makassar Metro Network', 'PT Makassar Airport Network'])->nullable();
             $table->string('merk')->nullable();
             $table->integer('stock')->nullable();
             $table->integer('addata')->nullable();
+            $table->string('gambar')->nullable();
             $table->string('adddata_string')->nullable();
-            $table->string('gambar');
+            $table->string('catatan')->nullable();
             $table->timestamps();
         });  
     }

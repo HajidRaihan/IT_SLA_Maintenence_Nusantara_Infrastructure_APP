@@ -33,27 +33,14 @@ const Kategori = () => {
     // Logic to parse the duration string and convert it into milliseconds
     // For example, you can use a library like 'date-fns' or 'moment' for parsing
     // Here's a basic implementation using regular expressions:
-    const match = input.match(/^(\d+)\s*(minute|hour|day|week|month)s?$/);
+    const match = input.match(/^(\d+)\s*(hour)s?$/);
     if (match) {
       const value = parseInt(match[1]);
       const unit = match[2];
       let durationInseconds = 0;
       switch (unit) {
-        case 'minute':
-          durationInseconds = value * 60 ;
-          break;
         case 'hour':
           durationInseconds = value * 60 * 60 ;
-          break;
-        case 'day':
-          durationInseconds = value * 24 * 60 * 60 ;
-          break;
-        case 'week':
-          durationInseconds = value * 7 * 24 * 60 * 60 ;
-          break;
-        case 'month':
-          // Note: This is a simplified calculation for months
-          durationInseconds = value * 30 * 24 * 60 * 60;
           break;
         default:
           break;

@@ -14,9 +14,22 @@ class RegisbarangController extends Controller
 
     public function add_regisbarang(Request $request){
         $data = $request -> validate([
-            'nama_barang' => 'required|string',
+        'nama_barang' => 'required|string|max:255',
+        'perusahaan' => 'string|in:PT Makassar Metro Network,PT Makassar Airport Network',
+        'merk' => 'required|string|max:255',
+        'stock' => 'required|integer|max:255',
+        'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048|nullable',
+        'spesifikasi' => 'string|required'
         ]);
-            $regisbarang = Regisbarang::create($request->all());
+
+        if ($request->hasFile('gambar')) {
+            $imageName = time().'.'.$request->gambar->extension();
+            $request->gambar->move(public_path('images'), $imageName);
+        } else {
+            // Handle case when no file is uploaded
+            return response()->json(['error' => 'No file uploaded'], 400);
+        }
+        $regisbarang = Regisbarang::create(array_merge($request->all(), ['gambar' => $imageName]));
             return response()->json([
                'message' => 'barang berhasil ditambahkan',
                'data' => $regisbarang,

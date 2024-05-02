@@ -45,6 +45,29 @@ const getBarangid = async(id) => {
   }
 }
 
+const getListBarangid = async(id) => {
+  const headers = {
+      'Content-Type' : 'application/json',
+      Authorization: `Bearer ${Cookies.get('access_token')}`,
+  };
+  try{
+      const response = await RequestApi(
+          'GET',
+          `barang/${id}`,
+          {},
+          headers,
+          'mencoba mengambil barang' 
+
+      );
+
+
+      return response.data;
+  }catch(error){
+      console.error("Terjadi Kesalahan",error);
+      throw error;
+  }
+}
+
 
 const getlogBarang = async () => {
   const headers = {
@@ -158,7 +181,7 @@ const deleteBarang = async(id) =>{
   
   
   
-  export { addBarang,getlogBarang, getBarang,updateBarang,deleteBarang,getBarangid };
+  export { addBarang,getlogBarang, getBarang,updateBarang,deleteBarang,getBarangid,getListBarangid };
 
 
 

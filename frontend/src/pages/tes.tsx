@@ -23,6 +23,10 @@ import Paginate from '../components/Pagination/paginate';
 const AddBarang = () => {
   const [data, setData] = useState([]);
   const [newbarang, setNewBarang] = useState('');
+  const [newMerk, setNewMerk] = useState('');
+  const [selectedCompany, setSelectedCompany] = useState('');
+  const [newPicture, setNewPicture] = useState();
+  const [newSpesifikasi, setNewSpesifikasi] = useState('');
   const [updatebarang, setUpdatebarang] = useState('');
   const [Barangid, setBarangId] = useState();
   const {
@@ -54,6 +58,8 @@ const AddBarang = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page); // Update the current page
   };
+
+  
 
   const handleAddForm = () => {
     setNewBarang('');
@@ -95,18 +101,7 @@ const AddBarang = () => {
     }
   };
 
-  const handleAddBarang = async () => {
-    const newBarangData = { nama_barang: newbarang };
-
-    try {
-      const res = await addregisBarang(newBarangData);
-      const addedBarang = res.data;
-      setData((prevData) => [...prevData, addedBarang]);
-      toast.success('Barang added successfully');
-    } catch (error) {
-      toast.error('Failed to add Barang');
-    }
-  };
+ 
 
   const handleUpdate = async () => {
     const dataToUpdate = {
@@ -133,7 +128,7 @@ const AddBarang = () => {
   return (
     <DefaultLayout>
       <ToastContainer />
-      <Breadcrumb pageName="Lokasi" />
+      <Breadcrumb pageName="Regist barang" />
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="py-6 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
@@ -245,8 +240,15 @@ const AddBarang = () => {
       <ItemModal
         isOpen={addModalOpen}
         onAdd={handleAddBarang}
-        onChange={(e) => setNewBarang(e.target.value)}
-        value={newbarang}
+        onChangeBarang={(e) => setNewBarang(e.target.value)}
+        onChangeMerk={(e) => setNewMerk(e.target.value)}
+        onChangeCompany={(e) => setSelectedCompany(e.target.value)}
+        onChangePicture= {(e) => setNewPicture(e.target.files[0])}
+        onChangespesifikasi ={(e) => setNewSpesifikasi(e.target.value)}
+        valueBarang={newbarang}
+        valueMerk = {newMerk}
+        valueCompany = {selectedCompany} 
+        valueSpesifikasi = {newSpesifikasi}
         onClose={onAddModalClose}
       />
       <UpdateRegisbarangModal
