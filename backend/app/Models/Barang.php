@@ -15,6 +15,7 @@ class Barang extends Model
         'perusahaan',
         'merk',
         'stock',
+        'catatan',
         'gambar',
         'adddata_string',
         'addata',
@@ -32,17 +33,22 @@ class Barang extends Model
                     'merk' => $barang->merk,
                     'nama_equipment' => $barang->nama_equipment,
                     'perusahaan' => $barang->perusahaan,
-                    'adddata_string' => $barang->adddata_string
+                    'adddata_string' => $barang->adddata_string,
+                    'spesifikasi' => $barang->catatan,
+                    'stock'=> $barang->stock
                 ]);
             }
         
             if (isset($changes['mindata'])) {
                 LogBarang::create([
+                    'id_barang'=> $barang->id,
                     'addata' => $barang->addata,
                     'merk' => $barang->merk,
                     'nama_equipment' => $barang->nama_equipment,
                     'perusahaan' => $barang->perusahaan,
-                    'adddata_string' => $barang->adddata_string
+                    'adddata_string' => $barang->adddata_string,
+                    'spesifikasi' => $barang->catatan,
+                    'stock'=> $barang->stock
                 ]);
             }
         });

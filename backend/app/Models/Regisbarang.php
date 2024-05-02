@@ -12,6 +12,11 @@ class Regisbarang extends Model
     protected $fillable = [
         'id',
         'nama_barang',
+        'perusahaan',
+        'stock',
+        'merk',
+        'gambar',
+        'spesifikasi',
     ];
 
 }

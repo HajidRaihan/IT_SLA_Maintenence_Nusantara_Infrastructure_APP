@@ -29,6 +29,7 @@ import Jadwal from './pages/Jadwal';
 import YourNewComponent from './pages/LogallBarangt';
 import AddBarang from './pages/tes';
 import HistoryBarang from './pages/historybarang';
+import Itemdetail from './pages/DetailBarang';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -138,6 +139,16 @@ function App() {
             <>
               <PageTitle title="Historybarang" />
               <HistoryBarang/>
+            </>
+          }
+        />
+
+<Route
+          path="listbarang/detailbarang/:id"
+          element={
+            <>
+              <PageTitle title="Detailbarang" />
+              <Itemdetail/>
             </>
           }
         />

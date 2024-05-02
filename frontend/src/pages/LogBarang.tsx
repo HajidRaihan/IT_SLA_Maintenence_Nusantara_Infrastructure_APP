@@ -48,43 +48,81 @@ const LogBarang = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Barang" />
-      <div>
-        <label>Start Date:</label>
-        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} />
-        <label>End Date:</label>
-        <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} />
-      </div>
-      <div>
-        <button onClick={() => navigate('/logallbarang')}>
-          View Logs by Week/Month/Year
-        </button>
-      </div>
+      <Breadcrumb pageName="Log Barang" />
+      <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+            <div style={{
+                marginBottom: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start'
+            }}>
+                <label style={{
+                    marginRight: '10px',
+                    fontWeight: 'bold',
+                    fontSize: '16px',
+                    color: '#333'
+                }}><p className="text-black dark:text-white">Start Date:</p></label>
+                <input
+                    type="date"
+                    value={startDate}
+                    onChange={e => setStartDate(e.target.value)}
+                    style={{
+                        padding: '8px',
+                        border: '2px solid #ccc',
+                        borderRadius: '4px',
+                        fontSize: '16px'
+                    }}
+                />
+            </div>
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start'
+            }}>
+                <label style={{
+                    marginRight: '10px',
+                    fontWeight: 'bold',
+                    fontSize: '16px',
+                    color: '#333'
+                }}><p className="text-black dark:text-white">End Date:</p></label>
+                <input
+                    type="date"
+                    value={endDate}
+                    onChange={e => setEndDate(e.target.value)}
+                    style={{
+                        padding: '8px',
+                        border: '2px solid #ccc',
+                        borderRadius: '4px',
+                        fontSize: '16px'
+                    }}
+                />
+            </div>
+        </div>
       <div className="max-w-full overflow-x-auto">
         {filteredRecords.length > 0 ? (
           <table className="w-full table-auto">
-           <thead>
-                <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                  <th className="py-4 px-4 font-medium text-black dark:text-white">
-                    NO
-                  </th>
-                  <th className="py-4 px-4 font-medium text-black dark:text-white">
-                    Nama Equipment
-                  </th>
-                  <th className="py-4 px-4 font-medium text-black dark:text-white">
-                    Tanggal Activity
-                  </th>
-                  <th className="py-4 px-4 font-medium text-black dark:text-white">
-                    Company
-                  </th>
-                  <th className="py-4 px-4 font-medium text-black dark:text-white">
-                    Stock Value
-                  </th>
-                  <th className="py-4 px-4 font-medium text-black dark:text-white">
-                    Action Value
-                  </th>
-                </tr>
-              </thead>
+            <thead>
+               <tr className="bg-gray-2 text-left dark:bg-meta-4">
+                 <th className="py-4 px-4 font-medium text-black dark:text-white">
+                   NO
+                 </th>
+                 <th className="py-4 px-4 font-medium text-black dark:text-white">
+                   Status
+                 </th>
+                 <th className="py-4 px-4 font-medium text-black dark:text-white">
+                   Nama Equipment
+                 </th>
+                 <th className="py-4 px-4 font-medium text-black dark:text-white">
+                   Company
+                 </th>
+                 <th className="py-4 px-4 font-medium text-black dark:text-white">
+                   Stock Value
+                 </th>
+                 <th className="py-4 px-4 font-medium text-black dark:text-white">
+                   Tanggal Activity
+                 </th>
+               </tr>
+             </thead>
               <tbody>
                 {filteredRecords.map((item, index) => (
                   <tr key={index}>
@@ -92,16 +130,23 @@ const LogBarang = () => {
                       <p className="text-sm">{index + 1}</p>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                    <button style={{
+                        backgroundColor: item.adddata_string === 'masuk' ? '#4CAF50' : '#F44336',
+                        color: 'white',
+                        border: 'none',
+                        padding: '10px 20px',
+                        borderRadius: '5px',
+                        cursor: 'pointer',
+                        outline: 'none',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                        transition: 'all 0.3s ease'
+                    }}>
+                        {item.adddata_string}
+                    </button>
+                </td>
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                       <p className="text-black dark:text-white">
                         {item && item.nama_equipment}
-                      </p>
-                    </td>
-                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                      <p>
-                        {item &&
-                          moment(item.created_at)
-                            .tz("Asia/Makassar")
-                            .format("DD-MM-YYYY ")}
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -115,20 +160,12 @@ const LogBarang = () => {
                       </p>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                      <button
-                        style={{
-                          // Button styles
-                        }}
-                        onFocus={(e) => {
-                          e.target.style.borderColor = 'rgba(255, 255, 255, 0.5)';
-                          e.target.style.outline = 'none';
-                        }}
-                        onBlur={(e) => {
-                          e.target.style.borderColor = 'transparent';
-                        }}
-                      >
-                        {item && item.adddata_string}
-                      </button>
+                      <p>
+                        {item &&
+                          moment(item.created_at)
+                            .tz("Asia/Makassar")
+                            .format("DD-MM-YYYY ")}
+                      </p>
                     </td>
                   </tr>
                 ))}
@@ -142,10 +179,10 @@ const LogBarang = () => {
                    NO
                  </th>
                  <th className="py-4 px-4 font-medium text-black dark:text-white">
-                   Nama Equipment
+                   Status
                  </th>
                  <th className="py-4 px-4 font-medium text-black dark:text-white">
-                   Tanggal Activity
+                   Nama Equipment
                  </th>
                  <th className="py-4 px-4 font-medium text-black dark:text-white">
                    Company
@@ -154,7 +191,7 @@ const LogBarang = () => {
                    Stock Value
                  </th>
                  <th className="py-4 px-4 font-medium text-black dark:text-white">
-                   Action Value
+                   Tanggal Activity
                  </th>
                </tr>
              </thead>

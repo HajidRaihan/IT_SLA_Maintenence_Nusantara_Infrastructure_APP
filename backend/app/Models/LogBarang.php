@@ -17,8 +17,10 @@ class LogBarang extends Model
         'nama_equipment',
         'perusahaan',
         'merk',
+        'spesifikasi',
         'adddata_string',
         'addata',
+        'stock'
     ];
 }
 

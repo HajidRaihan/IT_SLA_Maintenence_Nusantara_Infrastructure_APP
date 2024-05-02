@@ -2,12 +2,12 @@
             import DefaultLayout from '../layout/DefaultLayout';
             import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
             import { addBarang,getBarang,updateBarang } from '../api/BarangApi';
-            import { faPlus } from '@fortawesome/free-solid-svg-icons';
+            import { faPlus,faArrowUpLong,faRemove } from '@fortawesome/free-solid-svg-icons';
             import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
             import { toast, ToastContainer } from 'react-toastify';
             import 'react-toastify/dist/ReactToastify.css';
             import { useNavigate } from 'react-router-dom';
-            import { BarangModal } from '../components/Modals/AddModal';
+            import { BarangListModal } from '../components/Modals/AddModal';
             import { UpdateBarangModal } from '../components/Modals/UpdateLokasiModal';
             import {UpdateBarangModalMin} from '../components/Modals/UpdateLokasiModal';
             import { useDisclosure } from '@nextui-org/modal';
@@ -15,27 +15,64 @@
             const ListBarang = () => {
                 const [data, setData] = useState([]);
                 const navigate = useNavigate();
-                const [newEquipment, setNewEquipment] = useState('');
-                const [newMerk, setNewMerk] = useState('');
                 const [BarangId, setBarangId] = useState('');
+                const [filteredRecords, setFilteredRecords] = useState([]);
                 const [updateStock, setUpdateStock] = useState<number>(0);
                 const [updateStockMin, setUpdateStockMin] = useState(0);
-                const { isOpen: addModalOpen, onOpen: onAddModalOpen, onClose: onAddModalClose } = useDisclosure();
+                const { isOpen: addModalListOpen, onOpen: onAddModalListOpen, onClose: onAddModalListClose } = useDisclosure();
                 const { isOpen: updateModalOpen, onOpen: onUpdateModalOpen, onClose: onUpdateModalClose } = useDisclosure();
                 const { isOpen: updateModalMinOpen, onOpen: onUpdateModalMinOpen, onClose: onUpdateModalMinClose } = useDisclosure();
-                const [newStock, setNewStock] = useState(0);
-                const [newPicture, setNewPicture] = useState();
-                const [selectedCompany, setSelectedCompany] = useState('');
+                const [updatedSpesifikasi, setUpdateSpesifikasi] = useState('');
+                const [newPicture,setNewPicture] = useState();
+                const [newBarang, setNewBarang] = useState('');
+                const [newMerek, setNewMerek] = useState('');
+                const [newStok, setNewStok] = useState(0);
+                const [newSpesifikasi, setNewSpesifikasi] = useState('');
+                const [selectedPerusahan, setSelectedPerusahaan] = useState('');
                 const [currentPage, setCurrentPage] = useState(1); // Current page state
                 const itemsPerPage = 5; // Number of data items per page
+                const indexOfLastItem = currentPage * itemsPerPage;
+                const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+                const currentItems = filteredRecords.slice(indexOfFirstItem, indexOfLastItem);
+                useEffect(() => {
+                  const indexOfLastItem = currentPage * itemsPerPage;
+                  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+                  const currentItems = filteredRecords.slice(indexOfFirstItem, indexOfLastItem);
+                  // Update currentItems directly, no need for setCurrentItems
+              }, [currentPage, itemsPerPage, filteredRecords]);
 
-  // Calculate total number of pages
-                const startIndex = (currentPage-1) * itemsPerPage ;
-                const endIndex = Math.min(startIndex + itemsPerPage, data.length);
+              const handleFilter = () => {
+                const filtered = data.filter(item => {
+                    // Nama Equipment filtering
+                    const namaEquipmentFilter = newBarang ? item.nama_equipment
+                    .toLowerCase().includes(newBarang.toLowerCase()) : true;
+                    const namaPerusahaanFilter = selectedPerusahan ? item.perusahaan
+                    .toLowerCase().includes(selectedPerusahan.toLowerCase()) : true;
+                    const namaMerkFilter = newMerek?item.merk.toLowerCase().includes(newMerek.toLowerCase()) : true;
+                    return namaEquipmentFilter&&namaPerusahaanFilter&&namaMerkFilter;
+                    
+                    
+                });
+                setFilteredRecords(filtered);
+            };
 
-  // Filter the data to display only the items for the current page
-            const currentItems = data.slice(startIndex, endIndex);
+            useEffect(() => {
+              handleFilter();
+          }, [newBarang, selectedPerusahan,newMerek,data]);
 
+          
+          
+          const dropdownOptions = data.map(item => item.nama_equipment);
+
+          const uniqueDropdownOptions = Array.from(new Set(dropdownOptions));
+
+          const dropdownList = data.map(item => item.perusahaan);
+
+          const uniquelist = Array.from(new Set(dropdownList));
+
+          const dropdownmerk = data.map(item=>item.merk);
+
+          const uniquemerk = Array.from(new Set(dropdownmerk));
 
 
             const handlePageChange = (page) => {
@@ -53,7 +90,7 @@
                     onUpdateModalMinOpen();
                 };
             
-                const handleUpdateStock = async () => {
+                const handleUpdate = async () => {
                     // Ensure updateStock is parsed as an integer
                     const stockToAdd = updateStock;
                 
@@ -75,6 +112,7 @@
                             stock: updatedStock,
                             adddata_string: log_barang,
                             addata: stockToAdd,
+                            catatan:updatedSpesifikasi,
                         };
                 
                         const res = await updateBarang(BarangId, dataToUpdate);
@@ -90,6 +128,9 @@
                         }
                 
                         toast.success(`Stock updated successfully: ${updatedStock}`);
+                        setTimeout(() => {
+                          window.location.reload();
+                      }, 1500);
                     } catch (error) {
                         toast.error('Error updating stock:', error.message);
                         // Handle the error gracefully (e.g., display an error message to the user)
@@ -132,9 +173,11 @@
                       }
                   
                       toast.success(`Stock updated successfully: ${updatedStock}`);
+                      setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
                     } catch (error) {
                       toast.error('Error updating stock:', error.message);
-                      // Handle the error gracefully (e.g., display an error message to the user)
                     }
                   };
                 
@@ -150,21 +193,25 @@
                         });
                 }, []);
 
+                const handleBarang = e => {
+                  setNewBarang(e.target.value);
+              };
+                const handleMerek = e => {
+                  setNewMerek(e.target.value);
+              };
 
-
-                const handleEquipment = e => {
-                    setNewEquipment(e.target.value);
-                };
-                const handleMerk = e => {
-                    setNewMerk(e.target.value);
-                };
-                const handleCompany = e => {
-                    setSelectedCompany(e.target.value);
+                const UpdatedhandleCatatan = e => {
+                  setUpdateSpesifikasi(e.target.value);
                 };
 
-               
-                const handleStock = e => {
-                    setNewStock(parseInt(e.target.value)); // Parse input value to integer
+                const handleSpesifikasi = e => {
+                  setNewSpesifikasi(e.target.value);
+                };
+                const handlePerusahaan = e => {
+                  setSelectedPerusahaan(e.target.value);
+              };
+                const handleStok = e => {
+                    setNewStok(parseInt(e.target.value)); // Parse input value to integer
                 };
 
                 const UpdatehandleStock = (e) => {
@@ -172,63 +219,130 @@
                     setUpdateStock(newValue);
                   };
 
+                  
 
                   const UpdatehandleStockMin = (e) => {
                     const newValue = parseInt(e.target.value); // Parse input value to integer
                     setUpdateStockMin(newValue);
                   };
 
-                    const handleAddBarang = async() => {
-                    // Prevent default form submission behavior
-    
-                        const newBarangData = {
-                            nama_equipment: newEquipment,
-                            merk: newMerk,
-                            perusahaan: selectedCompany,
-                            stock: newStock,
-                            gambar: newPicture,
-                        };
-
-                        try {
-                            const res = await addBarang(newBarangData);
-                            const addedBarang = res.data;
-                            setData(prevData => [...prevData, addedBarang]);
-                            toast.success('Barang added successfully!', res);
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 1500);
-                    
-                        } catch (error) {
-                            toast.error('Failed to add ');
-                        }
-                    };
+                    const handleAddListBarang = async() => {
+                          const newBarangData = {
+                              nama_equipment: newBarang,
+                              merk: newMerek,
+                              perusahaan: selectedPerusahan,
+                              stock:newStok,
+                              catatan: newSpesifikasi,
+                              gambar:newPicture
+                          };
+  
+                          try {
+                              const res = await addBarang(newBarangData);
+                              const addedBarang = res.data;
+                              setData(prevData => [...prevData, addedBarang]);
+                              toast.success('Barang added successfully!', res);
+                              setTimeout(() => {
+                                  window.location.reload();
+                              }, 1500);
+                      
+                          } catch (error) {
+                              toast.error('Failed to add ');
+                          }
+                      };
                 const handlePictureChange = (e) => {
                 setNewPicture(e.target.files[0]);
 
                 };
-                 const handleAddForm = () => {
+                const handleAddListForm = () => {
                     
-                    onAddModalOpen();
-                }
+                  onAddModalListOpen();
+              };
                 return (
                     <DefaultLayout>
                         <ToastContainer/>
-                        <Breadcrumb pageName="Barang" />
+                        <Breadcrumb pageName="List Barang" />
+                   
                         <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-                            <div className='flex items-center'>
-                            <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-                                List Barang
-                            </h4>
-                            <button
-                        onClick={handleAddForm}
-                        className="ml-auto border border-stroke rounded-sm px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
-                    >
-                        <FontAwesomeIcon
-                        icon={faPlus}
-                        className="green-light-icon text-lg"
-                        />
-                    </button>
-                    </div>
+                        <div className='flex items-center'>
+    <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
+        List Barang
+    </h4>
+    <div className="flex flex-grow items-center space-x-4" style={{ padding: '0 20px', fontFamily: 'Arial, sans-serif' }}>
+            <div className="flex-1">
+                <input
+                    type="text"
+                    value={newBarang}
+                    onChange={e => setNewBarang(e.target.value)}
+                    placeholder="Select Equipment"
+                    list="equipmentList"
+                    style={{
+                      width: '100%', 
+                      padding: '5px',
+                      border: '2px solid #ccc',
+                      borderRadius: '5px',
+                    }}
+                />
+                <datalist id="equipmentList">
+                    {uniqueDropdownOptions.map((option, index) => (
+                        <option  key={index} value={option} />
+                    ))}
+                </datalist>
+            </div>
+            <div className="flex-1">
+                <input
+                    type="text"
+                    value={selectedPerusahan}
+                    onChange={e => setSelectedPerusahaan(e.target.value)}
+                    placeholder="Select Perusahaan"
+                    list="perusahaanList"
+                    style={{
+                      width: '100%', // Take full width of the parent
+                      padding: '5px',
+                      border: '2px solid #ccc',
+                      borderRadius: '5px',
+                    }}
+                />
+                <datalist id="perusahaanList">
+                    {uniquelist.map((option, index) => (
+                        <option key={index} value={option} />
+                    ))}
+                </datalist>
+            </div>
+            <div className="flex-1">
+                <input
+                    type="text"
+                    value={newMerek}
+                    onChange={e => setNewMerek(e.target.value)}
+                    placeholder="Select Merk"
+                    list="MerkList"
+                    style={{
+                      width: '100%', // Take full width of the parent
+                      padding: '5px',
+                      border: '2px solid #ccc',
+                      borderRadius: '5px',
+                    }}
+                />
+                <datalist id="MerkList">
+                    {uniquemerk.map((option, index) => (
+                        <option key={index} value={option} />
+                    ))}
+                </datalist>
+            </div>
+        </div>
+
+    <div className="ml-auto"> 
+        <button
+            onClick={handleAddListForm}
+            className="border border-stroke rounded-sm px-3 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
+        >
+            <FontAwesomeIcon
+                icon={faPlus}
+                className="green-light-icon text-lg"
+            />
+        </button>
+    </div>
+</div>
+
                     <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
           <thead>
@@ -249,18 +363,15 @@
                 Stock
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
-                Gambar
-              </th>
-              <th className="py-4 px-4 font-medium text-black dark:text-white">
                 Action
               </th>
             </tr>
           </thead>
           <tbody>
             {currentItems.map((item, index) => (
-              <tr key={startIndex + index}>
+              <tr key={indexOfFirstItem + index}>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark ">
-                    <p className="text-sm"> {startIndex + index + 1}</p>
+                    <p className="text-sm"> {indexOfFirstItem+ index + 1}</p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
@@ -281,9 +392,6 @@
                   <p className="text-black dark:text-white">
                     {item.stock}
                   </p>
-                </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                <img src={`http://127.0.0.1:8000/images/${item.gambar}`} alt="Descriptive text" style={{ width: '200px', height: '100px' }} />
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                 <button
@@ -372,6 +480,31 @@
                         />
                       </svg>
                     </button>
+                    <button
+                      className="hover:text-primary"
+                       onClick={() => navigate(`detailbarang/${item.id}`)}
+                    >
+                      <svg
+  className="fill-current"
+  width="18"
+  height="18"
+  viewBox="0 0 18 18"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M9 14C9.55228 14 10 13.5523 10 13C10 12.4477 9.55228 12 9 12C8.44772 12 8 12.4477 8 13C8 13.5523 8.44772 14 9 14Z"
+    fill="currentColor"
+  />
+  <path
+    d="M9 4V10"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+  />
+</svg>
+
+                    </button>
               </td>
               
               </tr>
@@ -380,24 +513,29 @@
         </table>
       </div>
     </div>
-                            <BarangModal 
-            isOpen={addModalOpen}  
-            onAdd={handleAddBarang} 
-            onChangeEquipment={handleEquipment}
-            onChangeMerk={handleMerk}
-            onChangeStock={handleStock}
+                            <BarangListModal 
+            isOpen={addModalListOpen}  
+            onAdd={handleAddListBarang} 
+            onChangeBarang={handleBarang}
+            onChangeMerk={handleMerek}
+            onChangeSpesifikasi={handleSpesifikasi}
             onChangePicture={handlePictureChange}
-            onChangeCompany={handleCompany}
-            valueEquipment={newEquipment}
-            valueMerk={newMerk}
-            valueStock={newStock}
-            valueCompany={selectedCompany}
-            onClose={onAddModalClose}/>
+            onChangeStock={handleStok}
+            onChangeCompany={handlePerusahaan}
+            valueStock={newStok} 
+            valueBarang={newBarang}
+            valueSpesifikasi= {newSpesifikasi}
+            valueMerk={newMerek}
+            valueCompany={selectedPerusahan}
+            onClose={onAddModalListClose}/>
             <div className='flex justify-center mt-4'>
          <Paginate currentPage={currentPage} onPageChange={handlePageChange}/></div>
-            <UpdateBarangModal  isUpdateOpen={updateModalOpen} onAdd = {handleUpdateStock} onUpdateStock={UpdatehandleStock} valueUpdateStock={updateStock} onUpdateClose={onUpdateModalClose}
+            <UpdateBarangModal  isUpdateOpen={updateModalOpen} onAdd = {handleUpdate} 
+            onUpdateStock={UpdatehandleStock}  valueUpdateSpesifikasi={updatedSpesifikasi}
+            onUpdatespesifikasi={UpdatedhandleCatatan} 
+             valueUpdateStock={updateStock} onUpdateClose={onUpdateModalClose}
+             barangId={BarangId} 
                   />
-
             <UpdateBarangModalMin  isUpdateOpen={updateModalMinOpen} onAdd = {handleUpdateMinStock} onUpdateStock={UpdatehandleStockMin} valueUpdateStock={updateStockMin} onUpdateClose={onUpdateModalMinClose}
                   />
             </DefaultLayout>
