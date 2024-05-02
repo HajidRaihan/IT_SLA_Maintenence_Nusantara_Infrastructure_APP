@@ -10,42 +10,64 @@ use Illuminate\Support\Facades\Auth;
 
 class ActivityWorkersController extends Controller
 {
-    public function index() {
-        return ActivityWorkers::all();
-    }   
-
-    public function store(Request $request)
+    public function index()
     {
-        $data = $request->validate([
-            // 'user_id' => 'required|exists:users,id',
-            'activity_id' => 'required|exists:activity,id',
-            // 'start_time' => 'required|date',
-            // 'end_time' => 'required|date|after_or_equal:start_time',
-            // 'work_duration' => 'required|string',
-        ]);
-
-        $activity = Activity::findOrFail($data['activity_id']);
-
-        // if ($activity->status == 'masuk') {
-        //     $activity['status'] = 'process';
-        //     $activity['process_at'] = Carbon::now();
-        //     $activity->save();
-        // }
-
-        $activity['status'] = 'process';
-        $activity->save();
-
-        $user = Auth::user()->id;
-        $data['user_id'] = $user;
-        // dd($data);  
-        $activityWorker = ActivityWorkers::create($request->all());
-        return response()->json(['message'=> "berhasil menambahkan activity worker", 'data' => $activityWorker]);
+        return ActivityWorkers::all();
     }
 
-    public function pending_activity (Request $request, $id) {
+    // public function store(Request $request)
+    // {
+    //     $data = $request->validate([
+    //         // 'user_id' => 'required|exists:users,id',
+    //         'activity_id' => 'required|exists:activity,id',
+    //         // 'start_time' => 'required|date',
+    //         // 'end_time' => 'required|date|after_or_equal:start_time',
+    //         // 'work_duration' => 'required|string',
+    //     ]);
+
+    //     // if ($activity->status == 'masuk') {
+    //     //     $activity['status'] = 'process';
+    //     //     $activity['process_at'] = Carbon::now();
+    //     //     $activity->save();
+    //     // }
+
+    //     $user = Auth::user()->id;
+    //     $data['user_id'] = $user;
+    //     $activity = Activity::findOrFail($data['activity_id']);
+    //     $activity['status'] = 'process';
+    //     $activity->save();
+
+    //     // dd($data);
+    //     $activityWorker = ActivityWorkers::create($request->all());
+    //     return response()->json(['message' => 'berhasil menambahkan activity worker', 'data' => $activityWorker]);
+    // }
+
+    public function store(Request $request)
+{
+    $data = $request->validate([
+        'activity_id' => 'required|exists:activity,id',
+    ]);
+
+    $user = Auth::user()->id;
+    $data['user_id'] = $user;
+    $data['start_time'] = Carbon::now();
+
+    $activity = Activity::findOrFail($data['activity_id']);
+    $activity->status = 'process';
+    $activity->save();
+
+    $activityWorker = ActivityWorkers::create($data);
+    return response()->json(['message' => 'berhasil menambahkan activity worker', 'data' => $activityWorker]);
+}
+
+
+    public function pending_activity(Request $request, $id)
+    {
         $data = $request->validate([
             'deskripsi_pending' => 'required|string',
         ]);
+
+        $data['status'] = 'pending';
 
         $activityWorker = ActivityWorkers::findOrFail($id);
         $activityWorker->update($data);
@@ -55,11 +77,11 @@ class ActivityWorkersController extends Controller
         $activity['status'] = 'pending';
         $activity->save();
 
-        return response()->json(['message'=> "berhasil pending activity worker", 'data' => $activityWorker]);
+        return response()->json(['message' => 'berhasil pending activity worker', 'data' => $activityWorker]);
     }
 
-  
-    public function done_activity(Request $request, $id){
+    public function done_activity(Request $request, $id)
+    {
         $request->validate([
             // 'status' => 'required|in:precoess:done',
             'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -69,20 +91,20 @@ class ActivityWorkersController extends Controller
         $activityWorker = ActivityWorkers::findOrFail($id);
 
         $startTime = Carbon::parse($activityWorker->start_time);
-    
+
         // Mengambil waktu selesai saat ini
         $endTime = Carbon::now();
-    
+
         // Menghitung durasi kerja
         $workDuration = $endTime->diff($startTime)->format('%H:%I:%S');
-    
+
         // Menyimpan data baru
         $data = [
             'end_time' => $endTime,
             'work_duration' => $workDuration,
             'status' => 'done',
         ];
-    
+
         // Perbarui entri activity worker
         $activityWorker->update($data);
 
@@ -98,17 +120,14 @@ class ActivityWorkersController extends Controller
                 return response()->json(['error' => 'Failed to upload foto_akhir'], 500);
             }
         }
-        
+
         $activity->kondisi_akhir = $request->kondisi_akhir;
         $activity->status = 'done';
         $activity->ended_at = Carbon::now();
 
         $activity->save();
 
-        
-
-        return response()->json(['message'=> "berhasil update activity worker", 'data' => $activityWorker]);
- 
+        return response()->json(['message' => 'berhasil update activity worker', 'data' => $activityWorker]);
     }
 
     // public function done_activity_sementara(Request $request, $id)
@@ -140,26 +159,24 @@ class ActivityWorkersController extends Controller
 
     //     // Mengambil waktu mulai dari entri activity worker
     //     $startTime = Carbon::parse($activityWorker->start_time);
-    
+
     //     // Mengambil waktu selesai saat ini
     //     $endTime = Carbon::now();
-    
+
     //     // Menghitung durasi kerja
     //     $workDuration = $endTime->diff($startTime)->format('%H:%I:%S');
-    
+
     //     // Menyimpan data baru
     //     $data = [
     //         'end_time' => $endTime,
     //         'work_duration' => $workDuration,
     //     ];
-    
+
     //     // Perbarui entri activity worker
     //     $activityWorker->update($data);
-    
 
     //     $activity = Activity::findOrFail($activityWorker->activity_id);
 
-        
     //     if ($request->hasFile('foto_akhir')) {
     //         try {
     //             $foto_akhir = $request->file('foto_akhir');
@@ -175,14 +192,11 @@ class ActivityWorkersController extends Controller
     //     $activity->status = 'done';
     //     $activity->ended_at = Carbon::now();
 
-
     //     $activity->save();
-
 
     //     if ($activity->status == "selesai") {
     //         return response()->json(['message'=> "Activity sudah selesai"]);
     //     }
-
 
     //     $activityWorker->update($data);
 
@@ -191,10 +205,8 @@ class ActivityWorkersController extends Controller
 
     public function getByActivityId(Request $request, $id)
     {
-
         $activityWorker = ActivityWorkers::where('activity_id', $id)->get();
 
-        return response()->json(['message'=> "berhasil update activity worker", 'data' => $activityWorker]);
+        return response()->json(['message' => 'berhasil update activity worker', 'data' => $activityWorker]);
     }
-   
 }

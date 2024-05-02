@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('jenis_hardware', function (Blueprint $table) {
             $table->id();
             $table->string('nama_hardware');
+            $table->unsignedInteger('jumlah_kerusakan')->default(0);
             $table->timestamps();
         });
     }
