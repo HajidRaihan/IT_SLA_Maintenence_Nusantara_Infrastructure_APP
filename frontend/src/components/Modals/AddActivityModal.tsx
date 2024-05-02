@@ -19,6 +19,7 @@ import {
   Button,
 } from '@nextui-org/react';
 import Loader from '../Loader';
+import SelectKategori from '../Forms/SelectGroup/SelectKategori';
 
 const AddActivityModal = ({
   isOpen,
@@ -51,6 +52,7 @@ const AddActivityModal = ({
   const [kategoriData, setKategoriData] = useState();
   const [dataUser, setDataUser] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [kategoriActivity, setKategoriActivity] = useState();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -121,6 +123,11 @@ const AddActivityModal = ({
     target: { value: React.SetStateAction<string> };
   }) => {
     setCompany(e.target.value);
+  };
+  const handleKategoriActivityChange = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setKategoriActivity(e.target.value);
   };
 
   const handleTanggalChange = (e) => {
@@ -229,6 +236,7 @@ const AddActivityModal = ({
       // user_id: dataUser.id,
       company: company,
       tanggal: tanggal,
+      kategori_activity: kategoriActivity,
       jenis_hardware: jenisHardware.join(', '),
       standart_aplikasi: standartAplikasi.join(', '),
       uraian_hardware: uraianHardware,
@@ -334,6 +342,11 @@ const AddActivityModal = ({
                           data={dataCompany}
                           value={company}
                           onChange={handleCompanyChange}
+                        />
+
+                        <SelectKategori
+                          value={kategoriActivity}
+                          onChange={handleKategoriActivityChange}
                         />
 
                         {/* <DatePickerOne

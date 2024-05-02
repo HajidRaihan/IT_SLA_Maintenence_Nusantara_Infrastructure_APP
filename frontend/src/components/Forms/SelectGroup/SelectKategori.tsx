@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SelectCompany: React.FC = ({ value, onChange, data }) => {
+const SelectKategori: React.FC = ({ value, onChange, data }) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(true);
 
@@ -11,8 +11,7 @@ const SelectCompany: React.FC = ({ value, onChange, data }) => {
   return (
     <div className="">
       <label className="mb-2.5 block text-black dark:text-white">
-        {' '}
-        Company{' '}
+        Kategori Activity
       </label>
 
       <div className="relative z-20 w-50 bg-transparent dark:bg-form-input">
@@ -29,13 +28,13 @@ const SelectCompany: React.FC = ({ value, onChange, data }) => {
             selected
             className="text-body dark:text-bodydark"
           >
-            Select company
+            Select Kategori Activity
           </option>
-          <option value="mmn" className="text-body dark:text-bodydark">
-            MMN
+          <option value="toll" className="text-body dark:text-bodydark">
+            Toll
           </option>
-          <option value="man" className="text-body dark:text-bodydark">
-            MAN
+          <option value="nontoll" className="text-body dark:text-bodydark">
+            Non Toll
           </option>
         </select>
 
@@ -63,4 +62,4 @@ const SelectCompany: React.FC = ({ value, onChange, data }) => {
   );
 };
 
-export default SelectCompany;
+export default SelectKategori;
