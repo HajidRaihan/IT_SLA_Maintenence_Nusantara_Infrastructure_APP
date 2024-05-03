@@ -248,7 +248,7 @@ const AddActivityModal = ({
       lokasi_id: lokasi,
       kategori_id: kategori,
       kondisi_akhir: kondisiAkhir,
-      biaya: biaya,
+      // biaya: biaya,
       foto_awal: foto,
       status: status,
     };
@@ -554,7 +554,7 @@ const AddActivityModal = ({
                         />
                       </div> */}
 
-                        <div className="w-full ">
+                        {/* <div className="w-full ">
                           <label className="mb-2.5 block text-black dark:text-white">
                             Biaya
                           </label>
@@ -565,7 +565,7 @@ const AddActivityModal = ({
                             value={biaya}
                             onChange={handleBiayaChange}
                           />
-                        </div>
+                        </div> */}
                         <div>
                           <label className="mb-3 block text-black dark:text-white">
                             Foto
