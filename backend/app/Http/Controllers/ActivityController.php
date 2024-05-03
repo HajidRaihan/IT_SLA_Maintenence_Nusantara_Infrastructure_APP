@@ -18,18 +18,18 @@ class ActivityController extends Controller
             'company' => 'required|in:man,mmn',
             // 'tanggal' => 'required|date',
             'kategori_activity' => 'required|in:toll,nontoll',
-            'jenis_hardware' => 'required|string',
-            'standart_aplikasi' => 'required|string',
-            'uraian_hardware' => 'required|string',
-            'uraian_aplikasi' => 'required|string',
-            'aplikasi_it_tol' => 'required|string',
-            'uraian_it_tol' => 'required|string',
-            'catatan' => 'required|string',
+            'jenis_hardware' => 'nullable|string',
+            'standart_aplikasi' => 'nullable|string',
+            'uraian_hardware' => 'nullable|string',
+            'uraian_aplikasi' => 'nullable|string',
+            'aplikasi_it_tol' => 'nullable|string',
+            'uraian_it_tol' => 'nullable|string',
+            'catatan' => 'nullable|string',
             'shift' => 'required|string',
             'lokasi_id' => 'required|exists:lokasi,id',
             'kategori_id' => 'required|exists:kategori,id',
             'kondisi_akhir' => 'nullable|string',
-            'biaya' => 'required|integer',
+            // 'biaya' => 'nullable|integer',
             'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             // 'status' => 'required|in:process,done',
@@ -301,7 +301,7 @@ class ActivityController extends Controller
     {
         $filters = $request->only(['company', 'status', 'location', 'category']);
 
-        $activity = Activity::query()->$activity = Activity::query()->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.nama_kategori as category_name', 'kategori.deadline_duration as category_deadline', 'lokasi.nama_lokasi as location_name')->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')->leftJoin('users', 'activity.user_id', '=', 'users.id')->where('activity.id', $id);
+        $activity = Activity::query()->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.nama_kategori as category_name', 'kategori.deadline_duration as category_deadline', 'lokasi.nama_lokasi as location_name')->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')->leftJoin('users', 'activity.user_id', '=', 'users.id')->where('activity.id', $id);
 
         if (!empty($filters)) {
             if (isset($filters['company'])) {
