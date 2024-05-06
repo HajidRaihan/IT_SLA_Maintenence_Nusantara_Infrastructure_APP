@@ -180,14 +180,13 @@ class ActivityWorkersController extends Controller
             ->select('activity_workers.*', 'users.username')
             ->get();
 
-        return response()->json(['message' => 'berhasil mendapatkan activity worker', 'data' => $activityWorkers]);
+        return response()->json(['message' => 'berhasil mendapatkan activity worker ', 'data' => $activityWorkers]);
     }
 
-    public function getActivityWorkerByUser()
+    public function getActivityWorkerByUser($id)
     {
-        $user = Auth::user()->id;
-        $activityWorker = ActivityWorkers::where('user_id', $user)->get();
+        $activityWorker = ActivityWorkers::where('user_id', $id)->get();
 
-        return response()->json(['message' => 'berhasil menampilkan', 'data' => $activityWorker]);
+        return response()->json(['message' => 'berhasil menampilkan bangsat', 'data' => $activityWorker]);
     }
 }

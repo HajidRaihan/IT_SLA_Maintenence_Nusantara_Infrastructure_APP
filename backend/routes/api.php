@@ -9,8 +9,6 @@ use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\AplikasiItTolController;
-use App\Http\Controllers\JadwalMaintenanceController;
-
 use App\Http\Controllers\JenisHardwareController;
 use App\Http\Controllers\JenisSoftwareController;
 use App\Http\Controllers\AuthenticationController;
@@ -100,20 +98,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/aplikasi_it_tol/{id}', [AplikasiItTolController::class, 'show']);
     Route::delete('/aplikasi_it_tol/{id}', [AplikasiItTolController::class, 'destroy']);
 
-
-    Route::get('/jadwal-maintenance', [JadwalMaintenanceController::class, 'index']);
-    Route::post('/jadwal-maintenance', [JadwalMaintenanceController::class, 'store']);
-    Route::get('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'show']);
-    Route::put('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'update']);
-    Route::delete('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'destroy']);
-
-    Route::get('api/schedule', [ScheduleController::class, 'show']);
     Route::post('/activity_workers', [ActivityWorkersController::class, 'store']);
     Route::post('/activity_workers/end/{id}', [ActivityWorkersController::class, 'done_activity']);
     Route::post('/activity_workers/pending/{id}', [ActivityWorkersController::class, 'pending_activity']);
     Route::get('/activity_workers', [ActivityWorkersController::class, 'index']);
     Route::get('/activity_workers/{id}', [ActivityWorkersController::class, 'getByActivityId']);
-    Route::get('/activity_workers/user', [ActivityWorkersController::class, 'getActivityWorkerByUser']);
+    Route::get('/activity_workers/user/{id}', [ActivityWorkersController::class, 'getActivityWorkerByUser']);
 
     Route::get('/item', [RegisbarangController::class, 'get_regisbarang']);
     Route::post('/regisbarang', [RegisbarangController::class, 'add_regisbarang']);
