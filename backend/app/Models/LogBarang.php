@@ -20,5 +20,6 @@ class LogBarang extends Model
         'addata',
         'mindata',
     ];
+    
 }
 

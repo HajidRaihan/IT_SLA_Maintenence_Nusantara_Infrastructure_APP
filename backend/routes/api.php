@@ -12,6 +12,8 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\JenisSoftwareController;
 use App\Http\Controllers\JenisHardwareController;
 use App\Http\Controllers\AplikasiItTolController;
+use App\Http\Controllers\JadwalMaintenanceController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -92,6 +94,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/aplikasi_it_tol', [AplikasiItTolController::class, 'store']);
     Route::get('/aplikasi_it_tol/{id}', [AplikasiItTolController::class, 'show']);
     Route::delete('/aplikasi_it_tol/{id}', [AplikasiItTolController::class, 'destroy']);
+
+
+    Route::get('/jadwal-maintenance', [JadwalMaintenanceController::class, 'index']);
+    Route::post('/jadwal-maintenance', [JadwalMaintenanceController::class, 'store']);
+    Route::get('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'show']);
+    Route::put('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'update']);
+    Route::delete('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'destroy']);
+
+    Route::get('api/schedule', [ScheduleController::class, 'show']);
 });
 Route::get('/tes', function () {
     return 'tes';
