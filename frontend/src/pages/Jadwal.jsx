@@ -34,17 +34,8 @@ const Jadwal = () => {
   const [updateLokasi, setUpdateLokasi] = useState('');
   const [updateWaktu, setUpdateWaktu] = useState([]);
 
-  const [filteredRecords, setFilteredRecords] = useState([]);
-  const [newTahunFilter, setNewTahunFilter] = useState('');
-  const [selectedJenisPerusahaan, setSelectedJenisPerusahaan] = useState('');
-  const [newLokasiFilter, setNewLokasiFilter] = useState('');
-  const [currentPage, setCurrentPage] = useState(1); // Current page state
-  const itemsPerPage = 5; // Number of data items per page
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredRecords.slice(indexOfFirstItem, indexOfLastItem);
-
-  const [JadwalId, setJadwalId] = useState();
+ 
+  const [JadwalId, setJadwalId] = useState('');
   const {
     isOpen: isOpenJadwalModal,
     onOpen: onOpenJadwalModal,
@@ -60,6 +51,16 @@ const Jadwal = () => {
     onOpen: onDeleteModalOpen,
     onClose: onDeleteModalClose,
   } = useDisclosure();
+  const [filteredRecords, setFilteredRecords] = useState([]);
+  const [newTahunFilter, setNewTahunFilter] = useState('');
+  const [selectedJenisPerusahaan, setSelectedJenisPerusahaan] = useState('');
+  const [newLokasiFilter, setNewLokasiFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const itemsPerPage = 5; // Number of data items per page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredRecords.slice(indexOfFirstItem, indexOfLastItem);
+
 
   const handleFilter = () => {
     const filtered = data.filter(item => {
@@ -130,7 +131,7 @@ const uniqueLokasi = Array.from(new Set(dropdownLokasi));
   };
 
   const handleAddJadwal = async () => {
-    const newBarangData = {
+    const newJadwalData = {
       jenis_perusahaan: newJenisPerusahaan,
       uraian_kegiatan: newUraianKegiatan,
       tahun: newTahun,
@@ -140,10 +141,10 @@ const uniqueLokasi = Array.from(new Set(dropdownLokasi));
     };
 
     try {
-      const res = await addJadwal(newBarangData);
-      const addedBarang = res.data;
-      setData((prevData) => [...prevData, addedBarang]);
-      toast.success('Barang added successfully!', res);
+      const res = await addJadwal(newJadwalData);
+      const addedJadwal = res.data;
+      setData((prevData) => [...prevData, addedJadwal]);
+      toast.success('Jadwal added successfully!', res);
       setTimeout(() => {
         window.location.reload();
       }, 1500);
@@ -151,6 +152,7 @@ const uniqueLokasi = Array.from(new Set(dropdownLokasi));
       toast.error('Failed to add ');
     }
   };
+
 
   const handleJenisPerusahaan = (e) => {
     setNewJenisPerusahaan(e.target.value);
@@ -194,16 +196,21 @@ const uniqueLokasi = Array.from(new Set(dropdownLokasi));
     newWaktuArray[index] = e.target.value;
     setUpdateWaktu(newWaktuArray);
     console.log(e.target.value);
-  };
+};
+
+
+
 
   const handleUpdate = async () => {
     const dataToUpdate = {
+
       jenis_perusahaan: updateJenisPerusahaan,
       uraian_kegiatan: updateUraianKegiatan,
       tahun: updateTahun,
       lokasi: updateLokasi,
       frekuensi: updateFrekuensi,
       waktu: updateWaktu,
+    
     };
     try {
       const res = await updatejadwal(JadwalId, dataToUpdate);
@@ -228,6 +235,7 @@ const uniqueLokasi = Array.from(new Set(dropdownLokasi));
     onDeleteModalOpen();
   };
 
+
   const handleUpdateForm = (id) => {
     setJadwalId(id);
     onUpdateModalOpen(); // Memanggil fungsi untuk membuka modal
@@ -236,6 +244,7 @@ const uniqueLokasi = Array.from(new Set(dropdownLokasi));
   const handleAddForm = () => {
     onOpenJadwalModal();
   };
+
 
   return (
     <DefaultLayout>

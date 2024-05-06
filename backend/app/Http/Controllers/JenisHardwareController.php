@@ -48,4 +48,8 @@ class JenisHardwareController extends Controller
             'data' => $hardware,
         ]);
     }
+
+    public function count_hardware_problem() {
+        return response()->json("haii");
+    }
 }

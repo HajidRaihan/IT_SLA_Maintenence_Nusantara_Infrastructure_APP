@@ -9,7 +9,7 @@ function DeleteModal({ isDeleteOpen, onDeleteClose, onDelete }) {
           <>
             <ModalHeader className="flex flex-col gap-1">Delete Data </ModalHeader>
             <ModalBody>
-              <p>Are you sure want to delete this ?</p>
+              <p className=" bg-transparent p text-black  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary">Are you sure want to delete this ?</p>
             </ModalBody>
             <ModalFooter>
               <Button color="danger" variant="flat" onPress={onDeleteClose}>

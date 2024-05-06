@@ -34,8 +34,8 @@ const SelectCompany: React.FC = ({ value, onChange, data }) => {
           <option value="mmn" className="text-body dark:text-bodydark">
             MMN
           </option>
-          <option value="jtse" className="text-body dark:text-bodydark">
-            JTSE
+          <option value="man" className="text-body dark:text-bodydark">
+            MAN
           </option>
         </select>
 

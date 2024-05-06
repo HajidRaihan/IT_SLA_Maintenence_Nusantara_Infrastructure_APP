@@ -18,7 +18,7 @@ class ActivityTableSeeder extends Seeder
             [
                 'user_id'=> '1',
                 'company'=> 'mmn',
-                'tanggal'=> '2024-03-30',
+                // 'tanggal'=> '2024-03-30',
                 'jenis_hardware'=> 'komputer2',
                 'standart_aplikasi'=> 'standar',
                 'uraian_hardware'=> 'firaa',
@@ -33,7 +33,7 @@ class ActivityTableSeeder extends Seeder
                 'biaya'=> '123',
                 'foto_awal'=> '1710815317.jpeg',
                 'foto_akhir'=> '1710815317.jpeg',
-                'status'=> 'done',
+                'status'=> 'process',
                 // 'ended'
                 // 'created_at' => Carbon::now(),
                 // 'updated_at' => Carbon::now(),

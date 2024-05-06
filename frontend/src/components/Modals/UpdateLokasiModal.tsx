@@ -1,23 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  Input,
-} from '@nextui-org/react';
 import { getLokasi } from '../../api/lokasiApi.js';
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input } from "@nextui-org/react";
+import React, { useEffect, useState } from 'react';
 
 
-function UpdateLokasiModal({
-  isUpdateOpen,
-  onUpdateClose,
-  onAdd,
-  value,
-  onChange,
-}) {
+
+function UpdateLokasiModal({ isUpdateOpen, onUpdateClose, onAdd, value, onChange }) {
+
   return (
     <>
       <Modal
@@ -101,13 +89,13 @@ function UpdateKategoriModal({
   );
 }
 
-function UpdateBarangModal({
-  isUpdateOpen,
-  onUpdateClose,
-  onAdd,
-  valueUpdateStock,
-  onUpdateStock,
-}) {
+
+function UpdateBarangModal({ isUpdateOpen, onUpdateClose, onAdd,
+  valueUpdateStock,valueUpdateSpesifikasi,onUpdatespesifikasi,barangId, onUpdateStock, }) {
+   
+
+  
+
   return (
     <>
       <Modal
@@ -120,17 +108,27 @@ function UpdateBarangModal({
             <ModalHeader className="flex flex-col gap-1">
               Update Stock
             </ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">Update Barang</ModalHeader>
             <ModalBody>
-              <Input
-                autoFocus
-                value={valueUpdateStock}
-                onChange={onUpdateStock}
-                label="Stock"
-                className=" bg-transparent p text-black  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                placeholder="Update your Stock"
-                type="number"
-                min="0"
-              />
+                    <ModalHeader className="mb-2.5 block text-black dark:text-white">
+                      Stock
+                    </ModalHeader>
+                    <Input
+                      value={valueUpdateStock}
+                      onChange={onUpdateStock}
+                      placeholder="Enter New Stock"
+                      type='number'
+                      min='0'
+                    />
+                   <ModalHeader className="mb-2.5 block text-black dark:text-white">
+                      Spesifikasi
+                    </ModalHeader>
+                    <Input
+                      value={valueUpdateSpesifikasi}
+                      onChange={onUpdatespesifikasi}
+                      placeholder="Enter spesifikasi"
+                      type="text"
+                    />
             </ModalBody>
             <ModalFooter>
               <Button color="danger" variant="flat" onPress={onUpdateClose}>
@@ -354,12 +352,36 @@ function UpdateJadwalModal({
   );
 }
 
-
-
-export {
-  UpdateKategoriModal,
-  UpdateLokasiModal,
-  UpdateBarangModal,
-  UpdateBarangModalMin,
-  UpdateJadwalModal,
-};
+function UpdateRegisbarangModal({ isUpdateOpen, onUpdateClose, onAdd, value, onChange }) {
+  return (
+    <>
+      <Modal isOpen={isUpdateOpen} onClose={onUpdateClose} placement="top-center">
+        <ModalContent>
+          <>
+            <ModalHeader className="mb-2.5 block text-black dark:text-white">Update Barang</ModalHeader>
+            <ModalBody>
+              <Input
+                autoFocus
+                value={value}
+                onChange={onChange}
+                className=" bg-transparent p text-black  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                label="Barang"
+                placeholder="Update your barang"
+                variant="bordered"
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="flat" onPress={onUpdateClose}>
+                Close
+              </Button>
+              <Button color="primary" onPress={onAdd}>
+                Update
+              </Button>
+            </ModalFooter>
+          </>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+}
+export  {UpdateKategoriModal,UpdateLokasiModal,UpdateBarangModal,UpdateBarangModalMin,UpdateJadwalModal,UpdateRegisbarangModal};

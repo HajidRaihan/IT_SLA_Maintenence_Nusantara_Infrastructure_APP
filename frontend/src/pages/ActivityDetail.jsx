@@ -67,7 +67,7 @@ const ActivityDetail = () => {
                   }`}
                   // isDisabled={detail.status === 'done'}
                 >
-                  {detail.status === 'done' ? 'Aproved' : 'Approve'}
+                  {detail.status === 'done' ? 'Selesai' : 'Selesaikan'}
                 </Button>
               </div>
             </div>

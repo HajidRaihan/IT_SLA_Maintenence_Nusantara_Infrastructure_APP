@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use Illuminate\Http\Request;
+use App\Models\JenisHardware;
 use Illuminate\Support\Carbon;
+use App\Models\ActivityWorkers;
 use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
@@ -13,20 +15,21 @@ class ActivityController extends Controller
     {
         $data = $request->validate([
             // 'user_id' => 'required|exists:users,id',
-            'company' => 'required|in:jtse,mmn',
-            'tanggal' => 'required|date',
-            'jenis_hardware' => 'required|string',
-            'standart_aplikasi' => 'required|string',
-            'uraian_hardware' => 'required|string',
-            'uraian_aplikasi' => 'required|string',
-            'aplikasi_it_tol' => 'required|string',
-            'uraian_it_tol' => 'required|string',
-            'catatan' => 'required|string',
+            'company' => 'required|in:man,mmn',
+            // 'tanggal' => 'required|date',
+            'kategori_activity' => 'required|in:toll,nontoll',
+            'jenis_hardware' => 'nullable|string',
+            'standart_aplikasi' => 'nullable|string',
+            'uraian_hardware' => 'nullable|string',
+            'uraian_aplikasi' => 'nullable|string',
+            'aplikasi_it_tol' => 'nullable|string',
+            'uraian_it_tol' => 'nullable|string',
+            'catatan' => 'nullable|string',
             'shift' => 'required|string',
             'lokasi_id' => 'required|exists:lokasi,id',
             'kategori_id' => 'required|exists:kategori,id',
             'kondisi_akhir' => 'nullable|string',
-            'biaya' => 'required|integer',
+            // 'biaya' => 'nullable|integer',
             'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             // 'status' => 'required|in:process,done',
@@ -62,8 +65,47 @@ class ActivityController extends Controller
             }
         }
 
+        $jenisHardwareList = explode(', ', $data['jenis_hardware']);
+
+        foreach ($jenisHardwareList as $jenisHardwareName) {
+            // Ambil jenis hardware yang terkait dengan aktivitas
+            $jenisHardware = JenisHardware::where('nama_hardware', $jenisHardwareName)->first();
+
+            if ($jenisHardware) {
+                // Jika jenis hardware ditemukan, tambahkan 1 ke jumlah kerusakan
+                try {
+                    $jenisHardware->increment('jumlah_kerusakan');
+                } catch (\Exception $e) {
+                    // Tangani kesalahan jika gagal menambahkan jumlah kerusakan
+                    return response()->json(['error' => 'Failed to increment damage count'], 500);
+                }
+            } else {
+                // Tangani jika jenis hardware tidak ditemukan
+                return response()->json(['error' => 'Hardware type not found: ' . $jenisHardwareName], 404);
+            }
+        }
+
         $activity = Activity::create($data);
-        return response()->json(['data' => $activity]);
+
+
+
+        $activityWorkerData = [
+            'user_id' => $user,
+            'activity_id' => $activity->id,
+            'status' => 'process', // sesuaikan dengan nilai default yang Anda inginkan
+            'start_time' => Carbon::now(),
+            // Isi kolom lain sesuai kebutuhan, seperti 'start_time', 'end_time', 'work_duration', dst.
+        ];
+
+        try {
+            $activityWorker = ActivityWorkers::create($activityWorkerData);
+        } catch (\Exception $e) {
+            // Penanganan kesalahan jika gagal membuat entri baru dalam tabel activity_workers
+            return response()->json(['error' => 'Failed to create activity worker entry'], 500);
+        }
+
+
+        return response()->json(['message' => 'Add Activity success', 'data' => $activity]);
     }
 
     public function getactivity_toll(Request $request)
@@ -71,40 +113,34 @@ class ActivityController extends Controller
         $filters = $request->only(['company', 'status', 'lokasi_id', 'kategori_id']);
 
         // Get activities based on filters and join with the category and lokasi tables
+
         $activities = Activity::query()
-        ->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.tanggal', 
-        'activity.jenis_hardware', 'activity.standart_aplikasi',
-         'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol',
-          'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 
-          'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 
-          'activity.created_at', 'activity.updated_at','kategori.deadline_duration as category_deadline', 
-          'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
-        ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
-        ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
-        ->leftJoin('users', 'activity.user_id', '=', 'users.id')
-        ->when(isset($filters['company']), function ($query) use ($filters) {
-            $query->where('activity.company', $filters['company']); 
-        })
-        ->when(isset($filters['status']), function ($query) use ($filters) {
-            $query->where('activity.status', $filters['status']); 
-        })
-        ->when(isset($filters['lokasi_id']), function ($query) use ($filters) {
-            $query->where('activity.lokasi_id', $filters['lokasi_id']);
-                })
-        ->when(isset($filters['kategori_id']), function ($query) use ($filters) {
-            $query->where('activity.kategori_id', $filters['kategori_id']); 
-                })
-        ->paginate(5);
-    
-    return response()->json(['data' => $activities]);
-    
+            ->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
+            ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
+            ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
+            ->leftJoin('users', 'activity.user_id', '=', 'users.id')
+            ->when(isset($filters['company']), function ($query) use ($filters) {
+                $query->where('activity.company', $filters['company']);
+            })
+            ->when(isset($filters['status']), function ($query) use ($filters) {
+                $query->where('activity.status', $filters['status']);
+            })
+            ->when(isset($filters['lokasi_id']), function ($query) use ($filters) {
+                $query->where('activity.lokasi_id', $filters['lokasi_id']);
+            })
+            ->when(isset($filters['kategori_id']), function ($query) use ($filters) {
+                $query->where('activity.kategori_id', $filters['kategori_id']);
+            })
+            ->paginate(5);
+
+        return response()->json(['data' => $activities]);
     }
 
     public function getactivity_toll_id(Request $request, $id)
     {
         $filters = $request->only(['company', 'status', 'location', 'category']);
 
-        $activity = Activity::query()->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.tanggal', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.nama_kategori as category_name', 'kategori.deadline_duration as category_deadline','lokasi.nama_lokasi as location_name')->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')->leftJoin('users', 'activity.user_id', '=', 'users.id')->where('activity.id', $id);
+        $activity = Activity::query()->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.nama_kategori as category_name', 'kategori.deadline_duration as category_deadline', 'lokasi.nama_lokasi as location_name')->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')->leftJoin('users', 'activity.user_id', '=', 'users.id')->where('activity.id', $id);
 
         if (!empty($filters)) {
             if (isset($filters['company'])) {
@@ -126,17 +162,32 @@ class ActivityController extends Controller
         return response()->json(['data' => $activity]);
     }
 
-    //     public function getactivity_toll_by_user($UserId)
-    // {
-    //         $activity = Activity::where('user_id', $userId)->get();
-    //         return response()->json(['data' => $activity]);
-    // }
+    public function getactivity_toll_by_user(Request $request = null, $userId)
+    {
+        // Mendapatkan filter dari permintaan HTTP
+        $filters = $request->only(['lokasi_id']);
+
+        // Lakukan query untuk mendapatkan data aktivitas tol berdasarkan ID pengguna
+        $activities = Activity::query()
+            ->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
+            ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
+            ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
+            ->leftJoin('users', 'activity.user_id', '=', 'users.id')
+            ->where('activity.user_id', $userId)
+            ->when(isset($filters['lokasi_id']), function ($query) use ($filters) {
+                $query->where('activity.lokasi_id', $filters['lokasi_id']);
+            })
+            ->paginate(5);
+
+        // Mengembalikan data dalam format JSON
+        return response()->json(['message' => 'Activities retrieved successfully.', 'data' => $activities], 200);
+    }
 
     public function edit_activity(Request $request, $id)
     {
         $data = $request->validate([
             'company' => 'required|in:jtse,mmn',
-            'tanggal' => 'required|date',
+            // 'tanggal' => 'required|date',
             'jenis_hardware' => 'required|string',
             'standart_aplikasi' => 'required|string',
             'uraian_hardware' => 'required|string',
@@ -172,7 +223,7 @@ class ActivityController extends Controller
         $data = $request->validate([
             'user_id' => 'required|exists:users,id',
             'company' => 'required|in:jtse,mmn',
-            'tanggal' => 'required|date',
+            // 'tanggal' => 'required|date',
             'jenis_hardware' => 'required|string',
             'standart_aplikasi' => 'required|string',
             'uraian_hardware' => 'required|string',
@@ -225,7 +276,7 @@ class ActivityController extends Controller
 
         // Get activities based on filters and join with the category and lokasi tables
         $activities = Activity::query()
-            ->select('activity.id', 'users.username as nama_user ', 'activity.company', 'activity.tanggal', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
+            ->select('activity.id', 'users.username as nama_user ', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
             ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
             ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
             ->leftJoin('users', 'activity.user_id', '=', 'users.id')
@@ -250,7 +301,7 @@ class ActivityController extends Controller
     {
         $filters = $request->only(['company', 'status', 'location', 'category']);
 
-        $activity = Activity::query()-> $activity = Activity::query()->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.tanggal', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.nama_kategori as category_name', 'kategori.deadline_duration as category_deadline','lokasi.nama_lokasi as location_name')->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')->leftJoin('users', 'activity.user_id', '=', 'users.id')->where('activity.id', $id);
+        $activity = Activity::query()->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.nama_kategori as category_name', 'kategori.deadline_duration as category_deadline', 'lokasi.nama_lokasi as location_name')->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')->leftJoin('users', 'activity.user_id', '=', 'users.id')->where('activity.id', $id);
 
         if (!empty($filters)) {
             if (isset($filters['company'])) {
@@ -282,7 +333,8 @@ class ActivityController extends Controller
     {
         $data = $request->validate([
             'company' => 'required|in:jtse,mmn',
-            'tanggal' => 'required|date',
+            // 'tanggal' => 'required|date',
+            'kategori_activity' => 'required|string',
             'jenis_hardware' => 'required|string',
             'standart_aplikasi' => 'required|string',
             'uraian_hardware' => 'required|string',
@@ -352,7 +404,7 @@ class ActivityController extends Controller
 
     public function changeStatus(Request $request, $id)
     {
-    $request->validate([
+        $request->validate([
             // 'status' => 'required|in:precoess:done',
             'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'kondisi_akhir' => 'required|string',
@@ -376,6 +428,6 @@ class ActivityController extends Controller
 
         $activity->save();
 
-        return response()->json(['data' => $activity]);   
+        return response()->json(['message' => 'Add changes success', 'data' => $activity]);
     }
 }

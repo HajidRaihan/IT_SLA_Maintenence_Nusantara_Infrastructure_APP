@@ -3,17 +3,19 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ActivityController;
-use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\JadwalController;
-use App\Http\Controllers\JenisSoftwareController;
-use App\Http\Controllers\JenisHardwareController;
+use App\Http\Controllers\LokasiController;
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\AplikasiItTolController;
 use App\Http\Controllers\JadwalMaintenanceController;
 
+use App\Http\Controllers\JenisHardwareController;
+use App\Http\Controllers\JenisSoftwareController;
+use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\ActivityWorkersController;
+use App\Http\Controllers\RegisbarangController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,7 +44,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/toll', [ActivityController::class, 'addactivity_toll']);
     Route::get('/toll', [ActivityController::class, 'getactivity_toll']);
     Route::get('/toll/{id}', [ActivityController::class, 'getactivity_toll_id']);
-    // Route::get('/toll/user/{userId}', [ActivityController::class, 'getactivity_toll_by_user']);
+    Route::get('/toll/user/{userId}', [ActivityController::class, 'getactivity_toll_by_user']);
+
     Route::put('/toll/update/{id}', [ActivityController::class, 'edit_activity']);
     Route::delete('/toll/delete/{id}', [ActivityController::class, 'delete_activity']);
     Route::post('/nontoll', [ActivityController::class, 'addactivity_nontoll']);
@@ -68,6 +71,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/barang', [BarangController::class, 'index']);
     Route::post('/barang', [BarangController::class, 'store']);
     Route::get('/barang/{id}', [BarangController::class, 'show']);
+    Route::get('/logbarang/{id}', [BarangController::class, 'logbarang_byid']);
     Route::put('/barang/{id}', [BarangController::class, 'update']);
     Route::delete('/barang/{id}', [BarangController::class, 'destroy']);
     Route::get('/logbarang', [BarangController::class, 'logbarang']);
@@ -89,6 +93,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/jenisHardware', [JenisHardwareController::class, 'store']);
     Route::get('/jenisHardware/{id}', [JenisHardwareController::class, 'show']);
     Route::delete('/jenisHardware/{id}', [JenisHardwareController::class, 'destroy']);
+    Route::get('/jenisHardware/count/problem', [JenisHardwareController::class, 'count_hardware_problem']);
 
     Route::get('/aplikasi_it_tol', [AplikasiItTolController::class, 'index']);
     Route::post('/aplikasi_it_tol', [AplikasiItTolController::class, 'store']);
@@ -103,6 +108,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'destroy']);
 
     Route::get('api/schedule', [ScheduleController::class, 'show']);
+    Route::post('/activity_workers', [ActivityWorkersController::class, 'store']);
+    Route::post('/activity_workers/end/{id}', [ActivityWorkersController::class, 'done_activity']);
+    Route::post('/activity_workers/pending/{id}', [ActivityWorkersController::class, 'pending_activity']);
+    Route::get('/activity_workers', [ActivityWorkersController::class, 'index']);
+    Route::get('/activity_workers/{id}', [ActivityWorkersController::class, 'getByActivityId']);
+
+    Route::get('/item', [RegisbarangController::class, 'get_regisbarang']);
+    Route::post('/regisbarang', [RegisbarangController::class, 'add_regisbarang']);
+    Route::put('/regisbarang/{id}', [RegisbarangController::class, 'update_barang']);
+    Route::get('/regisbarang/{id}', [RegisbarangController::class, 'get_regisbarangid']);
+    Route::delete('/regisbarang/{id}', [RegisbarangController::class, 'deletebarang']);
 });
 Route::get('/tes', function () {
     return 'tes';

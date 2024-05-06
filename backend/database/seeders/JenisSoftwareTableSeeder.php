@@ -14,31 +14,20 @@ class JenisSoftwareTableSeeder extends Seeder
     {
         DB::table('jenis_software')->insert([
             [
-                'nama_software' => 'Gate Barrier',
+                'nama_software' => 'Microsoft',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_software' => 'LLA/OTL',
+                'nama_software' => 'Excel',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_software' => 'CCTV',
+                'nama_software' => 'Power Point',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'nama_software' => 'UPS',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama_software' => 'STB',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
         ]);
     }
 }

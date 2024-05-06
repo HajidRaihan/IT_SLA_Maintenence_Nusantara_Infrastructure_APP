@@ -18,6 +18,8 @@ import {
   ModalBody,
   Button,
 } from '@nextui-org/react';
+import Loader from '../Loader';
+import SelectKategori from '../Forms/SelectGroup/SelectKategori';
 
 const AddActivityModal = ({
   isOpen,
@@ -50,6 +52,7 @@ const AddActivityModal = ({
   const [kategoriData, setKategoriData] = useState();
   const [dataUser, setDataUser] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [kategoriActivity, setKategoriActivity] = useState();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -110,7 +113,7 @@ const AddActivityModal = ({
       console.log({ res });
       // Menggunakan Set untuk menyaring nilai-nilai unik
       const uniqueAplikasiNames = [
-        ...new Set(res.map((item) => item.nama_aplikasitol)),
+        ...new Set(res.map((item) => item.nama_aplikasiTol)),
       ];
       setAplikasiItTolData(uniqueAplikasiNames);
     };
@@ -120,6 +123,11 @@ const AddActivityModal = ({
     target: { value: React.SetStateAction<string> };
   }) => {
     setCompany(e.target.value);
+  };
+  const handleKategoriActivityChange = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setKategoriActivity(e.target.value);
   };
 
   const handleTanggalChange = (e) => {
@@ -228,6 +236,7 @@ const AddActivityModal = ({
       // user_id: dataUser.id,
       company: company,
       tanggal: tanggal,
+      kategori_activity: kategoriActivity,
       jenis_hardware: jenisHardware.join(', '),
       standart_aplikasi: standartAplikasi.join(', '),
       uraian_hardware: uraianHardware,
@@ -239,7 +248,7 @@ const AddActivityModal = ({
       lokasi_id: lokasi,
       kategori_id: kategori,
       kondisi_akhir: kondisiAkhir,
-      biaya: biaya,
+      // biaya: biaya,
       foto_awal: foto,
       status: status,
     };
@@ -300,9 +309,14 @@ const AddActivityModal = ({
             <ModalHeader className="text-xl font-semibold text-black dark:text-white mx-6 mt-3 ">
               Add Activity
             </ModalHeader>
-            <ModalBody className="overflow-y-scroll">
-              <div className="rounded-sm">
-                {/* <div className="flex w-full justify-end">
+            {kategoriData &&
+            lokasiData &&
+            jenisHardwareData &&
+            jenisSoftwareData &&
+            aplikasiItTolData ? (
+              <ModalBody className="overflow-y-scroll">
+                <div className="rounded-sm">
+                  {/* <div className="flex w-full justify-end">
                       <div
                         className="fixed flex justify-center items-center w-8 h-8 rounded-full  hover:animate-pulse"
                         onClick={close}
@@ -311,32 +325,37 @@ const AddActivityModal = ({
                       </div>
                     </div>
                     {/* <FontAwesomeIcon icon={faX} className="right-3 fixed" /> */}
-                {/* <h4 className="text-xl font-semibold text-black dark:text-white mx-6 my-6 ">
+                  {/* <h4 className="text-xl font-semibold text-black dark:text-white mx-6 my-6 ">
                       Add Activity
                     </h4>  */}
-                <div className="w-full h-0.5 bg-black " />
-                <form action="#" className=" ">
-                  <div className="p-6.5">
-                    <div className="mb-4.5 flex gap-6 flex-col">
-                      {/* <SelectCompany
+                  <div className="w-full h-0.5 bg-black " />
+                  <form action="#" className=" ">
+                    <div className="p-6.5">
+                      <div className="mb-4.5 flex gap-6 flex-col">
+                        {/* <SelectCompany
                     value={company}
                     onChange={handleCompanyChange}
                   /> */}
 
-                      <SelectCompany
-                        label="Company"
-                        data={dataCompany}
-                        value={company}
-                        onChange={handleCompanyChange}
-                      />
+                        <SelectCompany
+                          label="Company"
+                          data={dataCompany}
+                          value={company}
+                          onChange={handleCompanyChange}
+                        />
 
-                      <DatePickerOne
+                        <SelectKategori
+                          value={kategoriActivity}
+                          onChange={handleKategoriActivityChange}
+                        />
+
+                        {/* <DatePickerOne
                         label={'Tanggal'}
                         value={tanggal}
                         onChange={handleTanggalChange}
-                      />
+                      /> */}
 
-                      {/* <MultiSelect
+                        {/* <MultiSelect
                     id="multiSelect"
                     data={dataJenisHardware}
                     label="Jenis Hardware"
@@ -344,37 +363,39 @@ const AddActivityModal = ({
                     onChange={handleJenisHardwareChange}
                   /> */}
 
-                      <div>
-                        <label className="mb-2.5 block text-black dark:text-white">
-                          Jenis Hardware
-                        </label>
-                        <div className="flex gap-10 flex-wrap">
-                          {jenisHardwareData?.map((data, index) => {
-                            return (
-                              <CheckboxTwo
-                                label={data}
-                                key={index}
-                                isChecked={jenisHardware.includes(data)} // Pass nilai isChecked berdasarkan apakah label ada dalam checkedValues
-                                onChange={() => handleJenisHardwareChange(data)} // Gunakan handleCheckboxChange sebagai onChange handler
-                                options={jenisHardwareData}
-                              />
-                            );
-                          })}
+                        <div>
+                          <label className="mb-2.5 block text-black dark:text-white">
+                            Jenis Hardware
+                          </label>
+                          <div className="flex gap-10 flex-wrap">
+                            {jenisHardwareData?.map((data, index) => {
+                              return (
+                                <CheckboxTwo
+                                  label={data}
+                                  key={index}
+                                  isChecked={jenisHardware.includes(data)} // Pass nilai isChecked berdasarkan apakah label ada dalam checkedValues
+                                  onChange={() =>
+                                    handleJenisHardwareChange(data)
+                                  } // Gunakan handleCheckboxChange sebagai onChange handler
+                                  options={jenisHardwareData}
+                                />
+                              );
+                            })}
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="w-full ">
-                        <textarea
-                          className="disabled:cursor-not-allowed w-full h-40 rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          placeholder="Penjabaran Masalah Hardware"
-                          rows={5}
-                          value={uraianHardware}
-                          onChange={handleUraianHardwareChange}
-                          disabled={jenisHardware.length === 0}
-                        />
-                      </div>
+                        <div className="w-full ">
+                          <textarea
+                            className="disabled:cursor-not-allowed w-full h-40 rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            placeholder="Penjabaran Masalah Hardware"
+                            rows={5}
+                            value={uraianHardware}
+                            onChange={handleUraianHardwareChange}
+                            disabled={jenisHardware.length === 0}
+                          />
+                        </div>
 
-                      {/* <div className="w-full ">
+                        {/* <div className="w-full ">
                     <label className="mb-2.5 block text-black dark:text-white">
                       Standart Aplikasi
                     </label>
@@ -386,39 +407,39 @@ const AddActivityModal = ({
                     />
                   </div> */}
 
-                      <div>
-                        <label className="mb-2.5 block text-black dark:text-white">
-                          Standard Aplikasi
-                        </label>
-                        <div className="flex gap-10 flex-wrap">
-                          {jenisSoftwareData.map((data, index) => {
-                            return (
-                              <CheckboxTwo
-                                label={data}
-                                key={index}
-                                isChecked={standartAplikasi.includes(data)} // Pass nilai isChecked berdasarkan apakah label ada dalam checkedValues
-                                onChange={() =>
-                                  handleStandartAplikasiChange(data)
-                                } // Gunakan handleCheckboxChange sebagai onChange handler
-                                options={jenisSoftwareData}
-                              />
-                            );
-                          })}
+                        <div>
+                          <label className="mb-2.5 block text-black dark:text-white">
+                            Standard Aplikasi
+                          </label>
+                          <div className="flex gap-10 flex-wrap">
+                            {jenisSoftwareData.map((data, index) => {
+                              return (
+                                <CheckboxTwo
+                                  label={data}
+                                  key={index}
+                                  isChecked={standartAplikasi.includes(data)} // Pass nilai isChecked berdasarkan apakah label ada dalam checkedValues
+                                  onChange={() =>
+                                    handleStandartAplikasiChange(data)
+                                  } // Gunakan handleCheckboxChange sebagai onChange handler
+                                  options={jenisSoftwareData}
+                                />
+                              );
+                            })}
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="w-full ">
-                        <textarea
-                          className="disabled:cursor-not-allowed h-40 w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          placeholder="Penjabaran Masalah Sistem"
-                          rows={5}
-                          value={uraianAplikasi}
-                          onChange={handleUraianAplikasiChange}
-                          disabled={standartAplikasi.length === 0}
-                        />
-                      </div>
+                        <div className="w-full ">
+                          <textarea
+                            className="disabled:cursor-not-allowed h-40 w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            placeholder="Penjabaran Masalah Sistem"
+                            rows={5}
+                            value={uraianAplikasi}
+                            onChange={handleUraianAplikasiChange}
+                            disabled={standartAplikasi.length === 0}
+                          />
+                        </div>
 
-                      {/* <div className="w-full ">
+                        {/* <div className="w-full ">
                     <label className="mb-2.5 block text-black dark:text-white">
                       Aplikasi IT Tol
                     </label>
@@ -430,14 +451,14 @@ const AddActivityModal = ({
                     />
                   </div> */}
 
-                      {/* <MultiSelectAplikasi
+                        {/* <MultiSelectAplikasi
                     id="multiSelect"
                     data={dataAplikasiTol}
                     label="Aplikasi IT dan Peralatan Tol"
                     value={aplikasiItTol}
                     onChange={handleAplikasiItTolChange}
                   /> */}
-                      {/*
+                        {/*
                   <div>
                     <label className="mb-2.5 block text-black dark:text-white">
                       Jenis Hardware
@@ -449,76 +470,78 @@ const AddActivityModal = ({
                     </div>
                   </div> */}
 
-                      <div>
-                        <label className="mb-2.5 block text-black dark:text-white">
-                          Aplikasi IT dan Peralatan Tol
-                        </label>
-                        <div className="flex gap-10 flex-wrap">
-                          {aplikasiItTolData.map((data, index) => {
-                            return (
-                              <CheckboxTwo
-                                label={data}
-                                key={index}
-                                isChecked={aplikasiItTol.includes(data)} // Perbarui prop isChecked
-                                onChange={() => handleAplikasiItTolChange(data)} // Perbarui prop onChange
-                                options={aplikasiItTol}
-                              />
-                            );
-                          })}
+                        <div>
+                          <label className="mb-2.5 block text-black dark:text-white">
+                            Aplikasi IT dan Peralatan Tol
+                          </label>
+                          <div className="flex gap-10 flex-wrap">
+                            {aplikasiItTolData.map((data, index) => {
+                              return (
+                                <CheckboxTwo
+                                  label={data}
+                                  key={index}
+                                  isChecked={aplikasiItTol.includes(data)} // Perbarui prop isChecked
+                                  onChange={() =>
+                                    handleAplikasiItTolChange(data)
+                                  } // Perbarui prop onChange
+                                  options={aplikasiItTol}
+                                />
+                              );
+                            })}
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="w-full ">
-                        <textarea
-                          placeholder="Penjabaran Masalah Aplikasi IT & Peralatan Tol"
-                          rows={5}
-                          className="disabled:cursor-not-allowed w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          value={uraianItTol}
-                          onChange={handleUraianItTolChange}
-                          disabled={aplikasiItTol.length === 0}
+                        <div className="w-full ">
+                          <textarea
+                            placeholder="Penjabaran Masalah Aplikasi IT & Peralatan Tol"
+                            rows={5}
+                            className="disabled:cursor-not-allowed w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            value={uraianItTol}
+                            onChange={handleUraianItTolChange}
+                            disabled={aplikasiItTol.length === 0}
+                          />
+                        </div>
+
+                        <div className="w-full ">
+                          <label className="mb-2.5 block text-black dark:text-white">
+                            Catatan
+                          </label>
+                          <input
+                            type="text"
+                            className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            placeholder="Catatan jika diperlukan"
+                            value={catatan}
+                            onChange={handleCatatanChange}
+                          />
+                        </div>
+
+                        <div className="w-full ">
+                          <label className="mb-2.5 block text-black dark:text-white">
+                            Shift
+                          </label>
+                          <input
+                            type="number"
+                            className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            value={shift}
+                            onChange={handleShiftChange}
+                          />
+                        </div>
+
+                        <SelectGroupOne
+                          value={lokasi}
+                          onChange={handleLokasiChange}
+                          label="Lokasi"
+                          data={lokasiData}
                         />
-                      </div>
 
-                      <div className="w-full ">
-                        <label className="mb-2.5 block text-black dark:text-white">
-                          Catatan
-                        </label>
-                        <input
-                          type="text"
-                          className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          placeholder="Catatan jika diperlukan"
-                          value={catatan}
-                          onChange={handleCatatanChange}
+                        <SelectGroupOne
+                          value={kategori}
+                          onChange={handleKategoriChange}
+                          label="Kategori"
+                          data={kategoriData}
                         />
-                      </div>
 
-                      <div className="w-full ">
-                        <label className="mb-2.5 block text-black dark:text-white">
-                          Shift
-                        </label>
-                        <input
-                          type="number"
-                          className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          value={shift}
-                          onChange={handleShiftChange}
-                        />
-                      </div>
-
-                      <SelectGroupOne
-                        value={lokasi}
-                        onChange={handleLokasiChange}
-                        label="Lokasi"
-                        data={lokasiData}
-                      />
-
-                      <SelectGroupOne
-                        value={kategori}
-                        onChange={handleKategoriChange}
-                        label="Kategori"
-                        data={kategoriData}
-                      />
-
-                      {/* <div className="w-full ">
+                        {/* <div className="w-full ">
                         <label className="mb-2.5 block text-black dark:text-white">
                           Kondisi Akhir
                         </label>
@@ -531,50 +554,54 @@ const AddActivityModal = ({
                         />
                       </div> */}
 
-                      <div className="w-full ">
-                        <label className="mb-2.5 block text-black dark:text-white">
-                          Biaya
-                        </label>
-                        <input
-                          type="number"
-                          className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          placeholder="example: 80.000"
-                          value={biaya}
-                          onChange={handleBiayaChange}
-                        />
-                      </div>
-                      <div>
-                        <label className="mb-3 block text-black dark:text-white">
-                          Foto
-                        </label>
-                        <input
-                          type="file"
-                          className="dark:text-white w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-                          onChange={handleFotoChange}
-                        />
+                        {/* <div className="w-full ">
+                          <label className="mb-2.5 block text-black dark:text-white">
+                            Biaya
+                          </label>
+                          <input
+                            type="number"
+                            className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            placeholder="example: 80.000"
+                            value={biaya}
+                            onChange={handleBiayaChange}
+                          />
+                        </div> */}
+                        <div>
+                          <label className="mb-3 block text-black dark:text-white">
+                            Foto
+                          </label>
+                          <input
+                            type="file"
+                            className="dark:text-white w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
+                            onChange={handleFotoChange}
+                          />
+                        </div>
+
+                        {/* <SelectStatus
+                          value={status}
+                          onChange={handleStatusChange}
+                        /> */}
                       </div>
 
-                      <SelectStatus
-                        value={status}
-                        onChange={handleStatusChange}
-                      />
-                    </div>
-
-                    <Button
-                      className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
-                      onClick={() => handleAddActivity(close)}
-                      isLoading={isLoading}
-                    >
-                      Submit
-                    </Button>
-                    {/* <ButtonSubmit
+                      <Button
+                        className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
+                        onClick={() => handleAddActivity(close)}
+                        isLoading={isLoading}
+                      >
+                        Submit
+                      </Button>
+                      {/* <ButtonSubmit
                       handler={() => handleAddActivity(close)}
                       isLoading={true}
                     /> */}
-                  </div>
-                </form>
-              </div>
-            </ModalBody>
+                    </div>
+                  </form>
+                </div>
+              </ModalBody>
+            ) : (
+              <p className="text-white ms-10">loading ...</p>
+              // <Loader/>
+            )}
           </>
         )}
       </ModalContent>

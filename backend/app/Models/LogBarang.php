@@ -13,12 +13,14 @@ class LogBarang extends Model
 
     protected $fillable = [
         'id',
+        'id_barang',
         'nama_equipment',
         'perusahaan',
         'merk',
+        'spesifikasi',
         'adddata_string',
         'addata',
-        'mindata',
+        'stock'
     ];
     
 }

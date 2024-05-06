@@ -109,9 +109,9 @@ const ListActivity = () => {
           Filter
         </h2> */}
         <div className="rounded-sm border  border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark p-5 mb-5">
-          <div className="flex gap-5 w-full">
+          {/* <div className="flex gap-5 w-full">
             <SelectCompany
-              label='Company'
+              label="Company"
               data={dataCompany}
               value={company}
               onChange={(e) => setCompany(e.target.value)}
@@ -136,7 +136,7 @@ const ListActivity = () => {
               label="Kategori"
               data={kategoriData}
             />
-          </div>
+          </div> */}
           <div>
             <Button onPress={clearFilter} color="danger" className="">
               Clear Filter

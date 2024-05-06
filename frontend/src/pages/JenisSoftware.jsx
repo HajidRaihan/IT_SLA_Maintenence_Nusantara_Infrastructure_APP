@@ -24,7 +24,7 @@ import {
 } from '../api/jenisSoftwareApi';
 
 const JenisSoftware = () => {
-  const [data, setData] = useState([]);
+
   const [jenisSoftware, setJenisSoftware] = useState();
   const [newJenisSoftware, setNewJenisSoftware] = useState('');
   const [jenisSoftwareId, setJenisSoftwareId] = useState();

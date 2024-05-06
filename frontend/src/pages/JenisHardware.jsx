@@ -78,30 +78,30 @@ const JenisHardware = () => {
     }
   };
 
-    const handleUpdate = async () => {
-      const data = {
-        nama_hardware: updateJenisHardware,
-      };
-      try {
-        const res = await editJenisHardware(data, jenisHardwareId);
-        const updatedJenisHardware = res.data;
-        const updatedIndex = jenisHardware.findIndex(
-          (item) => item.id === jenisHardwareId,
-        );
-        if (updatedIndex !== -1) {
-          setJenisHardware((prevData) => {
-            const newData = [...prevData];
-            newData[updatedIndex] = updatedJenisHardware;
-            return newData;
-          });
-        }
-        toast.success('Jenis Hardware Berhasil di Update :', res);
-      } catch (error) {
-        toast.error('Error saat mengupdate Jenis Hardware:', error);
-        // Handle the error gracefully (e.g., display an error message to the user)
-        console.error(error);
-      }
+  const handleUpdate = async () => {
+    const data = {
+      nama_hardware: updateJenisHardware,
     };
+    try {
+      const res = await editJenisHardware(data, jenisHardwareId);
+      const updatedJenisHardware = res.data;
+      const updatedIndex = jenisHardware.findIndex(
+        (item) => item.id === jenisHardwareId,
+      );
+      if (updatedIndex !== -1) {
+        setJenisHardware((prevData) => {
+          const newData = [...prevData];
+          newData[updatedIndex] = updatedJenisHardware;
+          return newData;
+        });
+      }
+      toast.success('Jenis Hardware Berhasil di Update :', res);
+    } catch (error) {
+      toast.error('Error saat mengupdate Jenis Hardware:', error);
+      // Handle the error gracefully (e.g., display an error message to the user)
+      console.error(error);
+    }
+  };
 
   const handlerUpdateOpen = (id) => {
     console.log({ id });
@@ -129,34 +129,42 @@ const JenisHardware = () => {
           </button>
         </div>
 
-        <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-          <div className="col-span-3 flex items-center">
+        <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-9 md:px-6 2xl:px-7.5">
+          <div className="col-span-2 flex items-center">
             <p className="font-medium mr-2">No</p>
           </div>
-          <div className="col-span-3 flex items-center sm:flex">
+          <div className="col-span-2 flex items-center sm:flex">
             <p className="font-medium">Nama</p>
           </div>
-          <div className="col-span-1 flex items-center">
+          <div className="col-span-3 flex items-center">
+            <p className="font-medium">Jumlah Kerusakan</p>
+          </div>
+          <div className="col-span-2 flex items-center">
             <p className="font-medium">Status</p>
           </div>
         </div>
 
         {jenisHardware?.map((item, index) => (
           <div
-            className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
+            className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-9 md:px-6 2xl:px-7.5"
             key={index}
           >
-            <div className="col-span-3 flex items-center">
+            <div className="col-span-2 flex items-center">
               <p className="font-medium mr-2 text-black dark:text-white">
                 {index + 1}
               </p>
             </div>
-            <div className="col-span-3 flex items-center sm:flex">
+            <div className="col-span-2 flex items-center sm:flex">
               <p className="font-medium mr-3 text-black dark:text-white">
                 {item.nama_hardware}
               </p>
             </div>
-            <div className="mb-3  flex items-center">
+            <div className="col-span-3 flex items-center">
+              <p className="font-medium text-black dark:text-white">
+                {item.jumlah_kerusakan}
+              </p>
+            </div>
+            <div className="col-span-2 flex items-center">
               <button
                 onClick={() => handlerUpdateOpen(item.id)}
                 className="hover:text-primary"
