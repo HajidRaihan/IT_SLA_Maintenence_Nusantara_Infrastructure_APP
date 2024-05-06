@@ -26,7 +26,6 @@ import JenisHardware from './pages/JenisHardware';
 import JenisSoftware from './pages/JenisSoftware';
 import AplikasiItTol from './pages/AplikasiItTol';
 import Jadwal from './pages/Jadwal';
-import YourNewComponent from './pages/LogallBarangt';
 import AddBarang from './pages/tes';
 import HistoryBarang from './pages/historybarang';
 import Itemdetail from './pages/DetailBarang';
@@ -230,17 +229,6 @@ function App() {
             </>
           }
         />
-
-<Route
-          path="/logallbarang"
-          element={
-            <>
-              <PageTitle title="LogallBarang" />
-              <YourNewComponent/>
-            </>
-          }
-        />
-
         <Route
           path="/forms/form-elements"
           element={

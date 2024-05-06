@@ -44,7 +44,7 @@ class JenisHardwareController extends Controller
         $hardware->delete();
 
         return response()->json ([
-            'message' => 'bisssaaaaa',
+            'message' => 'Sukses menghapus jenis hardware',
             'data' => $hardware,
         ]);
     }

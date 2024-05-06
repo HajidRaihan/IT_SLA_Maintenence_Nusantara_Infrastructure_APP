@@ -22,5 +22,6 @@ class LogBarang extends Model
         'addata',
         'stock'
     ];
+    
 }
 

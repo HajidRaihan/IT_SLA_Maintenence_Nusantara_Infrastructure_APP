@@ -9,7 +9,7 @@ const getJadwal = async () => {
   try {
     const response = await RequestApi(
       'GET',
-      'jadwal',
+      'jadwal-maintenance',
       {},
       headers,
       'Mencoba mengambil jadwal',
@@ -33,7 +33,7 @@ const addJadwal = async (data) => {
     try {
       const response = await RequestApi(
         'POST',
-        'jadwal',
+        'jadwal-maintenance',
         data,
         headers,
         'Mencoba mengirim jadwal',
@@ -41,7 +41,7 @@ const addJadwal = async (data) => {
   
       return response.data;
     } catch (error) {
-      console.error('Terjadi kesalahan saat mengupdate jadwal', error);
+      console.error('Terjadi kesalahan saat menambhkan jadwal', error);
       throw error;
     }
   };
@@ -54,7 +54,7 @@ const addJadwal = async (data) => {
     try{
         const response = await RequestApi(
             'PUT',
-            `jadwal/${id}`,
+            `jadwal-maintenance/${id}`,
             data,
             headers,
             'mencoba mengupdate jadwal' 
@@ -76,7 +76,7 @@ const deleteJadwal = async(id) =>{
       try {
         const response = await RequestApi(
           'DELETE',
-          `jadwal/${id}`,
+          `jadwal-maintenance/${id}`,
           {},
           headers,
           'Mencoba delete jadwal',

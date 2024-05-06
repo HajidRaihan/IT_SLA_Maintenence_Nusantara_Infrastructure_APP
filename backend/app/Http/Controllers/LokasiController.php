@@ -55,7 +55,7 @@ class LokasiController extends Controller
         $lokasi->delete();
 
         return response()->json ([
-            'message' => 'bisssaaaaa',
+            'message' => 'Sukses menghapus lokasi',
             'data' => $lokasi,
         ]);
     }

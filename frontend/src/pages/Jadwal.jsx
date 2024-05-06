@@ -11,6 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { toast, ToastContainer } from 'react-toastify';
+import moment from 'moment-timezone';
 import 'react-toastify/dist/ReactToastify.css';
 import { JadwalModal } from '../components/Modals/AddModal';
 import { useDisclosure } from '@nextui-org/react';
@@ -20,20 +21,20 @@ import Paginate from '../components/Pagination/paginate';
 
 const Jadwal = () => {
   const [data, setData] = useState([]);
-  const [newNamaKegiatan, setNewNamaKegiatan] = useState('');
-  const [newTanggalMulai, setNewTanggalMulai] = useState('');
-  const [newTanggalSelesai, setNewTanggalSelesai] = useState('');
-  const [newPerusahaan, setNewPerusahaan] = useState('');
+  const [newJenisPerusahaan, setNewJenisPerusahaan] = useState('');
+  const [newUraianKegiatan, setNewUraianKegiatan] = useState('');
+  const [newTahun, setNewTahun] = useState(0);
   const [newLokasi, setNewLokasi] = useState('');
-  const [newWaktuMulai, setNewWaktuMulai] = useState('');
-  const [newWaktuSelesai, setNewWaktuSelesai] = useState('');
-  const [updateNamaKegiatan, setupdateNamaKegiatan] = useState('');
-  const [updateTanggalMulai, setupdateTanggalMulai] = useState('');
-  const [updateTanggalSelesai, setupdateTanggalSelesai] = useState('');
-  const [updatePerusahaan, setupdatePerusahaan] = useState('');
-  const [updateLokasi, setupdateLokasi] = useState('');
-  const [updateWaktuMulai, setupdateWaktuMulai] = useState('');
-  const [updateWaktuSelesai, setupdateWaktuSelesai] = useState('');
+  const [newFrekuensi, setNewFrekuensi] = useState('');
+  const [newWaktu, setNewWaktu] = useState([]);
+  const [updateJenisPerusahaan, setUpdateJenisPerusahaan] = useState('');
+  const [updateUraianKegiatan, setUpdateUraianKegiatan] = useState('');
+  const [updateTahun, setUpdateTahun] = useState('');
+  const [updateFrekuensi, setUpdateFrekuensi] = useState('');
+  const [updateLokasi, setUpdateLokasi] = useState('');
+  const [updateWaktu, setUpdateWaktu] = useState([]);
+
+ 
   const [JadwalId, setJadwalId] = useState('');
   const {
     isOpen: isOpenJadwalModal,
@@ -50,16 +51,63 @@ const Jadwal = () => {
     onOpen: onDeleteModalOpen,
     onClose: onDeleteModalClose,
   } = useDisclosure();
-
+  const [filteredRecords, setFilteredRecords] = useState([]);
+  const [newTahunFilter, setNewTahunFilter] = useState('');
+  const [selectedJenisPerusahaan, setSelectedJenisPerusahaan] = useState('');
+  const [newLokasiFilter, setNewLokasiFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1); // Current page state
   const itemsPerPage = 5; // Number of data items per page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredRecords.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Calculate total number of pages
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, data.length);
 
-  // Filter the data to display only the items for the current page
-  const currentItems = data.slice(startIndex, endIndex);
+  const handleFilter = () => {
+    const filtered = data.filter(item => {
+      const jenisPerusahaanFilter = selectedJenisPerusahaan 
+        ? item.jenis_perusahaan.toLowerCase() === selectedJenisPerusahaan.toLowerCase() 
+        : true;
+      const tahunFilter = newTahunFilter 
+        ? (typeof item.tahun === 'number' 
+          ? item.tahun === parseInt(newTahunFilter) 
+          : item.tahun.includes(parseInt(newTahunFilter)))
+        : true;
+      const lokasiFilter = newLokasiFilter 
+        ? item.lokasi.toLowerCase().includes(newLokasiFilter.toLowerCase()) 
+        : true;
+      return jenisPerusahaanFilter && tahunFilter && lokasiFilter;
+    });
+    setFilteredRecords(filtered);
+  }
+  
+  
+
+useEffect(() => {
+  handleFilter();
+}, [newLokasiFilter, selectedJenisPerusahaan, newTahunFilter, data]);
+
+
+const dropdownJenisPerusahaan = data.map(item => item.jenis_perusahaan);
+
+const uniqueJenisPerusahaan = Array.from(new Set(dropdownJenisPerusahaan));
+
+const dropdownTahun = data.map(item => item.tahun);
+
+const uniqueTahun = Array.from(new Set(dropdownTahun));
+
+const dropdownLokasi = data.map(item=>item.lokasi);
+
+const uniqueLokasi = Array.from(new Set(dropdownLokasi));
+
+  // const [currentPage, setCurrentPage] = useState(1); // Current page state
+  // const itemsPerPage = 5; // Number of data items per page
+
+  // // Calculate total number of pages
+  // const startIndex = (currentPage - 1) * itemsPerPage;
+  // const endIndex = Math.min(startIndex + itemsPerPage, data.length);
+
+  // // Filter the data to display only the items for the current page
+  // const currentItems = data.slice(startIndex, endIndex);
 
   const handlePageChange = (page) => {
     setCurrentPage(page); // Update the current page
@@ -84,69 +132,85 @@ const Jadwal = () => {
 
   const handleAddJadwal = async () => {
     const newJadwalData = {
-      nama_kegiatan: newNamaKegiatan,
-      tanggal_mulai: newTanggalMulai,
-      tanggal_selesai: newTanggalSelesai,
-      perusahaan: newPerusahaan,
+      jenis_perusahaan: newJenisPerusahaan,
+      uraian_kegiatan: newUraianKegiatan,
+      tahun: newTahun,
       lokasi: newLokasi,
-      waktu_mulai: newWaktuMulai,
-      waktu_selesai: newWaktuSelesai,
+      frekuensi: newFrekuensi,
+      waktu: newWaktu,
     };
 
     try {
       const res = await addJadwal(newJadwalData);
       const addedJadwal = res.data;
       setData((prevData) => [...prevData, addedJadwal]);
-      toast.success('Jadwal added successfully');
-      onCloseJadwalModal(); // Close the modal after adding jadwal
+      toast.success('Jadwal added successfully!', res);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (error) {
-      toast.error('Failed to add Jadwal');
+      toast.error('Failed to add ');
     }
   };
 
-  const handleNamaKegiatan = (e) => {
-    setNewNamaKegiatan(e.target.value);
+
+  const handleJenisPerusahaan = (e) => {
+    setNewJenisPerusahaan(e.target.value);
   };
-  const handleTanggalMulai = (e) => {
-    setNewTanggalMulai(e.target.value);
+  const handleUraianKegiatan = (e) => {
+    setNewUraianKegiatan(e.target.value);
   };
-  const handleTanggalSelesai = (e) => {
-    setNewTanggalSelesai(e.target.value);
+  const handleTahun = (e) => {
+    setNewTahun(parseInt(e.target.value));
   };
-  const handlePerusahaan = (e) => {
-    setNewPerusahaan(e.target.value);
+  const handleFrekuensi = (e) => {
+    setNewFrekuensi(e.target.value);
   };
   const handleLokasi = (e) => {
     setNewLokasi(e.target.value);
   };
-  const handleWaktuMulai = (e) => {
-    setNewWaktuMulai(e.target.value);
-  };
-  const handleWaktuSelesai = (e) => {
-    setNewWaktuSelesai(e.target.value);
+  const handleWaktu = (index, e) => {
+    const newWaktuArray = [...newWaktu];
+    newWaktuArray[index] = e.target.value;
+    setNewWaktu(newWaktuArray);
+    console.log(e.target.value);
   };
 
-  const handleUpdateForm = (id) => {
-    setJadwalId(id);
-    setupdateNamaKegiatan('');
-    setupdateTanggalMulai('');
-    setupdateTanggalSelesai('');
-    setupdatePerusahaan('');
-    setupdateLokasi('');
-    setupdateWaktuMulai('');
-    setupdateWaktuSelesai('');
-    onUpdateModalOpen();
+  const handleUpdateJenisPerusahaan = (e) => {
+    setUpdateJenisPerusahaan(e.target.value);
   };
+  const handleUpdateUraianKegiatan = (e) => {
+    setUpdateUraianKegiatan(e.target.value);
+  };
+  const handleUpdateTahun = (e) => {
+    setUpdateTahun(parseInt(e.target.value));
+  };
+  const handleUpdateFrekuensi = (e) => {
+    setUpdateFrekuensi(e.target.value);
+  };
+  const handleUpdateLokasi = (e) => {
+    setUpdateLokasi(e.target.value);
+  };
+  const handleUpdateWaktu = (index, e) => {
+    const newWaktuArray = [...updateWaktu];
+    newWaktuArray[index] = e.target.value;
+    setUpdateWaktu(newWaktuArray);
+    console.log(e.target.value);
+};
+
+
+
 
   const handleUpdate = async () => {
     const dataToUpdate = {
-      nama_kegiatan: updateNamaKegiatan,
-      tanggal_mulai: updateTanggalMulai,
-      tanggal_selesai: updateTanggalSelesai,
-      perusahaan: updatePerusahaan,
+
+      jenis_perusahaan: updateJenisPerusahaan,
+      uraian_kegiatan: updateUraianKegiatan,
+      tahun: updateTahun,
       lokasi: updateLokasi,
-      waktu_mulai: updateWaktuMulai,
-      waktu_selesai: updateWaktuSelesai,
+      frekuensi: updateFrekuensi,
+      waktu: updateWaktu,
+    
     };
     try {
       const res = await updatejadwal(JadwalId, dataToUpdate);
@@ -171,6 +235,17 @@ const Jadwal = () => {
     onDeleteModalOpen();
   };
 
+
+  const handleUpdateForm = (id) => {
+    setJadwalId(id);
+    onUpdateModalOpen(); // Memanggil fungsi untuk membuka modal
+  };
+
+  const handleAddForm = () => {
+    onOpenJadwalModal();
+  };
+
+
   return (
     <DefaultLayout>
       <ToastContainer />
@@ -180,8 +255,66 @@ const Jadwal = () => {
           <h4 className="text-xl font-semibold text-black dark:text-white">
             Add Jadwal
           </h4>
+          <div className="flex flex-grow items-center space-x-4" style={{ padding: '0 20px', fontFamily: 'Arial, sans-serif' }}>
+          <div className="flex-1">
+            <select
+              value={selectedJenisPerusahaan}
+              onChange={e => setSelectedJenisPerusahaan(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '5px',
+                border: '2px solid #ccc',
+                borderRadius: '5px',
+              }}
+            >
+              <option value="">Pilih Jenis Perusahaan</option>
+              <option value="tol">tol</option>
+              <option value="non tol">non tol</option>
+            </select>
+          </div>
+            <div className="flex-1">
+                <input
+                    type="text"
+                    value={newTahunFilter}
+                    onChange={e => setNewTahunFilter(e.target.value)}
+                    placeholder="Pilih Tahun"
+                    list="TahunList"
+                    style={{
+                      width: '100%', // Take full width of the parent
+                      padding: '5px',
+                      border: '2px solid #ccc',
+                      borderRadius: '5px',
+                    }}
+                />
+                <datalist id="TahunList">
+                    {uniqueTahun.map((option, index) => (
+                        <option key={index} value={option} />
+                    ))}
+                </datalist>
+            </div>
+            <div className="flex-1">
+                <input
+                    type="text"
+                    value={newLokasiFilter}
+                    onChange={e => setNewLokasiFilter(e.target.value)}
+                    placeholder="Pilih Lokasi"
+                    list="LokasiList"
+                    style={{
+                      width: '100%', // Take full width of the parent
+                      padding: '5px',
+                      border: '2px solid #ccc',
+                      borderRadius: '5px',
+                    }}
+                />
+                <datalist id="LokasiList">
+                    {uniqueLokasi.map((option, index) => (
+                        <option key={index} value={option} />
+                    ))}
+                </datalist>
+            </div>
+        </div>
           <button
-            onClick={onOpenJadwalModal}
+            onClick={handleAddForm}
             className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
           >
             <FontAwesomeIcon
@@ -206,25 +339,19 @@ const Jadwal = () => {
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
                 >
-                  Nama Kegiatan
+                  Jenis Perusahaan
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
                 >
-                  Tanggal Mulai
+                  Uraian Kegiatan
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
                 >
-                  Tanggal Selesai
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
-                >
-                  Perusahaan
+                  Tahun
                 </th>
                 <th
                   scope="col"
@@ -236,13 +363,13 @@ const Jadwal = () => {
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
                 >
-                  Waktu Mulai
+                  Frekuensi
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
                 >
-                  Waktu Selesai
+                  Waktu
                 </th>
                 <th
                   scope="col"
@@ -256,32 +383,27 @@ const Jadwal = () => {
               {/* Table Body */}
               {currentItems.map((item, index) => (
                 <tr
-                  key={startIndex + index}
+                  key={indexOfFirstItem + index}
                   className="hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900 dark:text-gray-100">
-                      {startIndex + index + 1}
+                      {indexOfFirstItem + index + 1}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900 dark:text-gray-100">
-                      {item.nama_kegiatan}
+                      {item.jenis_perusahaan}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900 dark:text-gray-100">
-                      {item.tanggal_mulai}
+                      {item.uraian_kegiatan}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900 dark:text-gray-100">
-                      {item.tanggal_selesai}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900 dark:text-gray-100">
-                      {item.perusahaan}
+                      {item.tahun}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -291,13 +413,27 @@ const Jadwal = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900 dark:text-gray-100">
-                      {item.waktu_mulai}
+                      {item.frekuensi}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900 dark:text-gray-100">
-                      {item.waktu_selesai}
-                    </div>
+                    {item.waktu.map((date, index) => (
+                      <div
+                        key={index}
+                        className="text-sm text-gray-900 dark:text-gray-100"
+                      >
+                        <div className="flex items-center">
+                          <span>
+                            {moment(date)
+                              .tz('Asia/Makassar')
+                              .format('DD-MM-YYYY')}
+                          </span>
+                          {index < item.waktu.length - 1 && (
+                            <div className="h-px bg-gray-300 w-4 mx-2"></div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
                   </td>
 
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -385,48 +521,37 @@ const Jadwal = () => {
         isOpen={isOpenJadwalModal}
         onClose={onCloseJadwalModal}
         onAdd={handleAddJadwal}
-        onChangeNamaKegiatan={handleNamaKegiatan}
-        valueNamaKegiatan={newNamaKegiatan}
-        onChangeTanggalMulai={handleTanggalMulai}
-        valueTanggalMulai={newTanggalMulai}
-        onChangeTanggalSelesai={handleTanggalSelesai}
-        valueTanggalSelesai={newTanggalSelesai}
-        onChangePerusahaan={handlePerusahaan}
-        valuePerusahaan={newPerusahaan}
+        onChangeJenisPerusahaan={handleJenisPerusahaan}
+        valueJenisPerusahaan={newJenisPerusahaan}
+        onChangeUraianKegiatan={handleUraianKegiatan}
+        valueUraianKegiatan={newUraianKegiatan}
+        onChangeTahun={handleTahun}
+        valueTahun={newTahun}
+        onChangeFrekuensi={handleFrekuensi}
+        valueFrekuensi={newFrekuensi}
+        onChangeWaktu={handleWaktu}
+        valueWaktu={newWaktu}
         onChangeLokasi={handleLokasi}
         valueLokasi={newLokasi}
-        onChangeWaktuMulai={handleWaktuMulai}
-        valueWaktuMulai={newWaktuMulai}
-        onChangeWaktuSelesai={handleWaktuSelesai}
-        valueWaktuSelesai={newWaktuSelesai}
       />
       <UpdateJadwalModal
         isUpdateOpen={updateModalOpen}
-        onAdd={handleUpdate}
-        onChangeUpdateNamaKegiatan={(e) =>
-          setupdateNamaKegiatan(e.target.value)
-        }
-        valueUpdateNamaKegiatan={updateNamaKegiatan}
-        onChangeUpdateTanggalMulai={(e) =>
-          setupdateTanggalMulai(e.target.value)
-        }
-        valueUpdateTanggalMulai={updateTanggalMulai}
-        onChangeUpdateTanggalSelesai={(e) =>
-          setupdateTanggalSelesai(e.target.value)
-        }
-        valueUpdateTanggalSelesai={updateTanggalSelesai}
-        onChangeUpdatePerusahaan={(e) => setupdatePerusahaan(e.target.value)}
-        valueUpdatePerusahaan={updatePerusahaan}
-        onChangeUpdateLokasi={(e) => setupdateLokasi(e.target.value)}
+        onAdd={handleUpdate} // Perhatikan fungsi yang dipanggil saat tombol "simpan" ditekan
+        onChangeUpdateJenisPerusahaan={handleUpdateJenisPerusahaan}
+        valueUpdateJenisPerusahaan={updateJenisPerusahaan}
+        onChangeUpdateUraianKegiatan={handleUpdateUraianKegiatan}
+        valueUpdateUraianKegiatan={updateUraianKegiatan}
+        onChangeUpdateLokasi={handleUpdateLokasi}
         valueUpdateLokasi={updateLokasi}
-        onChangeUpdateWaktuMulai={(e) => setupdateWaktuMulai(e.target.value)}
-        valueUpdateWaktuMulai={updateWaktuMulai}
-        onChangeUpdateWaktuSelesai={(e) =>
-          setupdateWaktuSelesai(e.target.value)
-        }
-        valueUpdateWaktuSelesai={updateWaktuSelesai}
+        onChangeUpdateTahun={handleUpdateTahun}
+        valueUpdateTahun={updateTahun}
+        onChangeUpdateFrekuensi={handleUpdateFrekuensi}
+        valueUpdateFrekuensi={updateFrekuensi}
+        onChangeUpdateWaktu={handleUpdateWaktu}
+        valueUpdateWaktu={updateWaktu}
         onUpdateClose={onUpdateModalClose}
-      />
+/>
+
       <DeleteModal
         isDeleteOpen={deleteModalOpen}
         onDelete={handleDelete}
