@@ -65,25 +65,29 @@ class ActivityController extends Controller
             }
         }
 
-        $jenisHardwareList = explode(', ', $data['jenis_hardware']);
+        if ($request->jenis_hardware) {
 
-        foreach ($jenisHardwareList as $jenisHardwareName) {
-            // Ambil jenis hardware yang terkait dengan aktivitas
-            $jenisHardware = JenisHardware::where('nama_hardware', $jenisHardwareName)->first();
+            $jenisHardwareList = explode(', ', $data['jenis_hardware']);
 
-            if ($jenisHardware) {
-                // Jika jenis hardware ditemukan, tambahkan 1 ke jumlah kerusakan
-                try {
-                    $jenisHardware->increment('jumlah_kerusakan');
-                } catch (\Exception $e) {
-                    // Tangani kesalahan jika gagal menambahkan jumlah kerusakan
-                    return response()->json(['error' => 'Failed to increment damage count'], 500);
+            foreach ($jenisHardwareList as $jenisHardwareName) {
+                // Ambil jenis hardware yang terkait dengan aktivitas
+                $jenisHardware = JenisHardware::where('nama_hardware', $jenisHardwareName)->first();
+
+                if ($jenisHardware) {
+                    // Jika jenis hardware ditemukan, tambahkan 1 ke jumlah kerusakan
+                    try {
+                        $jenisHardware->increment('jumlah_kerusakan');
+                    } catch (\Exception $e) {
+                        // Tangani kesalahan jika gagal menambahkan jumlah kerusakan
+                        return response()->json(['error' => 'Failed to increment damage count'], 500);
+                    }
+                } else {
+                    // Tangani jika jenis hardware tidak ditemukan
+                    return response()->json(['error' => 'Hardware type not found: ' . $jenisHardwareName], 404);
                 }
-            } else {
-                // Tangani jika jenis hardware tidak ditemukan
-                return response()->json(['error' => 'Hardware type not found: ' . $jenisHardwareName], 404);
             }
         }
+
 
         $activity = Activity::create($data);
 
