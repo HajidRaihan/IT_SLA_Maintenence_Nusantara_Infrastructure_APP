@@ -157,7 +157,6 @@ class ActivityWorkersController extends Controller
         $activity->kondisi_akhir = $request->kondisi_akhir;
         $activity->status = 'done';
         $activity->ended_at = Carbon::now();
-        $activity->save();
 
         // Menghitung total durasi kerja untuk semua ActivityWorkers dengan activity_id yang sama
         $totalSeconds = ActivityWorkers::where('activity_id', $activityWorker->activity_id)
@@ -167,6 +166,8 @@ class ActivityWorkersController extends Controller
         $totalWorkDuration = gmdate('H:i:s', $totalSeconds);
 
         $activity->waktu_pengerjaan = $totalWorkDuration;
+
+        $activity->save();
 
         return response()->json(['message' => 'berhasil update activity worker', 'total_work_duration' => $totalWorkDuration, 'data' => $activity]);
     }
@@ -180,5 +181,13 @@ class ActivityWorkersController extends Controller
             ->get();
 
         return response()->json(['message' => 'berhasil mendapatkan activity worker', 'data' => $activityWorkers]);
+    }
+
+    public function getActivityWorkerByUser($id)
+    {
+        $user = Auth::user()->id;
+        $activityWorker = ActivityWorkers::where('user_id', $user)->get();
+
+        return response()->json(['message' => 'berhasil menampilkan', 'data' => $activityWorker]);
     }
 }

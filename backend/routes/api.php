@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 
-Route::middleware(['auth:sanctum'])->group(function () { 
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('logout', [AuthenticationController::class, 'logout']);
     Route::post('/user', [AuthenticationController::class, 'user']);
 
@@ -103,6 +103,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/activity_workers/pending/{id}', [ActivityWorkersController::class, 'pending_activity']);
     Route::get('/activity_workers', [ActivityWorkersController::class, 'index']);
     Route::get('/activity_workers/{id}', [ActivityWorkersController::class, 'getByActivityId']);
+    Route::get('/activity_workers/user/{id}', [ActivityWorkersController::class, 'getActivityWorkerByUser']);
 
     Route::get('/item', [RegisbarangController::class, 'get_regisbarang']);
     Route::post('/regisbarang', [RegisbarangController::class, 'add_regisbarang']);
