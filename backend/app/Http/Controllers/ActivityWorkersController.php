@@ -183,7 +183,7 @@ class ActivityWorkersController extends Controller
         return response()->json(['message' => 'berhasil mendapatkan activity worker', 'data' => $activityWorkers]);
     }
 
-    public function getActivityWorkerByUser($id)
+    public function getActivityWorkerByUser()
     {
         $user = Auth::user()->id;
         $activityWorker = ActivityWorkers::where('user_id', $user)->get();
