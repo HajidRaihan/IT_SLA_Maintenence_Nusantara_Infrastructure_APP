@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         $user = User::all();
 
-        return response()->json($user);
+        return response()->json(['message' => 'berhasil menampilkan user', 'data' => $user]);
     }
 
     public function updateProfile(Request $request, $id)
