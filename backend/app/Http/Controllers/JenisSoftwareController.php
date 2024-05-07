@@ -46,7 +46,7 @@ class JenisSoftwareController extends Controller
         $software->delete();
 
         return response()->json ([
-            'message' => 'bisssaaaaa terhapus',
+            'message' => 'Sukses menghapus jenis software',
             'data' => $software,
         ]);
     }

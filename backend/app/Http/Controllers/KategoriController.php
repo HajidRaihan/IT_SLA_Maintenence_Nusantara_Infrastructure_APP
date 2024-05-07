@@ -58,7 +58,7 @@ class KategoriController extends Controller
         $kategori->delete();
 
         return response()->json([
-            'pesannya' => 'yeay kehapus',
+            'pesannya' => 'Sukses menghapus kategori',
             'data' => $kategori,
         ]);
     }

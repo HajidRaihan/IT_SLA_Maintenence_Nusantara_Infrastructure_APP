@@ -175,7 +175,7 @@
                     toast.success(`Stock updated successfully: ${updatedStock}`);
                     setTimeout(() => {
                       window.location.reload();
-                    }, 1500);
+                    }, 15000);
                   } catch (error) {
                     toast.error(`Error updating stock: ${error.message}`); // Improved error message
                   }

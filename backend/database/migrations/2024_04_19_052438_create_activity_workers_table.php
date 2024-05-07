@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('activity_id');
             $table->enum('status', ['process','pending', 'done'])->default('process');
             $table->string('deskripsi_pending')->nullable();
-
             $table->timestamp('start_time')->nullable();
             $table->timestamp('end_time')->nullable();
             $table->string('work_duration')->nullable();

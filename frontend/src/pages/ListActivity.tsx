@@ -23,6 +23,7 @@ const ListActivity = () => {
   const [status, setStatus] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const [hapusLoading, setHapusLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ const ListActivity = () => {
         );
         console.log('actyivity', response);
         setActivity(response.data.data);
+        setTotalPage(response.data.last_page);
         if (response) {
           setIsLoading(false);
         }
@@ -155,11 +157,12 @@ const ListActivity = () => {
               hapusLoading={hapusLoading}
               toastSuccess={() => toast.success('success menambahkan activity')}
               toastError={toastErrorMessage}
+              page={page}
             />
             <div className="w-full flex justify-center mt-5">
               <Pagination
                 showControls
-                total={10}
+                total={totalPage}
                 initialPage={page}
                 showShadow
                 onChange={(e) => setPage(e)}

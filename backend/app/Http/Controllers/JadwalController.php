@@ -69,7 +69,7 @@ class JadwalController extends Controller
         $jadwal->delete();
 
         return response()->json([
-            'pesannya' => 'yeay kehapus jadwalnya',
+            'pesannya' => 'Sukses menghapus jadwal',
             'data' => $jadwal,
         ]);
     }

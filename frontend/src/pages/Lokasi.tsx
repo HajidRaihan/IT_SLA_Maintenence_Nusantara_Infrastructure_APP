@@ -244,10 +244,8 @@ const Lokasi = () => {
         onClose={onAddModalClose}
       />
       <UpdateLokasiModal
-        isUpdateOpen={updateModalOpen}
-        onAdd={handleUpdate}
-        onChange={(e) => setUpdatelokasi(e.target.value)}
-        value={updatelokasi}
+        isUpdateOpen={updateModalOpen} onAdd={handleUpdate}
+        onChange={(e) => setUpdatelokasi(e.target.value)} value={updatelokasi}
         onUpdateClose={onUpdateModalClose}
       />
       <DeleteModal

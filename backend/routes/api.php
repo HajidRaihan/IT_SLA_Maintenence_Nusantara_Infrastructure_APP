@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 
-Route::middleware(['auth:sanctum'])->group(function () { 
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('logout', [AuthenticationController::class, 'logout']);
     Route::post('/user', [AuthenticationController::class, 'user']);
 
@@ -91,6 +91,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/jenisHardware', [JenisHardwareController::class, 'store']);
     Route::get('/jenisHardware/{id}', [JenisHardwareController::class, 'show']);
     Route::delete('/jenisHardware/{id}', [JenisHardwareController::class, 'destroy']);
+    Route::get('/jenisHardware/count/problem', [JenisHardwareController::class, 'count_hardware_problem']);
 
     Route::get('/aplikasi_it_tol', [AplikasiItTolController::class, 'index']);
     Route::post('/aplikasi_it_tol', [AplikasiItTolController::class, 'store']);
@@ -99,8 +100,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/activity_workers', [ActivityWorkersController::class, 'store']);
     Route::post('/activity_workers/end/{id}', [ActivityWorkersController::class, 'done_activity']);
+    Route::post('/activity_workers/pending/{id}', [ActivityWorkersController::class, 'pending_activity']);
     Route::get('/activity_workers', [ActivityWorkersController::class, 'index']);
     Route::get('/activity_workers/{id}', [ActivityWorkersController::class, 'getByActivityId']);
+    Route::get('/activity_workers/user/{id}', [ActivityWorkersController::class, 'getActivityWorkerByUser']);
 
     Route::get('/item', [RegisbarangController::class, 'get_regisbarang']);
     Route::post('/regisbarang', [RegisbarangController::class, 'add_regisbarang']);

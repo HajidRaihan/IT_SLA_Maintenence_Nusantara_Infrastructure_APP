@@ -26,9 +26,9 @@ import JenisHardware from './pages/JenisHardware';
 import JenisSoftware from './pages/JenisSoftware';
 import AplikasiItTol from './pages/AplikasiItTol';
 import Jadwal from './pages/Jadwal';
-import YourNewComponent from './pages/LogallBarangt';
 import HistoryBarang from './pages/historybarang';
 import Itemdetail from './pages/DetailBarang';
+import UserList from './pages/UserList';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -65,7 +65,7 @@ function App() {
             </>
           }
         />
-          <Route
+        <Route
           path="/calendar"
           element={
             <>
@@ -92,6 +92,16 @@ function App() {
             </>
           }
         />
+
+        <Route
+          path="/list-user"
+          element={
+            <>
+              <PageTitle title="List User" />
+              <UserList />
+            </>
+          }
+        />
         <Route
           path="/kategori"
           element={
@@ -111,7 +121,6 @@ function App() {
           }
         /> */}
 
-        
         <Route
           path="/listbarang"
           element={
@@ -122,23 +131,24 @@ function App() {
           }
         />
 
+    
 
-<Route
+        <Route
           path="listbarang/historybarang/:id"
           element={
             <>
               <PageTitle title="Historybarang" />
-              <HistoryBarang/>
+              <HistoryBarang />
             </>
           }
         />
 
-<Route
+        <Route
           path="listbarang/detailbarang/:id"
           element={
             <>
               <PageTitle title="Detailbarang" />
-              <Itemdetail/>
+              <Itemdetail />
             </>
           }
         />
@@ -172,7 +182,7 @@ function App() {
           }
         />
 
-<Route
+        <Route
           path="/jenis-software"
           element={
             <>
@@ -220,17 +230,6 @@ function App() {
             </>
           }
         />
-
-<Route
-          path="/logallbarang"
-          element={
-            <>
-              <PageTitle title="LogallBarang" />
-              <YourNewComponent/>
-            </>
-          }
-        />
-
         <Route
           path="/forms/form-elements"
           element={

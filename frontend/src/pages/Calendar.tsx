@@ -272,4 +272,18 @@ const Calendar = () => {
   );
 };
 
+const MyComponent: React.FC = () => {
+  return (
+      <div>
+          <h1>Hello, World!</h1>
+          <p>This is a template HTML.</p>
+      </div>
+  );
+}
+
+
+
+
+
+
 export default Calendar;

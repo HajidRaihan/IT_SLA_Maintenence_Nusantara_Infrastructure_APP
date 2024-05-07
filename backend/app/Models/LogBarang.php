@@ -23,5 +23,6 @@ class LogBarang extends Model
         'stock',
       
     ];
+    
 }
 
