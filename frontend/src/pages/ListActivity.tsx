@@ -23,6 +23,7 @@ const ListActivity = () => {
   const [status, setStatus] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const [hapusLoading, setHapusLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ const ListActivity = () => {
         );
         console.log('actyivity', response);
         setActivity(response.data.data);
+        setTotalPage(response.data.last_page);
         if (response) {
           setIsLoading(false);
         }
@@ -109,7 +111,7 @@ const ListActivity = () => {
           Filter
         </h2> */}
         <div className="rounded-sm border  border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark p-5 mb-5">
-          {/* <div className="flex gap-5 w-full">
+          <div className="flex gap-5 w-full">
             <SelectCompany
               label="Company"
               data={dataCompany}
@@ -136,7 +138,7 @@ const ListActivity = () => {
               label="Kategori"
               data={kategoriData}
             />
-          </div> */}
+          </div>
           <div>
             <Button onPress={clearFilter} color="danger" className="">
               Clear Filter
@@ -155,11 +157,12 @@ const ListActivity = () => {
               hapusLoading={hapusLoading}
               toastSuccess={() => toast.success('success menambahkan activity')}
               toastError={toastErrorMessage}
+              page={page}
             />
             <div className="w-full flex justify-center mt-5">
               <Pagination
                 showControls
-                total={10}
+                total={totalPage}
                 initialPage={page}
                 showShadow
                 onChange={(e) => setPage(e)}

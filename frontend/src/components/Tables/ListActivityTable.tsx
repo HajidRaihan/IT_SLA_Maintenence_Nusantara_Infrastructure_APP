@@ -44,6 +44,7 @@ const ListActivityTable = ({
   setData,
   hapusLoading,
   toastError,
+  page,
 }) => {
   const navigate = useNavigate();
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -112,9 +113,9 @@ const ListActivityTable = ({
               <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                 Tanggal
               </th>
-              <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+              {/* <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                 Uraian Jenis Hardware
-              </th>
+              </th> */}
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                 Shift
               </th>
@@ -150,11 +151,11 @@ const ListActivityTable = ({
                   </h5>
                   {/* <p className="text-sm">${item.biaya}</p> */}
                 </td>
-                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                {/* <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">
                     {item.uraian_hardware}
                   </p>
-                </td>
+                </td> */}
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-black dark:text-white">{item.shift}</p>
                 </td>

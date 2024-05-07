@@ -29,6 +29,7 @@ import Jadwal from './pages/Jadwal';
 import AddBarang from './pages/tes';
 import HistoryBarang from './pages/historybarang';
 import Itemdetail from './pages/DetailBarang';
+import UserList from './pages/UserList';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -65,7 +66,7 @@ function App() {
             </>
           }
         />
-          <Route
+        <Route
           path="/calendar"
           element={
             <>
@@ -92,6 +93,16 @@ function App() {
             </>
           }
         />
+
+        <Route
+          path="/list-user"
+          element={
+            <>
+              <PageTitle title="List User" />
+              <UserList />
+            </>
+          }
+        />
         <Route
           path="/kategori"
           element={
@@ -111,7 +122,6 @@ function App() {
           }
         /> */}
 
-        
         <Route
           path="/listbarang"
           element={
@@ -122,32 +132,32 @@ function App() {
           }
         />
 
-<Route
+        <Route
           path="/regisbarang"
           element={
             <>
               <PageTitle title="Barang" />
-              <AddBarang/>
+              <AddBarang />
             </>
           }
         />
 
-<Route
+        <Route
           path="listbarang/historybarang/:id"
           element={
             <>
               <PageTitle title="Historybarang" />
-              <HistoryBarang/>
+              <HistoryBarang />
             </>
           }
         />
 
-<Route
+        <Route
           path="listbarang/detailbarang/:id"
           element={
             <>
               <PageTitle title="Detailbarang" />
-              <Itemdetail/>
+              <Itemdetail />
             </>
           }
         />
@@ -181,7 +191,7 @@ function App() {
           }
         />
 
-<Route
+        <Route
           path="/jenis-software"
           element={
             <>
