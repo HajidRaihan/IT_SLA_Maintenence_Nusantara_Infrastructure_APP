@@ -18,6 +18,8 @@ import { useDisclosure } from '@nextui-org/react';
 import { UpdateJadwalModal } from '../components/Modals/UpdateLokasiModal';
 import DeleteModal from '../components/Modals/DeleteModal';
 import Paginate from '../components/Pagination/paginate';
+// import * as XLSX from 'xlsx';
+
 
 const Jadwal = () => {
   const [data, setData] = useState([]);
@@ -34,7 +36,6 @@ const Jadwal = () => {
   const [updateLokasi, setUpdateLokasi] = useState('');
   const [updateWaktu, setUpdateWaktu] = useState([]);
 
- 
   const [JadwalId, setJadwalId] = useState('');
   const {
     isOpen: isOpenJadwalModal,
@@ -61,43 +62,40 @@ const Jadwal = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredRecords.slice(indexOfFirstItem, indexOfLastItem);
 
-
   const handleFilter = () => {
-    const filtered = data.filter(item => {
-      const jenisPerusahaanFilter = selectedJenisPerusahaan 
-        ? item.jenis_perusahaan.toLowerCase() === selectedJenisPerusahaan.toLowerCase() 
+    const filtered = data.filter((item) => {
+      const jenisPerusahaanFilter = selectedJenisPerusahaan
+        ? item.jenis_perusahaan.toLowerCase() ===
+          selectedJenisPerusahaan.toLowerCase()
         : true;
-      const tahunFilter = newTahunFilter 
-        ? (typeof item.tahun === 'number' 
-          ? item.tahun === parseInt(newTahunFilter) 
-          : item.tahun.includes(parseInt(newTahunFilter)))
+      const tahunFilter = newTahunFilter
+        ? typeof item.tahun === 'number'
+          ? item.tahun === parseInt(newTahunFilter)
+          : item.tahun.includes(parseInt(newTahunFilter))
         : true;
-      const lokasiFilter = newLokasiFilter 
-        ? item.lokasi.toLowerCase().includes(newLokasiFilter.toLowerCase()) 
+      const lokasiFilter = newLokasiFilter
+        ? item.lokasi.toLowerCase().includes(newLokasiFilter.toLowerCase())
         : true;
       return jenisPerusahaanFilter && tahunFilter && lokasiFilter;
     });
     setFilteredRecords(filtered);
-  }
-  
-  
+  };
 
-useEffect(() => {
-  handleFilter();
-}, [newLokasiFilter, selectedJenisPerusahaan, newTahunFilter, data]);
+  useEffect(() => {
+    handleFilter();
+  }, [newLokasiFilter, selectedJenisPerusahaan, newTahunFilter, data]);
 
+  const dropdownJenisPerusahaan = data.map((item) => item.jenis_perusahaan);
 
-const dropdownJenisPerusahaan = data.map(item => item.jenis_perusahaan);
+  const uniqueJenisPerusahaan = Array.from(new Set(dropdownJenisPerusahaan));
 
-const uniqueJenisPerusahaan = Array.from(new Set(dropdownJenisPerusahaan));
+  const dropdownTahun = data.map((item) => item.tahun);
 
-const dropdownTahun = data.map(item => item.tahun);
+  const uniqueTahun = Array.from(new Set(dropdownTahun));
 
-const uniqueTahun = Array.from(new Set(dropdownTahun));
+  const dropdownLokasi = data.map((item) => item.lokasi);
 
-const dropdownLokasi = data.map(item=>item.lokasi);
-
-const uniqueLokasi = Array.from(new Set(dropdownLokasi));
+  const uniqueLokasi = Array.from(new Set(dropdownLokasi));
 
   // const [currentPage, setCurrentPage] = useState(1); // Current page state
   // const itemsPerPage = 5; // Number of data items per page
@@ -153,7 +151,6 @@ const uniqueLokasi = Array.from(new Set(dropdownLokasi));
     }
   };
 
-
   const handleJenisPerusahaan = (e) => {
     setNewJenisPerusahaan(e.target.value);
   };
@@ -196,21 +193,16 @@ const uniqueLokasi = Array.from(new Set(dropdownLokasi));
     newWaktuArray[index] = e.target.value;
     setUpdateWaktu(newWaktuArray);
     console.log(e.target.value);
-};
-
-
-
+  };
 
   const handleUpdate = async () => {
     const dataToUpdate = {
-
       jenis_perusahaan: updateJenisPerusahaan,
       uraian_kegiatan: updateUraianKegiatan,
       tahun: updateTahun,
       lokasi: updateLokasi,
       frekuensi: updateFrekuensi,
       waktu: updateWaktu,
-    
     };
     try {
       const res = await updatejadwal(JadwalId, dataToUpdate);
@@ -235,7 +227,6 @@ const uniqueLokasi = Array.from(new Set(dropdownLokasi));
     onDeleteModalOpen();
   };
 
-
   const handleUpdateForm = (id) => {
     setJadwalId(id);
     onUpdateModalOpen(); // Memanggil fungsi untuk membuka modal
@@ -244,7 +235,6 @@ const uniqueLokasi = Array.from(new Set(dropdownLokasi));
   const handleAddForm = () => {
     onOpenJadwalModal();
   };
-
 
   return (
     <DefaultLayout>
@@ -255,64 +245,67 @@ const uniqueLokasi = Array.from(new Set(dropdownLokasi));
           <h4 className="text-xl font-semibold text-black dark:text-white">
             Add Jadwal
           </h4>
-          <div className="flex flex-grow items-center space-x-4" style={{ padding: '0 20px', fontFamily: 'Arial, sans-serif' }}>
-          <div className="flex-1">
-            <select
-              value={selectedJenisPerusahaan}
-              onChange={e => setSelectedJenisPerusahaan(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '5px',
-                border: '2px solid #ccc',
-                borderRadius: '5px',
-              }}
-            >
-              <option value="">Pilih Jenis Perusahaan</option>
-              <option value="tol">tol</option>
-              <option value="non tol">non tol</option>
-            </select>
+          <div
+            className="flex flex-grow items-center space-x-4"
+            style={{ padding: '0 20px', fontFamily: 'Arial, sans-serif' }}
+          >
+            <div className="flex-1">
+              <select
+                value={selectedJenisPerusahaan}
+                onChange={(e) => setSelectedJenisPerusahaan(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '5px',
+                  border: '2px solid #ccc',
+                  borderRadius: '5px',
+                }}
+              >
+                <option value="">Pilih Jenis Perusahaan</option>
+                <option value="tol">tol</option>
+                <option value="non tol">non tol</option>
+              </select>
+            </div>
+            <div className="flex-1">
+              <input
+                type="text"
+                value={newTahunFilter}
+                onChange={(e) => setNewTahunFilter(e.target.value)}
+                placeholder="Pilih Tahun"
+                list="TahunList"
+                style={{
+                  width: '100%', // Take full width of the parent
+                  padding: '5px',
+                  border: '2px solid #ccc',
+                  borderRadius: '5px',
+                }}
+              />
+              <datalist id="TahunList">
+                {uniqueTahun.map((option, index) => (
+                  <option key={index} value={option} />
+                ))}
+              </datalist>
+            </div>
+            <div className="flex-1">
+              <input
+                type="text"
+                value={newLokasiFilter}
+                onChange={(e) => setNewLokasiFilter(e.target.value)}
+                placeholder="Pilih Lokasi"
+                list="LokasiList"
+                style={{
+                  width: '100%', // Take full width of the parent
+                  padding: '5px',
+                  border: '2px solid #ccc',
+                  borderRadius: '5px',
+                }}
+              />
+              <datalist id="LokasiList">
+                {uniqueLokasi.map((option, index) => (
+                  <option key={index} value={option} />
+                ))}
+              </datalist>
+            </div>
           </div>
-            <div className="flex-1">
-                <input
-                    type="text"
-                    value={newTahunFilter}
-                    onChange={e => setNewTahunFilter(e.target.value)}
-                    placeholder="Pilih Tahun"
-                    list="TahunList"
-                    style={{
-                      width: '100%', // Take full width of the parent
-                      padding: '5px',
-                      border: '2px solid #ccc',
-                      borderRadius: '5px',
-                    }}
-                />
-                <datalist id="TahunList">
-                    {uniqueTahun.map((option, index) => (
-                        <option key={index} value={option} />
-                    ))}
-                </datalist>
-            </div>
-            <div className="flex-1">
-                <input
-                    type="text"
-                    value={newLokasiFilter}
-                    onChange={e => setNewLokasiFilter(e.target.value)}
-                    placeholder="Pilih Lokasi"
-                    list="LokasiList"
-                    style={{
-                      width: '100%', // Take full width of the parent
-                      padding: '5px',
-                      border: '2px solid #ccc',
-                      borderRadius: '5px',
-                    }}
-                />
-                <datalist id="LokasiList">
-                    {uniqueLokasi.map((option, index) => (
-                        <option key={index} value={option} />
-                    ))}
-                </datalist>
-            </div>
-        </div>
           <button
             onClick={handleAddForm}
             className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
@@ -511,6 +504,8 @@ const uniqueLokasi = Array.from(new Set(dropdownLokasi));
         </div>
       </div>
 
+      
+
       {/* Pagination */}
       <div className="flex justify-center mt-4">
         <Paginate currentPage={currentPage} onPageChange={handlePageChange} />
@@ -550,7 +545,7 @@ const uniqueLokasi = Array.from(new Set(dropdownLokasi));
         onChangeUpdateWaktu={handleUpdateWaktu}
         valueUpdateWaktu={updateWaktu}
         onUpdateClose={onUpdateModalClose}
-/>
+      />
 
       <DeleteModal
         isDeleteOpen={deleteModalOpen}

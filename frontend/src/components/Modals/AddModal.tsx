@@ -84,18 +84,6 @@ function ItemModal({
                   <ModalHeader className="mb-2.5 block text-black dark:text-white">
                     Equipment
                   </ModalHeader>
-                  <select
-                    value={valueEquipment}
-                    onChange={onChangeEquipment}
-                    className="w-full p-2 border rounded"
-                  >
-                    <option value="">Select equipment</option>
-                    {equipmentOptions.map((option) => (
-                      <option key={option.id} value={option.nama_barang}>
-                        {option.nama_barang}
-                      </option>
-                    ))}
-                  </select>
                 </div>
                 <div className="w-full sm:w-1/2 md:w-1/3">
                   <ModalHeader className="mb-2.5 block text-black dark:text-white">
