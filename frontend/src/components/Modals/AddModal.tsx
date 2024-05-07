@@ -7,9 +7,8 @@ import {
   ModalFooter,
   Button,
   Input,
-  Select
 } from '@nextui-org/react';
-import { getbarang } from '../../api/regisBarangApi'; 
+ 
 
 
 

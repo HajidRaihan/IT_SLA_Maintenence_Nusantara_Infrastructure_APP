@@ -27,7 +27,6 @@ import JenisSoftware from './pages/JenisSoftware';
 import AplikasiItTol from './pages/AplikasiItTol';
 import Jadwal from './pages/Jadwal';
 import YourNewComponent from './pages/LogallBarangt';
-import AddBarang from './pages/tes';
 import HistoryBarang from './pages/historybarang';
 import Itemdetail from './pages/DetailBarang';
 
@@ -123,15 +122,6 @@ function App() {
           }
         />
 
-<Route
-          path="/regisbarang"
-          element={
-            <>
-              <PageTitle title="Barang" />
-              <AddBarang/>
-            </>
-          }
-        />
 
 <Route
           path="listbarang/historybarang/:id"

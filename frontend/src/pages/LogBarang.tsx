@@ -11,6 +11,7 @@ const LogBarang = () => {
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
   const navigate = useNavigate();
 
   // Load all data initially
@@ -25,79 +26,101 @@ const LogBarang = () => {
       });
   }, []);
 
-  // Function to handle date filtering
+
   const handleFilter = () => {
+    let filteredData = data;
+    
+    // Filter by start and end date
     if (startDate && endDate) {
-      const start = new Date(startDate);
-      const end = new Date(endDate);
-      const filtered = data.filter(item => {
-        const itemDate = new Date(moment(item.created_at).format('YYYY-MM-DD'));
-        return itemDate >= start && itemDate <= end;
-      });
-      setFilteredRecords(filtered);
-    } else {
-      setFilteredRecords(data); // No filter applied, show all records
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        filteredData = filteredData.filter(item => {
+            const itemDate = new Date(moment(item.created_at).format('YYYY-MM-DD'));
+            return itemDate >= start && itemDate <= end;
+        });
     }
-  };
+
+    // Filter by status
+    if (statusFilter) {
+        filteredData = filteredData.filter(item => item.adddata_string === statusFilter);
+    }
+
+    setFilteredRecords(filteredData);
+};
 
   // When dates are set, trigger filtering
   useEffect(() => {
     handleFilter();
-  }, [startDate, endDate]);
+  }, [startDate,statusFilter,data, endDate]);
 
 
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Log Barang" />
       <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-            <div style={{
-                marginBottom: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-start'
-            }}>
-                <label style={{
-                    marginRight: '10px',
-                    fontWeight: 'bold',
-                    fontSize: '16px',
-                    color: '#333'
-                }}><p className="text-black dark:text-white">Start Date:</p></label>
-                <input
-                    type="date"
-                    value={startDate}
-                    onChange={e => setStartDate(e.target.value)}
-                    style={{
-                        padding: '8px',
-                        border: '2px solid #ccc',
-                        borderRadius: '4px',
-                        fontSize: '16px'
-                    }}
-                />
-            </div>
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-start'
-            }}>
-                <label style={{
-                    marginRight: '10px',
-                    fontWeight: 'bold',
-                    fontSize: '16px',
-                    color: '#333'
-                }}><p className="text-black dark:text-white">End Date:</p></label>
-                <input
-                    type="date"
-                    value={endDate}
-                    onChange={e => setEndDate(e.target.value)}
-                    style={{
-                        padding: '8px',
-                        border: '2px solid #ccc',
-                        borderRadius: '4px',
-                        fontSize: '16px'
-                    }}
-                />
-            </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+            <label style={{
+                marginRight: '10px',
+                fontWeight: 'bold',
+                fontSize: '16px',
+                color: '#333'
+            }}>Start Date:</label>
+            <input
+                type="date"
+                value={startDate}
+                onChange={e => setStartDate(e.target.value)}
+                style={{
+                    padding: '8px',
+                    border: '2px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '16px'
+                }}
+            />
         </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+            <label style={{
+                marginRight: '10px',
+                fontWeight: 'bold',
+                fontSize: '16px',
+                color: '#333'
+            }}>End Date:</label>
+            <input
+                type="date"
+                value={endDate}
+                onChange={e => setEndDate(e.target.value)}
+                style={{
+                    padding: '8px',
+                    border: '2px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '16px'
+                }}
+            />
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+            <label style={{
+                marginRight: '10px',
+                fontWeight: 'bold',
+                fontSize: '16px',
+                color: '#333'
+            }}>Status:</label>
+            <select
+                value={statusFilter}
+                onChange={e => setStatusFilter(e.target.value)}
+                style={{
+                    padding: '8px',
+                    border: '2px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '16px'
+                }}
+            >
+                <option value="">Select Status</option>
+                <option value="masuk">Masuk</option>
+                <option value="keluar">Keluar</option>
+            </select>
+        </div>
+    </div>
+</div>
       <div className="max-w-full overflow-x-auto">
         {filteredRecords.length > 0 ? (
           <table className="w-full table-auto">

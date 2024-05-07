@@ -26,6 +26,7 @@
                 const [newPicture,setNewPicture] = useState();
                 const [newBarang, setNewBarang] = useState('');
                 const [newMerek, setNewMerek] = useState('');
+                const [updateLokasi, setUpdatelokasi] = useState('');
                 const [newStok, setNewStok] = useState(0);
                 const [newSpesifikasi, setNewSpesifikasi] = useState('');
                 const [selectedPerusahan, setSelectedPerusahaan] = useState('');
@@ -34,12 +35,12 @@
                 const indexOfLastItem = currentPage * itemsPerPage;
                 const indexOfFirstItem = indexOfLastItem - itemsPerPage;
                 const currentItems = filteredRecords.slice(indexOfFirstItem, indexOfLastItem);
-                useEffect(() => {
-                  const indexOfLastItem = currentPage * itemsPerPage;
-                  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-                  const currentItems = filteredRecords.slice(indexOfFirstItem, indexOfLastItem);
-                  // Update currentItems directly, no need for setCurrentItems
-              }, [currentPage, itemsPerPage, filteredRecords]);
+              //   useEffect(() => {
+              //     const indexOfLastItem = currentPage * itemsPerPage;
+              //     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+              //     const currentItems = filteredRecords.slice(indexOfFirstItem, indexOfLastItem);
+              //     // Update currentItems directly, no need for setCurrentItems
+              // }, [currentPage, itemsPerPage, filteredRecords]);
 
               const handleFilter = () => {
                 const filtered = data.filter(item => {
@@ -139,47 +140,47 @@
                 
                 
 
-                  const handleUpdateMinStock = async () => {
+                const handleUpdateMinStock = async () => {
+                  try {
                     if (updateStockMin <= 0) {
-                      toast.error('Error: Stock should be a positive number');
-                      return;
+                      throw new Error('Error: Stock should be a positive number');
                     }
-                  
-                    try {
-                      const itemToUpdate = data.find(item => item.id === BarangId);
-                      if (!itemToUpdate) {
-                        throw new Error('Error: Barang not found');
-                      }
-                  
-                      const updatedStock = itemToUpdate.stock - updateStockMin;
-                      const log_barang = String('keluar');
-                  
-                      const dataToUpdate = {
-                        stock: updatedStock,
-                        adddata_string:log_barang,
-                        addata:updateStockMin
-                      };
-                  
-                      const res = await updateBarang(BarangId, dataToUpdate);
-                      const updatedBarang = res.data;
-                  
-                      const updatedIndex = data.findIndex(item => item.id === BarangId);
-                      if (updatedIndex !== -1) {
-                        setData(prevData => {
-                          const newData = [...prevData];
-                          newData[updatedIndex] = updatedBarang;
-                          return newData;
-                        });
-                      }
-                  
-                      toast.success(`Stock updated successfully: ${updatedStock}`);
-                      setTimeout(() => {
-                        window.location.reload();
+                
+                    const itemToUpdate = data.find(item => item.id === BarangId);
+                    if (!itemToUpdate) {
+                      throw new Error('Error: Barang not found');
+                    }
+                
+                    const updatedStock = itemToUpdate.stock - updateStockMin;
+                    const log_barang = 'keluar'; // Removed unnecessary String() conversion
+                
+                    const dataToUpdate = {
+                      stock: updatedStock,
+                      adddata_string: log_barang,
+                      addata: updateStockMin
+                    };
+                
+                    const res = await updateBarang(BarangId, dataToUpdate);
+                    const updatedBarang = res.data;
+                
+                    const updatedIndex = data.findIndex(item => item.id === BarangId);
+                    if (updatedIndex !== -1) {
+                      setData(prevData => {
+                        const newData = [...prevData];
+                        newData[updatedIndex] = updatedBarang;
+                        return newData;
+                      });
+                    }
+                
+                    toast.success(`Stock updated successfully: ${updatedStock}`);
+                    setTimeout(() => {
+                      window.location.reload();
                     }, 1500);
-                    } catch (error) {
-                      toast.error('Error updating stock:', error.message);
-                    }
-                  };
+                  } catch (error) {
+                    toast.error(`Error updating stock: ${error.message}`); // Improved error message
+                  }
+                };
+                
                 
                 
                 
@@ -195,6 +196,10 @@
 
                 const handleBarang = e => {
                   setNewBarang(e.target.value);
+              };
+
+              const updatehandleLokasi = e => {
+                  setUpdatelokasi(e.target.value);
               };
                 const handleMerek = e => {
                   setNewMerek(e.target.value);
@@ -534,9 +539,12 @@
             onUpdateStock={UpdatehandleStock}  valueUpdateSpesifikasi={updatedSpesifikasi}
             onUpdatespesifikasi={UpdatedhandleCatatan} 
              valueUpdateStock={updateStock} onUpdateClose={onUpdateModalClose}
-             barangId={BarangId} 
                   />
-            <UpdateBarangModalMin  isUpdateOpen={updateModalMinOpen} onAdd = {handleUpdateMinStock} onUpdateStock={UpdatehandleStockMin} valueUpdateStock={updateStockMin} onUpdateClose={onUpdateModalMinClose}
+            <UpdateBarangModalMin valueUpdateSpesifikasi={updatedSpesifikasi} 
+            valueUpdateLokasi = {updateLokasi} onUpdateLokasi = {updatehandleLokasi}
+            onUpdatespesifikasi={UpdatedhandleCatatan} isUpdateOpen={updateModalMinOpen} 
+            onAdd = {handleUpdateMinStock} onUpdateStock={UpdatehandleStockMin} valueUpdateStock={updateStockMin} 
+            onUpdateClose={onUpdateModalMinClose}
                   />
             </DefaultLayout>
                 );
