@@ -599,7 +599,7 @@ const AddActivityModal = ({
                 </div>
               </ModalBody>
             ) : (
-              <p className="text-white ms-10">loading ...</p>
+              <p className="dark:text-white ms-10">loading ...</p>
               // <Loader/>
             )}
           </>

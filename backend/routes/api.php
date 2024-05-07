@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 
-Route::middleware(['auth:sanctum'])->group(function () { 
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('logout', [AuthenticationController::class, 'logout']);
     Route::post('/user', [AuthenticationController::class, 'user']);
 
@@ -100,19 +100,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/aplikasi_it_tol/{id}', [AplikasiItTolController::class, 'show']);
     Route::delete('/aplikasi_it_tol/{id}', [AplikasiItTolController::class, 'destroy']);
 
-
-    Route::get('/jadwal-maintenance', [JadwalMaintenanceController::class, 'index']);
-    Route::post('/jadwal-maintenance', [JadwalMaintenanceController::class, 'store']);
-    Route::get('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'show']);
-    Route::put('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'update']);
-    Route::delete('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'destroy']);
-
-    Route::get('api/schedule', [ScheduleController::class, 'show']);
     Route::post('/activity_workers', [ActivityWorkersController::class, 'store']);
     Route::post('/activity_workers/end/{id}', [ActivityWorkersController::class, 'done_activity']);
     Route::post('/activity_workers/pending/{id}', [ActivityWorkersController::class, 'pending_activity']);
     Route::get('/activity_workers', [ActivityWorkersController::class, 'index']);
     Route::get('/activity_workers/{id}', [ActivityWorkersController::class, 'getByActivityId']);
+    Route::get('/activity_workers/user/{id}', [ActivityWorkersController::class, 'getActivityWorkerByUser']);
 
     Route::get('/item', [RegisbarangController::class, 'get_regisbarang']);
     Route::post('/regisbarang', [RegisbarangController::class, 'add_regisbarang']);

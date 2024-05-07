@@ -135,7 +135,7 @@ class ActivityController extends Controller
             ->when(isset($filters['kategori_id']), function ($query) use ($filters) {
                 $query->where('activity.kategori_id', $filters['kategori_id']);
             })
-            ->paginate(5);
+            ->paginate(10);
 
         return response()->json(['data' => $activities]);
     }
