@@ -20,10 +20,11 @@ const ChangeStatusModal = ({
   const [status, setStatus] = useState();
   const [kondisiAkhir, setKondisiAkhir] = useState();
   const [fotoAkhir, setFotoAkhir] = useState();
+  const [biaya, setBiaya] = useState();
 
   const changeStatusHandler = async (close) => {
     const data = {
-      status: status,
+      biaya: biaya,
       kondisi_akhir: kondisiAkhir,
       foto_akhir: fotoAkhir,
     };
@@ -77,6 +78,19 @@ const ChangeStatusModal = ({
                       placeholder="Catatan jika diperlukan"
                       value={kondisiAkhir}
                       onChange={(e) => setKondisiAkhir(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="w-full ">
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Biaya
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      placeholder="Catatan jika diperlukan"
+                      value={biaya}
+                      onChange={(e) => setBiaya(e.target.value)}
                     />
                   </div>
 
