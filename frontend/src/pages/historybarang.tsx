@@ -10,26 +10,33 @@ const HistoryBarang = () => {
     const [filteredRecords, setFilteredRecords] = useState([]);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [statusFilter, setStatusFilter] = useState('');
     const { id } = useParams();
 
     // Function to handle date filtering
     const handleFilter = () => {
+        let filteredData = data;
+        
+        // Filter by start and end date
         if (startDate && endDate) {
             const start = new Date(startDate);
             const end = new Date(endDate);
-            const filtered = data.filter(item => {
+            filteredData = filteredData.filter(item => {
                 const itemDate = new Date(moment(item.created_at).format('YYYY-MM-DD'));
                 return itemDate >= start && itemDate <= end;
             });
-            setFilteredRecords(filtered);
-        } else {
-            setFilteredRecords(data); // Reset or hide the table when no filter is applied
         }
-    };
 
+        // Filter by status
+        if (statusFilter) {
+            filteredData = filteredData.filter(item => item.adddata_string === statusFilter);
+        }
+
+        setFilteredRecords(filteredData);
+    };
     useEffect(() => {
         handleFilter();
-    }, [startDate, endDate, data]);
+    }, [startDate, endDate, statusFilter,data]);
 
     useEffect(() => {
         const fetchBarang = async () => {
@@ -86,54 +93,70 @@ const HistoryBarang = () => {
             </div>
             </div>
             <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-                <div style={{
-                    marginBottom: '10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'flex-start'
-                }}>
-                    <label style={{
-                        marginRight: '10px',
-                        fontWeight: 'bold',
-                        fontSize: '16px',
-                        color: '#333'
-                    }}><p className="py-4 px-4 font-medium text-black dark:text-white">Start Date:</p></label>
-                    <input
-                        type="date"
-                        value={startDate}
-                        onChange={e => setStartDate(e.target.value)}
-                        style={{
-                            padding: '8px',
-                            border: '2px solid #ccc',
-                            borderRadius: '4px',
-                            fontSize: '16px'
-                        }}
-                    />
-                </div>
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'flex-start'
-                }}>
-                    <label style={{
-                        marginRight: '10px',
-                        fontWeight: 'bold',
-                        fontSize: '16px',
-                        color: '#333'
-                    }}><p className="py-4 px-4 font-medium text-black dark:text-white">End Date:</p></label>
-                    <input
-                        type="date"
-                        value={endDate}
-                        onChange={e => setEndDate(e.target.value)}
-                        style={{
-                            padding: '8px',
-                            border: '2px solid #ccc',
-                            borderRadius: '4px',
-                            fontSize: '16px'
-                        }}
-                    />
-                </div>
-            </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+            <label style={{
+                marginRight: '10px',
+                fontWeight: 'bold',
+                fontSize: '16px',
+                color: '#333'
+            }}>Start Date:</label>
+            <input
+                type="date"
+                value={startDate}
+                onChange={e => setStartDate(e.target.value)}
+                style={{
+                    padding: '8px',
+                    border: '2px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '16px'
+                }}
+            />
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+            <label style={{
+                marginRight: '10px',
+                fontWeight: 'bold',
+                fontSize: '16px',
+                color: '#333'
+            }}>End Date:</label>
+            <input
+                type="date"
+                value={endDate}
+                onChange={e => setEndDate(e.target.value)}
+                style={{
+                    padding: '8px',
+                    border: '2px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '16px'
+                }}
+            />
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+            <label style={{
+                marginRight: '10px',
+                fontWeight: 'bold',
+                fontSize: '16px',
+                color: '#333'
+            }}>Status:</label>
+            <select
+                value={statusFilter}
+                onChange={e => setStatusFilter(e.target.value)}
+                style={{
+                    padding: '8px',
+                    border: '2px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '16px'
+                }}
+            >
+                <option value="">Select Status</option>
+                <option value="masuk">Masuk</option>
+                <option value="keluar">Keluar</option>
+            </select>
+        </div>
+    </div>
+</div>
+
                 <div className="max-w-full overflow-x-auto">
                     <table className="w-full table-auto">
                         <thead>
@@ -142,6 +165,7 @@ const HistoryBarang = () => {
                                 <th className="py-4 px-4 font-medium text-black dark:text-white">Status</th>
                                 <th className="py-4 px-4 font-medium text-black dark:text-white">Nama Equipment</th>
                                 <th className="py-4 px-4 font-medium text-black dark:text-white">Stock Value</th>
+                                <th className="py-4 px-4 font-medium text-black dark:text-white">Catatan</th>
                                 <th className="py-4 px-4 font-medium text-black dark:text-white">Tanggal Activity</th>
                                
                                 
@@ -170,6 +194,9 @@ const HistoryBarang = () => {
                 <td className="border-b border-gray-200 py-5 px-4">{item.nama_equipment}</td>
                 <td className="border-b border-gray-200 py-5 px-4">
                     {item.addata}
+                </td>
+                <td className="border-b border-gray-200 py-5 px-4">
+                    {item.spesifikasi}
                 </td>
                 <td className="border-b border-gray-200 py-5 px-4">
                     {moment(item.created_at).tz("Asia/Makassar").format("DD-MM-YYYY")}

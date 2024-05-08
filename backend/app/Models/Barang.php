@@ -18,7 +18,8 @@ class Barang extends Model
         'catatan',
         'gambar',
         'adddata_string',
-        'addata',
+        'addata'
+      
     ];
 
     protected static function booted() {
@@ -35,7 +36,9 @@ class Barang extends Model
                     'perusahaan' => $barang->perusahaan,
                     'adddata_string' => $barang->adddata_string,
                     'spesifikasi' => $barang->catatan,
-                    'stock'=> $barang->stock
+                    'stock'=> $barang->stock,
+                
+                    
                 ]);
             }
         
@@ -48,7 +51,8 @@ class Barang extends Model
                     'perusahaan' => $barang->perusahaan,
                     'adddata_string' => $barang->adddata_string,
                     'spesifikasi' => $barang->catatan,
-                    'stock'=> $barang->stock
+                    'stock'=> $barang->stock,
+                 
                 ]);
             }
         });
