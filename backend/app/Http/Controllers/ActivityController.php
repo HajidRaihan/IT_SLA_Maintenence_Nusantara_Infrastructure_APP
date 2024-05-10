@@ -108,8 +108,41 @@ class ActivityController extends Controller
             return response()->json(['error' => 'Failed to create activity worker entry'], 500);
         }
 
+        $activity = Activity::with(['user', 'kategori', 'lokasi']) // Eager loading untuk memuat relasi user, kategori, dan lokasi
+        ->where('id', $activity->id)
+        ->first();
 
-        return response()->json(['message' => 'Add Activity success', 'data' => $activity]);
+    // Pastikan untuk menyesuaikan struktur respons sesuai kebutuhan Anda
+    $responseData = [
+        'id' => $activity->id,
+        'nama_user' => $activity->user->username,
+        'company' => $activity->company,
+        'jenis_hardware' => $activity->jenis_hardware,
+        'standart_aplikasi' => $activity->standart_aplikasi,
+        'uraian_hardware' => $activity->uraian_hardware,
+        'uraian_aplikasi' => $activity->uraian_aplikasi,
+        'aplikasi_it_tol' => $activity->aplikasi_it_tol,
+        'uraian_it_tol' => $activity->uraian_it_tol,
+        'catatan' => $activity->catatan,
+        'shift' => $activity->shift,
+        'kondisi_akhir' => $activity->kondisi_akhir,
+        'biaya' => $activity->biaya,
+        'foto_awal' => $activity->foto_awal,
+        'foto_akhir' => $activity->foto_akhir,
+        'status' => $activity->status,
+        'ended_at' => $activity->ended_at,
+        'created_at' => $activity->created_at,
+        'updated_at' => $activity->updated_at,
+        'category_deadline' => $activity->kategori->deadline_duration,
+        'category_name' => $activity->kategori->nama_kategori,
+        'location_name' => $activity->lokasi->nama_lokasi
+    ];
+
+    return response()->json(['message' => 'Add Activity success', 'data' => $responseData]);
+
+
+
+        // return response()->json(['message' => 'Add Activity success', 'data' => $activity]);
     }
 
     public function getactivity_toll(Request $request)
@@ -119,7 +152,7 @@ class ActivityController extends Controller
         // Get activities based on filters and join with the category and lokasi tables
 
         $activities = Activity::query()
-            ->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
+            ->select('activity.id', 'users.username as nama_user', 'activity.company','activity.kategori_activity', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name', 'waktu_pengerjaan')
             ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
             ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
             ->leftJoin('users', 'activity.user_id', '=', 'users.id')
@@ -139,6 +172,72 @@ class ActivityController extends Controller
 
         return response()->json(['data' => $activities]);
     }
+
+    public function getactivity_toll_without_pagination(Request $request)
+    {
+        $filters = $request->only(['company', 'status', 'lokasi_id', 'kategori_id']);
+
+        // Get activities based on filters and join with the category and lokasi tables
+
+        $activities = Activity::query()
+            ->select('activity.id', 'users.username as nama_user', 'activity.company','activity.kategori_activity', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name', 'waktu_pengerjaan')
+            ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
+            ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
+            ->leftJoin('users', 'activity.user_id', '=', 'users.id')
+            ->when(isset($filters['company']), function ($query) use ($filters) {
+                $query->where('activity.company', $filters['company']);
+            })
+            ->when(isset($filters['status']), function ($query) use ($filters) {
+                $query->where('activity.status', $filters['status']);
+            })
+            ->when(isset($filters['lokasi_id']), function ($query) use ($filters) {
+                $query->where('activity.lokasi_id', $filters['lokasi_id']);
+            })
+            ->when(isset($filters['kategori_id']), function ($query) use ($filters) {
+                $query->where('activity.kategori_id', $filters['kategori_id']);
+            })
+            ->get();
+
+        return response()->json(['data' => $activities]);
+    }
+
+    public function getAllActivityTol () {
+        $activities = Activity::with(['user', 'kategori', 'lokasi'])->get();
+
+        $responseData = [];
+        foreach ($activities as $activity) {
+            $responseData[] = [
+                'id' => $activity->id,
+                'user' => $activity->user ? $activity->user->username : null,
+                'company' => $activity->company,
+                'kategori_activity' => $activity->kategori_activity,
+                'jenis_hardware' => $activity->jenis_hardware,
+                'standart_aplikasi' => $activity->standart_aplikasi,
+                'uraian_hardware' => $activity->uraian_hardware,
+                'uraian_aplikasi' => $activity->uraian_aplikasi,
+                'aplikasi_it_tol' => $activity->aplikasi_it_tol,
+                'uraian_it_tol' => $activity->uraian_it_tol,
+                'catatan' => $activity->catatan,
+                'shift' => $activity->shift,
+                'kondisi_akhir' => $activity->kondisi_akhir,
+                'biaya' => $activity->biaya,
+                'foto_awal' => $activity->foto_awal,
+                'foto_akhir' => $activity->foto_akhir,
+                'status' => $activity->status,
+                'waktu_pengerjaan' => $activity->waktu_pengerjaan,
+                'ended_at' => $activity->ended_at,
+                'created_at' => $activity->created_at,
+                'updated_at' => $activity->updated_at,
+                'category_deadline' => $activity->kategori ? $activity->kategori->deadline_duration : null,
+                'category' => $activity->kategori ? $activity->kategori->nama_kategori : null,
+                'location' => $activity->lokasi ? $activity->lokasi->nama_lokasi : null
+            ];
+        }
+        
+        return response()->json(['data' => $responseData]);
+    
+    }
+
 
     public function getactivity_toll_id(Request $request, $id)
     {

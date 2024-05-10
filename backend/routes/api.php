@@ -41,6 +41,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/toll', [ActivityController::class, 'addactivity_toll']);
     Route::get('/toll', [ActivityController::class, 'getactivity_toll']);
+    Route::get('/toll/noPagination', [ActivityController::class, 'getactivity_toll_without_pagination']);
+    Route::get('/toll/all', [ActivityController::class, 'getAllActivityTol']);
     Route::get('/toll/{id}', [ActivityController::class, 'getactivity_toll_id']);
     Route::get('/toll/user/{userId}', [ActivityController::class, 'getactivity_toll_by_user']);
 
@@ -100,6 +102,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/activity_workers', [ActivityWorkersController::class, 'store']);
     Route::post('/activity_workers/end/{id}', [ActivityWorkersController::class, 'done_activity']);
+    Route::post('/activity_workers/end/admin/{id}', [ActivityWorkersController::class, 'done_activity_by_admin']);
     Route::post('/activity_workers/pending/{id}', [ActivityWorkersController::class, 'pending_activity']);
     Route::get('/activity_workers', [ActivityWorkersController::class, 'index']);
     Route::get('/activity_workers/{id}', [ActivityWorkersController::class, 'getByActivityId']);
