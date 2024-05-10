@@ -140,7 +140,7 @@ const changeStatus = async (data, id) => {
   try {
     const response = await RequestApi(
       'POST',
-      `toll/${id}/status`,
+      `activity_workers/end/admin/${id}`,
       data,
       headers,
       'Mencoba change status activity',
@@ -153,11 +153,34 @@ const changeStatus = async (data, id) => {
   }
 };
 
+const getAllActivityList = async () => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${Cookies.get('access_token')}`,
+  };
+
+  try {
+    const response = await RequestApi(
+      'GET',
+      `toll/all`,
+      {},
+      headers,
+      'Mencoba menampilkan acitvity',
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat menampilkan activity', error);
+    throw error;
+  }
+};
+
 export {
   addActivity,
   getAllActivity,
   deleteActivity,
   getDetailActivity,
   editActivity,
+  getAllActivityList,
   changeStatus,
 };

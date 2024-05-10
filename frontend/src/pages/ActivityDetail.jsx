@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import DefaultLayout from '../layout/DefaultLayout';
 import { getDetailActivity } from '../api/activityApi';
 import { Link, useParams } from 'react-router-dom';
-import { changeStatus } from '../api/activityApi';
 import ChangeStatusModal from '../components/Modals/ChangeStatusModal';
 import { toast, ToastContainer } from 'react-toastify';
 import { useDisclosure, Button } from '@nextui-org/react';
