@@ -75,87 +75,71 @@ const HistoryBarang = () => {
     return (
         <DefaultLayout>
             <Breadcrumb pageName="Barang" />
-            <div className="flex justify-center">
-            <div className="mb-6">
-                <h4 className="text-xl px-4 font-semibold text-black dark:text-white">
-                    Nama Barang: {namabarang()}
-                </h4>
-            </div>
-            <div className="mb-6">
-                <h4 className="text-xl px-4 font-semibold text-black dark:text-white">
-                Merk: {merk()} 
-                </h4>
-            </div>
-            <div className="mb-6">
-                <h4 className="text-xl font-semibold text-black dark:text-white">
-                    Stock: {calculateStock()}
-                </h4>
-            </div>
-            </div>
-            <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-            <label style={{
-                marginRight: '10px',
-                fontWeight: 'bold',
-                fontSize: '16px',
-                color: '#333'
-            }}>Start Date:</label>
-            <input
-                type="date"
-                value={startDate}
-                onChange={e => setStartDate(e.target.value)}
-                style={{
-                    padding: '8px',
-                    border: '2px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px'
-                }}
-            />
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-            <label style={{
-                marginRight: '10px',
-                fontWeight: 'bold',
-                fontSize: '16px',
-                color: '#333'
-            }}>End Date:</label>
-            <input
-                type="date"
-                value={endDate}
-                onChange={e => setEndDate(e.target.value)}
-                style={{
-                    padding: '8px',
-                    border: '2px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px'
-                }}
-            />
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-            <label style={{
-                marginRight: '10px',
-                fontWeight: 'bold',
-                fontSize: '16px',
-                color: '#333'
-            }}>Status:</label>
-            <select
-                value={statusFilter}
-                onChange={e => setStatusFilter(e.target.value)}
-                style={{
-                    padding: '8px',
-                    border: '2px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px'
-                }}
-            >
-                <option value="">Select Status</option>
-                <option value="masuk">Masuk</option>
-                <option value="keluar">Keluar</option>
-            </select>
-        </div>
+            <div className="flex justify-center bg-gray-100 p-4 rounded-md shadow-md mb-6">
+    <div className="flex items-center mr-8">
+        <h4 className="text-base font-semibold text-black dark:text-white mr-2">
+            Nama Barang:
+        </h4>
+        <p className="text-sm text-blue-600 font-semibold">{namabarang()}</p>
+    </div>
+    <div className="flex items-center mr-8">
+        <h4 className="text-base font-semibold text-black dark:text-white mr-2">
+            Merk:
+        </h4>
+        <p className="text-sm text-blue-600 font-semibold">{merk()}</p>
+    </div>
+    <div className="flex items-center">
+        <h4 className="text-base font-semibold text-black dark:text-white mr-2">
+            Stock:
+        </h4>
+        <p className="text-sm text-blue-600 font-semibold">{calculateStock()}</p>
     </div>
 </div>
+
+
+
+    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
+    <label style={{ fontWeight: 'bold', fontSize: '16px', color: '#333' }}>Start Date:</label>
+    <input
+        type="date"
+        value={startDate}
+        onChange={e => setStartDate(e.target.value)}
+        style={{
+            padding: '8px',
+            border: '2px solid #ccc',
+            borderRadius: '4px',
+            fontSize: '16px'
+        }}
+    />
+    <label style={{ fontWeight: 'bold', fontSize: '16px', color: '#333' }}>End Date:</label>
+    <input
+        type="date"
+        value={endDate}
+        onChange={e => setEndDate(e.target.value)}
+        style={{
+            padding: '8px',
+            border: '2px solid #ccc',
+            borderRadius: '4px',
+            fontSize: '16px'
+        }}
+    />
+    <label style={{ fontWeight: 'bold', fontSize: '16px', color: '#333' }}>Status:</label>
+    <select
+        value={statusFilter}
+        onChange={e => setStatusFilter(e.target.value)}
+        style={{
+            padding: '8px',
+            border: '2px solid #ccc',
+            borderRadius: '4px',
+            fontSize: '16px'
+        }}
+    >
+        <option value="">Select Status</option>
+        <option value="masuk">Masuk</option>
+        <option value="keluar">Keluar</option>
+    </select>
+</div>
+
 
                 <div className="max-w-full overflow-x-auto">
                     <table className="w-full table-auto">
@@ -172,44 +156,35 @@ const HistoryBarang = () => {
                             </tr>
                         </thead>
                         <tbody>
-    {filteredRecords.length > 0 ? (
-        filteredRecords.map((item, index) => (
-            <tr key={index}>
-                <td className="border-b border-gray-200 py-5 px-4">{index + 1}</td>
-                <td className="border-b border-gray-200 py-5 px-4">
-                    <button style={{
-                        backgroundColor: item.adddata_string === 'masuk' ? '#4CAF50' : '#F44336',
-                        color: 'white',
-                        border: 'none',
-                        padding: '10px 20px',
-                        borderRadius: '5px',
-                        cursor: 'pointer',
-                        outline: 'none',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                        transition: 'all 0.3s ease'
-                    }}>
-                        {item.adddata_string}
-                    </button>
-                </td>
-                <td className="border-b border-gray-200 py-5 px-4">{item.nama_equipment}</td>
-                <td className="border-b border-gray-200 py-5 px-4">
-                    {item.addata}
-                </td>
-                <td className="border-b border-gray-200 py-5 px-4">
-                    {item.spesifikasi}
-                </td>
-                <td className="border-b border-gray-200 py-5 px-4">
-                    {moment(item.created_at).tz("Asia/Makassar").format("DD-MM-YYYY")}
-                </td>
-              
-
-            </tr>
-        ))
-    ) : (
-        <tr>
-         
+                        {filteredRecords.length > 0 ? (
+    filteredRecords.map((item, index) => (
+        <tr key={index}>
+            <td className="border-b border-gray-200 py-5 px-4">{index + 1}</td>
+            <td className="border-b border-gray-200 py-5 px-4">
+                <button className={`rounded-full py-1 px-3 text-sm font-medium ${
+                    item.adddata_string === 'masuk' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                }`}>
+                    {item.adddata_string}
+                </button>
+            </td>
+            <td className="border-b border-gray-200 py-5 px-4">{item.nama_equipment}</td>
+            <td className="border-b border-gray-200 py-5 px-4">
+                {item.addata}
+            </td>
+            <td className="border-b border-gray-200 py-5 px-4">
+                {item.spesifikasi}
+            </td>
+            <td className="border-b border-gray-200 py-5 px-4">
+                {moment(item.created_at).tz("Asia/Makassar").format("DD-MM-YYYY")}
+            </td>
         </tr>
-    )}
+    ))
+) : (
+    <tr>
+    
+    </tr>
+)}
+
 </tbody>
 
                     </table>

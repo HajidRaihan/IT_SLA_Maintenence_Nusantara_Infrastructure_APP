@@ -175,7 +175,7 @@
                     toast.success(`Stock updated successfully: ${updatedStock}`);
                     setTimeout(() => {
                       window.location.reload();
-                    }, 15000);
+                  }, 1500);
                   } catch (error) {
                     toast.error(`Error updating stock: ${error.message}`); // Improved error message
                   }
@@ -402,6 +402,7 @@
                 <button
                                 className="hover:text-primary"
                                 onClick={() => handleUpdateForm(item.id)} 
+                                title="update stock"
                                 >
                                 <svg
                                     className="fill-current"
@@ -410,8 +411,8 @@
                                     viewBox="0 0 20 20"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"
+                                   
                                 >
-                                    <g opacity="0.8" clipPath="url(#clip0_88_10224)">
                                     <path
                                         fillRule="evenodd"
                                         clipRule="evenodd"
@@ -424,18 +425,15 @@
                                         d="M16.6664 2.39884C16.4185 2.39884 16.1809 2.49729 16.0056 2.67253L8.25216 10.426L7.81167 12.188L9.57365 11.7475L17.3271 3.99402C17.5023 3.81878 17.6008 3.5811 17.6008 3.33328C17.6008 3.08545 17.5023 2.84777 17.3271 2.67253C17.1519 2.49729 16.9142 2.39884 16.6664 2.39884ZM14.8271 1.49402C15.3149 1.00622 15.9765 0.732178 16.6664 0.732178C17.3562 0.732178 18.0178 1.00622 18.5056 1.49402C18.9934 1.98182 19.2675 2.64342 19.2675 3.33328C19.2675 4.02313 18.9934 4.68473 18.5056 5.17253L10.5889 13.0892C10.4821 13.196 10.3483 13.2718 10.2018 13.3084L6.86847 14.1417C6.58449 14.2127 6.28409 14.1295 6.0771 13.9225C5.87012 13.7156 5.78691 13.4151 5.85791 13.1312L6.69124 9.79783C6.72787 9.65131 6.80364 9.51749 6.91044 9.41069L14.8271 1.49402Z"
                                         fill=""
                                     />
-                                    </g>
-                                    <defs>
-                                    <clipPath id="clip0_88_10224">
-                                        <rect width="20" height="20" fill="white" />
-                                    </clipPath>
-                                    </defs>
                                 </svg>
-                               </button>
+
+                        </button>
 
                         <button
                             className="hover:text-primary"
                             onClick={() => handleUpdateFormMin(item.id)} 
+                            title="min stock"
+
                         >
                             <svg
                                     className="fill-current"
@@ -444,6 +442,7 @@
                                     viewBox="0 0 18 18"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"
+                                  
                                 >
                                     <path
                                     d="M13.7535 2.47502H11.5879V1.9969C11.5879 1.15315 10.9129 0.478149 10.0691 0.478149H7.90352C7.05977 0.478149 6.38477 1.15315 6.38477 1.9969V2.47502H4.21914C3.40352 2.47502 2.72852 3.15002 2.72852 3.96565V4.8094C2.72852 5.42815 3.09414 5.9344 3.62852 6.1594L4.07852 15.4688C4.13477 16.6219 5.09102 17.5219 6.24414 17.5219H11.7004C12.8535 17.5219 13.8098 16.6219 13.866 15.4688L14.3441 6.13127C14.8785 5.90627 15.2441 5.3719 15.2441 4.78127V3.93752C15.2441 3.15002 14.5691 2.47502 13.7535 2.47502ZM7.67852 1.9969C7.67852 1.85627 7.79102 1.74377 7.93164 1.74377H10.0973C10.2379 1.74377 10.3504 1.85627 10.3504 1.9969V2.47502H7.70664V1.9969H7.67852ZM4.02227 3.96565C4.02227 3.85315 4.10664 3.74065 4.24727 3.74065H13.7535C13.866 3.74065 13.9785 3.82502 13.9785 3.96565V4.8094C13.9785 4.9219 13.8941 5.0344 13.7535 5.0344H4.24727C4.13477 5.0344 4.02227 4.95002 4.02227 4.8094V3.96565ZM11.7285 16.2563H6.27227C5.79414 16.2563 5.40039 15.8906 5.37227 15.3844L4.95039 6.2719H13.0785L12.6566 15.3844C12.6004 15.8625 12.2066 16.2563 11.7285 16.2563Z"
@@ -466,6 +465,8 @@
                         <button
                       className="hover:text-primary"
                        onClick={() => navigate(`historybarang/${item.id}`)}
+                       title="history"
+
                     >
                       <svg
                         className="fill-current"
@@ -488,26 +489,28 @@
                     <button
                       className="hover:text-primary"
                        onClick={() => navigate(`detailbarang/${item.id}`)}
+                       title="detail"
+
                     >
                       <svg
-  className="fill-current"
-  width="18"
-  height="18"
-  viewBox="0 0 18 18"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    d="M9 14C9.55228 14 10 13.5523 10 13C10 12.4477 9.55228 12 9 12C8.44772 12 8 12.4477 8 13C8 13.5523 8.44772 14 9 14Z"
-    fill="currentColor"
-  />
-  <path
-    d="M9 4V10"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-  />
-</svg>
+                        className="fill-current"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9 14C9.55228 14 10 13.5523 10 13C10 12.4477 9.55228 12 9 12C8.44772 12 8 12.4477 8 13C8 13.5523 8.44772 14 9 14Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M9 4V10"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                        />
+                      </svg>
 
                     </button>
               </td>
