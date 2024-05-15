@@ -74,7 +74,7 @@ class ActivityWorkersController extends Controller
         $data['status'] = 'pending';
         $data['end_time'] = Carbon::now();
 
-        $activityWorker = ActivityWorkers::where('activity_id', $id)->where('user_id', $user)->firstOrFail();
+        $activityWorker = ActivityWorkers::where('activity_id', $id)->where('user_id', $user)->where('status', 'process')->firstOrFail();
 
         $startTime = Carbon::parse($activityWorker->start_time);
         $endTime = Carbon::now();
@@ -96,117 +96,27 @@ class ActivityWorkersController extends Controller
         return response()->json(['message' => 'berhasil pending activity worker', 'data' => $activityWorker]);
     }
 
-    // public function done_activity(Request $request, $id)
-    // {
-    //     // Validasi request
-    //     $request->validate([
-    //         'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //         'kondisi_akhir' => 'required|string',
-    //         'biaya' => 'nullable|integer'
-    //     ]);
-
-    //     // Mendapatkan ID pengguna yang sedang login
-    //     $user = Auth::user();
-
-    //     $userId = $user->id;
-
-    //     // Mendapatkan data activity worker yang sesuai
-    //     $activityWorker = ActivityWorkers::where('activity_id', $id)
-    //         ->where('user_id', $userId)
-    //         ->firstOrFail();
-
-    //     // Menghitung durasi kerja dari waktu mulai hingga sekarang
-    //     $startTime = Carbon::parse($activityWorker->start_time);
-    //     $endTime = Carbon::now();
-    //     $workDuration = $endTime->diff($startTime)->format('%H:%I:%S');
-
-    //     // Menyiapkan data yang akan diupdate
-    //     $data = [
-    //         'end_time' => $endTime,
-    //         'work_duration' => $workDuration,
-    //         'status' => 'done',
-    //     ];
-
-    //     // Melakukan update data activity worker
-    //     $activityWorker->update($data);
-
-    //     // Mendapatkan data activity yang terkait
-    //     $activity = Activity::findOrFail($activityWorker->activity_id);
-
-    //     // Menyimpan foto akhir jika ada
-    //     if ($request->hasFile('foto_akhir')) {
-    //         try {
-    //             $foto_akhir = $request->file('foto_akhir');
-    //             $nama_foto_akhir = time() . '_akhir.' . $foto_akhir->getClientOriginalExtension();
-    //             $foto_akhir->move(public_path('images'), $nama_foto_akhir);
-    //             $activity->foto_akhir = $nama_foto_akhir;
-    //         } catch (\Exception $e) {
-    //             return response()->json(['error' => 'Gagal mengunggah foto_akhir'], 500);
-    //         }
-    //     }
-
-    //     // Mengupdate data activity
-    //     $activity->kondisi_akhir = $request->kondisi_akhir;
-    //     $activity->status = 'done';
-    //     $activity->ended_at = Carbon::now();
-
-    //     // Menghitung total durasi kerja untuk semua ActivityWorkers dengan activity_id yang sama
-    //     $totalSeconds = ActivityWorkers::where('activity_id', $activityWorker->activity_id)
-    //         ->sum(DB::raw("TIME_TO_SEC(work_duration)"));
-
-    //     // Konversi total detik kembali ke format "jam:menit:detik"
-    //     $totalWorkDuration = gmdate('H:i:s', $totalSeconds);
-
-    //     $activity->waktu_pengerjaan = $totalWorkDuration;
-
-    //     $activity->save();
-
-    //     return response()->json(['message' => 'berhasil update activity worker', 'total_work_duration' => $totalWorkDuration, 'data' => $activity]);
-    // }
-
     public function done_activity(Request $request, $id)
     {
         // Validasi request
         $request->validate([
             'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'kondisi_akhir' => 'required|string',
-            'biaya' => 'nullable|integer',
+            'biaya' => 'nullable|integer'
         ]);
 
-        // Mendapatkan ID pengguna yang sedang login dan rolenya
+        // Mendapatkan ID pengguna yang sedang login
         $user = Auth::user();
+
         $userId = $user->id;
-        $userRole = $user->role;
 
         // Mendapatkan data activity worker yang sesuai
-        $activityWorker = ActivityWorkers::where('activity_id', $id)->where('user_id', $userId)->first();
+        $activityWorker = ActivityWorkers::where('activity_id', $id)
+            ->where('user_id', $userId)
+            ->latest()
+            ->firstOrFail();
 
         // Menghitung durasi kerja dari waktu mulai hingga sekarang
-
-        // Jika user adalah admin
-        if ($userRole === 'admin') {
-            if (!$activityWorker) {
-                $newActivityWorker = new ActivityWorkers();
-                $newActivityWorker->activity_id = $id;
-                $newActivityWorker->user_id = $userId;
-                $newActivityWorker->start_time = Carbon::now();
-                $newActivityWorker->end_time = null;
-                $newActivityWorker->work_duration = null;
-                $newActivityWorker->status = 'done';
-                $newActivityWorker->save();
-
-                // Mengubah status activity menjadi 'done'
-                $activity = Activity::findOrFail($id);
-                $activity->status = 'done';
-            } else {
-            }
-            # code...
-
-            // return response()->json($activityWorker);
-            // Membuat activity worker baru dengan status 'done'
-
-            // $activity->ended_at = $;
-        }
         $startTime = Carbon::parse($activityWorker->start_time);
         $endTime = Carbon::now();
         $workDuration = $endTime->diff($startTime)->format('%H:%I:%S');
@@ -217,6 +127,12 @@ class ActivityWorkersController extends Controller
             'work_duration' => $workDuration,
             'status' => 'done',
         ];
+
+        // Melakukan update data activity worker
+        $activityWorker->update($data);
+
+        // Mendapatkan data activity yang terkait
+        $activity = Activity::findOrFail($activityWorker->activity_id);
 
         // Menyimpan foto akhir jika ada
         if ($request->hasFile('foto_akhir')) {
@@ -232,16 +148,105 @@ class ActivityWorkersController extends Controller
 
         // Mengupdate data activity
         $activity->kondisi_akhir = $request->kondisi_akhir;
+        $activity->status = 'done';
+        $activity->ended_at = Carbon::now();
 
         // Menghitung total durasi kerja untuk semua ActivityWorkers dengan activity_id yang sama
-        $totalSeconds = ActivityWorkers::where('activity_id', $id)->sum(DB::raw('TIME_TO_SEC(work_duration)'));
+        $totalSeconds = ActivityWorkers::where('activity_id', $activityWorker->activity_id)
+            ->sum(DB::raw("TIME_TO_SEC(work_duration)"));
 
         // Konversi total detik kembali ke format "jam:menit:detik"
         $totalWorkDuration = gmdate('H:i:s', $totalSeconds);
+
+        $activity->waktu_pengerjaan = $totalWorkDuration;
+
         $activity->save();
 
-        return response()->json(['message' => 'Berhasil update activity worker', 'total_work_duration' => $totalWorkDuration, 'data' => $activity]);
+        return response()->json(['message' => 'berhasil update activity worker', 'total_work_duration' => $totalWorkDuration, 'data' => $activity]);
     }
+
+    // public function done_activity(Request $request, $id)
+    // {
+    //     // Validasi request
+    //     $request->validate([
+    //         'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //         'kondisi_akhir' => 'required|string',
+    //         'biaya' => 'nullable|integer',
+    //     ]);
+
+    //     // Mendapatkan ID pengguna yang sedang login dan rolenya
+    //     $user = Auth::user();
+    //     $userId = $user->id;
+    //     $userRole = $user->role;
+
+    //     // Mendapatkan data activity worker yang sesuai
+    //     $activityWorker = ActivityWorkers::where('activity_id', $id)->where('user_id', $userId)->first();
+
+    //     // Menghitung durasi kerja dari waktu mulai hingga sekarang
+
+    //     // Jika user adalah admin
+    //     if ($userRole === 'admin') {
+    //         if (!$activityWorker) {
+    //             $newActivityWorker = new ActivityWorkers();
+    //             $newActivityWorker->activity_id = $id;
+    //             $newActivityWorker->user_id = $userId;
+    //             $newActivityWorker->start_time = Carbon::now();
+    //             $newActivityWorker->end_time = null;
+    //             $newActivityWorker->work_duration = null;
+    //             $newActivityWorker->status = 'done';
+    //             $newActivityWorker->save();
+
+    //             // Mengubah status activity menjadi 'done'
+    //             $activity = Activity::findOrFail($id);
+    //             $activity->status = 'done';
+    //         } else {
+    //         }
+    //         # code...
+
+    //         // return response()->json($activityWorker);
+    //         // Membuat activity worker baru dengan status 'done'
+
+    //         // $activity->ended_at = $;
+    //     }
+    //     $startTime = Carbon::parse($activityWorker->start_time);
+    //     $endTime = Carbon::now();
+    //     $workDuration = $endTime->diff($startTime)->format('%H:%I:%S');
+
+    //     // Menyiapkan data yang akan diupdate
+    //     $data = [
+    //         'end_time' => $endTime,
+    //         'work_duration' => $workDuration,
+    //         'status' => 'done',
+    //     ];
+
+    //     // Menyimpan foto akhir jika ada
+    //     if ($request->hasFile('foto_akhir')) {
+    //         try {
+    //             // Mendapatkan objek aktivitas
+    //             $activity = Activity::findOrFail($id);
+                
+    //             $foto_akhir = $request->file('foto_akhir');
+    //             $nama_foto_akhir = time() . '_akhir.' . $foto_akhir->getClientOriginalExtension();
+    //             $foto_akhir->move(public_path('images'), $nama_foto_akhir);
+    //             $activity->foto_akhir = $nama_foto_akhir;
+    //             $activity->save(); // Simpan aktivitas setelah mengatur foto akhir
+    //         } catch (\Exception $e) {
+    //             return response()->json(['error' => 'Gagal mengunggah foto_akhir'], 500);
+    //         }
+    //     }
+
+    //     // Mengupdate data activity
+    //     $activity->kondisi_akhir = $request->kondisi_akhir;
+
+    //     // Menghitung total durasi kerja untuk semua ActivityWorkers dengan activity_id yang sama
+    //     $totalSeconds = ActivityWorkers::where('activity_id', $id)->sum(DB::raw('TIME_TO_SEC(work_duration)'));
+
+    //     // Konversi total detik kembali ke format "jam:menit:detik"
+    //     $totalWorkDuration = gmdate('H:i:s', $totalSeconds);
+    //     $activity->save();
+
+    //     return response()->json(['message' => 'Berhasil update activity worker', 'total_work_duration' => $totalWorkDuration, 'data' => $activity]);
+    // }    
 
     function done_activity_by_admin(Request $request, $id)
     {
@@ -256,8 +261,6 @@ class ActivityWorkersController extends Controller
             if ($user->role != 'admin') {
                 throw new \Exception('anda bukan admin');
             }
-
-           
 
             $activityWorker = ActivityWorkers::where('activity_id', $id)->where('user_id', $userId)->first();
 

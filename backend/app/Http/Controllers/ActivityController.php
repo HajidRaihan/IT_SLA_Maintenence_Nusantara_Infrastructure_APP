@@ -170,7 +170,8 @@ class ActivityController extends Controller
             })
             ->paginate(10);
 
-        return response()->json(['data' => $activities]);
+            return response()->json(['message' => 'data activity berhasil di dapatkan', 'data' => $activities]);
+
     }
 
     public function getactivity_toll_without_pagination(Request $request)
@@ -234,7 +235,7 @@ class ActivityController extends Controller
             ];
         }
         
-        return response()->json(['data' => $responseData]);
+        return response()->json(['message' => 'data activity berhasil di dapatkan', 'data' => $responseData]);
     
     }
 
