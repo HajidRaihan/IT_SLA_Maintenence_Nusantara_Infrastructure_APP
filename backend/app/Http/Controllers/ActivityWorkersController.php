@@ -316,8 +316,22 @@ class ActivityWorkersController extends Controller
 
     public function getActivityWorkerByUser($id)
     {
-        $activityWorker = ActivityWorkers::where('user_id', $id)->get();
-
-        return response()->json(['message' => 'berhasil menampilkan bangsat', 'data' => $activityWorker]);
+        $year = request()->query('year');
+        $month = request()->query('month');
+    
+        $query = ActivityWorkers::where('user_id', $id);
+    
+        if ($year) {
+            $query->whereYear('created_at', $year);
+        }
+    
+        if ($month) {
+            $query->whereMonth('created_at', $month);
+        }
+    
+        $activityWorker = $query->get();
+    
+        return response()->json(['message' => 'berhasil menampilkan data', 'data' => $activityWorker]);
     }
+    
 }
