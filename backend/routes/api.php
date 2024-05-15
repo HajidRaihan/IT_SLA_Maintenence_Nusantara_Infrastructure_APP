@@ -76,11 +76,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/barang/{id}/updatestock', [BarangController::class, 'updatestock']);
     Route::put('/barang/{id}/minusstock', [BarangController::class, 'minusstock']);
 
-    Route::get('/jadwal', [JadwalController::class, 'index']);
-    Route::post('/jadwal', [JadwalController::class, 'store']);
-    Route::get('/jadwal/{id}', [JadwalController::class, 'show']);
-    Route::put('/jadwal/{id}', [JadwalController::class, 'update']);
-    Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy']);
+    Route::get('/jadwal-maintenance', [JadwalController::class, 'index']);
+    Route::post('/jadwal-maintenance', [JadwalController::class, 'store']);
+    Route::get('/jadwal-maintenance/{id}', [JadwalController::class, 'show']);
+    Route::put('/jadwal-maintenance/{id}', [JadwalController::class, 'update']);
+    Route::delete('/jadwal-maintenance/{id}', [JadwalController::class, 'destroy']);
 
     Route::get('/jenisSoftware', [JenisSoftwareController::class, 'index']);
     Route::post('/jenisSoftware', [JenisSoftwareController::class, 'store']);
