@@ -3,17 +3,19 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\RegisbarangController;
 use App\Http\Controllers\AplikasiItTolController;
 use App\Http\Controllers\JenisHardwareController;
 use App\Http\Controllers\JenisSoftwareController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ActivityWorkersController;
-use App\Http\Controllers\RegisbarangController;
+use App\Http\Controllers\JadwalMaintenanceController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -78,11 +80,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/barang/{id}/updatestock', [BarangController::class, 'updatestock']);
     Route::put('/barang/{id}/minusstock', [BarangController::class, 'minusstock']);
 
-    Route::get('/jadwal', [JadwalController::class, 'index']);
-    Route::post('/jadwal', [JadwalController::class, 'store']);
-    Route::get('/jadwal/{id}', [JadwalController::class, 'show']);
-    Route::put('/jadwal/{id}', [JadwalController::class, 'update']);
-    Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy']);
+    Route::get('/jadwal-maintenance', [JadwalMaintenanceController::class, 'index']);
+    Route::post('/jadwal-maintenance', [JadwalMaintenanceController::class, 'store']);
+    Route::get('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'show']);
+    Route::put('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'update']);
+    Route::delete('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'destroy']);
+
+
 
     Route::get('/jenisSoftware', [JenisSoftwareController::class, 'index']);
     Route::post('/jenisSoftware', [JenisSoftwareController::class, 'store']);
@@ -115,6 +119,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/regisbarang/{id}', [RegisbarangController::class, 'update_barang']);
     Route::get('/regisbarang/{id}', [RegisbarangController::class, 'get_regisbarangid']);
     Route::delete('/regisbarang/{id}', [RegisbarangController::class, 'deletebarang']);
+   
+
 });
 Route::get('/tes', function () {
     return 'tes';

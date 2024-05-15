@@ -9,5 +9,12 @@
         "axios": "^1.6.4",
         "laravel-vite-plugin": "^1.0.0",
         "vite": "^5.0.0"
+    },
+    "dependencies": {
+<<<<<<< HEAD
+        "jspdf": "^2.5.1",
+=======
+>>>>>>> e441d1b47cbad08caaaacb0258a8b9751701899d
+        "xlsx": "^0.18.5"
     }
 }

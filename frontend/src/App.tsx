@@ -131,8 +131,6 @@ function App() {
           }
         />
 
-    
-
         <Route
           path="listbarang/historybarang/:id"
           element={
