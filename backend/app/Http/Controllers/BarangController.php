@@ -99,10 +99,8 @@ public function show($barangId)
             'stock' => 'integer|min:0',
             'adddata_string' => 'string|in:masuk,keluar',
             'catatan' => 'string',
-
-
-
            
+        
         ]);
 
         if ($validator->fails()) {

@@ -20,7 +20,8 @@ class LogBarang extends Model
         'spesifikasi',
         'adddata_string',
         'addata',
-        'stock'
+        'stock',
+      
     ];
     
 }

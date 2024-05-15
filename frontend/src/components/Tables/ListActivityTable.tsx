@@ -1,7 +1,6 @@
 import { Package } from '../../types/package';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UpdateActivityModal from '../Modals/UpdateActivityModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import AddActivityModal from '../Modals/AddActivityModal';
@@ -9,6 +8,9 @@ import { format } from 'date-fns';
 
 import { Button, useDisclosure } from '@nextui-org/react';
 import ActionModal from '../Modals/ActionModal';
+import CsvIcon from '../../assets/icon/csv-icon.png';
+import { exportToPdf, exportToExcel } from '../../helper/ExportUtils';
+import { getAllActivityList } from '../../api/activityApi';
 
 const packageData: Package[] = [
   {
@@ -44,7 +46,6 @@ const ListActivityTable = ({
   setData,
   hapusLoading,
   toastError,
-  page,
 }) => {
   const navigate = useNavigate();
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -88,6 +89,15 @@ const ListActivityTable = ({
     onOpenAddModal();
   };
 
+  const handleExportPdf = async () => {
+    exportToPdf(); // Call your exportToPdf function with currentItems
+  };
+
+  const handleExportExcel = async () => {
+    const res = await getAllActivityList();
+    exportToExcel(res.data, 'activity'); // Call your exportToExcel function with currentItems
+  };
+
   return (
     <div
       className={`rounded-sm border  border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1`}
@@ -96,13 +106,27 @@ const ListActivityTable = ({
         <h4 className="text-xl font-semibold text-black dark:text-white">
           List Activity
         </h4>
-        <Button
-          className="border border-stroke rounded-lg px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
-          onPress={openAddModalHandler}
-        >
-          <FontAwesomeIcon icon={faPlus} className="green-light-icon text-lg" />
-        </Button>
+        <div className="flex items-center gap-3">
+          <button onClick={handleExportExcel}>
+            <img src={CsvIcon} alt="" className="w-8 h-8" />
+          </button>
+          {/* <CsvDownloadButton
+            data={data}
+            filename="activity log"
+          ></CsvDownloadButton> */}
+          <Button
+            className="border text-xs font-medium flex justify-center items-center border-stroke rounded-lg px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
+            onPress={openAddModalHandler}
+          >
+            <FontAwesomeIcon
+              icon={faPlus}
+              className="green-light-icon text-md"
+            />
+            <p>Tambah activity</p>
+          </Button>
+        </div>
       </div>
+
       <div className="max-w-full h-fit overflow-x-auto">
         <table className="w-full table-auto">
           <thead>

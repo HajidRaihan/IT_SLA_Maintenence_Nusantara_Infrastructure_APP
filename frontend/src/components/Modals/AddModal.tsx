@@ -9,10 +9,11 @@ import {
   Button,
   Input,
 } from '@nextui-org/react';
-const modalStyles = {
-  maxHeight: 'calc(100vh - 100px)',
-  overflowY: 'auto',
-};
+ 
+// const modalStyles = {
+//   maxHeight: 'calc(100vh - 100px)',
+//   overflowY: 'auto',
+// };
 import { getLokasi } from '../../api/lokasiApi.js';
 
 function AddStuffModal({ isOpen, onClose, onAdd, value, onChange, title }) {

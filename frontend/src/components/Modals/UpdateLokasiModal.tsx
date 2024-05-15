@@ -91,12 +91,8 @@ function UpdateKategoriModal({
 
 
 function UpdateBarangModal({ isUpdateOpen, onUpdateClose, onAdd,
-  valueUpdateStock,valueUpdateSpesifikasi,onUpdatespesifikasi,barangId, onUpdateStock, }) {
-   
-
-  
-
-  return (
+  valueUpdateStock,valueUpdateSpesifikasi,onUpdatespesifikasi, onUpdateStock, }) {
+return (
     <>
       <Modal
         isOpen={isUpdateOpen}
@@ -121,7 +117,7 @@ function UpdateBarangModal({ isUpdateOpen, onUpdateClose, onAdd,
                       min='0'
                     />
                    <ModalHeader className="mb-2.5 block text-black dark:text-white">
-                      Spesifikasi
+                      Catatan
                     </ModalHeader>
                     <Input
                       value={valueUpdateSpesifikasi}
@@ -145,13 +141,8 @@ function UpdateBarangModal({ isUpdateOpen, onUpdateClose, onAdd,
   );
 }
 
-function UpdateBarangModalMin({
-  isUpdateOpen,
-  onUpdateClose,
-  onAdd,
-  valueUpdateStock,
-  onUpdateStock,
-}) {
+function UpdateBarangModalMin({ isUpdateOpen, onUpdateClose,
+   onAdd, valueUpdateStock, onUpdateStock,valueUpdateSpesifikasi,onUpdatespesifikasi }) {
   return (
     <>
       <Modal
@@ -175,6 +166,15 @@ function UpdateBarangModalMin({
                 type="number"
                 min="0"
               />
+                <ModalHeader className="mb-2.5 block text-black dark:text-white">
+                      Catatan
+                    </ModalHeader>
+                    <Input
+                      value={valueUpdateSpesifikasi}
+                      onChange={onUpdatespesifikasi}
+                      placeholder="Enter spesifikasi"
+                      type="text"
+                    />
             </ModalBody>
             <ModalFooter>
               <Button color="danger" variant="flat" onPress={onUpdateClose}>
