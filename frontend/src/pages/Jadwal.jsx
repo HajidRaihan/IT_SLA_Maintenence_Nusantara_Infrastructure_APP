@@ -18,7 +18,7 @@ import { useDisclosure } from '@nextui-org/react';
 import { UpdateJadwalModal } from '../components/Modals/UpdateLokasiModal';
 import DeleteModal from '../components/Modals/DeleteModal';
 import Paginate from '../components/Pagination/paginate';
-import { exportToPdf, exportToExcel } from '../helper/ExportUtils';
+import { exportToPdf, exportToExcel } from '../components/Modals/ExportUtils';
 import { faFilePdf, faFileExcel } from '@fortawesome/free-solid-svg-icons';
 
 // import * as XLSX from 'xlsx';
@@ -37,8 +37,9 @@ const Jadwal = () => {
   const [updateFrekuensi, setUpdateFrekuensi] = useState('');
   const [updateLokasi, setUpdateLokasi] = useState('');
   const [updateWaktu, setUpdateWaktu] = useState([]);
-
   const [JadwalId, setJadwalId] = useState('');
+  const [verificationOption, setVerificationOption] = useState(null);
+
   const {
     isOpen: isOpenJadwalModal,
     onOpen: onOpenJadwalModal,
@@ -58,11 +59,6 @@ const Jadwal = () => {
   const [newTahunFilter, setNewTahunFilter] = useState('');
   const [selectedJenisPerusahaan, setSelectedJenisPerusahaan] = useState('');
   const [newLokasiFilter, setNewLokasiFilter] = useState('');
-  const [currentPage, setCurrentPage] = useState(1); // Current page state
-  const itemsPerPage = 5; // Number of data items per page
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredRecords.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleFilter = () => {
     const filtered = data.filter((item) => {
@@ -98,16 +94,6 @@ const Jadwal = () => {
   const dropdownLokasi = data.map((item) => item.lokasi);
 
   const uniqueLokasi = Array.from(new Set(dropdownLokasi));
-
-  // const [currentPage, setCurrentPage] = useState(1); // Current page state
-  // const itemsPerPage = 5; // Number of data items per page
-
-  // // Calculate total number of pages
-  // const startIndex = (currentPage - 1) * itemsPerPage;
-  // const endIndex = Math.min(startIndex + itemsPerPage, data.length);
-
-  // // Filter the data to display only the items for the current page
-  // const currentItems = data.slice(startIndex, endIndex);
 
   const handlePageChange = (page) => {
     setCurrentPage(page); // Update the current page
@@ -231,7 +217,7 @@ const Jadwal = () => {
 
   const handleUpdateForm = (id) => {
     setJadwalId(id);
-    onUpdateModalOpen(); // Memanggil fungsi untuk membuka modal
+    onUpdateModalOpen();
   };
 
   const handleAddForm = () => {
@@ -239,11 +225,27 @@ const Jadwal = () => {
   };
 
   const handleExportPdf = () => {
-    exportToPdf(currentItems); // Call your exportToPdf function with currentItems
+    const dataToExport = filteredRecords.map((data) => ({
+      // jenis_perusahaan: data.jenis_perusahaan,
+      lokasi: data.lokasi,
+      waktu: data.waktu,
+    }));
+    exportToPdf(dataToExport);
   };
 
   const handleExportExcel = () => {
-    exportToExcel(currentItems, 'jadwal'); // Call your exportToExcel function with currentItems
+    const dataToExport = filteredRecords.map((data) => ({
+      jenis_perusahaan: data.jenis_perusahaan,
+      uraian_kegiatan: data.uraian_kegiatan,
+      tahun: data.tahun,
+      lokasi: data.lokasi,
+      waktu: JSON.stringify(
+        data.waktu.map((date) =>
+          moment(date).tz('Asia/Makassar').format('DD-MM-YYYY'),
+        ),
+      ),
+    }));
+    exportToExcel(dataToExport);
   };
 
   return (
@@ -420,14 +422,14 @@ const Jadwal = () => {
             </thead>
             <tbody className="bg-gray-50 dark:bg-gray-800">
               {/* Table Body */}
-              {currentItems.map((item, index) => (
+              {filteredRecords.map((item, index) => (
                 <tr
-                  key={indexOfFirstItem + index}
+                  key={index}
                   className="hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900 dark:text-gray-100">
-                      {indexOfFirstItem + index + 1}
+                      {index + 1}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -479,10 +481,10 @@ const Jadwal = () => {
                     <div className="mb-3  flex items-center">
                       <button
                         onClick={() => handleUpdateForm(item.id)}
-                        className="hover:text-green-500"
+                        className="hover:text-black-500"
                       >
                         <svg
-                          className="fill-current text-green-500"
+                          className="fill-current text-black-500"
                           width="20"
                           height="20"
                           viewBox="0 0 20 20"
@@ -513,10 +515,10 @@ const Jadwal = () => {
 
                       <button
                         onClick={() => handleDeleteForm(item.id)}
-                        className="hover:text-red-500"
+                        className="hover:text-black-500"
                       >
                         <svg
-                          className="fill-current text-red-500"
+                          className="fill-current text-black-500"
                           width="18"
                           height="18"
                           viewBox="0 0 18 18"
@@ -550,10 +552,10 @@ const Jadwal = () => {
         </div>
       </div>
 
-      {/* Pagination */}
+      {/* Pagination
       <div className="flex justify-center mt-4">
         <Paginate currentPage={currentPage} onPageChange={handlePageChange} />
-      </div>
+      </div> */}
 
       {/* Modals */}
       <JadwalModal

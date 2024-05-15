@@ -21,6 +21,9 @@ const ListActivity = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [hapusLoading, setHapusLoading] = useState(false);
+  const [tanggal, setTanggal] = useState(getDefaultDate());
+  const [showFilters, setShowFilters] = useState(false);
+  const [filteredDate, setFilteredDate] = useState(getDefaultDate());
 
   useEffect(() => {
     const fetchActivity = async () => {
@@ -31,21 +34,20 @@ const ListActivity = () => {
           kategori,
           company,
           status,
+          filteredDate, // Include filtered date value
           page,
         );
-        console.log('actyivity', response);
+        console.log('activity', response);
         setActivity(response.data.data);
         setTotalPage(response.data.last_page);
-        if (response) {
-          setIsLoading(false);
-        }
+        setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
         throw error;
       }
     };
     fetchActivity();
-  }, [lokasi, kategori, company, status, page]);
+  }, [lokasi, kategori, company, status, filteredDate, page]);
 
   useEffect(() => {
     const fetchLokasi = async () => {
@@ -92,14 +94,13 @@ const ListActivity = () => {
     setKategori(null);
     setCompany(null);
     setStatus(null);
+    setTanggal(getDefaultDate());
   };
 
   const dataCompany = ['mmn', 'jtse'];
 
   return (
     <DefaultLayout>
-      {/* <Breadcrumb pageName="List Activity" /> */}
-
       <div className="flex flex-col">
         {/* <h2 className="text-title-md2 font-semibold text-black  dark:text-white mb-5">
           Filter
