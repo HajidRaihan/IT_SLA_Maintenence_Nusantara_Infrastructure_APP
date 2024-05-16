@@ -9,20 +9,24 @@ import Loader from '../common/Loader';
 import { toast, ToastContainer } from 'react-toastify';
 import { Pagination, Button } from '@nextui-org/react';
 
+// Define getDefaultDate function here
+const getDefaultDate = () => {
+  const today = new Date();
+  return today.toISOString().split('T')[0]; // Ensure a valid date string
+};
+
 const ListActivity = () => {
   const [activity, setActivity] = useState([]);
-  const [lokasiData, setLokasiData] = useState();
-  const [kategori, setKategori] = useState();
-  const [lokasi, setLokasi] = useState();
-  const [kategoriData, setKategoriData] = useState();
-  const [company, setCompany] = useState();
-  const [status, setStatus] = useState();
+  const [lokasiData, setLokasiData] = useState([]);
+  const [kategoriData, setKategoriData] = useState([]);
+  const [lokasi, setLokasi] = useState(null);
+  const [kategori, setKategori] = useState(null);
+  const [company, setCompany] = useState(null);
+  const [status, setStatus] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [hapusLoading, setHapusLoading] = useState(false);
-  const [tanggal, setTanggal] = useState(getDefaultDate());
-  const [showFilters, setShowFilters] = useState(false);
   const [filteredDate, setFilteredDate] = useState(getDefaultDate());
 
   useEffect(() => {
@@ -40,10 +44,10 @@ const ListActivity = () => {
         console.log('activity', response);
         setActivity(response.data.data);
         setTotalPage(response.data.last_page);
-        setIsLoading(false);
       } catch (error) {
+        toast.error('Error fetching activity: ' + error.message);
+      } finally {
         setIsLoading(false);
-        throw error;
       }
     };
     fetchActivity();
@@ -51,18 +55,26 @@ const ListActivity = () => {
 
   useEffect(() => {
     const fetchLokasi = async () => {
-      const res = await getLokasi();
-      console.log(res);
-      setLokasiData(res);
+      try {
+        const res = await getLokasi();
+        console.log(res);
+        setLokasiData(res);
+      } catch (error) {
+        toast.error('Error fetching lokasi: ' + error.message);
+      }
     };
     fetchLokasi();
   }, []);
 
   useEffect(() => {
     const fetchKategori = async () => {
-      const res = await getKategori();
-      console.log(res);
-      setKategoriData(res);
+      try {
+        const res = await getKategori();
+        console.log(res);
+        setKategoriData(res);
+      } catch (error) {
+        toast.error('Error fetching kategori: ' + error.message);
+      }
     };
     fetchKategori();
   }, []);
@@ -79,13 +91,13 @@ const ListActivity = () => {
       if (res) {
         const updatedData = activity.filter((item) => item.id !== id);
         setActivity(updatedData);
-        setHapusLoading(false);
-        toast.success('success menambahkan activity');
+        toast.success('Successfully deleted activity');
       }
       console.log(res);
     } catch (error) {
+      toast.error('Error deleting activity: ' + error.message);
+    } finally {
       setHapusLoading(false);
-      throw error;
     }
   };
 
@@ -94,7 +106,7 @@ const ListActivity = () => {
     setKategori(null);
     setCompany(null);
     setStatus(null);
-    setTanggal(getDefaultDate());
+    setFilteredDate(getDefaultDate());
   };
 
   const dataCompany = ['mmn', 'jtse'];
@@ -102,38 +114,7 @@ const ListActivity = () => {
   return (
     <DefaultLayout>
       <div className="flex flex-col">
-        {/* <h2 className="text-title-md2 font-semibold text-black  dark:text-white mb-5">
-          Filter
-        </h2> */}
-        <div className="rounded-sm border  border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark p-5 mb-5">
-          {/* <div className="flex gap-5 w-full">
-            <SelectCompany
-              label="Company"
-              data={dataCompany}
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-            />
-
-            <SelectStatus
-              label="Status"
-              data={['process, done']}
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-            />
-
-            <SelectGroupOne
-              value={lokasi}
-              onChange={(e) => setLokasi(e.target.value)}
-              label="Lokasi"
-              data={lokasiData}
-            />
-            <SelectGroupOne
-              value={kategori}
-              onChange={(e) => setKategori(e.target.value)}
-              label="Kategori"
-              data={kategoriData}
-            />
-          </div> */}
+        <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark p-5 mb-5">
           <div>
             <Button onPress={clearFilter} color="danger" className="">
               Clear Filter
@@ -150,7 +131,7 @@ const ListActivity = () => {
               setData={setActivity}
               deleteHandler={deleteHandler}
               hapusLoading={hapusLoading}
-              toastSuccess={() => toast.success('success menambahkan activity')}
+              toastSuccess={() => toast.success('Successfully added activity')}
               toastError={toastErrorMessage}
             />
             <div className="w-full flex justify-center mt-5">
@@ -159,7 +140,7 @@ const ListActivity = () => {
                 total={totalPage}
                 initialPage={page}
                 showShadow
-                onChange={(e) => setPage(e)}
+                onChange={(page) => setPage(page)}
               />
             </div>
           </>
