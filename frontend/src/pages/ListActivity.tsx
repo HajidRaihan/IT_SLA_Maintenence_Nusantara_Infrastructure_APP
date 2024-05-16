@@ -27,7 +27,9 @@ const ListActivity = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [hapusLoading, setHapusLoading] = useState(false);
-  const [filteredDate, setFilteredDate] = useState(getDefaultDate());
+  // const [tanggal, setTanggal] = useState(getDefaultDate());
+  const [showFilters, setShowFilters] = useState(false);
+  // const [filteredDate, setFilteredDate] = useState(getDefaultDate());
 
   useEffect(() => {
     const fetchActivity = async () => {
@@ -38,7 +40,7 @@ const ListActivity = () => {
           kategori,
           company,
           status,
-          filteredDate, // Include filtered date value
+          // filteredDate, // Include filtered date value
           page,
         );
         console.log('activity', response);
@@ -51,7 +53,7 @@ const ListActivity = () => {
       }
     };
     fetchActivity();
-  }, [lokasi, kategori, company, status, filteredDate, page]);
+  }, [lokasi, kategori, company, status, page]);
 
   useEffect(() => {
     const fetchLokasi = async () => {
@@ -101,25 +103,56 @@ const ListActivity = () => {
     }
   };
 
-  const clearFilter = () => {
-    setLokasi(null);
-    setKategori(null);
-    setCompany(null);
-    setStatus(null);
-    setFilteredDate(getDefaultDate());
-  };
+  // const clearFilter = () => {
+  //   setLokasi(null);
+  //   setKategori(null);
+  //   setCompany(null);
+  //   setStatus(null);
+  //   setTanggal(getDefaultDate());
+  // };
 
   const dataCompany = ['mmn', 'jtse'];
 
   return (
     <DefaultLayout>
       <div className="flex flex-col">
-        <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark p-5 mb-5">
-          <div>
+        {/* <h2 className="text-title-md2 font-semibold text-black  dark:text-white mb-5">
+          Filter
+        </h2> */}
+        <div className="rounded-sm border  border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark p-5 mb-5">
+          {/* <div className="flex gap-5 w-full">
+            <SelectCompany
+              label="Company"
+              data={dataCompany}
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+            />
+
+            <SelectStatus
+              label="Status"
+              data={['process, done']}
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            />
+
+            <SelectGroupOne
+              value={lokasi}
+              onChange={(e) => setLokasi(e.target.value)}
+              label="Lokasi"
+              data={lokasiData}
+            />
+            <SelectGroupOne
+              value={kategori}
+              onChange={(e) => setKategori(e.target.value)}
+              label="Kategori"
+              data={kategoriData}
+            />
+          </div> */}
+          {/* <div>
             <Button onPress={clearFilter} color="danger" className="">
               Clear Filter
             </Button>
-          </div>
+          </div> */}
         </div>
 
         <ToastContainer autoClose={2000} />
