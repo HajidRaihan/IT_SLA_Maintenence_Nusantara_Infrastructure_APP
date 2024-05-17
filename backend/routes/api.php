@@ -111,6 +111,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/activity_workers', [ActivityWorkersController::class, 'index']);
     Route::get('/activity_workers/{id}', [ActivityWorkersController::class, 'getByActivityId']);
     Route::get('/activity_workers/user/{id}', [ActivityWorkersController::class, 'getActivityWorkerByUser']);
+    Route::get('/activity_workers/grafik/{year}', [ActivityWorkersController::class, 'grafikWaktuPengerjaan']);
+    Route::get('/activity_workers/grafik/user/{id}/{year}', [ActivityWorkersController::class, 'grafikWaktuPengerjaanByUser']);
 
     Route::get('/item', [RegisbarangController::class, 'get_regisbarang']);
     Route::post('/regisbarang', [RegisbarangController::class, 'add_regisbarang']);
