@@ -172,3 +172,7 @@ const ListActivity = () => {
 };
 
 export default ListActivity;
+
+function getDefaultDate(): any {
+  throw new Error('Function not implemented.');
+}

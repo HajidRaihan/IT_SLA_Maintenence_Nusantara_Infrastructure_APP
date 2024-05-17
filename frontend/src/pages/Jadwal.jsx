@@ -17,6 +17,7 @@ import { JadwalModal } from '../components/Modals/AddModal';
 import { useDisclosure } from '@nextui-org/react';
 import { UpdateJadwalModal } from '../components/Modals/UpdateLokasiModal';
 import DeleteModal from '../components/Modals/DeleteModal';
+import ButtonModal from '../components/Modals/ButtonModal';
 import Paginate from '../components/Pagination/paginate';
 import { exportToPdf, exportToExcel } from '../components/Modals/ExportUtils';
 import { faFilePdf, faFileExcel } from '@fortawesome/free-solid-svg-icons';
@@ -39,6 +40,9 @@ const Jadwal = () => {
   const [updateWaktu, setUpdateWaktu] = useState([]);
   const [JadwalId, setJadwalId] = useState('');
   const [verificationOption, setVerificationOption] = useState(null);
+  const [newOntime,setNewOntime] = useState('');
+  const [newLate,setNewLate] = useState('');
+  const [newDelayed,setNewDelayed] = useState('');
 
   const {
     isOpen: isOpenJadwalModal,
@@ -54,6 +58,12 @@ const Jadwal = () => {
     isOpen: deleteModalOpen,
     onOpen: onDeleteModalOpen,
     onClose: onDeleteModalClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: buttonModalOpen,
+    onOpen: onButtonModalOpen,
+    onClose: onButtonModalClose,
   } = useDisclosure();
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [newTahunFilter, setNewTahunFilter] = useState('');
@@ -142,6 +152,18 @@ const Jadwal = () => {
   const handleJenisPerusahaan = (e) => {
     setNewJenisPerusahaan(e.target.value);
   };
+  consthandleOntime = (e) => {
+    setNewOntime(e.target.value);
+  };
+
+  consthandleDelay = (e) => {
+    setNewDelayed(e.target.value);
+  };
+
+  consthandleLate = (e) => {
+    setNewLate(e.target.value);
+  };
+
   const handleUraianKegiatan = (e) => {
     setNewUraianKegiatan(e.target.value);
   };
@@ -219,6 +241,11 @@ const Jadwal = () => {
     setJadwalId(id);
     onUpdateModalOpen();
   };
+
+  const handleApproveForm = (id) => {
+    setJadwalId(id);
+    onButtonModalOpen;
+  }
 
   const handleAddForm = () => {
     onOpenJadwalModal();
@@ -598,6 +625,8 @@ const Jadwal = () => {
         onDelete={handleDelete}
         onDeleteClose={onDeleteModalClose}
       />
+
+      
     </DefaultLayout>
   );
 };
