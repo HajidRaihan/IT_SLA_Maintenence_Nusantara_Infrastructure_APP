@@ -1,16 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CardDataStats from '../../components/CardDataStats';
 import ChartOne from '../../components/Charts/ChartOne';
 import ChartThree from '../../components/Charts/ChartThree';
 import ChartTwo from '../../components/Charts/ChartTwo';
+import WorkDurationChart from '../../components/Charts/WorkDurationChart';
 import ChatCard from '../../components/Chat/ChatCard';
 import MapOne from '../../components/Maps/MapOne';
 import TableOne from '../../components/Tables/TableOne';
 import DefaultLayout from '../../layout/DefaultLayout';
+import { getGrafikWorkDuration } from '../../api/grafikApi';
 
 const ECommerce: React.FC = () => {
+  const [dataGrafikWork, setDataGrafikWork] = useState<{
+    series: { name: string; data: any }[];
+  }>({ series: [] });
+
+  useEffect(() => {
+    const getGrafik = async () => {
+      const res = await getGrafikWorkDuration(2024);
+      console.log(res);
+
+      function convertToSeconds(duration) {
+        const [hours, minutes, seconds] = duration.split(':').map(Number);
+        return hours * 3600 + minutes * 60 + seconds;
+      }
+
+      if (res) {
+        const durationsInSeconds = res?.durations.map(convertToSeconds);
+        console.log({ durationsInSeconds });
+      }
+
+      setDataGrafikWork({
+        series: [
+          {
+            name: 'waktu pengerjaan',
+            data: res.duration,
+          },
+        ],
+      });
+    };
+    getGrafik();
+  }, []);
   return (
     <DefaultLayout>
+      <div className="mb-10">
+        <WorkDurationChart data={dataGrafikWork} />
+      </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
           <svg
