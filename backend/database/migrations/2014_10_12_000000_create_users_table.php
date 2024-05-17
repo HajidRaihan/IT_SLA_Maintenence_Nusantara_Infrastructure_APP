@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('foto')->nullable();
             $table->string('ttd')->nullable();
+            $table->string('total_waktu_pengerjaan')->nullable();
             $table->enum('role', ['admin', 'user'])->default('user');
             $table->rememberToken();
             $table->timestamps();

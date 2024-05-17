@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use App\Models\ActivityWorkers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Events\ActivityWorkerUpdated;
 
 class ActivityWorkersController extends Controller
 {
@@ -92,6 +93,8 @@ class ActivityWorkersController extends Controller
 
         $activity['status'] = 'pending';
         $activity->save();
+
+        event(new ActivityWorkerUpdated($activityWorker));
 
         return response()->json(['message' => 'berhasil pending activity worker', 'data' => $activityWorker]);
     }
@@ -368,6 +371,48 @@ class ActivityWorkersController extends Controller
     //     return response()->json(['message' => 'Data berhasil diambil', 'data' => $formattedData]);
     // }
 
+    // public function grafikWaktuPengerjaan($year) {
+    //     $workDurations = DB::table('activity_workers')
+    //         ->select(
+    //             DB::raw('user_id'),
+    //             DB::raw('MONTH(created_at) as month'),
+    //             DB::raw('work_duration')
+    //         )
+    //         ->whereYear('created_at', $year)
+    //         ->get();
+    
+    //     // Menyusun data ke dalam format yang sesuai untuk grafik
+    //     $result = [];
+    //     foreach ($workDurations as $data) {
+    //         $userId = $data->user_id;
+    //         $month = $data->month;
+    //         $durationInSeconds = $this->convertToSeconds($data->work_duration);
+    
+    //         if (!isset($result[$userId][$month])) {
+    //             $result[$userId][$month] = 0;
+    //         }
+    
+    //         $result[$userId][$month] += $durationInSeconds;
+    //     }
+    
+    //     // Konversi kembali hasil total durasi dari detik ke format HH:MM:SS
+    //     $formattedData = [];
+        
+    //     foreach ($result as $userId => $durations) {
+    //         $formattedDurations = [];
+    //         for ($month = 1; $month <= 12; $month++) {
+    //             $totalSeconds = $durations[$month] ?? 0;
+    //             $formattedDurations[$month] = $this->formatDuration($totalSeconds);
+    //         }
+    //         $formattedData[] = [
+    //             'user_id' => $userId,
+    //             'durations' => array_values($formattedDurations)
+    //         ];
+    //     }
+    
+    //     return response()->json(['message' => 'Data berhasil diambil', 'data' => $formattedData]);
+    // }
+
     public function grafikWaktuPengerjaan($year) {
         $workDurations = DB::table('activity_workers')
             ->select(
@@ -392,13 +437,14 @@ class ActivityWorkersController extends Controller
             $result[$userId][$month] += $durationInSeconds;
         }
     
-        // Konversi kembali hasil total durasi dari detik ke format HH:MM:SS
+        // Menyusun data dengan format detik
         $formattedData = [];
+        
         foreach ($result as $userId => $durations) {
             $formattedDurations = [];
             for ($month = 1; $month <= 12; $month++) {
                 $totalSeconds = $durations[$month] ?? 0;
-                $formattedDurations[$month] = $this->formatDuration($totalSeconds);
+                $formattedDurations[$month] = $totalSeconds;
             }
             $formattedData[] = [
                 'user_id' => $userId,
@@ -408,6 +454,13 @@ class ActivityWorkersController extends Controller
     
         return response()->json(['message' => 'Data berhasil diambil', 'data' => $formattedData]);
     }
+    
+    // Fungsi untuk mengonversi durasi "HH:MM:SS" menjadi detik
+    private function convertToSeconds($duration) {
+        list($hours, $minutes, $seconds) = explode(':', $duration);
+        return ($hours * 3600) + ($minutes * 60) + $seconds;
+    }
+    
 
 
     public function grafikWaktuPengerjaanByUser($id,$year) {
@@ -441,7 +494,7 @@ class ActivityWorkersController extends Controller
             $formattedDurations = [];
             for ($month = 1; $month <= 12; $month++) {
                 $totalSeconds = $durations[$month] ?? 0;
-                $formattedDurations[$month] = $this->formatDuration($totalSeconds);
+                $formattedDurations[$month] = $totalSeconds;
             }
             $formattedData[] = [
                 'user_id' => $userId,
@@ -455,25 +508,25 @@ class ActivityWorkersController extends Controller
     
     
     
-    private function formatDuration($seconds) {
-        $hours = floor($seconds / 3600);
-        $minutes = floor(($seconds % 3600) / 60);
-        $seconds = $seconds % 60;
-        return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
-    }
+    // private function formatDuration($seconds) {
+    //     $hours = floor($seconds / 3600);
+    //     $minutes = floor(($seconds % 3600) / 60);
+    //     $seconds = $seconds % 60;
+    //     return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
+    // }
     
     
     
-    private function convertToSeconds($time) {
-        // Pastikan format waktu adalah HH:MM:SS
-        if (preg_match('/^\d{2}:\d{2}:\d{2}$/', $time)) {
-            list($hours, $minutes, $seconds) = explode(':', $time);
-            return $hours * 3600 + $minutes * 60 + $seconds;
-        } else {
-            // Jika format tidak valid, kembalikan 0 sebagai fallback
-            return 0;
-        }
-    }
+    // private function convertToSeconds($time) {
+    //     // Pastikan format waktu adalah HH:MM:SS
+    //     if (preg_match('/^\d{2}:\d{2}:\d{2}$/', $time)) {
+    //         list($hours, $minutes, $seconds) = explode(':', $time);
+    //         return $hours * 3600 + $minutes * 60 + $seconds;
+    //     } else {
+    //         // Jika format tidak valid, kembalikan 0 sebagai fallback
+    //         return 0;
+    //     }
+    // }
     
     
     
