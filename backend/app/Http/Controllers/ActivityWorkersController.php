@@ -453,7 +453,6 @@ class ActivityWorkersController extends Controller
     public function grafikWaktuPengerjaan(Request $request, $year)
     {
         $isLimit = $request->query('limit');
-    
 
         // Mendapatkan tahun awal dan tahun terakhir dari data
         $yearsRange = DB::table('activity_workers')->select(DB::raw('MIN(YEAR(created_at)) as start_year'), DB::raw('MAX(YEAR(created_at)) as end_year'))->first();
