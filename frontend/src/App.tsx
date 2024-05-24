@@ -29,6 +29,7 @@ import Jadwal from './pages/Jadwal';
 import HistoryBarang from './pages/historybarang';
 import Itemdetail from './pages/DetailBarang';
 import UserList from './pages/UserList';
+import GrafikWaktuKerjaPage from './pages/GrafikWaktuKerjaPage';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -99,6 +100,16 @@ function App() {
             <>
               <PageTitle title="List User" />
               <UserList />
+            </>
+          }
+        />
+
+        <Route
+          path="/grafik-kerja"
+          element={
+            <>
+              <PageTitle title="Grafik Waktu Kerja" />
+              <GrafikWaktuKerjaPage />
             </>
           }
         />

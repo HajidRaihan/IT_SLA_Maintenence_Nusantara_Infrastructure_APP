@@ -62,7 +62,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/kategori', [KategoriController::class, 'store']);
     Route::get('/kategori/{id}', [KategoriController::class, 'show']);
     Route::put('/kategori/{id}', [KategoriController::class, 'update']);
-    Route::delete('/kategori/{id}', [KategoriController::class, 'destroy']);
+    Route::delete('/kategori/{id}', [KategoriController::class, 'destroy']);    
 
     Route::get('/lokasi', [LokasiController::class, 'index']);
     Route::post('/lokasi', [LokasiController::class, 'store']);

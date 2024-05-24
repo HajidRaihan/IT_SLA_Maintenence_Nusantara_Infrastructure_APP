@@ -107,9 +107,6 @@ const ListActivityTable = ({
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
               <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                Foto
-              </th>
-              <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                 Tanggal
               </th>
               {/* <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
@@ -135,15 +132,6 @@ const ListActivityTable = ({
           <tbody>
             {data?.map((item, key) => (
               <tr key={key}>
-                <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                  <div className=" w-15 rounded-md">
-                    <img
-                      src={`http://127.0.0.1:8000/images/${item.foto_awal}`}
-                      alt="actyvitis"
-                    />
-                  </div>
-                  {/* <p className="text-sm">${item.biaya}</p> */}
-                </td>
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
                     {format(new Date(item.created_at), 'yyyy-MM-dd')}

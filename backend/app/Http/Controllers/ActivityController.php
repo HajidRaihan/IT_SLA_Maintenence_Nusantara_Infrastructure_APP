@@ -152,7 +152,7 @@ public function getactivity_toll(Request $request)
 
     // Get activities based on filters and join with the category and lokasi tables
     $activities = Activity::query()
-        ->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
+        ->select('activity.id', 'users.username as nama_user', 'activity.kategori_activity', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
         ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
         ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
         ->leftJoin('users', 'activity.user_id', '=', 'users.id')
@@ -219,7 +219,7 @@ public function getactivity_toll(Request $request)
     {
         $filters = $request->only(['company', 'status', 'location', 'category']);
 
-        $activity = Activity::query()->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.nama_kategori as category_name', 'kategori.deadline_duration as category_deadline', 'lokasi.nama_lokasi as location_name')->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')->leftJoin('users', 'activity.user_id', '=', 'users.id')->where('activity.id', $id);
+        $activity = Activity::query()->select('activity.id', 'activity.kategori_activity', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.nama_kategori as category_name', 'kategori.deadline_duration as category_deadline', 'lokasi.nama_lokasi as location_name')->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')->leftJoin('users', 'activity.user_id', '=', 'users.id')->where('activity.id', $id);
 
         if (!empty($filters)) {
             if (isset($filters['company'])) {
@@ -249,7 +249,7 @@ public function getactivity_toll(Request $request)
         $filters = $request->only(['lokasi_id']);
 
         $activities = Activity::query()
-            ->select('activity.id', 'users.username as nama_user', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
+            ->select('activity.id', 'users.username as nama_user','activity.kategori_activity', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
             ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
             ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
             ->leftJoin('users', 'activity.user_id', '=', 'users.id')
@@ -291,12 +291,18 @@ public function getactivity_toll(Request $request)
     }
 
     public function delete_activity($id)
-    {
-        $activity = Activity::findOrFail($id);
-        $activity->delete();
+{
+    $activity = Activity::findOrFail($id);
 
-        return response()->json(['message' => 'Activity deleted successfully']);
-    }
+    // Delete associated activity workers
+    ActivityWorkers::where('activity_id', $activity->id)->delete();
+
+    // Now delete the activity
+    $activity->delete();
+
+    return response()->json(['message' => 'Activity deleted successfully']);
+}
+
 
     public function addactivity_nontoll(Request $request)
     {
