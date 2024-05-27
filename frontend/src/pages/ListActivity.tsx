@@ -21,9 +21,9 @@ const ListActivity = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [hapusLoading, setHapusLoading] = useState(false);
-  // const [tanggal, setTanggal] = useState(getDefaultDate());
+  
   const [showFilters, setShowFilters] = useState(false);
-  // const [filteredDate, setFilteredDate] = useState(getDefaultDate());
+
 
   useEffect(() => {
     const fetchActivity = async () => {
@@ -33,8 +33,7 @@ const ListActivity = () => {
           lokasi,
           kategori,
           company,
-          status,
-          // filteredDate, // Include filtered date value
+          status, 
           page,
         );
         console.log('activity', response);
@@ -89,13 +88,13 @@ const ListActivity = () => {
     }
   };
 
-  // const clearFilter = () => {
-  //   setLokasi(null);
-  //   setKategori(null);
-  //   setCompany(null);
-  //   setStatus(null);
-  //   setTanggal(getDefaultDate());
-  // };
+  const clearFilter = () => {
+    setLokasi(null);
+    setKategori(null);
+    setCompany(null);
+    setStatus(null);
+
+  };
 
   const dataCompany = ['mmn', 'jtse'];
 
@@ -134,11 +133,11 @@ const ListActivity = () => {
               data={kategoriData}
             />
           </div> */}
-          {/* <div>
+          <div>
             <Button onPress={clearFilter} color="danger" className="">
               Clear Filter
             </Button>
-          </div> */}
+          </div>
         </div>
 
         <ToastContainer autoClose={2000} />
