@@ -152,7 +152,7 @@ public function getactivity_toll(Request $request)
 
     // Get activities based on filters and join with the category and lokasi tables
     $activities = Activity::query()
-        ->select('activity.id', 'users.username as nama_user', 'activity.kategori_activity', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
+        ->select('activity.id', 'users.username as nama_user', 'activity.waktu_pengerjaan', 'activity.kategori_activity', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.deadline_duration as category_deadline', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
         ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
         ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
         ->leftJoin('users', 'activity.user_id', '=', 'users.id')
