@@ -30,6 +30,7 @@ import HistoryBarang from './pages/historybarang';
 import Itemdetail from './pages/DetailBarang';
 import UserList from './pages/UserList';
 import GrafikWaktuKerjaPage from './pages/GrafikWaktuKerjaPage';
+import TestPdf from './pages/TesPdf';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -317,6 +318,15 @@ function App() {
             <>
               <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <SignUp />
+            </>
+          }
+        />
+        <Route
+          path="/pdf"
+          element={
+            <>
+              <PageTitle title="test pdf" />
+              <TestPdf />
             </>
           }
         />

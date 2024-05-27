@@ -61,7 +61,7 @@ const ECommerce: React.FC = () => {
         <h4 className="text-xl font-bold text-black dark:text-white mb-5">
           Grafik Waktu Kerja
         </h4>
-        <div className="flex-1 w-32 ml-3">
+        <div className="flex-1 w-32 lg:ml-3">
           <select
             value={selectedYear}
             onChange={selectedYearHanlder}
@@ -84,7 +84,7 @@ const ECommerce: React.FC = () => {
           {dataGrafikWork &&
             dataGrafikWork.data.map((data, index) => {
               return (
-                <div className="w-1/2">
+                <div className="lg:w-1/2 w-full">
                   <WorkDurationChart data={data} key={index} />
                 </div>
               );
