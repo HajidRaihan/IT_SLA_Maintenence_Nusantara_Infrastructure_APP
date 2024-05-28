@@ -101,31 +101,15 @@ const ChartTwo: React.FC = () => {
 
   const totalCategories = state.series[0].data.reduce((acc, curr) => acc + curr, 0);
 
-  const handleReset = () => {
-    setState({
-      categories: [],
-      series: [
-        {
-          name: 'Count',
-          data: [],
-        },
-      ],
-    });
-  };
-
   return (
     <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
       <div className="mb-3 justify-between gap-4 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
-            Activity Categories
+            Hardware Performance
           </h5>
         </div>
-        <div>
-          <button onClick={handleReset} className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md">
-            Reset
-          </button>
-        </div>
+       
       </div>
 
       <div className="mb-2">
