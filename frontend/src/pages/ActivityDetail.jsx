@@ -7,6 +7,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useDisclosure, Button } from '@nextui-org/react';
 import TableDetailActivity from '../components/Tables/TableDetailActivity';
 import DoneActivityTable from '../components/Tables/DoneActivityTable';
+import PdfModal from '../components/FormActivity/PdfModal';
 
 const ActivityDetail = () => {
   const [detail, setDetail] = useState();
@@ -57,7 +58,7 @@ const ActivityDetail = () => {
               />
               <div className="w-full">
                 <TableDetailActivity data={detail} />
-                <Button
+                {/* <Button
                   onPress={onOpen}
                   className={`my-5 w-full inline-flex items-center justify-center rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 ${
                     detail.status === 'done'
@@ -67,7 +68,7 @@ const ActivityDetail = () => {
                   // isDisabled={detail.status === 'done'}
                 >
                   {detail.status === 'done' ? 'Selesai' : 'Selesaikan'}
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>
@@ -85,6 +86,13 @@ const ActivityDetail = () => {
                 />
                 <div className="w-full">
                   <DoneActivityTable data={detail} />
+                  <Button
+                    onPress={onOpen}
+                    color={'primary'}
+                    className="w-full mt-3"
+                  >
+                    Cetak
+                  </Button>
                 </div>
               </div>
             </div>
@@ -94,14 +102,20 @@ const ActivityDetail = () => {
         ''
       )}
       <ToastContainer autoClose={2000} />
+      <PdfModal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        id={id}
+        data={detail}
+      />
 
-      <ChangeStatusModal
+      {/* <ChangeStatusModal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         id={id}
         toastSuccess={() => toast.success('Success Approve Activity')}
         toastError={toastErrorMessage}
-      />
+      /> */}
     </DefaultLayout>
   );
 };
