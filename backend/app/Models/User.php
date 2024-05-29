@@ -24,6 +24,7 @@ class User extends Authenticatable
         'foto',
         'ttd',
         'role',
+        'total_waktu_pengerjaan'
     ];
 
     /**

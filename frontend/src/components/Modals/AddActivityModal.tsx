@@ -265,6 +265,23 @@ const AddActivityModal = ({
         setIsLoading(false);
         console.log(res);
         setData((prev) => [...prev, res.data]);
+
+        setCompany('');
+        setTanggal('');
+        setKategoriActivity('');
+        setJenisHardware([]);
+        setStandartAplikasi([]);
+        setUraianHardware('');
+        setUraianAplikasi('');
+        setAplikasiItTol([]);
+        setUraianItTol('');
+        setCatatan('');
+        setShift('');
+        setLokasi('');
+        setKategori('');
+        setKondisiAkhir('');
+        setFoto('');
+        setStatus('');
       }
     } catch (error) {
       console.error(error);
