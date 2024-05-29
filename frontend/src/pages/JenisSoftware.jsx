@@ -24,7 +24,6 @@ import {
 } from '../api/jenisSoftwareApi';
 
 const JenisSoftware = () => {
-
   const [jenisSoftware, setJenisSoftware] = useState();
   const [newJenisSoftware, setNewJenisSoftware] = useState('');
   const [jenisSoftwareId, setJenisSoftwareId] = useState();
@@ -74,30 +73,30 @@ const JenisSoftware = () => {
     }
   };
 
-    const handleUpdate = async () => {
-      const data = {
-        nama_Software: updateJenisSoftware,
-      };
-      try {
-        const res = await editJenisSoftware(data, jenisSoftwareId);
-        const updatedJenisSoftware = res.data;
-        const updatedIndex = jenisSoftware.findIndex(
-          (item) => item.id === jenisSoftwareId,
-        );
-        if (updatedIndex !== -1) {
-          setJenisSoftware((prevData) => {
-            const newData = [...prevData];
-            newData[updatedIndex] = updatedJenisSoftware;
-            return newData;
-          });
-        }
-        toast.success('Jenis Software Berhasil di Update :', res);
-      } catch (error) {
-        toast.error('Error saat mengupdate Jenis Software:', error);
-        // Handle the error gracefully (e.g., display an error message to the user)
-        console.error(error);
-      }
+  const handleUpdate = async () => {
+    const data = {
+      nama_Software: updateJenisSoftware,
     };
+    try {
+      const res = await editJenisSoftware(data, jenisSoftwareId);
+      const updatedJenisSoftware = res.data;
+      const updatedIndex = jenisSoftware.findIndex(
+        (item) => item.id === jenisSoftwareId,
+      );
+      if (updatedIndex !== -1) {
+        setJenisSoftware((prevData) => {
+          const newData = [...prevData];
+          newData[updatedIndex] = updatedJenisSoftware;
+          return newData;
+        });
+      }
+      toast.success('Standart Aplikasi Berhasil di Update :', res);
+    } catch (error) {
+      toast.error('Error saat mengupdate Standart Aplikasi:', error);
+      // Handle the error gracefully (e.g., display an error message to the user)
+      console.error(error);
+    }
+  };
 
   const handlerUpdateOpen = (id) => {
     setJenisSoftwareId(id);
@@ -107,11 +106,11 @@ const JenisSoftware = () => {
   return (
     <DefaultLayout>
       <ToastContainer />
-      <Breadcrumb pageName="Jenis Software" />
+      <Breadcrumb pageName="Standart Aplikasi" />
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="py-6 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Jenis Software
+            Standart Aplikasi
           </h4>
           <button
             className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
@@ -225,7 +224,7 @@ const JenisSoftware = () => {
         {/* <Paginate currentPage={currentPage} onPageChange={handlePageChange} /> */}
       </div>
       <AddStuffModal
-        title="Jenis Software"
+        title="Standart Aplikasi"
         isOpen={addModalOpen}
         onAdd={handleAddJenisSoftware}
         onChange={(e) => setNewJenisSoftware(e.target.value)}
@@ -233,7 +232,7 @@ const JenisSoftware = () => {
         onClose={onAddModalClose}
       />
       <AddStuffModal
-        title="Update Jenis Software"
+        title="Update Standart Aplikasi"
         isOpen={updateModalOpen}
         onAdd={handleUpdate}
         onChange={(e) => setUpdateJenisSoftware(e.target.value)}

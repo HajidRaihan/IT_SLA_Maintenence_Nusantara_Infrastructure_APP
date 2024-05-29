@@ -17,7 +17,7 @@ const getJenisSoftware = async () => {
 
     return response.data;
   } catch (error) {
-    console.error('Terjadi kesalahan saat menampilkan jenis Software', error);
+    console.error('Terjadi kesalahan saat menampilkan Standart aplikasi', error);
     throw error;
   }
 };
@@ -33,12 +33,12 @@ const addJenisSoftware = async (data) => {
       'jenisSoftware',
       data,
       headers,
-      'Mencoba menambahkan jenis Software',
+      'Mencoba menambahkan Standart aplikasi ',
     );
 
     return response.data;
   } catch (error) {
-    console.error('Terjadi kesalahan saat menambahkan jenis Software', error);
+    console.error('Terjadi kesalahan saat menambahkan Standart aplikasi', error);
     throw error;
   }
 };
@@ -54,12 +54,12 @@ const deleteJenisSoftware = async (id) => {
       `jenisSoftware/${id}`,
       {},
       headers,
-      'Mencoba hapus jenis Software',
+      'Mencoba hapus Standart aplikasi',
     );
 
     return response.data;
   } catch (error) {
-    console.error('Terjadi kesalahan saat hapus jenis Software', error);
+    console.error('Terjadi kesalahan saat hapus Standart aplikasi', error);
     throw error;
   }
 };

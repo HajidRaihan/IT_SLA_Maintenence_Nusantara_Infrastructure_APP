@@ -173,11 +173,11 @@ const handleAddKategori = async () => {
   return (
     <DefaultLayout>
       <ToastContainer />
-      <Breadcrumb pageName="Category" />
+      <Breadcrumb pageName="Kategori" />
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="py-6 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Add Category
+            Add Kategori
           </h4>
           <button
              onClick={handleAddForm} 
