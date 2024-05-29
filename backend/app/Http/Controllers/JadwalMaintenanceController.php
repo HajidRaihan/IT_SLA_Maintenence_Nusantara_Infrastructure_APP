@@ -23,6 +23,8 @@ class JadwalMaintenanceController extends Controller
             'frekuensi' => 'required|string|in:1x pertahun,2x pertahun',
             'waktu' => 'required|array',
             'waktu.*' => 'required|date_format:Y-m-d',
+            'status' => 'required|string|in:on time,late,not done',
+
         ]);
 
         $waktuArray = $request->input('waktu');
@@ -51,6 +53,8 @@ class JadwalMaintenanceController extends Controller
         'frekuensi' => 'required|string|in:1x pertahun,2x pertahun',
         'waktu' => 'required|array',
         'waktu.*' => 'required|date_format:Y-m-d',
+        'status' => 'required|string|in:on time,late,not done',
+
     ]);
 
     // Konversi waktu menjadi array
@@ -64,6 +68,7 @@ class JadwalMaintenanceController extends Controller
     $jadwalMaintenance->lokasi = $validateData['lokasi'];
     $jadwalMaintenance->frekuensi = $validateData['frekuensi'];
     $jadwalMaintenance->waktu = $waktuArray;
+    $jadwalMaintenance->status = $validateData['status'];
     $jadwalMaintenance->save();
     
     return response()->json([

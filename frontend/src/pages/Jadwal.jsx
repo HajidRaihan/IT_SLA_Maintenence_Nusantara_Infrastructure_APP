@@ -385,49 +385,49 @@ const Jadwal = () => {
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-semibold text-black dark:text-gray-400 tracking-wider"
                 >
                   No
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-semibold text-black dark:text-gray-400 tracking-wider"
                 >
                   Jenis Perusahaan
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-semibold text-black dark:text-gray-400 tracking-wider"
                 >
                   Uraian Kegiatan
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-semibold text-black dark:text-gray-400 tracking-wider"
                 >
                   Tahun
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-semibold text-black dark:text-gray-400 tracking-wider"
                 >
                   Lokasi
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-semibold text-black dark:text-gray-400 tracking-wider"
                 >
                   Frekuensi
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-semibold text-black dark:text-gray-400 tracking-wider"
                 >
                   Waktu
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-semibold text-black dark:text-gray-400 tracking-wider"
                 >
                   Aksi
                 </th>

@@ -14,11 +14,14 @@
     "url": "https://tailadmin.com"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/material": "^5.15.18",
     "@nextui-org/modal": "^2.0.29",
     "@nextui-org/react": "^2.2.10",
     "@react-google-maps/api": "^2.19.3",
