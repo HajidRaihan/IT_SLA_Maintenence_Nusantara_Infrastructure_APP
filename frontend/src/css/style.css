@@ -214,3 +214,7 @@ span.flatpickr-weekday,
 [x-cloak] {
   display: none !important;
 }
+
+.sidebar {
+  /* @apply w-16 h-full lg:w-20 lg:h-full; */
+}

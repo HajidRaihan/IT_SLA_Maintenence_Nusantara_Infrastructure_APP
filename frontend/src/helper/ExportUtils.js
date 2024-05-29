@@ -10,7 +10,7 @@ const exportToPdf = (data) => {
   doc.autoTable({
     head: [headers],
     body: table,
-  });
+  }); 
 
   doc.save('exported_data.pdf');
 };

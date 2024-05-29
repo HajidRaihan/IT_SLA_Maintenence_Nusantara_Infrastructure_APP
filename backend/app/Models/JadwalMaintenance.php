@@ -18,6 +18,7 @@ class JadwalMaintenance extends Model
         'lokasi',
         'frekuensi',
         'waktu',
+        'status'
     ];
 
     protected $casts = [
