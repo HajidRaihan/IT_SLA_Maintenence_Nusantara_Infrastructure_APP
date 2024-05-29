@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('lokasi');
             $table->enum('frekuensi', ['1x pertahun', '2x pertahun']);
             $table->json('waktu');
+            $table->json('status', ['on time', 'late', 'not done']);
             $table->timestamps();
         });
     }

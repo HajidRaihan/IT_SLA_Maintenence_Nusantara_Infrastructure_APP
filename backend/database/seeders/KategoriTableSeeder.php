@@ -14,13 +14,13 @@ class KategoriTableSeeder extends Seeder
     {
         DB::table('kategori')->insert([
             [
-                'nama_kategori' => 'Perbaikan barang',
+                'nama_kategori' => 'Kerusakan Minor',
                 'deadline_duration'  => '3',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_kategori' => 'kerusakan mayor',
+                'nama_kategori' => 'Kerusakan Mayor',
                 'deadline_duration'  =>'6',
                 'created_at' => now(),
                 'updated_at' => now(),

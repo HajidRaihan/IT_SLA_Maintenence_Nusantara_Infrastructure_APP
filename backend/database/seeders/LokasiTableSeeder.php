@@ -12,15 +12,81 @@ class LokasiTableSeeder extends Seeder
     {
         DB::table('lokasi')->insert([
             [
-                'nama_lokasi' => 'kantor cambayya',
+                'nama_lokasi' => 'Gerbang Tol cambayya',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_lokasi' => 'kantor IT Workshop',
+                'nama_lokasi' => 'Gerbang Tol Kaluku Bodoa',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'nama_lokasi' => 'Gerbang Tol Tamalanrea',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_lokasi' => 'Gerbang Tol Parangloe',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_lokasi' => 'Gerbang Tol Biringkanaya',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_lokasi' => 'Ramp Tallo Timur',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_lokasi' => 'Ramp Tallo Barat',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_lokasi' => 'Ramp Bira Timur',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_lokasi' => 'Ramp Bira Barat',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_lokasi' => 'Kantor operasional Cambayya',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_lokasi' => 'Kantor Menara Bosowa',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_lokasi' => 'Kantor pelayanan lalin',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_lokasi' => 'Kantor IT Workshop',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_lokasi' => 'Kantor Satelit',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_lokasi' => 'Kantor Project',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
 
         ]);
     }
