@@ -17,6 +17,7 @@ import { JadwalModal } from '../components/Modals/AddModal';
 import { useDisclosure } from '@nextui-org/react';
 import { UpdateJadwalModal } from '../components/Modals/UpdateLokasiModal';
 import DeleteModal from '../components/Modals/DeleteModal';
+import VerifiedModal from '../components/Modals/VerifiedModal';
 import Paginate from '../components/Pagination/paginate';
 import { exportToPdf, exportToExcel } from '../components/Modals/ExportUtils';
 import { faFilePdf, faFileExcel } from '@fortawesome/free-solid-svg-icons';
@@ -54,6 +55,12 @@ const Jadwal = () => {
     isOpen: deleteModalOpen,
     onOpen: onDeleteModalOpen,
     onClose: onDeleteModalClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: verifiedModalOpen,
+    onOpen: onVerifiedModalOpen,
+    onClose: onVerifiedModalClose,
   } = useDisclosure();
   
   const [filteredRecords, setFilteredRecords] = useState([]);
@@ -215,6 +222,11 @@ const Jadwal = () => {
     setJadwalId(id);
     onDeleteModalOpen();
   };
+
+  const handleVerifiedForm = (id) =>{
+    setJadwalId(id);
+    onVerifiedModalOpen();
+  }
 
   const handleUpdateForm = (id) => {
     setJadwalId(id);
@@ -544,6 +556,25 @@ const Jadwal = () => {
                           />
                         </svg>
                       </button>
+
+                      <button
+  className="hover:text-black-500"
+>
+  <svg
+    className="fill-current text-black-500"
+    width="18"
+    height="18"
+    viewBox="0 0 18 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0ZM9 16.2C4.8178 16.2 1.8 13.1822 1.8 9C1.8 4.8178 4.8178 1.8 9 1.8C13.1822 1.8 16.2 4.8178 16.2 9C16.2 13.1822 13.1822 16.2 9 16.2ZM9 4.5C8.60218 4.5 8.22064 4.65804 7.93934 4.93934C7.65804 5.22064 7.5 5.60218 7.5 6V10.5C7.5 10.8978 7.65804 11.2794 7.93934 11.5607C8.22064 11.842 8.60218 12 9 12C9.39782 12 9.77936 11.842 10.0607 11.5607C10.342 11.2794 10.5 10.8978 10.5 10.5V6C10.5 5.60218 10.342 5.22064 10.0607 4.93934C9.77936 4.65804 9.39782 4.5 9 4.5ZM9 14.25C8.60218 14.25 8.22064 14.408 7.93934 14.6893C7.65804 14.9706 7.5 15.3522 7.5 15.75C7.5 16.1478 7.65804 16.5294 7.93934 16.8107C8.22064 17.092 8.60218 17.25 9 17.25C9.39782 17.25 9.77936 17.092 10.0607 16.8107C10.342 16.5294 10.5 16.1478 10.5 15.75C10.5 15.3522 10.342 14.9706 10.0607 14.6893C9.77936 14.408 9.39782 14.25 9 14.25Z"
+      fill=""
+    />
+  </svg>
+</button>
+
                     </div>
                   </td>
                 </tr>
@@ -598,6 +629,11 @@ const Jadwal = () => {
         isDeleteOpen={deleteModalOpen}
         onDelete={handleDelete}
         onDeleteClose={onDeleteModalClose}
+      />
+
+      <VerifiedModal
+        isVerifiedOpen={verifiedModalOpen}
+        onVerifiedClose = {onVerifiedModalClose}
       />
     </DefaultLayout>
   );
