@@ -55,7 +55,7 @@ const Jadwal = () => {
     onOpen: onDeleteModalOpen,
     onClose: onDeleteModalClose,
   } = useDisclosure();
-  
+
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [newTahunFilter, setNewTahunFilter] = useState('');
   const [selectedJenisPerusahaan, setSelectedJenisPerusahaan] = useState('');
@@ -603,4 +603,4 @@ const Jadwal = () => {
   );
 };
 
-export default Jadwal;
+export default Jadwal;

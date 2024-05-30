@@ -32,7 +32,7 @@ const TimeDisplay = ({ timeString }) => {
     </div>
   );
 };
-const DoneActivityTable = ({ data, user }) => {
+const PendingActivityTable = ({ data }) => {
   const [tanggalSelesai, setTanggalSelesai] = useState();
   const [tanggalMulai, setTanggalMulai] = useState();
   const [lamaHandle, setLamaHandle] = useState();
@@ -65,18 +65,15 @@ const DoneActivityTable = ({ data, user }) => {
       .replace(/\.\d+/g, '');
 
     console.log({ tanggalMulaiFormat });
-    const tanggalSelesaiFormat = data.ended_at.replace(' ', 'T');
-    console.log({ tanggalSelesaiFormat });
+    // const tanggalSelesaiFormat = data.ended_at.replace(' ', 'T');
+    // console.log({ tanggalSelesaiFormat });
 
-    const selisihDetik = differenceInSeconds(
-      tanggalSelesaiFormat,
-      tanggalMulaiFormat,
-    );
+    const selisihDetik = differenceInSeconds(tanggalMulaiFormat);
     console.log({ selisihDetik });
     const lama = konversiDetik(selisihDetik);
     console.log({ lama });
     setLamaHandle(lama);
-    setTanggalSelesai(format(tanggalSelesaiFormat, 'd MMMM yyyy, HH:mm:ss'));
+    // setTanggalSelesai(format(tanggalSelesaiFormat, 'd MMMM yyyy, HH:mm:ss'));
     setTanggalMulai(format(tanggalMulaiFormat, 'd MMMM yyyy, HH:mm:ss'));
   }, []);
 
@@ -101,24 +98,24 @@ const DoneActivityTable = ({ data, user }) => {
           <tr>
             <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
               <h5 className="font-medium text-black dark:text-white">
-                Pelapor Hanlde
+                Pelapor Pending
               </h5>
             </td>
             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-              <p className="text-black dark:text-white">{user}</p>
+              <p className="text-black dark:text-white">{data.username}</p>
             </td>
           </tr>
           <tr>
             <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
               <h5 className="font-medium text-black dark:text-white">
-                Tanggal Report
+                Tanggal Report Pending
               </h5>
             </td>
             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
               <p className="text-black dark:text-white">{tanggalMulai}</p>
             </td>
           </tr>
-          <tr>
+          {/* <tr>
             <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
               <h5 className="font-medium text-black dark:text-white">
                 Tanggal Selesai
@@ -127,38 +124,30 @@ const DoneActivityTable = ({ data, user }) => {
             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
               <p className="text-black dark:text-white">{tanggalSelesai}</p>
             </td>
-          </tr>
+          </tr> */}
 
           <tr>
             <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
               <h5 className="font-medium text-black dark:text-white">
-                Waktu Handle
+                Deskripsi pending
               </h5>
             </td>
             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
               <p className="text-black dark:text-white">
-                {/* {lamaHandle
-                  ? `
-                  ${lamaHandle.hari !== 0 ? lamaHandle.hari + ' Hari ' : ''} 
-                    ${lamaHandle.jam !== 0 ? lamaHandle.jam + ' Jam ' : ''}  
-                    ${
-                      lamaHandle.menit !== 0 ? lamaHandle.menit + ' Menit ' : ''
-                    }  
-                    ${lamaHandle.detik} Detik`
-                  : '-'} */}
-                <TimeDisplay timeString={data.waktu_pengerjaan} />
-                {/* {data.waktu_pengerjaan} */}
+                {data.deskripsi_pending}
               </p>
             </td>
           </tr>
           <tr>
             <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
               <h5 className="font-medium text-black dark:text-white">
-                Kondisi Akhir
+                Waktu Pending
               </h5>
             </td>
             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-              <p className="text-black dark:text-white">{data.kondisi_akhir}</p>
+              <p className="text-black dark:text-white">
+                <TimeDisplay timeString={data.work_duration} />
+              </p>
             </td>
           </tr>
           {/* <tr>
@@ -198,4 +187,4 @@ const DoneActivityTable = ({ data, user }) => {
   );
 };
 
-export default DoneActivityTable;
+export default PendingActivityTable;
