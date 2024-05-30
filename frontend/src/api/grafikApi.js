@@ -6,6 +6,7 @@ const getGrafikWorkDuration = async (year, limit) => {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
   };
+
   try {
     const response = await RequestApi(
       'GET',

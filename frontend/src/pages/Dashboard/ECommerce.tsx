@@ -84,8 +84,8 @@ const ECommerce: React.FC = () => {
           {dataGrafikWork &&
             dataGrafikWork.data.map((data, index) => {
               return (
-                <div className="lg:w-1/2 w-full">
-                  <WorkDurationChart data={data} key={index} />
+                <div className="lg:w-1/2 w-full" key={index}>
+                  <WorkDurationChart data={data} />
                 </div>
               );
             })}
