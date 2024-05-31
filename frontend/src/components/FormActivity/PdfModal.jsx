@@ -24,7 +24,13 @@ const PdfModal = ({ isOpen, onOpenChange, data }) => {
       const res = await getJenisHardware();
       console.log({ res });
 
-      setJenisHardwareData(res);
+      setJenisHardwareData(
+        res.filter(
+          (hardware) =>
+            data.jenis_hardware &&
+            data.jenis_hardware.includes(hardware.nama_hardware),
+        ),
+      );
     };
     fetchHardware();
   }, []);
@@ -34,7 +40,13 @@ const PdfModal = ({ isOpen, onOpenChange, data }) => {
       const res = await getJenisSoftware();
       console.log({ res });
 
-      setJenisSoftwareData(res);
+      setJenisSoftwareData(
+        res.filter(
+          (software) =>
+            data.standart_aplikasi &&
+            data.standart_aplikasi.includes(software.nama_software),
+        ),
+      );
     };
     fetchSoftware();
   }, []);
@@ -45,7 +57,13 @@ const PdfModal = ({ isOpen, onOpenChange, data }) => {
       console.log({ res });
       // Menggunakan Set untuk menyaring nilai-nilai unik
 
-      setAplikasiItTolData(res);
+      setAplikasiItTolData(
+        res.filter(
+          (aplikasi) =>
+            data.aplikasi_it_tol &&
+            data.aplikasi_it_tol.includes(aplikasi.nama_aplikasiTol),
+        ),
+      );
     };
     fetchAplikasi();
   }, []);
@@ -156,7 +174,7 @@ const PdfModal = ({ isOpen, onOpenChange, data }) => {
                           <input type="checkbox" className="ml-2" /> Tol
                           <input type="checkbox" className="ml-2" /> Non Tol
                         </div>
-                        <table className="w-full border-collapse mb-2">
+                        {/* <table className="w-full border-collapse mb-2">
                           <thead>
                             <tr className="bg-gray-200">
                               <th className="border p-1 w-1/3">
@@ -216,17 +234,61 @@ const PdfModal = ({ isOpen, onOpenChange, data }) => {
                                 </tr>
                               );
                             })}
-
-                            <tr>
-                              <td className="border p-1">
-                                <div className="flex items-center">
-                                  <input type="checkbox" className="mr-2" />
-                                  Lainnya
+                          </tbody>
+                        </table> */}
+                        <table className="w-full border-collapse mb-2">
+                          <thead>
+                            <tr className="bg-gray-200">
+                              <th className="border p-1 w-1/3">
+                                <div className="flex items-center justify-center">
+                                  <input type="checkbox" name="" id="" />
+                                  <span className="ml-3">Jenis Hardware</span>
                                 </div>
-                              </td>
-                              <td className="border p-1"></td>
-                              <td className="border p-1"></td>
+                              </th>
+                              <th className="border p-1 w-1/8">
+                                <div className="flex items-center">Kondisi</div>
+                              </th>
+                              <th className="border p-1 w-1/2">
+                                <div className="flex items-center">
+                                  <input type="checkbox" name="" id="" />
+                                  <span className="text-red-500 ml-3">
+                                    Mohon dijabarkan Permasalahan**
+                                  </span>
+                                </div>
+                              </th>
                             </tr>
+                          </thead>
+                          <tbody>
+                            {jenisHardwareData.map((hardware, index) => (
+                              <tr key={index}>
+                                <td className="border p-1">
+                                  <div className="flex items-center">
+                                    <input
+                                      type="checkbox"
+                                      className="mr-2"
+                                      checked={
+                                        data.jenis_hardware &&
+                                        data.jenis_hardware.includes(
+                                          hardware.nama_hardware,
+                                        )
+                                      }
+                                    />
+                                    {hardware.nama_hardware}
+                                  </div>
+                                </td>
+                                <td className="border p-1">
+                                  <input type="checkbox" className="ml-2" />
+                                </td>
+                                {index === 0 && (
+                                  <td
+                                    className="border p-1 one-line"
+                                    rowSpan={jenisHardwareData.length}
+                                  >
+                                    <p>{data.uraian_hardware}</p>
+                                  </td>
+                                )}
+                              </tr>
+                            ))}
                           </tbody>
                         </table>
                       </div>
@@ -283,44 +345,19 @@ const PdfModal = ({ isOpen, onOpenChange, data }) => {
                                     </div>
                                   </td>
                                   <td className="border p-1">
-                                    {data.standart_aplikasi &&
-                                    data.standart_aplikasi.includes(
-                                      software.nama_software,
-                                    )
-                                      ? data.kondisi_akhir
-                                      : ''}
+                                    <input type="checkbox" className="ml-2" />
                                   </td>
-                                  <td className="border p-1">
-                                    {data.standart_aplikasi &&
-                                    data.standart_aplikasi.includes(
-                                      software.nama_software,
-                                    )
-                                      ? data.uraian_aplikasi
-                                      : ''}
-                                  </td>
+                                  {index === 0 && (
+                                    <td
+                                      className="border p-1 one-line"
+                                      rowSpan={jenisHardwareData.length}
+                                    >
+                                      <p>{data.uraian_hardware}</p>
+                                    </td>
+                                  )}
                                 </tr>
                               );
                             })}
-                            <tr>
-                              <td className="border p-1">
-                                <div className="flex items-center">
-                                  <input type="checkbox" className="mr-2" />
-                                  Open Office/word/excel/powerpoint
-                                </div>
-                              </td>
-                              <td className="border p-1"></td>
-                              <td className="border p-1"></td>
-                            </tr>
-                            <tr>
-                              <td className="border p-1">
-                                <div className="flex items-center">
-                                  <input type="checkbox" className="mr-2" />
-                                  Lainnya
-                                </div>
-                              </td>
-                              <td className="border p-1"></td>
-                              <td className="border p-1"></td>
-                            </tr>
                           </tbody>
                         </table>
                         <table className="w-full border-collapse mb-2">
@@ -369,64 +406,19 @@ const PdfModal = ({ isOpen, onOpenChange, data }) => {
                                     </div>
                                   </td>
                                   <td className="border p-1">
-                                    {data.aplikasi_it_tol &&
-                                    data.aplikasi_it_tol.includes(
-                                      aplikasi?.nama_aplikasiTol,
-                                    )
-                                      ? data?.kondisi_akhir
-                                      : ''}
+                                    <input type="checkbox" className="ml-2" />
                                   </td>
-                                  <td className="border p-1">
-                                    {data.aplikasi_it_tol &&
-                                    data.aplikasi_it_tol.includes(
-                                      aplikasi.nama_aplikasiTol,
-                                    )
-                                      ? data?.uraian_it_tol
-                                      : ''}
-                                  </td>
+                                  {index === 0 && (
+                                    <td
+                                      className="border p-1 one-line"
+                                      rowSpan={jenisHardwareData.length}
+                                    >
+                                      <p>{data.uraian_hardware}</p>
+                                    </td>
+                                  )}
                                 </tr>
                               );
                             })}
-                            <tr>
-                              <td className="border p-1">
-                                <div className="flex items-center">
-                                  <input type="checkbox" className="mr-2" />
-                                  Program PCS
-                                </div>
-                              </td>
-                              <td className="border p-1"></td>
-                              <td className="border p-1"></td>
-                            </tr>
-                            <tr>
-                              <td className="border p-1">
-                                <div className="flex items-center">
-                                  <input type="checkbox" className="mr-2" />
-                                  Program RTM
-                                </div>
-                              </td>
-                              <td className="border p-1"></td>
-                              <td className="border p-1"></td>
-                            </tr>
-                            <tr>
-                              <td className="border p-1">
-                                <div className="flex items-center">
-                                  <input type="checkbox" className="mr-2" />
-                                  Program CCTV/VMS
-                                </div>
-                              </td>
-                              <td className="border p-1"></td>
-                              <td className="border p-1"></td>
-                            </tr>
-                            <tr>
-                              <td className="border p-1">
-                                <div className="flex items-center">
-                                  <input type="checkbox" className="mr-2" />
-                                  Lainnya
-                                </div>
-                              </td>
-                              <td className="border p-1"></td>
-                              <td className="border p-1"></td>
-                            </tr>
                           </tbody>
                         </table>
                         <table className="w-full border-collapse mb-2">
