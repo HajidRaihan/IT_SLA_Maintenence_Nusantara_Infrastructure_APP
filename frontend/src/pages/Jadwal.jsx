@@ -57,12 +57,6 @@ const Jadwal = () => {
     onClose: onDeleteModalClose,
   } = useDisclosure();
 
-  const {
-    isOpen: verifiedModalOpen,
-    onOpen: onVerifiedModalOpen,
-    onClose: onVerifiedModalClose,
-  } = useDisclosure();
-  
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [newTahunFilter, setNewTahunFilter] = useState('');
   const [selectedJenisPerusahaan, setSelectedJenisPerusahaan] = useState('');
@@ -631,12 +625,12 @@ const Jadwal = () => {
         onDeleteClose={onDeleteModalClose}
       />
 
-      <VerifiedModal
+      {/* <VerifiedModal
         isVerifiedOpen={verifiedModalOpen}
         onVerifiedClose = {onVerifiedModalClose}
-      />
+      /> */}
     </DefaultLayout>
   );
 };
 
-export default Jadwal;
+export default Jadwal;

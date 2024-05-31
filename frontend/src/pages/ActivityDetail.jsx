@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DefaultLayout from '../layout/DefaultLayout';
-import { getDetailActivity } from '../api/activityApi';
+import { getActivityWorker, getDetailActivity } from '../api/activityApi';
 import { Link, useParams } from 'react-router-dom';
 import ChangeStatusModal from '../components/Modals/ChangeStatusModal';
 import { toast, ToastContainer } from 'react-toastify';
@@ -8,11 +8,15 @@ import { useDisclosure, Button } from '@nextui-org/react';
 import TableDetailActivity from '../components/Tables/TableDetailActivity';
 import DoneActivityTable from '../components/Tables/DoneActivityTable';
 import PdfModal from '../components/FormActivity/PdfModal';
+import PendingActivityTable from '../components/Tables/PendingActivityTable';
 
 const ActivityDetail = () => {
   const [detail, setDetail] = useState();
   const [fotoAkhir, setfotoAkhir] = useState();
   const [kondisiAkhir, setKondisiAkhir] = useState();
+  const [workerPending, setWorkerPending] = useState();
+  const [workerDone, setWorkerDone] = useState();
+  const [workerProcess, setWorkerProcess] = useState();
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -25,6 +29,29 @@ const ActivityDetail = () => {
       setDetail(res.data.data[0]);
     };
     fetchActivity();
+  }, []);
+
+  useEffect(() => {
+    const fetchWorker = async () => {
+      const res = await getActivityWorker(id);
+
+      console.log('acitivty worker', res.data);
+      const workerPendingFilter = await res.data.filter(
+        (worker) => worker.status === 'pending',
+      );
+      setWorkerPending(workerPendingFilter);
+      const workerDoneFilter = await res.data.filter(
+        (worker) => worker.status === 'done',
+      );
+      setWorkerDone(workerDoneFilter[0]);
+      const workerProcessFilter = await res.data.filter(
+        (worker) => worker.status === 'process',
+      );
+
+      console.log('worker done', workerDoneFilter);
+      setWorkerProcess(workerProcessFilter);
+    };
+    fetchWorker();
   }, []);
 
   // const handleApprove = async () => {
@@ -72,6 +99,28 @@ const ActivityDetail = () => {
               </div>
             </div>
           </div>
+
+          {workerPending
+            ? workerPending.map((data, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="mt-10 rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
+                  >
+                    <h1 className="text-3xl font-semibold text-black dark:text-white text-center uppercase">
+                      Pending
+                    </h1>
+                    <div className="h-0.5 mb-10 bg-stroke mt-5" />
+                    <div className="mb-10">
+                      <div className="w-full">
+                        <PendingActivityTable data={data} />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            : ''}
+
           {detail.status === 'done' && (
             <div className="mt-10 rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
               <h1 className="text-3xl font-semibold text-black dark:text-white text-center uppercase">
@@ -85,7 +134,10 @@ const ActivityDetail = () => {
                   className="w-1/3 h-full"
                 />
                 <div className="w-full">
-                  <DoneActivityTable data={detail} />
+                  <DoneActivityTable
+                    data={detail}
+                    user={workerDone?.username}
+                  />
                   <Button
                     onPress={onOpen}
                     color={'primary'}

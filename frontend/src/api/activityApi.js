@@ -175,6 +175,27 @@ const getAllActivityList = async () => {
   }
 };
 
+const getActivityWorker = async (id) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${Cookies.get('access_token')}`,
+  };
+
+  try {
+    const response = await RequestApi(
+      'GET',
+      `activity_workers/${id}`,
+      {},
+      headers,
+      'Mencoba menampilkan acitvity',
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat menureen activity', error);
+    throw error;
+  }
+};
 export {
   addActivity,
   getAllActivity,
@@ -183,4 +204,5 @@ export {
   editActivity,
   getAllActivityList,
   changeStatus,
+  getActivityWorker,
 };
