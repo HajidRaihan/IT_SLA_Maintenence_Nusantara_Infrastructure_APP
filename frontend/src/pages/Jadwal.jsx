@@ -464,6 +464,12 @@ const Jadwal = () => {
                 >
                   Aksi
                 </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-semibold text-black dark:text-gray-400 tracking-wider"
+                >
+                  Status
+                </th>
               </tr>
             </thead>
             <tbody className="bg-gray-50 dark:bg-gray-800">
@@ -609,6 +615,11 @@ const Jadwal = () => {
   </svg>
 </button>
 
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900 dark:text-gray-100">
+                      {item.status}
                     </div>
                   </td>
                 </tr>
