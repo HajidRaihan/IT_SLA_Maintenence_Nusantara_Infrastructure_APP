@@ -33,7 +33,7 @@
     "flatpickr": "^4.6.13",
     "framer-motion": "^11.0.20",
     "headlessui": "^0.0.0",
-    "html2pdf.js": "^0.9.0",
+    "html2pdf.js": "^0.9.3",
     "js-cookie": "^3.0.5",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
