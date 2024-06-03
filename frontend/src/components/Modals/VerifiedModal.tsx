@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, Button } from "@nextui-org/react";
 
-function VerifiedModal({ isVerifiedOpen, onVerifiedClose, onComplete, onProcess, onNotDone }) {
+function VerifiedModal({  isVerifiedOpen,onAdd,onChangeStatus1,valueStatus,onVerifiedClose  }) {
   return (
     <>
       <Modal isOpen={isVerifiedOpen} onClose={onVerifiedClose} placement="top-center">
@@ -9,17 +9,23 @@ function VerifiedModal({ isVerifiedOpen, onVerifiedClose, onComplete, onProcess,
           <>
             <ModalHeader className="flex flex-col gap-1">Delete Data</ModalHeader>
             <ModalBody>
-            <Button color="primary" variant="flat" onPress={onComplete}>
-                Complete
+            <input 
+            value={valueStatus}
+            onChange={onChangeStatus1}
+            />
+              <Button color="warning" value={valueStatus}
+                >
+                Late
               </Button>
-              <Button color="warning" onPress={onProcess}>
-                Process
-              </Button>
-              <Button color="danger" onPress={onNotDone}>
-                Not Done
+              <Button color="danger" value={valueStatus}
+              >
+                not
               </Button>
               <Button color="secondary" variant="flat" onPress={onVerifiedClose}>
                 Close
+              </Button>
+              <Button color="primary" onPress={onAdd}>
+                Update
               </Button>
             </ModalBody>
           </>
