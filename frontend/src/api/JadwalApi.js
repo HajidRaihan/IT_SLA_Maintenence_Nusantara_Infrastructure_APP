@@ -46,6 +46,28 @@ const addJadwal = async (data) => {
     }
   };
 
+  const updateStatusjadwal = async(id,data) => {
+    const headers = {
+        'Content-Type' : 'application/json',
+        Authorization: `Bearer ${Cookies.get('access_token')}`,
+    };
+    try{
+        const response = await RequestApi(
+            'PUT',
+            `jadwal-maintenancestatus/${id}`,
+            data,
+            headers,
+            'mencoba mengupdate status jadwal' 
+
+        );
+
+        return response.data;
+    }catch(error){
+        console.error("Terjadi Kesalahan",error);
+        throw error;
+    }
+}
+
   const updatejadwal = async(id,data) => {
     const headers = {
         'Content-Type' : 'application/json',
@@ -89,4 +111,4 @@ const deleteJadwal = async(id) =>{
       }
 }
   
-  export { addJadwal,getJadwal,updatejadwal,deleteJadwal };
+  export { addJadwal,getJadwal,updatejadwal,deleteJadwal,updateStatusjadwal };

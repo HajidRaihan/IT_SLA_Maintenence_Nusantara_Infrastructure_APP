@@ -7,7 +7,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import { Pagination, Select } from '@mui/material';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 
-
 const getDefaultDate = () => {
   const today = new Date();
   return today.toISOString().split('T')[0];
@@ -30,11 +29,12 @@ const ListActivity = () => {
       console.error('Data is not an array:', data);
       return;
     }
-  
-  
+
     const filtered = data.filter((item) => {
       const lokasiFillter = lokasiFilter
-        ? (item.location_name || '').toLowerCase().includes(lokasiFilter.toLowerCase())
+        ? (item.location_name || '')
+            .toLowerCase()
+            .includes(lokasiFilter.toLowerCase())
         : true;
       const kategoriFillter = kategoriFilter
         ? (item.category_name || '')
@@ -49,15 +49,15 @@ const ListActivity = () => {
             .toLowerCase()
             .includes(perusahaanFilter.toLowerCase())
         : true;
-        // const tanggalFillter = tanggalFilter.match(/^\d{4}-\d{2}-\d{2}$/);
-  
+      // const tanggalFillter = tanggalFilter.match(/^\d{4}-\d{2}-\d{2}$/);
+
       return (
-        lokasiFillter && kategoriFillter && statusFillter && perusahaanFillter );
+        lokasiFillter && kategoriFillter && statusFillter && perusahaanFillter
+      );
     });
-  
+
     setFilteredRecords(filtered);
   };
-  
 
   useEffect(() => {
     handleFilter();
@@ -109,10 +109,12 @@ const ListActivity = () => {
     // setTanggalFilter(getDefaultDate());
   };
 
-  const dropdownLokasi = Array.from(new Set(data.map((item) => item.location_name)));
+  const dropdownLokasi = Array.from(
+    new Set(data.map((item) => item.location_name)),
+  );
   const dropdownKategori = Array.from(
     new Set(data.map((item) => item.category_name)),
-);
+  );
   const dropdownStatus = Array.from(new Set(data.map((item) => item.status)));
   const dropdownPerusahaan = Array.from(
     new Set(data.map((item) => item.company)),
@@ -122,8 +124,7 @@ const ListActivity = () => {
     <DefaultLayout>
       <ToastContainer />
       <Breadcrumb pageName="Activity" />
-        <div className="py-1 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
-          </div>
+      <div className="py-1 px-4 md:px-6 xl:px-7.5 flex justify-between items-center"></div>
       <div className="py-6 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
         <h4 className="text-xl font-semibold text-black dark:text-white">
           Filter Activity

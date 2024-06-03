@@ -11,8 +11,7 @@ import ActionModal from '../Modals/ActionModal';
 import CsvIcon from '../../assets/icon/csv-icon.png';
 import { exportToPdf, exportToExcel } from '../../helper/ExportUtils';
 import { getAllActivityList } from '../../api/activityApi';
-
-
+import { faFilePdf, faFileExcel } from '@fortawesome/free-solid-svg-icons';
 
 const ListActivityTable = ({
   data,
@@ -82,23 +81,31 @@ const ListActivityTable = ({
           List Activity
         </h4>
         <div className="flex items-center gap-3">
-          <button onClick={handleExportExcel}>
-            <img src={CsvIcon} alt="" className="w-8 h-8" />
-          </button>
-          {/* <CsvDownloadButton
-            data={data}
-            filename="activity log"
-          ></CsvDownloadButton> */}
-          <Button
-            className="border text-xs font-medium flex justify-center items-center border-stroke rounded-lg px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
-            onPress={openAddModalHandler}
+          <button
+            onClick={openAddModalHandler}
+            className="flex items-center rounded-full px-1 py-1 bg-blue-300 dark:bg-boxdark shadow-default text-white"
           >
-            <FontAwesomeIcon
-              icon={faPlus}
-              className="green-light-icon text-md"
-            />
-            <p>Tambah activity</p>
-          </Button>
+            <div className="w-6 h-6 flex items-center justify-center bg-white rounded-full shadow-md">
+              <FontAwesomeIcon
+                icon={faPlus}
+                className="text-blue-500 text-md"
+              />
+            </div>
+            <span className="ml-2"></span>
+          </button>
+
+          <button
+            onClick={handleExportExcel}
+            className="flex items-center rounded-full px-1 py-1 bg-green-300 dark:bg-boxdark shadow-default text-white ml-4"
+          >
+            <div className="w-6 h-6 flex items-center justify-center bg-white rounded-full shadow-md">
+              <FontAwesomeIcon
+                icon={faFileExcel}
+                className="text-green-500 text-md"
+              />
+            </div>
+            <span className="ml-2"></span>
+          </button>
         </div>
       </div>
 
@@ -159,7 +166,9 @@ const ListActivityTable = ({
                     className={`inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
                       item.status === 'done'
                         ? 'bg-success text-success'
-                        : 'bg-warning text-warning'
+                        : item.status === 'process'
+                        ? 'bg-warning text-warning'
+                        : 'bg-red-500 text-red-500'
                     }`}
                   >
                     {item.status}

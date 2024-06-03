@@ -5,6 +5,7 @@ import { getAllActivityList } from '../../api/activityApi';
 
 interface ActivityData {
   jenis_hardware: string;
+  updated_at: string;
   // Add other fields from your API response here if needed
 }
 
@@ -22,7 +23,7 @@ const options: ApexOptions = {
       show: false,
     },
   },
-  colors: ["#00008B", "#ADD8E6"],
+  colors: ["#00008B"], // Bar color
   plotOptions: {
     bar: {
       horizontal: false,
@@ -31,15 +32,23 @@ const options: ApexOptions = {
     },
   },
   dataLabels: {
-    enabled: false,
+    enabled: true,
+    offsetY: -20,
+    style: {
+      fontSize: '12px',
+      colors: ["#000"],
+    }
   },
   xaxis: {
     categories: [],
   },
   yaxis: {
     title: {
-      text: 'Count',
+      text: 'Total Waktu Pengerjaan (minutes)',
     },
+    labels: {
+        show: false
+    }
   },
   fill: {
     opacity: 1,
@@ -61,15 +70,24 @@ const ChartTwo: React.FC = () => {
       },
     ],
   });
+  const [startYear, setStartYear] = useState<number>(2020); // Default start year
+  const [endYear, setEndYear] = useState<number>(2024); // Default end year
+
 
   useEffect(() => {
-    getAllActivityList()
+    getAllActivityList({ startYear, endYear })
       .then(res => {
         const data: ActivityData[] = res.data;
         const categoryCountsMap: Map<string, number> = new Map();
 
+        // Filter data by year
+        const filteredData = data.filter(item => {
+          const updatedAtYear = new Date(item.updated_at).getFullYear();
+          return updatedAtYear >= startYear && updatedAtYear <= endYear;
+        });
+
         // Count occurrences of each category
-        data.forEach(item => {
+        filteredData.forEach(item => {
           const categories = item.jenis_hardware.split(',').map(cat => cat.trim());
           categories.forEach(cat => {
             if (categoryCountsMap.has(cat)) {
@@ -97,7 +115,7 @@ const ChartTwo: React.FC = () => {
       .catch(error => {
         console.error('Error fetching activity data:', error);
       });
-  }, []);
+  }, [startYear, endYear]);
 
   const totalCategories = state.series[0].data.reduce((acc, curr) => acc + curr, 0);
 
@@ -109,8 +127,25 @@ const ChartTwo: React.FC = () => {
             Hardware Performance
           </h5>
         </div>
-       
+        <div>
+          <label className="mr-2">Start Year:</label>
+          <input
+            type="number"
+            value={startYear}
+            onChange={(e) => setStartYear(parseInt(e.target.value, 10))}
+            className="border rounded p-1"
+          />
+          <label className="mx-2">End Year:</label>
+          <input
+            type="number"
+            value={endYear}
+            onChange={(e) => setEndYear(parseInt(e.target.value, 10))}
+            className="border rounded p-1"
+          />
+   
+        </div>
       </div>
+      
 
       <div className="mb-2">
         <div id="chartThree" className="mx-auto flex justify-center">

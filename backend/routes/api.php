@@ -34,10 +34,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 
+Route::get('/user/{id}', [UserController::class, 'getById']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('logout', [AuthenticationController::class, 'logout']);
     Route::post('/user', [AuthenticationController::class, 'user']);
-
+    
     Route::get('/users', [UserController::class, 'index']);
     Route::post('/users/update/{id}', [UserController::class, 'updateProfile']);
 

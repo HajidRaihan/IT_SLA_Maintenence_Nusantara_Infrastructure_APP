@@ -16,6 +16,13 @@ class UserController extends Controller
         return response()->json(['message' => 'berhasil menampilkan user', 'data' => $user]);
     }
 
+    public function getById($id)
+    {
+        $user = User::findOrFail($id);
+
+        return response()->json(['message' => 'berhasil menampilkan user', 'data' => $user]);
+    }
+
     public function updateProfile(Request $request, $id)
     {
         $validate = $request->validate([

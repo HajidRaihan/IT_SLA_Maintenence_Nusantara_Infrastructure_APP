@@ -7,6 +7,7 @@ import {
   getJadwal,
   updatejadwal,
   deleteJadwal,
+  updateStatusjadwal
 } from '../api/JadwalApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -17,6 +18,7 @@ import { JadwalModal } from '../components/Modals/AddModal';
 import { useDisclosure } from '@nextui-org/react';
 import { UpdateJadwalModal } from '../components/Modals/UpdateLokasiModal';
 import DeleteModal from '../components/Modals/DeleteModal';
+import VerifiedModal from '../components/Modals/VerifiedModal';
 import Paginate from '../components/Pagination/paginate';
 import { exportToPdf, exportToExcel } from '../components/Modals/ExportUtils';
 import { faFilePdf, faFileExcel } from '@fortawesome/free-solid-svg-icons';
@@ -30,6 +32,7 @@ const Jadwal = () => {
   const [newTahun, setNewTahun] = useState(0);
   const [newLokasi, setNewLokasi] = useState('');
   const [newFrekuensi, setNewFrekuensi] = useState('');
+  const [newStatus, setNewStatus] = useState('');
   const [newWaktu, setNewWaktu] = useState([]);
   const [updateJenisPerusahaan, setUpdateJenisPerusahaan] = useState('');
   const [updateUraianKegiatan, setUpdateUraianKegiatan] = useState('');
@@ -55,7 +58,13 @@ const Jadwal = () => {
     onOpen: onDeleteModalOpen,
     onClose: onDeleteModalClose,
   } = useDisclosure();
-  
+
+  const {
+    isOpen: VerifiedModalOpen,
+    onOpen: onVerifiedModalOpen,
+    onClose: onVerifiedModalClose,
+  } = useDisclosure();
+
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [newTahunFilter, setNewTahunFilter] = useState('');
   const [selectedJenisPerusahaan, setSelectedJenisPerusahaan] = useState('');
@@ -149,6 +158,11 @@ const Jadwal = () => {
   const handleTahun = (e) => {
     setNewTahun(parseInt(e.target.value));
   };
+
+  const handleStatusontime = (e) => {
+    setNewStatus(e.target.value);
+  };
+  
   const handleFrekuensi = (e) => {
     setNewFrekuensi(e.target.value);
   };
@@ -211,14 +225,45 @@ const Jadwal = () => {
     }
   };
 
+  const handleUpdateStatus = async () => {
+    const dataToUpdate = {
+     status:newStatus,
+    };
+    try {
+      const res = await updateStatusjadwal(JadwalId, dataToUpdate);
+      const updateJadwal = res.data;
+      const updatedIndex = data.findIndex((item) => item.id === JadwalId);
+      if (updatedIndex !== -1) {
+        setData((prevData) => {
+          const newData = [...prevData];
+          newData[updatedIndex] = updateJadwal;
+          return newData;
+        });
+      }
+      toast.success('Jadwal Status updated successfully :', res);
+    } catch (error) {
+      toast.error('Error updating Jadwal', error);
+      // Handle the error gracefully (e.g., display an error message to the user)
+    }
+  };
+
   const handleDeleteForm = (id) => {
     setJadwalId(id);
     onDeleteModalOpen();
   };
 
+  const handleVerifiedForm = (id) =>{
+    setJadwalId(id);
+    onVerifiedModalOpen();
+  }
+
   const handleUpdateForm = (id) => {
     setJadwalId(id);
     onUpdateModalOpen();
+  };  
+  const handleUpdateStatusForm = (id) => {
+    setJadwalId(id);
+    onVerifiedModalOpen();
   };
 
   const handleAddForm = () => {
@@ -419,6 +464,12 @@ const Jadwal = () => {
                 >
                   Aksi
                 </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-semibold text-black dark:text-gray-400 tracking-wider"
+                >
+                  Status
+                </th>
               </tr>
             </thead>
             <tbody className="bg-gray-50 dark:bg-gray-800">
@@ -544,6 +595,31 @@ const Jadwal = () => {
                           />
                         </svg>
                       </button>
+
+                      <button
+                       onClick={() => handleUpdateStatusForm(item.id)}
+  className="hover:text-black-500"
+>
+  <svg
+    className="fill-current text-black-500"
+    width="18"
+    height="18"
+    viewBox="0 0 18 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0ZM9 16.2C4.8178 16.2 1.8 13.1822 1.8 9C1.8 4.8178 4.8178 1.8 9 1.8C13.1822 1.8 16.2 4.8178 16.2 9C16.2 13.1822 13.1822 16.2 9 16.2ZM9 4.5C8.60218 4.5 8.22064 4.65804 7.93934 4.93934C7.65804 5.22064 7.5 5.60218 7.5 6V10.5C7.5 10.8978 7.65804 11.2794 7.93934 11.5607C8.22064 11.842 8.60218 12 9 12C9.39782 12 9.77936 11.842 10.0607 11.5607C10.342 11.2794 10.5 10.8978 10.5 10.5V6C10.5 5.60218 10.342 5.22064 10.0607 4.93934C9.77936 4.65804 9.39782 4.5 9 4.5ZM9 14.25C8.60218 14.25 8.22064 14.408 7.93934 14.6893C7.65804 14.9706 7.5 15.3522 7.5 15.75C7.5 16.1478 7.65804 16.5294 7.93934 16.8107C8.22064 17.092 8.60218 17.25 9 17.25C9.39782 17.25 9.77936 17.092 10.0607 16.8107C10.342 16.5294 10.5 16.1478 10.5 15.75C10.5 15.3522 10.342 14.9706 10.0607 14.6893C9.77936 14.408 9.39782 14.25 9 14.25Z"
+      fill=""
+    />
+  </svg>
+</button>
+
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900 dark:text-gray-100">
+                      {item.status}
                     </div>
                   </td>
                 </tr>
@@ -599,8 +675,16 @@ const Jadwal = () => {
         onDelete={handleDelete}
         onDeleteClose={onDeleteModalClose}
       />
+
+      { <VerifiedModal
+        isVerifiedOpen={VerifiedModalOpen}
+        onAdd = {handleUpdateStatus}
+        onChangeStatus1 = {handleStatusontime}
+        valueStatus = {newStatus}
+        onVerifiedClose = {onVerifiedModalClose}
+      /> }
     </DefaultLayout>
   );
 };
 
-export default Jadwal;
+export default Jadwal;
