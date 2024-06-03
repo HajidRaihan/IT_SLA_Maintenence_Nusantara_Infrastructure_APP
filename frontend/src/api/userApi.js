@@ -22,4 +22,24 @@ const getAllUser = async () => {
   }
 };
 
-export { getAllUser };
+const getUser = async (id) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${Cookies.get('access_token')}`,
+  };
+  try {
+    const response = await RequestApi(
+      'GET',
+      `user/${id}`,
+      {},
+      headers,
+      'Mencoba menemukan user',
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat menemukan user', error);
+    throw error;
+  }
+};
+export { getAllUser, getUser };

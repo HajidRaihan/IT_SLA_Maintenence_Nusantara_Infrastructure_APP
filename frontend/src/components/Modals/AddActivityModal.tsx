@@ -198,7 +198,12 @@ const AddActivityModal = ({
   };
 
   const handleShiftChange = (e) => {
-    setShift(e.target.value);
+    const inputValue = e.target.value;
+
+    // Memastikan bahwa nilai yang dimasukkan berada dalam rentang 0 hingga 3
+    if (inputValue >= 0 && inputValue <= 3) {
+      setShift(inputValue);
+    }
   };
 
   const handleLokasiChange = (e) => {
@@ -538,6 +543,8 @@ const AddActivityModal = ({
                           </label>
                           <input
                             type="number"
+                            min="0" // Nilai minimum
+                            max="3" // Nilai maksimum
                             className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                             value={shift}
                             onChange={handleShiftChange}

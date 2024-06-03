@@ -9,6 +9,7 @@ import TableDetailActivity from '../components/Tables/TableDetailActivity';
 import DoneActivityTable from '../components/Tables/DoneActivityTable';
 import PdfModal from '../components/FormActivity/PdfModal';
 import PendingActivityTable from '../components/Tables/PendingActivityTable';
+import DetailSekeleton from '../components/Skeleton/DetailSekeleton';
 
 const ActivityDetail = () => {
   const [detail, setDetail] = useState();
@@ -17,6 +18,9 @@ const ActivityDetail = () => {
   const [workerPending, setWorkerPending] = useState();
   const [workerDone, setWorkerDone] = useState();
   const [workerProcess, setWorkerProcess] = useState();
+  const [statusActivity, setStatusActivity] = useState();
+  const [deskripsiPending, setDeskripsiPending] = useState();
+  const [userId, setUserId] = useState();
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -72,6 +76,14 @@ const ActivityDetail = () => {
     toast.error(message);
   };
 
+  const pdfModalOpen = (status, deskripsi, id) => {
+    onOpen();
+    setStatusActivity(status);
+    setDeskripsiPending(deskripsi);
+    setUserId(id);
+    console.log(status, deskripsi, id);
+  };
+
   return (
     <DefaultLayout>
       {detail ? (
@@ -116,12 +128,25 @@ const ActivityDetail = () => {
                         <PendingActivityTable data={data} />
                       </div>
                     </div>
+                    <Button
+                      onPress={() =>
+                        pdfModalOpen(
+                          'pending',
+                          data.deskripsi_pending,
+                          data.user_id,
+                        )
+                      }
+                      color={'primary'}
+                      className="w-full mt-3"
+                    >
+                      Cetak
+                    </Button>
                   </div>
                 );
               })
             : ''}
 
-          {detail.status === 'done' && (
+          {detail.status === 'done' && workerDone ? (
             <div className="mt-10 rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
               <h1 className="text-3xl font-semibold text-black dark:text-white text-center uppercase">
                 Handled
@@ -139,7 +164,7 @@ const ActivityDetail = () => {
                     user={workerDone?.username}
                   />
                   <Button
-                    onPress={onOpen}
+                    onPress={() => pdfModalOpen('done', '', workerDone.user_id)}
                     color={'primary'}
                     className="w-full mt-3"
                   >
@@ -148,18 +173,22 @@ const ActivityDetail = () => {
                 </div>
               </div>
             </div>
+          ) : (
+            ''
           )}
+          <PdfModal
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            deskripsiPending={deskripsiPending}
+            status={statusActivity}
+            id={userId}
+            data={detail}
+          />
         </>
       ) : (
-        ''
+        <DetailSekeleton />
       )}
       <ToastContainer autoClose={2000} />
-      <PdfModal
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        id={id}
-        data={detail}
-      />
 
       {/* <ChangeStatusModal
         isOpen={isOpen}
