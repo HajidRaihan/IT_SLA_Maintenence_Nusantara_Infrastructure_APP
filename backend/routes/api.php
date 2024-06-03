@@ -34,10 +34,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 
+Route::get('/user/{id}', [UserController::class, 'getById']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('logout', [AuthenticationController::class, 'logout']);
     Route::post('/user', [AuthenticationController::class, 'user']);
-
+    
     Route::get('/users', [UserController::class, 'index']);
     Route::post('/users/update/{id}', [UserController::class, 'updateProfile']);
 
@@ -111,8 +112,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/activity_workers', [ActivityWorkersController::class, 'index']);
     Route::get('/activity_workers/{id}', [ActivityWorkersController::class, 'getByActivityId']);
     Route::get('/activity_workers/user/{id}', [ActivityWorkersController::class, 'getActivityWorkerByUser']);
-    Route::get('/activity_workers/grafik/pengerjaan', [ActivityWorkersController::class, 'grafikWaktuPengerjaan']);
-    Route::get('/activity_workers/grafik/user/{id}', [ActivityWorkersController::class, 'grafikWaktuPengerjaanByUser']);
+    Route::get('/activity_workers/grafik/{year}', [ActivityWorkersController::class, 'grafikWaktuPengerjaan']);
+    Route::get('/activity_workers/grafik/user/{id}/{year}', [ActivityWorkersController::class, 'grafikWaktuPengerjaanByUser']);
 
     Route::get('/item', [RegisbarangController::class, 'get_regisbarang']);
     Route::post('/regisbarang', [RegisbarangController::class, 'add_regisbarang']);
