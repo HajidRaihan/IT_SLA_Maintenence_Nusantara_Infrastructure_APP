@@ -23,7 +23,6 @@ class JadwalMaintenanceController extends Controller
             'frekuensi' => 'required|string|in:1x pertahun,2x pertahun',
             'waktu' => 'required|array',
             'waktu.*' => 'required|date_format:Y-m-d',
-            'status' => 'required|string|in:on time,late,not done',
 
         ]);
 
@@ -43,6 +42,33 @@ class JadwalMaintenanceController extends Controller
         return response()->json($jadwalMaintenance);
     }
 
+    public function updateStatus(Request $request, string $id)
+    {
+        // Validate the incoming request
+        $validateData = $request->validate([
+            'status' => 'required|string|in:on time,late,not done',
+        ]);
+    
+        // Fetch the jadwalMaintenance record by ID
+        $jadwalMaintenance = JadwalMaintenance::findOrFail($id);
+    
+        // Update the status field
+        $jadwalMaintenance->status = $validateData['status'];
+    
+        // Save the changes to the database
+        $jadwalMaintenance->save();
+    
+        // Log the query
+        $queries = DB::getQueryLog();
+        Log::info($queries);
+    
+        // Return a JSON response
+        return response()->json([
+            'message' => 'Success updating status',
+            'data' => $jadwalMaintenance,
+        ]);
+    }
+
     public function update(Request $request, string $id)
 {
     $validateData = $request->validate([
@@ -53,7 +79,7 @@ class JadwalMaintenanceController extends Controller
         'frekuensi' => 'required|string|in:1x pertahun,2x pertahun',
         'waktu' => 'required|array',
         'waktu.*' => 'required|date_format:Y-m-d',
-        'status' => 'required|string|in:on time,late,not done',
+       
 
     ]);
 

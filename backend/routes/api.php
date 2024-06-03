@@ -85,6 +85,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'show']);
     Route::put('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'update']);
     Route::delete('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'destroy']);
+    Route::put('/jadwal-maintenancestatus/{id}', [JadwalMaintenanceController::class, 'updateStatus']);
 
 
 
@@ -120,6 +121,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/regisbarang/{id}', [RegisbarangController::class, 'get_regisbarangid']);
     Route::delete('/regisbarang/{id}', [RegisbarangController::class, 'deletebarang']);
    
+    Route::get('employee', [EmployeeController::class, 'index']);
+    Route::post('employee', [EmployeeController::class, 'store']);
+    Route::get('employee/{id}', [EmployeeController::class, 'show']);
+    Route::put('employee/{id}', [EmployeeController::class, 'update']);
+    Route::delete('employee/{id}', [EmployeeController::class, 'destroy']);
 
 });
 Route::get('/tes', function () {
