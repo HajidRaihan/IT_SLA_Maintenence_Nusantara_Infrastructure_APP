@@ -86,6 +86,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'show']);
     Route::put('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'update']);
     Route::delete('/jadwal-maintenance/{id}', [JadwalMaintenanceController::class, 'destroy']);
+    Route::put('/jadwal-maintenancestatus/{id}', [JadwalMaintenanceController::class, 'updateStatus']);
 
 
 

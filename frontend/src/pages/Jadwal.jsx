@@ -7,6 +7,7 @@ import {
   getJadwal,
   updatejadwal,
   deleteJadwal,
+  updateStatusjadwal
 } from '../api/JadwalApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -31,6 +32,7 @@ const Jadwal = () => {
   const [newTahun, setNewTahun] = useState(0);
   const [newLokasi, setNewLokasi] = useState('');
   const [newFrekuensi, setNewFrekuensi] = useState('');
+  const [newStatus, setNewStatus] = useState('');
   const [newWaktu, setNewWaktu] = useState([]);
   const [updateJenisPerusahaan, setUpdateJenisPerusahaan] = useState('');
   const [updateUraianKegiatan, setUpdateUraianKegiatan] = useState('');
@@ -55,6 +57,12 @@ const Jadwal = () => {
     isOpen: deleteModalOpen,
     onOpen: onDeleteModalOpen,
     onClose: onDeleteModalClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: VerifiedModalOpen,
+    onOpen: onVerifiedModalOpen,
+    onClose: onVerifiedModalClose,
   } = useDisclosure();
 
   const [filteredRecords, setFilteredRecords] = useState([]);
@@ -150,6 +158,11 @@ const Jadwal = () => {
   const handleTahun = (e) => {
     setNewTahun(parseInt(e.target.value));
   };
+
+  const handleStatusontime = (e) => {
+    setNewStatus(e.target.value);
+  };
+  
   const handleFrekuensi = (e) => {
     setNewFrekuensi(e.target.value);
   };
@@ -212,6 +225,28 @@ const Jadwal = () => {
     }
   };
 
+  const handleUpdateStatus = async () => {
+    const dataToUpdate = {
+     status:newStatus,
+    };
+    try {
+      const res = await updateStatusjadwal(JadwalId, dataToUpdate);
+      const updateJadwal = res.data;
+      const updatedIndex = data.findIndex((item) => item.id === JadwalId);
+      if (updatedIndex !== -1) {
+        setData((prevData) => {
+          const newData = [...prevData];
+          newData[updatedIndex] = updateJadwal;
+          return newData;
+        });
+      }
+      toast.success('Jadwal Status updated successfully :', res);
+    } catch (error) {
+      toast.error('Error updating Jadwal', error);
+      // Handle the error gracefully (e.g., display an error message to the user)
+    }
+  };
+
   const handleDeleteForm = (id) => {
     setJadwalId(id);
     onDeleteModalOpen();
@@ -225,6 +260,10 @@ const Jadwal = () => {
   const handleUpdateForm = (id) => {
     setJadwalId(id);
     onUpdateModalOpen();
+  };  
+  const handleUpdateStatusForm = (id) => {
+    setJadwalId(id);
+    onVerifiedModalOpen();
   };
 
   const handleAddForm = () => {
@@ -425,6 +464,12 @@ const Jadwal = () => {
                 >
                   Aksi
                 </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-semibold text-black dark:text-gray-400 tracking-wider"
+                >
+                  Status
+                </th>
               </tr>
             </thead>
             <tbody className="bg-gray-50 dark:bg-gray-800">
@@ -552,6 +597,7 @@ const Jadwal = () => {
                       </button>
 
                       <button
+                       onClick={() => handleUpdateStatusForm(item.id)}
   className="hover:text-black-500"
 >
   <svg
@@ -569,6 +615,11 @@ const Jadwal = () => {
   </svg>
 </button>
 
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900 dark:text-gray-100">
+                      {item.status}
                     </div>
                   </td>
                 </tr>
@@ -625,10 +676,13 @@ const Jadwal = () => {
         onDeleteClose={onDeleteModalClose}
       />
 
-      {/* <VerifiedModal
-        isVerifiedOpen={verifiedModalOpen}
+      { <VerifiedModal
+        isVerifiedOpen={VerifiedModalOpen}
+        onAdd = {handleUpdateStatus}
+        onChangeStatus1 = {handleStatusontime}
+        valueStatus = {newStatus}
         onVerifiedClose = {onVerifiedModalClose}
-      /> */}
+      /> }
     </DefaultLayout>
   );
 };

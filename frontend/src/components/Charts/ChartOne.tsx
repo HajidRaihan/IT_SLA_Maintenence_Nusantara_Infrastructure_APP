@@ -1,12 +1,11 @@
-import { ApexOptions } from 'apexcharts';
 import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { getAllActivityList } from '../../api/activityApi';
 
 interface ActivityData {
   jenis_hardware: string;
-  waktu_pengerjaan: string | null; // Assuming waktu_pengerjaan is a string in the API response
-  // Add other fields from your API response here if needed
+  waktu_pengerjaan: string | null;
+  updated_at: string; // Assuming updated_at is a string, change to Date if it's a Date object
 }
 
 interface ChartOneState {
@@ -18,21 +17,31 @@ interface ChartOneState {
   maxWaktuPengerjaan: number;
 }
 
-const options: ApexOptions = {
+const options = {
   chart: {
     fontFamily: 'Satoshi, sans-serif',
-    type: 'area',
+    type: 'bar',
     height: 350,
     toolbar: {
       show: false,
     },
   },
-  colors: ["#00008B", "#ADD8E6"],
-  stroke: {
-    curve: 'smooth',
+  colors: ["#00008B"],
+  plotOptions: {
+    bar: {
+      horizontal: false,
+      columnWidth: '70%',
+      endingShape: 'rounded',
+      startingShape: 'rounded',
+    },
   },
   dataLabels: {
-    enabled: false,
+    enabled: true,
+    offsetY: -20,
+    style: {
+      fontSize: '12px',
+      colors: ["#000"]
+    }
   },
   xaxis: {
     categories: [],
@@ -42,19 +51,7 @@ const options: ApexOptions = {
       text: 'Total Waktu Pengerjaan (minutes)',
     },
   },
-  fill: {
-    type: 'gradient',
-    gradient: {
-      shadeIntensity: 1,
-      opacityFrom: 0.7,
-      opacityTo: 0.9,
-    },
-  },
-  tooltip: {
-    y: {
-      formatter: (val: number) => `${val} minutes`,
-    },
-  },
+
 };
 
 const ChartOne: React.FC = () => {
@@ -72,15 +69,42 @@ const ChartOne: React.FC = () => {
     maxWaktuPengerjaan: 0,
   });
 
-  useEffect(() => {
-    getAllActivityList()
+  const [startYear, setStartYear] = useState<number>(2020); // Default start year
+  const [endYear, setEndYear] = useState<number>(2024); // Default end year
+
+  const fetchData = () => {
+    getAllActivityList({ startYear, endYear })
       .then(res => {
         const data: ActivityData[] = res.data;
+        
+        // Filter out data that does not match the year range
+        const filteredData = data.filter(item => {
+          const updatedAtYear = new Date(item.updated_at).getFullYear();
+          return updatedAtYear >= startYear && updatedAtYear <= endYear;
+        });
+
+        if (filteredData.length === 0) {
+          // If no data found with the updated_at year range, reset state
+          setState({
+            categories: [],
+            series: [
+              {
+                name: 'Waktu Pengerjaan',
+                data: [],
+              },
+            ],
+            totalWaktuPengerjaan: 0,
+            averageWaktuPengerjaan: 0,
+            maxCategory: '',
+            maxWaktuPengerjaan: 0,
+          });
+          return;
+        }
+
         const categoryTimeMap: Map<string, number> = new Map();
         let totalWaktuPengerjaan = 0;
 
-        // Sum waktu_pengerjaan for each category and total
-        data.forEach(item => {
+        filteredData.forEach(item => {
           if (item.waktu_pengerjaan !== null) {
             const waktuPengerjaan = parseInt(item.waktu_pengerjaan, 10);
             totalWaktuPengerjaan += waktuPengerjaan;
@@ -96,14 +120,10 @@ const ChartOne: React.FC = () => {
           }
         });
 
-        // Convert map to arrays for ApexCharts
         const uniqueCategories = Array.from(categoryTimeMap.keys());
         const categoryTimes = uniqueCategories.map(cat => categoryTimeMap.get(cat)!);
-
-        // Calculate average waktu pengerjaan
         const averageWaktuPengerjaan = totalWaktuPengerjaan / uniqueCategories.length;
 
-        // Find category with max waktu pengerjaan
         let maxCategory = '';
         let maxWaktuPengerjaan = 0;
         categoryTimeMap.forEach((value, key) => {
@@ -114,25 +134,27 @@ const ChartOne: React.FC = () => {
         });
 
         setState({
-          categories: uniqueCategories, // Set categories for x-axis
+          categories: uniqueCategories,
           series: [
             {
               name: 'Waktu Pengerjaan',
               data: categoryTimes,
             },
           ],
-          totalWaktuPengerjaan, // Set total waktu pengerjaan
-          averageWaktuPengerjaan, // Set average waktu pengerjaan
-          maxCategory, // Set category with max waktu pengerjaan
-          maxWaktuPengerjaan, // Set max waktu pengerjaan
+          totalWaktuPengerjaan,
+          averageWaktuPengerjaan,
+          maxCategory,
+          maxWaktuPengerjaan,
         });
       })
       .catch(error => {
         console.error('Error fetching activity data:', error);
       });
-  }, []);
+  };
 
-
+  useEffect(() => {
+    fetchData();
+  }, [startYear, endYear]); // Trigger fetchData whenever startYear or endYear changes
 
   return (
     <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
@@ -142,7 +164,23 @@ const ChartOne: React.FC = () => {
             Hardware Performance
           </h5>
         </div>
-        
+        <div>
+          <label className="mr-2">Start Year:</label>
+          <input
+            type="number"
+            value={startYear}
+            onChange={(e) => setStartYear(parseInt(e.target.value, 10))}
+            className="border rounded p-1"
+          />
+          <label className="mx-2">End Year:</label>
+          <input
+            type="number"
+            value={endYear}
+            onChange={(e) => setEndYear(parseInt(e.target.value, 10))}
+            className="border rounded p-1"
+          />
+   
+        </div>
       </div>
 
       <div className="mb-2">
@@ -152,11 +190,11 @@ const ChartOne: React.FC = () => {
               ...options,
               xaxis: {
                 ...options.xaxis,
-                categories: state.categories.map(String), // Ensure categories are strings
+                categories: state.categories.map(String),
               },
             }}
             series={state.series}
-            type="area"
+            type="bar"
             height={350}
           />
         </div>
@@ -165,7 +203,6 @@ const ChartOne: React.FC = () => {
       <div className="mt-6">
         <h6 className="text-lg font-semibold text-black dark:text-white mb-2">Summary</h6>
         <div className="flex flex-wrap justify-between">
-
           <div className="w-full md:w-1/3 p-2">
             <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
               <h6 className="text-md font-medium text-black dark:text-white">Average Waktu Pengerjaan</h6>
