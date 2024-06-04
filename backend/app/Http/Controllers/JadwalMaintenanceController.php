@@ -56,11 +56,7 @@ class JadwalMaintenanceController extends Controller
         $jadwalMaintenance->status = $validateData['status'];
     
         // Save the changes to the database
-        $jadwalMaintenance->save();
-    
-        // Log the query
-        $queries = DB::getQueryLog();
-        Log::info($queries);
+     
     
         // Return a JSON response
         return response()->json([

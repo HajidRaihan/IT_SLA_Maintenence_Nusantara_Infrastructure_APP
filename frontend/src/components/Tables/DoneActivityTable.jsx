@@ -137,17 +137,7 @@ const DoneActivityTable = ({ data, user }) => {
             </td>
             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
               <p className="text-black dark:text-white">
-                {/* {lamaHandle
-                  ? `
-                  ${lamaHandle.hari !== 0 ? lamaHandle.hari + ' Hari ' : ''} 
-                    ${lamaHandle.jam !== 0 ? lamaHandle.jam + ' Jam ' : ''}  
-                    ${
-                      lamaHandle.menit !== 0 ? lamaHandle.menit + ' Menit ' : ''
-                    }  
-                    ${lamaHandle.detik} Detik`
-                  : '-'} */}
                 <TimeDisplay timeString={data.waktu_pengerjaan} />
-                {/* {data.waktu_pengerjaan} */}
               </p>
             </td>
           </tr>
@@ -161,37 +151,7 @@ const DoneActivityTable = ({ data, user }) => {
               <p className="text-black dark:text-white">{data.kondisi_akhir}</p>
             </td>
           </tr>
-          {/* <tr>
-            <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-              <h5 className="font-medium text-black dark:text-white">
-                duration
-              </h5>
-            </td>
-            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-              <p className="text-black dark:text-white">
-                {convertsecondsToReadableString(data.category_deadline)}
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-              <h5 className="font-medium text-black dark:text-white">
-                Duration Result
-              </h5>
-            </td>
-            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-              {lamaHandle &&
-              totalSeconds(lamaHandle) <= data.category_deadline ? (
-                <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded shadow">
-                  On Time
-                </button>
-              ) : (
-                <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded shadow">
-                  Late
-                </button>
-              )}
-            </td>
-          </tr> */}
+        
         </table>
       </div>
     </div>
