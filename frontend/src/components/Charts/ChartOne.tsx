@@ -20,24 +20,16 @@ interface ChartOneState {
 const options = {
   chart: {
     fontFamily: 'Satoshi, sans-serif',
-    type: 'bar',
+    type: 'line',
     height: 350,
     toolbar: {
       show: false,
     },
   },
   colors: ["#00008B"],
-  plotOptions: {
-    bar: {
-      horizontal: false,
-      columnWidth: '70%',
-      endingShape: 'rounded',
-      startingShape: 'rounded',
-    },
-  },
   dataLabels: {
     enabled: true,
-    offsetY: -20,
+    offsetY: -10,
     style: {
       fontSize: '12px',
       colors: ["#000"]
@@ -50,8 +42,11 @@ const options = {
     title: {
       text: 'Total Waktu Pengerjaan (minutes)',
     },
+    min: 0, // Ensure y-axis starts from 0
   },
-
+  stroke: {
+    curve: 'smooth',
+  },
 };
 
 const ChartOne: React.FC = () => {
@@ -179,7 +174,6 @@ const ChartOne: React.FC = () => {
             onChange={(e) => setEndYear(parseInt(e.target.value, 10))}
             className="border rounded p-1"
           />
-   
         </div>
       </div>
 
@@ -194,7 +188,7 @@ const ChartOne: React.FC = () => {
               },
             }}
             series={state.series}
-            type="bar"
+            type="line"
             height={350}
           />
         </div>
