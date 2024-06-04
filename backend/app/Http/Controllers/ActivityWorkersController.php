@@ -450,10 +450,9 @@ class ActivityWorkersController extends Controller
     //     return response()->json(['message' => 'Data berhasil diambil', 'data' => $formattedData]);
     // }
 
-    public function grafikWaktuPengerjaan(Request $request)
+    public function grafikWaktuPengerjaan(Request $request, $year)
     
     {
-        $year = request()->query('year');
 
         $isLimit = request()->query('limit');
 
@@ -564,10 +563,8 @@ class ActivityWorkersController extends Controller
     //     return response()->json(['message' => 'Data berhasil diambil', 'data' => $formattedData]);
     // }
 
-    public function grafikWaktuPengerjaanByUser($id)
+    public function grafikWaktuPengerjaanByUser($id, $year)
     {
-        $year = request()->query('year');
-
         // Mendapatkan tahun awal dan tahun terakhir dari data
         $yearsRange = DB::table('activity_workers')->select(DB::raw('MIN(YEAR(created_at)) as start_year'), DB::raw('MAX(YEAR(created_at)) as end_year'))->first();
 
