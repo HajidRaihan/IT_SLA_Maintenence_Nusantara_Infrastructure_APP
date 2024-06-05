@@ -49,4 +49,5 @@ class JadwalMaintenance extends Model
             throw new \Exception("Jumlah waktu tidak sesuai dengan frekuensi.");
         }
     }
+    
 }
