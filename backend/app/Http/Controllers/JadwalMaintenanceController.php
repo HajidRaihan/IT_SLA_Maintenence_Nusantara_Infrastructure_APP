@@ -56,7 +56,7 @@ class JadwalMaintenanceController extends Controller
         $jadwalMaintenance->status = $validateData['status'];
     
         // Save the changes to the database
-     
+        $jadwalMaintenance->save();
     
         // Return a JSON response
         return response()->json([

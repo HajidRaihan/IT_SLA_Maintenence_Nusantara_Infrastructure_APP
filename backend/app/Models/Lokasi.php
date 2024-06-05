@@ -14,5 +14,7 @@ class Lokasi extends Model
         'nama_lokasi',
     ];
 
+   
+
     use HasFactory;
 }
