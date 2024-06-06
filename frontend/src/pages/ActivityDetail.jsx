@@ -21,6 +21,7 @@ const ActivityDetail = () => {
   const [statusActivity, setStatusActivity] = useState();
   const [deskripsiPending, setDeskripsiPending] = useState();
   const [userId, setUserId] = useState();
+  const [openPdfModal, setOpenPdfModal] = useState(false);
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -81,6 +82,7 @@ const ActivityDetail = () => {
     setStatusActivity(status);
     setDeskripsiPending(deskripsi);
     setUserId(id);
+    setOpenPdfModal(true);
     console.log(status, deskripsi, id);
   };
 
@@ -91,7 +93,7 @@ const ActivityDetail = () => {
           <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
             <div className="flex gap-5">
               <img
-                src={`http://127.0.0.1:8000/images/${detail.foto_awal}`}
+                src={`${import.meta.env.VITE_IMAGE_URL}/${detail.foto_awal}`}
                 alt="sdsd"
                 className="w-1/3 h-full"
               />
@@ -154,7 +156,7 @@ const ActivityDetail = () => {
               <div className="h-0.5 mb-10 bg-stroke mt-5" />
               <div className="flex gap-5 mb-10">
                 <img
-                  src={`http://127.0.0.1:8000/images/${detail.foto_akhir}`}
+                  src={`${import.meta.env.VITE_IMAGE_URL}/${detail.foto_akhir}`}
                   alt="foto akhir"
                   className="w-1/3 h-full"
                 />
@@ -176,14 +178,16 @@ const ActivityDetail = () => {
           ) : (
             ''
           )}
-          <PdfModal
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-            deskripsiPending={deskripsiPending}
-            status={statusActivity}
-            id={userId}
-            data={detail}
-          />
+          {openPdfModal && (
+            <PdfModal
+              isOpen={isOpen}
+              onOpenChange={onOpenChange}
+              deskripsiPending={deskripsiPending}
+              status={statusActivity}
+              id={userId}
+              data={detail}
+            />
+          )}
         </>
       ) : (
         <DetailSekeleton />

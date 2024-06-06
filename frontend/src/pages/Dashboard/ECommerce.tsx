@@ -58,7 +58,7 @@ const ECommerce: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4 mb-5">
+      <div className=" col-span-12 rounded-sm border border-stroke p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4 mb-5">
         <h4 className="text-xl font-bold text-black dark:text-white mb-5">
           Grafik Waktu Kerja
         </h4>
