@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { getKategori, addKategori, updateKategori, deleteKategori } from "../api/kategoriApi";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -17,8 +17,6 @@ import { UpdateKategoriModal } from '../components/Modals/UpdateLokasiModal';
 const Kategori = () => {
   const [data, setData] = useState([]);
   const [newCategory, setNewCategory] = useState('');
-  const [newDurationString, setNewDurationString] = useState('');
-  const [parsedDuration, setParsedDuration]= useState(null)
   const [updateCategory, setUpdateCategory] = useState('');
   const [CategoryId, setCategoryId] = useState('');
   const { isOpen: deleteModalOpen, onOpen: onDeleteModalOpen, onClose: onDeleteModalClose } = useDisclosure();
@@ -29,26 +27,7 @@ const Kategori = () => {
   const itemsPerPage = 5; // Number of data items per page
 
 
-  const parseDurationString = (input) => {
-    // Logic to parse the duration string and convert it into milliseconds
-    // For example, you can use a library like 'date-fns' or 'moment' for parsing
-    // Here's a basic implementation using regular expressions:
-    const match = input.match(/^(\d+)\s*(hour)s?$/);
-    if (match) {
-      const value = parseInt(match[1]);
-      const unit = match[2];
-      let durationInseconds = 0;
-      switch (unit) {
-        case 'hour':
-          durationInseconds = value * 60 * 60 ;
-          break;
-        default:
-          break;
-      }
-      return durationInseconds;
-    }
-    return null; // Return null if the input string doesn't match the expected format
-  };
+
 
 
 
@@ -100,38 +79,15 @@ const Kategori = () => {
   }
 };
 
-const convertsecondsToReadableString = (seconds) => {
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-  const weeks = Math.floor(days / 7);
 
-  if (weeks > 0) {
-    return `${weeks} week${weeks > 1 ? 's' : ''}`;
-  } else if (days > 0) {
-    return `${days} day${days > 1 ? 's' : ''}`;
-  } else if (hours > 0) {
-    return `${hours} hour${hours > 1 ? 's' : ''}`;
-  } else if (minutes > 0) {
-    return `${minutes} minute${minutes > 1 ? 's' : ''}`;
-  
-  }
-};
 
 
 
 const handleAddKategori = async () => {
-  // Parse the duration string
-  const parsedDuration = parseDurationString(newDurationString);
 
-  if (parsedDuration === null) {
-    toast.error('Invalid duration format');
-    return;
-  }
 
   const newKategoriData = {
-    nama_kategori: newCategory,
-    deadline_duration: parsedDuration, // Add the parsed duration to the data
+    nama_kategori: newCategory, 
   };
 
   try {
@@ -187,15 +143,12 @@ const handleAddKategori = async () => {
           </button>
         </div>
 
-        <div className="grid grid-cols-4 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5">
+        <div className="grid grid-cols-3 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5">
   <div className="col-span-1 flex items-center">
     <p className="font-medium mr-2">No</p>
   </div>
   <div className="col-span-1 flex items-center">
     <p className="font-medium">Nama</p>
-  </div>
-  <div className="col-span-1 flex items-center">
-    <p className="font-medium">Duration</p>
   </div>
   <div className="col-span-1 flex items-center">
     <p className="font-medium">Status</p>
@@ -205,7 +158,7 @@ const handleAddKategori = async () => {
 
         {currentItems.map((item, index) => (
           <div
-            className="grid grid-cols-4 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5"
+            className="grid grid-cols-3 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5"
             key={startIndex+index}
           >
             <div className="col-span-1 flex items-center">
@@ -214,9 +167,6 @@ const handleAddKategori = async () => {
             <div className="col-span-1 flex items-center">
               <p className="font-medium mr-3 text-black dark:text-white">{item.nama_kategori}</p>
             </div>
-            <div className="col-span-1 flex items-center">
-               <p className="font-medium mr-3 text-black dark:text-white">{convertsecondsToReadableString(item.deadline_duration)}</p>
-             </div>
             <div className="col-span-1 flex items-center">
               <button   onClick={() => handleUpdateForm(item.id)}  className="hover:text-primary">
               <svg
@@ -282,7 +232,7 @@ const handleAddKategori = async () => {
         </div>
       <div className='flex justify-center mt-4'>
       <Paginate currentPage={currentPage} onPageChange={handlePageChange}/></div>
-      <KategoriModal isOpen={addModalOpen}  onAdd={handleAddKategori} onChangeKategori={(e) => setNewCategory(e.target.value)} OnChangeDuration= {(e) => setNewDurationString(e.target.value)} valuecategory={newCategory} valueduration = {newDurationString} onClose={onAddModalClose}/>
+      <KategoriModal isOpen={addModalOpen}  onAdd={handleAddKategori} onChangeKategori={(e) => setNewCategory(e.target.value)} valuecategory={newCategory}  onClose={onAddModalClose}/>
       <UpdateKategoriModal isUpdateOpen={updateModalOpen}  onAdd={handleUpdate} onChange={(e) => setUpdateCategory(e.target.value)} value={updateCategory} onUpdateClose={onUpdateModalClose}/>
       <DeleteModal isDeleteOpen={deleteModalOpen}  onDelete={handleDelete} onDeleteClose={onDeleteModalClose}/>
       
