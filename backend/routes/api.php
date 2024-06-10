@@ -8,6 +8,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\RegisbarangController;
 use App\Http\Controllers\AplikasiItTolController;
