@@ -27,8 +27,8 @@ class UserController extends Controller
     {
         $validate = $request->validate([
             'username' => 'nullable|string',
-            'foto' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'ttd' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'foto' => 'nullable|file|mimes:jpg,jpeg,png,pdf',
+            'ttd' => 'nullable|file|mimes:jpg,jpeg,png,pdf',
         ]);
 
         // Periksa apakah username telah diisi

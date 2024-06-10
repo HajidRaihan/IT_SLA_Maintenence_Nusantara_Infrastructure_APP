@@ -14,6 +14,9 @@ import { getJenisHardware } from '../../api/jenisHardwareApi';
 import { getJenisSoftware } from '../../api/jenisSoftwareApi';
 import { getAplikasiTol } from '../../api/aplikasiTolApi';
 import { getUser } from '../../api/userApi';
+import { getEmployee } from '../../api/employeeApi';
+
+const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
 
 const PdfModal = ({
   isOpen,
@@ -26,9 +29,26 @@ const PdfModal = ({
   const [jenisHardwareData, setJenisHardwareData] = useState();
   const [jenisSoftwareData, setJenisSoftwareData] = useState();
   const [aplikasiItTolData, setAplikasiItTolData] = useState();
+  const [employee, setEmployee] = useState();
+  const [employeeName, setEmployeeName] = useState('');
+  const [employeeIndex, setEmployeeIndex] = useState();
   const [userData, setUserData] = useState('');
   const [departemen, setDepartemen] = useState();
   const [user, setUser] = useState();
+  const [processedUserDataImage, setProcessedUserDataImage] = useState(null);
+  const [processedEmployeeImage, setProcessedEmployeeImage] = useState(null);
+
+  const processImage = async (imgURL) => {
+    if (!imgURL) return null;
+    try {
+      const image = await fetch(CORS_PROXY + imgURL);
+      const imageBlob = await image.blob();
+      return URL.createObjectURL(imageBlob);
+    } catch (error) {
+      console.error('Error processing image:', error);
+      return null;
+    }
+  };
 
   useEffect(() => {
     const fetchHardware = async () => {
@@ -48,18 +68,26 @@ const PdfModal = ({
     fetchHardware();
   }, [data.jenis_hardware]);
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const res = await getUser(id);
-  //       setUserData(res.data);
-  //       console.log('asldkjalk');
-  //     } catch (error) {
-  //       console.error('Error fetching user:', error);
-  //     }
-  //   };
-  //   fetchUser();
-  // }, [id]);
+  useEffect(() => {
+    getEmployee().then((res) => {
+      console.log(res);
+      setEmployee(res);
+    });
+  }, []);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      console.log('ini id user', id);
+      try {
+        const res = await getUser(id);
+        setUserData(res.data);
+        console.log('asldkjalk', res.data);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
+    };
+    fetchUser();
+  }, [id]);
 
   useEffect(() => {
     const fetchSoftware = async () => {
@@ -97,6 +125,35 @@ const PdfModal = ({
     fetchAplikasi();
   }, [data.aplikasi_it_tol]);
 
+  useEffect(() => {
+    const processImages = async () => {
+      if (userData && userData.ttd) {
+        const userImage = await processImage(
+          `${import.meta.env.VITE_IMAGE_URL}/${userData.ttd}`,
+        );
+        setProcessedUserDataImage(userImage);
+      }
+      if (employeeIndex && employeeIndex.ttd) {
+        const employeeImage = await processImage(
+          `${import.meta.env.VITE_IMAGE_URL}/${employeeIndex.ttd}`,
+        );
+        setProcessedEmployeeImage(employeeImage);
+      }
+    };
+    processImages();
+  }, [userData, employeeIndex]);
+
+  // const generatePDF = () => {
+  //   const element = document.getElementById('pdf-content');
+  //   const opt = {
+  //     margin: 0,
+  //     filename: 'Form-maintenance.pdf',
+  //     // image: { type: 'jpeg', quality: 0.98 },
+  //     html2canvas: { scale: 2 },
+  //     jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+  //   };
+  //   html2pdf().set(opt).from(element).save();
+  // };
   const generatePDF = () => {
     const element = document.getElementById('pdf-content');
     const opt = {
@@ -106,7 +163,49 @@ const PdfModal = ({
       html2canvas: { scale: 2 },
       jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
     };
-    html2pdf().set(opt).from(element).save();
+
+    const images = element.getElementsByTagName('img');
+    const totalImages = images.length;
+    let imagesLoaded = 0;
+
+    const checkImagesLoaded = () => {
+      if (imagesLoaded === totalImages) {
+        html2pdf().set(opt).from(element).save();
+      }
+    };
+
+    for (let img of images) {
+      if (img.complete) {
+        imagesLoaded++;
+        checkImagesLoaded();
+      } else {
+        img.onload = () => {
+          imagesLoaded++;
+          checkImagesLoaded();
+        };
+        img.onerror = () => {
+          console.error('Error loading image', img.src);
+          imagesLoaded++;
+          checkImagesLoaded();
+        };
+      }
+    }
+
+    if (totalImages === 0) {
+      html2pdf().set(opt).from(element).save();
+    }
+  };
+
+  const handleEmployeeSelect = (e) => {
+    const selected = e.target.value;
+    setEmployeeName(selected);
+
+    const employeeIndex = employee.filter(
+      (employee) => employee.nama == selected,
+    );
+    setEmployeeIndex(employeeIndex[0]);
+    console.log('iindex', employeeIndex[0].ttd);
+    console.log(e.target.value);
   };
 
   return (
@@ -126,16 +225,6 @@ const PdfModal = ({
               <ModalBody>
                 <>
                   <div className=" ml-5 mr-5">
-                    <label className="mb-2.5 block text-black dark:text-white">
-                      user
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="ketik nama lengkap user disini"
-                      className="w-full rounded border-[1.5px] bg-white border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      value={user}
-                      onChange={(e) => setUser(e.target.value)}
-                    />
                     <div className="flex-1 mt-3">
                       <label className="mb-2.5 block text-black dark:text-white">
                         Departemen
@@ -155,6 +244,30 @@ const PdfModal = ({
                         <option value="Operational">Operational</option>
                       </select>
                     </div>
+                    {employee && (
+                      <div className="flex-1 mt-3">
+                        <label className="mb-2.5 block text-black dark:text-white">
+                          User
+                        </label>
+                        <select
+                          value={employeeName}
+                          onChange={handleEmployeeSelect}
+                          style={{
+                            width: '100%',
+                            padding: '5px',
+                            border: '2px solid #ccc',
+                            borderRadius: '5px',
+                          }}
+                        >
+                          <option value="">Pilih user</option>
+                          {employee.map((data) => {
+                            return (
+                              <option value={data.nama}>{data.nama}</option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                    )}
                   </div>
                   <div className="PdfModal ml-5 mr-5 bg-white ">
                     {jenisHardwareData &&
@@ -246,7 +359,7 @@ const PdfModal = ({
                           <thead className="w-full">
                             <tr className="w-full ">
                               <td>Nama Lengkap (user) &nbsp;&nbsp;&nbsp;:</td>
-                              <td className=" w-32">{user}</td>
+                              <td className=" w-32">{employeeIndex?.nama}</td>
                               <td className=" ">Lokasi &emsp;&ensp;&nbsp;:</td>
                               <td className=" w-32">{data.location_name}</td>
                               <td>Tgl :</td>
@@ -260,7 +373,7 @@ const PdfModal = ({
                               </td>
                               <td>{departemen}</td>
                               <td>Jabatan &emsp;:</td>
-                              <td>{data.location_name}</td>
+                              <td>{employeeIndex?.jabatan}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -539,7 +652,7 @@ const PdfModal = ({
                                 <td className="border p-1 h-20">
                                   {status === 'pending'
                                     ? deskripsiPending
-                                    : data.catatan}
+                                    : data.kondisi_akhir}
                                 </td>
                               </tr>
                             </tbody>
@@ -564,16 +677,78 @@ const PdfModal = ({
                                 </th>
                               </tr>
                             </thead>
-                            <tbody>
+                            {/* <tbody>
                               <tr className="h-15">
                                 <td className="border p-1"></td>
                                 <td className="border p-1">
                                   <img
-                                    src={`http://127.0.0.1:8000/images/${userData.ttd}`}
+                                    src={`${import.meta.env.VITE_IMAGE_URL}/${
+                                      userData.ttd
+                                    }`}
                                     alt=""
                                   />
                                 </td>
+                                <td className="border p-1">
+                                  <img
+                                    src={`${import.meta.env.VITE_IMAGE_URL}/${
+                                      employeeIndex?.ttd
+                                    }`}
+                                    className="w-20 h-20 m-auto"
+                                    alt="ttd"
+                                  />
+                                </td>
+                              </tr>
+                              <tr className="h-6">
+                                <td className="border p-1">
+                                  <span className="text-red-500 font-bold">
+                                    Nama:
+                                  </span>
+                                </td>
+                                <td className="border p-1">
+                                  <span className="text-red-500 font-bold">
+                                    Nama:
+                                  </span>
+                                </td>
+                                <td className="border p-1">
+                                  <span className="text-red-500 font-bold">
+                                    Nama:
+                                  </span>
+                                </td>
+                              </tr>
+                            </tbody> */}
+
+                            <tbody>
+                              <tr className="h-15">
                                 <td className="border p-1"></td>
+                                <td className="border p-1">
+                                  {processedUserDataImage && (
+                                    <img
+                                      src={processedUserDataImage}
+                                      alt="user ttd"
+                                      onError={() =>
+                                        console.error(
+                                          'Error loading user image',
+                                          processedUserDataImage,
+                                        )
+                                      }
+                                    />
+                                  )}
+                                </td>
+                                <td className="border p-1">
+                                  {processedEmployeeImage && (
+                                    <img
+                                      src={processedEmployeeImage}
+                                      className="w-20 h-20 m-auto"
+                                      alt="employee ttd"
+                                      onError={() =>
+                                        console.error(
+                                          'Error loading employee image',
+                                          processedEmployeeImage,
+                                        )
+                                      }
+                                    />
+                                  )}
+                                </td>
                               </tr>
                               <tr className="h-6">
                                 <td className="border p-1">

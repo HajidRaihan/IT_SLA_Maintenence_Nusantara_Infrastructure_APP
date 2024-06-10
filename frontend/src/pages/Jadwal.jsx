@@ -241,6 +241,9 @@ const Jadwal = () => {
         });
       }
       toast.success('Jadwal Status updated successfully :', res);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (error) {
       toast.error('Error updating Jadwal', error);
       // Handle the error gracefully (e.g., display an error message to the user)

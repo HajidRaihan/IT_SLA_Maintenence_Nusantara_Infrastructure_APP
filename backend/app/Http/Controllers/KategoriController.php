@@ -17,7 +17,6 @@ class KategoriController extends Controller
     {
         $validateData = $request->validate([
             'nama_kategori' => 'required|string',
-            'deadline_duration' => 'required|integer',
         ]);
 
         $kategori = Kategori::create($request->all());

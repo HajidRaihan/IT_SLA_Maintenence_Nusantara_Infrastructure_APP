@@ -1,4 +1,3 @@
-import { CSSProperties } from 'react';
 import React, { useState, useEffect } from 'react';
 import {
   Modal,
@@ -163,10 +162,8 @@ function KategoriModal({
   isOpen,
   onClose,
   onAdd,
-  valueduration,
   valuecategory,
   onChangeKategori,
-  OnChangeDuration,
 }) {
   return (
     <>
@@ -184,15 +181,6 @@ function KategoriModal({
                 className=" bg-transparent p text-black  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 label="Kategori"
                 placeholder="Enter your kategori"
-                variant="bordered"
-              />
-              <Input
-                autoFocus
-                value={valueduration}
-                onChange={OnChangeDuration}
-                className=" bg-transparent p text-black  transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                label="Duration"
-                placeholder="Enter duration (e.g., 7 minutes/hours/days/weeks/months)"
                 variant="bordered"
               />
             </ModalBody>

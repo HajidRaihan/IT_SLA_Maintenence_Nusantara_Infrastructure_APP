@@ -34,6 +34,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
+// Route::post('/taik', [AuthenticationController::class, 'login']);
+
+
 
 Route::get('/user/{id}', [UserController::class, 'getById']);
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -122,12 +125,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/regisbarang/{id}', [RegisbarangController::class, 'update_barang']);
     Route::get('/regisbarang/{id}', [RegisbarangController::class, 'get_regisbarangid']);
     Route::delete('/regisbarang/{id}', [RegisbarangController::class, 'deletebarang']);
-   
+
     Route::get('employee', [EmployeeController::class, 'index']);
     Route::post('employee', [EmployeeController::class, 'store']);
     Route::get('employee/{id}', [EmployeeController::class, 'show']);
     Route::put('employee/{id}', [EmployeeController::class, 'update']);
     Route::delete('employee/{id}', [EmployeeController::class, 'destroy']);
+   
 
 });
 Route::get('/tes', function () {

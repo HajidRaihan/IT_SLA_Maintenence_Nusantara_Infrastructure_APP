@@ -17,19 +17,38 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi input termasuk file ttd
         $validateData = $request->validate([
             'nama' => 'required|string',
             'jabatan' => 'required|string|in:teknisi,kspt',
-            'ttd' => 'required|string',
+            'ttd' => 'required|file|mimes:jpeg,png,jpg,gif,svg',
         ]);
-
-        $employee = Employee::create($request->all());
-
+    
+        // Penanganan pengunggahan file ttd
+        if ($request->hasFile('ttd')) {
+            try {
+                $ttd = $request->file('ttd');
+                $nama_ttd = time() . '_ttd.' . $ttd->getClientOriginalExtension();
+                $ttd->move(public_path('images'), $nama_ttd); // Menyimpan file di direktori public/images
+                $data['ttd'] = $nama_ttd; // Menyimpan nama file ttd di array data
+            } catch (\Exception $e) {
+                return response()->json(['error' => 'Failed to upload ttd'], 500);
+            }
+        }
+    
+        // Menyimpan data employee ke database
+        $employee = Employee::create([
+            'nama' => $validateData['nama'],
+            'jabatan' => $validateData['jabatan'],
+            'ttd' => $data['ttd'], // Mengambil nama file ttd dari array data
+        ]);
+    
         return response()->json([
-            'message' => 'tambah data employee berhasil',
-            'data' => $employee, 
+            'message' => 'Tambah data employee berhasil',
+            'data' => $employee,
         ]);
     }
+    
 
  
     public function show(string $id)

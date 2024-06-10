@@ -97,8 +97,9 @@ const TableUser = ({ data }) => {
             <div className="flex items-center gap-3 p-2.5 xl:p-5">
               <div className="flex-shrink-0">
                 <img
-                  src={`http://127.0.0.1:8000/images/${item.foto}`}
+                  src={`${import.meta.env.VITE_IMAGE_URL}/${item.foto}`}
                   alt="profile"
+                  className="w-32 h-32 object-cover object-center"
                 />
               </div>
             </div>
@@ -113,8 +114,9 @@ const TableUser = ({ data }) => {
             <div className="flex items-center gap-3 p-2.5 xl:p-5">
               <div className="flex-shrink-0">
                 <img
-                  src={`http://127.0.0.1:8000/images/${item.ttd}`}
+                  src={`${import.meta.env.VITE_IMAGE_URL}/${item.ttd}`}
                   alt="ttd"
+                  className="w-32 h-32 object-cover object-center"
                 />
               </div>
             </div>

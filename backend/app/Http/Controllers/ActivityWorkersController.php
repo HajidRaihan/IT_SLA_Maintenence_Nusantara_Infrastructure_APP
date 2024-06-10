@@ -103,7 +103,7 @@ class ActivityWorkersController extends Controller
     {
         // Validasi request
         $request->validate([
-            'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif',
             'kondisi_akhir' => 'required|string',
             'biaya' => 'nullable|integer',
         ]);
@@ -168,7 +168,7 @@ class ActivityWorkersController extends Controller
     // {
     //     // Validasi request
     //     $request->validate([
-    //         'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //         'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif',
     //         'kondisi_akhir' => 'required|string',
     //         'biaya' => 'nullable|integer',
     //     ]);
