@@ -30,8 +30,8 @@ class ActivityController extends Controller
             'kategori_id' => 'required|exists:kategori,id',
             'kondisi_akhir' => 'nullable|string',
             // 'biaya' => 'nullable|integer',
-            'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             // 'status' => 'required|in:process,done',
         ]);
 
@@ -288,8 +288,8 @@ class ActivityController extends Controller
             'lokasi_id' => 'required|exists:lokasi,id',
             'biaya' => 'required|integer',
             'kondisi_akhir' => 'nullable|string',
-            'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'status' => 'required|in:process,done',
         ]);
 
@@ -331,8 +331,8 @@ class ActivityController extends Controller
             'kategori_id' => 'required|exists:kategori,id',
             'kondisi_akhir' => 'nullable|string',
             'biaya' => 'required|integer',
-            'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'status' => 'required|in:process,done',
         ]);
 
@@ -447,8 +447,8 @@ class ActivityController extends Controller
             'lokasi_id' => 'required|exists:lokasi,id',
             'biaya' => 'required|integer',
             'kondisi_akhir' => 'nullable|string',
-            'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_awal' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'foto_akhir' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'status' => 'required|in:process,done',
         ]);
 
@@ -470,7 +470,7 @@ class ActivityController extends Controller
     //     // Validasi permintaan
     //     $request->validate([
     //         'status' => 'required|in:process,done',
-    //         'foto_akhir' => 'required_if:status,done|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //         'foto_akhir' => 'required_if:status,done|image|mimes:jpeg,png,jpg,gif',
     //         'kondisi_akhir' => 'required_if:status,done|string',
     //     ]);
 
@@ -507,7 +507,7 @@ class ActivityController extends Controller
     {
         $request->validate([
             // 'status' => 'required|in:precoess:done',
-            'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_akhir' => 'required|image|mimes:jpeg,png,jpg,gif',
             'kondisi_akhir' => 'required|string',
         ]);
 

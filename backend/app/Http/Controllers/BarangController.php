@@ -66,7 +66,7 @@ public function barang_byid($barangId)
         'perusahaan' => 'string|in:PT Makassar Metro Network,PT Makassar Airport Network',
         'merk' => 'required|string|max:255',
         'stock' => 'required|integer|min:0',
-        'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048|nullable',
+        'gambar' => 'image|mimes:jpeg,png,jpg,gif|nullable',
         'catatan' => 'string|required'
         ]);
 

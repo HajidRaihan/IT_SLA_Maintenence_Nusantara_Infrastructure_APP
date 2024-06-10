@@ -18,7 +18,7 @@ class RegisbarangController extends Controller
         'perusahaan' => 'string|in:PT Makassar Metro Network,PT Makassar Airport Network',
         'merk' => 'required|string|max:255',
         'stock' => 'required|integer|max:255',
-        'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048|nullable',
+        'gambar' => 'image|mimes:jpeg,png,jpg,gif|nullable',
         'spesifikasi' => 'string|required'
         ]);
 

@@ -18,7 +18,7 @@ const handleErrorResponse = (error: any, action: string) => {
 const RequestApi = async (
   method: string,
   url: string,
-  data: any = {},
+  data: any = {}, 
   headers: any = {},
   action: string,
 ) => {

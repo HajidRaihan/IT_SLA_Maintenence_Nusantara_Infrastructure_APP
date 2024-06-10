@@ -21,7 +21,7 @@ class EmployeeController extends Controller
         $validateData = $request->validate([
             'nama' => 'required|string',
             'jabatan' => 'required|string|in:teknisi,kspt',
-            'ttd' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'ttd' => 'required|file|mimes:jpeg,png,jpg,gif,svg',
         ]);
     
         // Penanganan pengunggahan file ttd
