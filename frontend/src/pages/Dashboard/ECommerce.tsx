@@ -14,6 +14,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '@nextui-org/react';
 import { useNavigate } from 'react-router-dom';
+import GrafikSkeleton from '../../components/Skeleton/GrafikSkeleton';
 
 const ECommerce: React.FC = () => {
   const [dataGrafikWork, setDataGrafikWork] = useState();
@@ -82,14 +83,17 @@ const ECommerce: React.FC = () => {
           </select>
         </div>
         <div className="mb-10 flex flex-wrap">
-          {dataGrafikWork &&
+          {dataGrafikWork ? (
             dataGrafikWork.data.map((data, index) => {
               return (
                 <div className="lg:w-1/2 w-full" key={index}>
                   <WorkDurationChart data={data} />
                 </div>
               );
-            })}
+            })
+          ) : (
+            <GrafikSkeleton />
+          )}
         </div>
         <div className="flex justify-end items-center">
           <Button

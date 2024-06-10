@@ -15,8 +15,9 @@ import { getJenisSoftware } from '../../api/jenisSoftwareApi';
 import { getAplikasiTol } from '../../api/aplikasiTolApi';
 import { getUser } from '../../api/userApi';
 import { getEmployee } from '../../api/employeeApi';
-
-const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+import { atasanData } from './atasanData';
+import TTD1 from './ttd/ttd1.png';
+import TTD2 from './ttd/ttd2.png';
 
 const PdfModal = ({
   isOpen,
@@ -37,11 +38,12 @@ const PdfModal = ({
   const [user, setUser] = useState();
   const [processedUserDataImage, setProcessedUserDataImage] = useState(null);
   const [processedEmployeeImage, setProcessedEmployeeImage] = useState(null);
+  const [atasan, setAtasan] = useState(atasanData[0].name);
 
   const processImage = async (imgURL) => {
     if (!imgURL) return null;
     try {
-      const image = await fetch(CORS_PROXY + imgURL);
+      const image = await fetch(imgURL);
       const imageBlob = await image.blob();
       return URL.createObjectURL(imageBlob);
     } catch (error) {
@@ -227,6 +229,25 @@ const PdfModal = ({
                   <div className=" ml-5 mr-5">
                     <div className="flex-1 mt-3">
                       <label className="mb-2.5 block text-black dark:text-white">
+                        Atasan
+                      </label>
+                      <select
+                        value={atasan}
+                        onChange={(e) => setAtasan(e.target.value)}
+                        style={{
+                          width: '100%',
+                          padding: '5px',
+                          border: '2px solid #ccc',
+                          borderRadius: '5px',
+                        }}
+                      >
+                        {atasanData.map((data) => {
+                          return <option value={data.name}>{data.name}</option>;
+                        })}
+                      </select>
+                    </div>
+                    <div className="flex-1 mt-3">
+                      <label className="mb-2.5 block text-black dark:text-white">
                         Departemen
                       </label>
                       <select
@@ -373,7 +394,11 @@ const PdfModal = ({
                               </td>
                               <td>{departemen}</td>
                               <td>Jabatan &emsp;:</td>
-                              <td>{employeeIndex?.jabatan}</td>
+                              <td>
+                                {employeeIndex?.jabatan === 'kspt'
+                                  ? 'KSPT'
+                                  : 'Teknisi'}
+                              </td>
                             </tr>
                           </tbody>
                         </table>
@@ -719,12 +744,21 @@ const PdfModal = ({
 
                             <tbody>
                               <tr className="h-15">
-                                <td className="border p-1"></td>
+                                <td className="border p-1">
+                                  <img
+                                    src={
+                                      atasan === 'Mashuri Said' ? TTD1 : TTD2
+                                    }
+                                    alt="user ttd"
+                                    className="w-20 h-20 m-auto"
+                                  />
+                                </td>
                                 <td className="border p-1">
                                   {processedUserDataImage && (
                                     <img
                                       src={processedUserDataImage}
                                       alt="user ttd"
+                                      className="w-20 h-20 m-auto"
                                       onError={() =>
                                         console.error(
                                           'Error loading user image',
@@ -753,17 +787,17 @@ const PdfModal = ({
                               <tr className="h-6">
                                 <td className="border p-1">
                                   <span className="text-red-500 font-bold">
-                                    Nama:
+                                    Nama: {atasan}
                                   </span>
                                 </td>
                                 <td className="border p-1">
                                   <span className="text-red-500 font-bold">
-                                    Nama:
+                                    Nama: {userData.username}
                                   </span>
                                 </td>
                                 <td className="border p-1">
                                   <span className="text-red-500 font-bold">
-                                    Nama:
+                                    Nama: {employeeName}
                                   </span>
                                 </td>
                               </tr>
