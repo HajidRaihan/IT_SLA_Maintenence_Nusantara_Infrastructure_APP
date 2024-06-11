@@ -128,27 +128,31 @@ const ChartTwo: React.FC = () => {
 
   return (
     <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
-      <div className="mb-3 flex justify-between gap-4 sm:flex">
+      <div className="mb-3 flex flex-col md:flex-row justify-between gap-4 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
             Hardware Performance
           </h5>
         </div>
-        <div className="flex items-center">
-          <label className="mr-2 text-black dark:text-white">Start Year:</label>
-          <input
-            type="number"
-            value={startYear}
-            onChange={(e) => setStartYear(parseInt(e.target.value, 10))}
-            className="border rounded p-1 w-20 text-center transition duration-200 ease-in-out focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-          />
-          <label className="mx-2 text-black dark:text-white">End Year:</label>
-          <input
-            type="number"
-            value={endYear}
-            onChange={(e) => setEndYear(parseInt(e.target.value, 10))}
-            className="border rounded p-1 w-20 text-center transition duration-200 ease-in-out focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-          />
+        <div className="flex items-center space-x-4">
+          <div className="flex flex-col items-center md:items-end">
+            <label className="text-black dark:text-white">Start Year:</label>
+            <input
+              type="number"
+              value={startYear}
+              onChange={(e) => setStartYear(parseInt(e.target.value, 10))}
+              className="border rounded p-1 w-24 text-center transition duration-200 ease-in-out focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+          <div className="flex flex-col items-center md:items-end">
+            <label className="text-black dark:text-white">End Year:</label>
+            <input
+              type="number"
+              value={endYear}
+              onChange={(e) => setEndYear(parseInt(e.target.value, 10))}
+              className="border rounded p-1 w-24 text-center transition duration-200 ease-in-out focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
         </div>
       </div>
 
