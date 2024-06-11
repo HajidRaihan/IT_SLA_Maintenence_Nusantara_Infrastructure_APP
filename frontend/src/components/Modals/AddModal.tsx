@@ -355,7 +355,7 @@ function JadwalModal({
                 onChange={onChangeTahun}
                 className="bg-transparent text-black transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 placeholder="Masukkan Tahun"
-                min="1"
+                min="2024"
               />
             </div>
             <div className="flex flex-col gap-2">

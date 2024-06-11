@@ -2,28 +2,29 @@ import { ApexOptions } from 'apexcharts';
 import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { getJadwal } from '../../api/JadwalApi';
-import moment from 'moment-timezone';
 
 interface ChartThreeState {
   series: number[];
 }
 
+
+
 const options: ApexOptions = {
   chart: {
     fontFamily: 'Satoshi, sans-serif',
-    type: 'donut', // Change the chart type to 'donut'
+    type: 'donut',
   },
-  colors: ["#00008B", "#ADD8E6", "#FF6347"], // Colors for 'on time', 'late', and 'not done' statuses
-  labels: ['on time', 'late', 'not done'], // Labels for 'on time', 'late', and 'not done' statuses
+  colors: ["#00008B", "#ADD8E6", "#FF6347"],
+  labels: ['On Time', 'Late', 'Not Done'],
   legend: {
     show: false,
     position: 'bottom',
   },
   plotOptions: {
     pie: {
-      startAngle: 0, // Set start angle to 0 degrees
-      endAngle: 360, // Set end angle to 360 degrees
-      expandOnClick: false, // Disable expanding on click
+      startAngle: 0,
+      endAngle: 360,
+      expandOnClick: false,
     },
   },
   dataLabels: {
@@ -33,11 +34,12 @@ const options: ApexOptions = {
 
 const ChartFour: React.FC = () => {
   const [state, setState] = useState<ChartThreeState>({
-    series: [0, 0, 0], // Initialize series with 0 for 'on time', 'late', and 'not done' statuses
+    series: [0, 0, 0],
   });
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear()); // Tambahkan state tahun dan set ke tahun sekarang
 
   useEffect(() => {
-    getJadwal()
+    getJadwal(selectedYear) // Gunakan tahun yang dipilih sebagai parameter
       .then(res => {
         const onTimeCount = res.filter(item => item.status === 'on time').length;
         const lateCount = res.filter(item => item.status === 'late').length;
@@ -45,72 +47,46 @@ const ChartFour: React.FC = () => {
         setState({ series: [onTimeCount, lateCount, notDoneCount] });
       })
       .catch(error => {
-        console.error('Error fetching barang data:', error);
+        console.error('Error fetching jadwal data:', error);
       });
-  }, []);
+  }, [selectedYear]); // Tambahkan selectedYear sebagai dependensi
 
-  const sumstatus = state.series.reduce((acc, curr) => acc + curr, 0);
+  const sumStatus = state.series.reduce((acc, curr) => acc + curr, 0);
 
   return (
-    <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
-      <div className="mb-3 justify-between gap-4 sm:flex">
-        <div>
-          <h5 className="text-xl font-semibold text-black dark:text-white">
-            Jadwal Status
-          </h5>
-        </div>
-        <div>
-        </div>
+    <div className="col-span-12 rounded-sm border border-stroke bg-white p-5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
+      <div className="mb-3 flex justify-between items-center">
+        <h5 className="text-xl font-semibold text-black dark:text-white">Jadwal Performance</h5>
+        <select value={selectedYear} onChange={(e) => setSelectedYear(parseInt(e.target.value))} className="border rounded px-2 py-1">
+          {/* Tambahkan opsi untuk memilih tahun */}
+          <option value={2024}>2024</option>
+          <option value={2025}>2025</option>
+          {/* Tambahkan opsi lain sesuai kebutuhan */}
+        </select>
       </div>
-
       <div className="mb-2">
         <div id="chartThree" className="mx-auto flex justify-center">
-          <ReactApexChart
-            options={options}
-            series={state.series}
-            type="donut"
-          />
+          <ReactApexChart options={options} series={state.series} type="donut" />
         </div>
       </div>
+      <div className="flex flex-wrap items-center justify-center gap-y-2 gap-x-4">
+        <StatusItem color="#00008B" label="On Time" count={state.series[0]} total={sumStatus} />
+        <StatusItem color="#ADD8E6" label="Late" count={state.series[1]} total={sumStatus} />
+        <StatusItem color="#FF6347" label="Not Done" count={state.series[2]} total={sumStatus} />
+        <StatusItem color="#B0B0B0" label="All Status" count={sumStatus} total={sumStatus} />
+      </div>
+    </div>
+  );
+};
 
-      <div className="-mx-8 flex flex-wrap items-center justify-center gap-y-3">
-        <div className="sm:w-1/3 w-full px-8">
-          <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-primary"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> on time </span>
-              <span> {state.series[0]} ({((state.series[0] / sumstatus) * 100).toFixed(2)}%) </span>
-            </p>
-          </div>
-        </div>
-        <div className="sm:w-1/3 w-full px-8">
-          <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#ADD8E6]"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> late </span>
-              <span> {state.series[1]} ({((state.series[1] / sumstatus) * 100).toFixed(2)}%) </span>
-            </p>
-          </div>
-        </div>
-        <div className="sm:w-1/3 w-full px-8">
-          <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#FF6347]"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> not done </span>
-              <span> {state.series[2]} ({((state.series[2] / sumstatus) * 100).toFixed(2)}%) </span>
-            </p>
-          </div>
-        </div>
-        <div className="sm:w-1/3 w-full px-8">
-          <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-gray-400"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> All status </span>
-              <span> {sumstatus} </span>
-            </p>
-          </div>
-        </div>
-      </div>
+const StatusItem: React.FC<{ color: string, label: string, count: number, total: number }> = ({ color, label, count, total }) => {
+  const percentage = total > 0 ? ((count / total) * 100).toFixed(2) : '0.00';
+  return (
+    <div className="flex items-center space-x-2">
+      <span className={`block h-3 w-3 rounded-full`} style={{ backgroundColor: color }}></span>
+      <p className="text-sm font-medium text-black dark:text-white">
+        <span>{label}:</span> <span>{count} ({percentage}%)</span>
+      </p>
     </div>
   );
 };
