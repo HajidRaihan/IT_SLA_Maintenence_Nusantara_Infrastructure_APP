@@ -380,7 +380,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </ul>
               {/* <!-- Menu Item Settings --> */}
-
+              <ul>
               <li>
                 <NavLink
                   to="/grafik-kerja"
@@ -405,6 +405,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Grafik Waktu Kerja
                 </NavLink>
               </li>
+              </ul>
 
               {/* <!-- Menu Item Forms --> */}
               {/* <ul> */}
@@ -565,11 +566,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </ul> */}
               {/* <!-- Menu Item Tables --> */}
 
+              <li>
               <ul>
+                
                 <h3 className="mb-1 ml-4 text-sm font-semibold text-bodydark2">
                   INFORMATION SCHEMA
                 </h3>
-              </ul>
+                </ul>
+                </li>
+              
 
               {/* <!-- Menu Item information Schema*/}
               {/* <!-- Menu Item kategori*/}

@@ -51,10 +51,7 @@ const ChartThree: React.FC = () => {
   const totalBarang = state.series.reduce((acc, curr) => acc + curr, 0);
 
   const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-      series: [0, 0], // Reset series to 0 for 'masuk' and 'keluar' statuses
-    }));
+    setState({ series: [0, 0] }); // Reset series to 0 for 'masuk' and 'keluar' statuses
   };
 
   return (
@@ -66,6 +63,7 @@ const ChartThree: React.FC = () => {
           </h5>
         </div>
         <div>
+          {/* Additional controls can be added here if needed */}
         </div>
       </div>
 
@@ -79,31 +77,31 @@ const ChartThree: React.FC = () => {
         </div>
       </div>
 
-      <div className="-mx-8 flex flex-wrap items-center justify-center gap-y-3">
-        <div className="sm:w-1/3 w-full px-8">
-          <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-primary"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Masuk </span>
-              <span> {state.series[0]} ({((state.series[0] / totalBarang) * 100).toFixed(2)}%) </span>
+      <div className="flex flex-wrap items-center justify-center gap-y-3">
+        <div className="w-full sm:w-1/3 px-8">
+          <div className="flex items-center">
+            <span className="mr-2 block h-3 w-3 rounded-full bg-primary"></span>
+            <p className="flex justify-between w-full text-sm font-medium text-black dark:text-white">
+              <span>Masuk</span>
+              <span>{state.series[0]} ({((state.series[0] / totalBarang) * 100).toFixed(2)}%)</span>
             </p>
           </div>
         </div>
-        <div className="sm:w-1/3 w-full px-8">
-          <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#ADD8E6]"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Keluar </span>
-              <span> {state.series[1]} ({((state.series[1] / totalBarang) * 100).toFixed(2)}%) </span>
+        <div className="w-full sm:w-1/3 px-8">
+          <div className="flex items-center">
+            <span className="mr-2 block h-3 w-3 rounded-full bg-[#ADD8E6]"></span>
+            <p className="flex justify-between w-full text-sm font-medium text-black dark:text-white">
+              <span>Keluar</span>
+              <span>{state.series[1]} ({((state.series[1] / totalBarang) * 100).toFixed(2)}%)</span>
             </p>
           </div>
         </div>
-        <div className="sm:w-1/3 w-full px-8">
-          <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-gray-400"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Total Barang </span>
-              <span> {totalBarang} </span>
+        <div className="w-full sm:w-1/3 px-8">
+          <div className="flex items-center">
+            <span className="mr-2 block h-3 w-3 rounded-full bg-gray-400"></span>
+            <p className="flex justify-between w-full text-sm font-medium text-black dark:text-white">
+              <span>Total Barang</span>
+              <span>{totalBarang}</span>
             </p>
           </div>
         </div>
