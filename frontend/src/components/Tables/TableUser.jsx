@@ -58,27 +58,19 @@ const TableUser = ({ data }) => {
       <div className="flex flex-col">
         <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
           <div className="p-2.5 xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">No</h5>
+            <h5 className="text-sm font-medium  xsm:text-base">No</h5>
           </div>
           <div className="p-2.5 xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Foto
-            </h5>
+            <h5 className="text-sm font-medium  xsm:text-base">Foto</h5>
           </div>
           <div className="p-2.5 xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Username
-            </h5>
+            <h5 className="text-sm font-medium  xsm:text-base">Username</h5>
           </div>
           <div className="hidden p-2.5 sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Email
-            </h5>
+            <h5 className="text-sm font-medium  xsm:text-base">Email</h5>
           </div>
           <div className="hidden p-2.5 sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Tanda Tangan
-            </h5>
+            <h5 className="text-sm font-medium  xsm:text-base">Tanda Tangan</h5>
           </div>
         </div>
 
@@ -99,7 +91,7 @@ const TableUser = ({ data }) => {
                 <img
                   src={`${import.meta.env.VITE_IMAGE_URL}/${item.foto}`}
                   alt="profile"
-                  className="w-32 h-32 object-cover object-center"
+                  className="w-32 h-32 rounded-full object-cover object-center"
                 />
               </div>
             </div>

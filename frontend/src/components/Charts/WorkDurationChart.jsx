@@ -1,6 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
+const convertSecondsToTime = (totalSeconds) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return { hours, minutes, seconds };
+};
+
+const TimeConverter = ({ totalSeconds }) => {
+  const { hours, minutes, seconds } = convertSecondsToTime(totalSeconds);
+
+  return (
+    <div>
+      {hours} jam, {minutes} menit, and {seconds} detik.
+    </div>
+  );
+};
+
 const options = {
   colors: ['#3C50E0', '#80CAEE'],
   chart: {
@@ -189,7 +207,10 @@ const WorkDurationChart = ({ data, yearOnChange }) => {
             )}
           </div>
         </div>
-        <p>Total jam kerja : {(data?.total / 3600).toFixed(2)} jam</p>
+        {/* <p>Total jam kerja : {(data?.total / 3600).toFixed(2)} jam</p> */}
+        <p className="flex">
+          total jam kerja : <TimeConverter totalSeconds={data?.total} />
+        </p>
       </div>
     </>
   );

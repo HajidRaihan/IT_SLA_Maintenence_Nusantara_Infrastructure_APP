@@ -6,7 +6,6 @@ import { getAllActivityList } from '../../api/activityApi';
 interface ActivityData {
   jenis_hardware: string;
   updated_at: string;
-  // Add other fields from your API response here if needed
 }
 
 interface ChartThreeState {
@@ -23,40 +22,52 @@ const options: ApexOptions = {
       show: false,
     },
   },
-  colors: ["#00008B"], // Bar color
+  colors: ["#1E90FF"],
   plotOptions: {
     bar: {
       horizontal: false,
-      columnWidth: '55%',
+      columnWidth: '50%',
       endingShape: 'rounded',
     },
   },
   dataLabels: {
-    enabled: true,
-    offsetY: -20,
-    style: {
-      fontSize: '12px',
-      colors: ["#000"],
-    }
+    enabled: false,
   },
   xaxis: {
     categories: [],
+    labels: {
+      style: {
+        colors: ['#304758'],
+        fontSize: '12px',
+      },
+    },
   },
   yaxis: {
     title: {
-      text: 'Total Waktu Pengerjaan (minutes)',
+      text: 'Total Unit Pengerjaan Hardware',
+      style: {
+        color: '#304758',
+        fontSize: '14px',
+      },
     },
     labels: {
-        show: false
-    }
+      style: {
+        colors: ['#304758'],
+        fontSize: '12px',
+      },
+      formatter: (value) => Math.floor(value),
+    },
   },
   fill: {
     opacity: 1,
   },
   tooltip: {
     y: {
-      formatter: (val: number) => val.toString(),
+      formatter: (val: number) => `${val} unit`,
     },
+  },
+  grid: {
+    borderColor: '#f1f1f1',
   },
 };
 
@@ -70,9 +81,8 @@ const ChartTwo: React.FC = () => {
       },
     ],
   });
-  const [startYear, setStartYear] = useState<number>(2020); // Default start year
-  const [endYear, setEndYear] = useState<number>(2024); // Default end year
-
+  const [startYear, setStartYear] = useState<number>(2020);
+  const [endYear, setEndYear] = useState<number>(2024);
 
   useEffect(() => {
     getAllActivityList({ startYear, endYear })
@@ -80,13 +90,11 @@ const ChartTwo: React.FC = () => {
         const data: ActivityData[] = res.data;
         const categoryCountsMap: Map<string, number> = new Map();
 
-        // Filter data by year
         const filteredData = data.filter(item => {
           const updatedAtYear = new Date(item.updated_at).getFullYear();
           return updatedAtYear >= startYear && updatedAtYear <= endYear;
         });
 
-        // Count occurrences of each category
         filteredData.forEach(item => {
           const categories = item.jenis_hardware.split(',').map(cat => cat.trim());
           categories.forEach(cat => {
@@ -98,12 +106,11 @@ const ChartTwo: React.FC = () => {
           });
         });
 
-        // Convert map to arrays for ApexCharts
         const uniqueCategories = Array.from(categoryCountsMap.keys());
         const categoryCounts = uniqueCategories.map(cat => categoryCountsMap.get(cat)!);
 
         setState({
-          categories: uniqueCategories, // Set categories for x-axis
+          categories: uniqueCategories,
           series: [
             {
               name: 'Count',
@@ -121,31 +128,33 @@ const ChartTwo: React.FC = () => {
 
   return (
     <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
-      <div className="mb-3 justify-between gap-4 sm:flex">
+      <div className="mb-3 flex flex-col md:flex-row justify-between gap-4 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
             Hardware Performance
           </h5>
         </div>
-        <div>
-          <label className="mr-2">Start Year:</label>
-          <input
-            type="number"
-            value={startYear}
-            onChange={(e) => setStartYear(parseInt(e.target.value, 10))}
-            className="border rounded p-1"
-          />
-          <label className="mx-2">End Year:</label>
-          <input
-            type="number"
-            value={endYear}
-            onChange={(e) => setEndYear(parseInt(e.target.value, 10))}
-            className="border rounded p-1"
-          />
-   
+        <div className="flex items-center space-x-4">
+          <div className="flex flex-col items-center md:items-end">
+            <label className="text-black dark:text-white">Start Year:</label>
+            <input
+              type="number"
+              value={startYear}
+              onChange={(e) => setStartYear(parseInt(e.target.value, 10))}
+              className="border rounded p-1 w-24 text-center transition duration-200 ease-in-out focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+          <div className="flex flex-col items-center md:items-end">
+            <label className="text-black dark:text-white">End Year:</label>
+            <input
+              type="number"
+              value={endYear}
+              onChange={(e) => setEndYear(parseInt(e.target.value, 10))}
+              className="border rounded p-1 w-24 text-center transition duration-200 ease-in-out focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
         </div>
       </div>
-      
 
       <div className="mb-2">
         <div id="chartThree" className="mx-auto flex justify-center">
@@ -154,7 +163,7 @@ const ChartTwo: React.FC = () => {
               ...options,
               xaxis: {
                 ...options.xaxis,
-                categories: state.categories.map(String), // Ensure categories are strings
+                categories: state.categories.map(String),
               },
             }}
             series={state.series}
@@ -164,13 +173,13 @@ const ChartTwo: React.FC = () => {
         </div>
       </div>
 
-      <div className="-mx-8 flex flex-wrap items-center justify-center gap-y-3">
-        <div className="sm:w-1/3 w-full px-8">
-          <div className="flex w-full items-center">
+      <div className="flex flex-wrap items-center justify-center gap-y-3">
+        <div className="w-full px-8 sm:w-1/3">
+          <div className="flex items-center w-full">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-primary"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Categories </span>
-              <span> {totalCategories} </span>
+            <p className="flex justify-between w-full text-sm font-medium text-black dark:text-white">
+              <span>Categories</span>
+              <span>{totalCategories}</span>
             </p>
           </div>
         </div>

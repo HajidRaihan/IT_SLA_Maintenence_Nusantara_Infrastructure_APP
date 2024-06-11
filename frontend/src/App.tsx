@@ -29,6 +29,7 @@ import Jadwal from './pages/Jadwal';
 import HistoryBarang from './pages/historybarang';
 import Itemdetail from './pages/DetailBarang';
 import UserList from './pages/UserList';
+import EmployeeList from './pages/EmployeeList';
 import GrafikWaktuKerjaPage from './pages/GrafikWaktuKerjaPage';
 import TestPdf from './pages/TesPdf';
 
@@ -94,7 +95,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="/list-user"
           element={
@@ -103,8 +103,16 @@ function App() {
               <UserList />
             </>
           }
+        />{' '}
+        <Route
+          path="/list-employee"
+          element={
+            <>
+              <PageTitle title="List User (Teknisi/KTSP)" />
+              <EmployeeList />
+            </>
+          }
         />
-
         <Route
           path="/grafik-kerja"
           element={
@@ -132,7 +140,6 @@ function App() {
             </>
           }
         /> */}
-
         <Route
           path="/listbarang"
           element={
@@ -142,7 +149,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="listbarang/historybarang/:id"
           element={
@@ -152,7 +158,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="listbarang/detailbarang/:id"
           element={
@@ -162,7 +167,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="/logbarang"
           element={
@@ -181,7 +185,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="/jenis-hardware"
           element={
@@ -191,7 +194,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="/jenis-software"
           element={
@@ -201,7 +203,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="/aplikasi-tol"
           element={
@@ -211,7 +212,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="/detail/activity/:id"
           element={
@@ -230,7 +230,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="/jadwal"
           element={

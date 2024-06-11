@@ -94,13 +94,16 @@ const AplikasiItTol = () => {
           Aplikasi It Tol
           </h4>
           <button
-            className="border border-stroke rounded-sm px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
             onClick={onAddModalOpen}
+            className="flex items-center rounded-full px-1 py-1 bg-blue-300 dark:bg-boxdark shadow-default text-white"
           >
-            <FontAwesomeIcon
-              icon={faPlus}
-              className="green-light-icon text-lg"
-            />
+            <div className="w-6 h-6 flex items-center justify-center bg-white rounded-full shadow-md">
+              <FontAwesomeIcon
+                icon={faPlus}
+                className="text-blue-500 text-md"
+              />
+            </div>
+            <span className="ml-2"></span>
           </button>
         </div>
 
