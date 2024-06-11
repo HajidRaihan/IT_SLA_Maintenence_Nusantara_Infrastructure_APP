@@ -20,13 +20,20 @@ interface ChartOneState {
 const options = {
   chart: {
     fontFamily: 'Satoshi, sans-serif',
-    type: 'line',
+    type: 'bar',
     height: 350,
     toolbar: {
       show: false,
     },
   },
-  colors: ["#00008B"],
+  colors: ["#00008B"], // Dark blue color for bars
+  plotOptions: {
+    bar: {
+      horizontal: false,
+      columnWidth: '50%',
+      endingShape: 'rounded',
+    },
+  },
   dataLabels: {
     enabled: true,
     offsetY: -10,
@@ -71,7 +78,7 @@ const ChartOne: React.FC = () => {
     getAllActivityList({ startYear, endYear })
       .then(res => {
         const data: ActivityData[] = res.data;
-        
+
         // Filter out data that does not match the year range
         const filteredData = data.filter(item => {
           const updatedAtYear = new Date(item.updated_at).getFullYear();
@@ -153,27 +160,31 @@ const ChartOne: React.FC = () => {
 
   return (
     <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
-      <div className="mb-3 justify-between gap-4 sm:flex">
+      <div className="mb-3 flex flex-col md:flex-row justify-between gap-4">
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
             Hardware Performance
           </h5>
         </div>
-        <div>
-          <label className="mr-2">Start Year:</label>
-          <input
-            type="number"
-            value={startYear}
-            onChange={(e) => setStartYear(parseInt(e.target.value, 10))}
-            className="border rounded p-1"
-          />
-          <label className="mx-2">End Year:</label>
-          <input
-            type="number"
-            value={endYear}
-            onChange={(e) => setEndYear(parseInt(e.target.value, 10))}
-            className="border rounded p-1"
-          />
+        <div className="flex items-center space-x-4">
+          <div className="flex flex-col items-center md:items-end">
+            <label className="text-black dark:text-white">Start Year:</label>
+            <input
+              type="number"
+              value={startYear}
+              onChange={(e) => setStartYear(parseInt(e.target.value, 10))}
+              className="border rounded p-1 w-24 text-center transition duration-200 ease-in-out focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+          <div className="flex flex-col items-center md:items-end">
+            <label className="text-black dark:text-white">End Year:</label>
+            <input
+              type="number"
+              value={endYear}
+              onChange={(e) => setEndYear(parseInt(e.target.value, 10))}
+              className="border rounded p-1 w-24 text-center transition duration-200 ease-in-out focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
         </div>
       </div>
 
@@ -188,7 +199,7 @@ const ChartOne: React.FC = () => {
               },
             }}
             series={state.series}
-            type="line"
+            type="bar"
             height={350}
           />
         </div>
@@ -205,7 +216,7 @@ const ChartOne: React.FC = () => {
           </div>
           <div className="w-full md:w-1/3 p-2">
             <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-              <h6 className="text-md font-medium text-black dark:text-white">Category with Max Waktu Pengerjaan</h6>
+              <h6 className="text-md font-medium text-black dark:text-white"> Max Waktu Pengerjaan</h6>
               <p className="text-2xl font-bold text-blue-600">{state.maxCategory}</p>
               <p className="text-md font-medium text-black dark:text-white">{state.maxWaktuPengerjaan} minutes</p>
             </div>
