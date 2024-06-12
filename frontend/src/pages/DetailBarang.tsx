@@ -12,7 +12,6 @@ const Itemdetail = () => {
   useEffect(() => {
     const fetchActivity = async () => {
       const res = await getListBarangid(id);
-      console.log(res.data);
       setData(res.data);
     };
     fetchActivity();

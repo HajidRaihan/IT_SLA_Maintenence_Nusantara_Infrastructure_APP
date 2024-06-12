@@ -173,7 +173,6 @@ const Jadwal = () => {
     const newWaktuArray = [...newWaktu];
     newWaktuArray[index] = e.target.value;
     setNewWaktu(newWaktuArray);
-    console.log(e.target.value);
   };
 
   const handleUpdateJenisPerusahaan = (e) => {
@@ -195,7 +194,6 @@ const Jadwal = () => {
     const newWaktuArray = [...updateWaktu];
     newWaktuArray[index] = e.target.value;
     setUpdateWaktu(newWaktuArray);
-    console.log(e.target.value);
   };
 
   const handleUpdate = async () => {

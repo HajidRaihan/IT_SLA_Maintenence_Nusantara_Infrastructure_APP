@@ -21,7 +21,6 @@ const ECommerce: React.FC = () => {
   useEffect(() => {
     const getGrafik = async () => {
       const res = await getGrafikWorkDuration(selectedYear, 'true');
-      console.log('ini data dari api', res);
 
       setDataGrafikWork(res);
       const yearSet = new Set();
@@ -37,7 +36,6 @@ const ECommerce: React.FC = () => {
 
   const selectedYearHanlder = (e) => {
     setSelectedYear(e.target.value);
-    console.log(e.target.value);
   };
 
   return (
@@ -46,7 +44,7 @@ const ECommerce: React.FC = () => {
         <h4 className="text-xl font-bold text-black dark:text-white mb-5">
           Grafik Waktu Kerja
         </h4>
-        <div className="flex-1 w-32 lg:ml-3">
+        <div className="flex-1 w-32 mb-5 ">
           <select
             value={selectedYear}
             onChange={selectedYearHanlder}
@@ -69,11 +67,13 @@ const ECommerce: React.FC = () => {
           {dataGrafikWork ? (
             dataGrafikWork.data.map((data, index) => {
               return (
-                <div className="lg:w-full w-full mx-4 mb-4" key={index}>
-                  <div className="rounded-sm border border-stroke p-3 shadow-default dark:border-strokedark dark:bg-boxdark">
-                    <WorkDurationChart data={data} />
+                <>
+                  <div className="lg:w-full w-full mb-4" key={index}>
+                    <div className="rounded-sm border border-stroke p-3 shadow-default dark:border-strokedark dark:bg-boxdark">
+                      <WorkDurationChart data={data} />
+                    </div>
                   </div>
-                </div>
+                </>
               );
             })
           ) : (
@@ -96,23 +96,23 @@ const ECommerce: React.FC = () => {
 
       {/* ChartOne */}
       <div className="col-span-12 xl:col-span-6 mx-4 mb-5">
-          <ChartOne />
+        <ChartOne />
       </div>
 
       {/* ChartTwo */}
       <div className="col-span-12 xl:col-span-6 mx-4 mb-5">
-          <ChartTwo />
+        <ChartTwo />
       </div>
 
       {/* ChartThree */}
       <div className="col-span-12 xl:col-span-6 mx-4 mb-5">
-          <ChartThree />
+        <ChartThree />
       </div>
 
       {/* ChartFour */}
       <div className="col-span-12 xl:col-span-6 mx-4 mb-5">
-          <ChartFour />
-        </div>
+        <ChartFour />
+      </div>
     </DefaultLayout>
   );
 };

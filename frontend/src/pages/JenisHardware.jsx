@@ -50,7 +50,6 @@ const JenisHardware = () => {
   useEffect(() => {
     getJenisHardware().then((res) => {
       setJenisHardware(res);
-      console.log(res);
     });
   }, []);
 
@@ -104,7 +103,6 @@ const JenisHardware = () => {
   };
 
   const handlerUpdateOpen = (id) => {
-    console.log({ id });
     setJenisHardwareId(id);
     onUpdateModalOpen();
   };

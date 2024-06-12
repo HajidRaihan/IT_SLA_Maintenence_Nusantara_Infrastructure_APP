@@ -29,7 +29,6 @@ const Jadwalpdf = () => {
   useEffect(() => {
     getJadwal().then((res) => {
       setData(res);
-      console.log(res);
     });
   }, []);
 
