@@ -339,7 +339,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Barang --> */}
 
               {/* <!-- Menu Item Settings --> */}
-              <ul>
+              {/* <ul>
                 <NavLink
                   to="/settings"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -378,7 +378,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </svg>
                   Settings
                 </NavLink>
-              </ul>
+              </ul> */}
               {/* <!-- Menu Item Settings --> */}
               <ul>
               <li>
@@ -570,13 +570,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <ul>
                 
                 <h3 className="mb-1 ml-4 text-sm font-semibold text-bodydark2">
-                  INFORMATION SCHEMA
+                  OTHERS
                 </h3>
                 </ul>
                 </li>
-              
 
-              {/* <!-- Menu Item information Schema*/}
               {/* <!-- Menu Item kategori*/}
               <ul>
                 <NavLink
@@ -712,14 +710,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             </div>
 
             {/* <!-- Others Group --> */}
-            <div>
+            {/* <div>
               <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
                 OTHERS
-              </h3>
+              </h3> */}
 
-              <ul className="mb-6 flex flex-col gap-1.5">
+              {/* <ul className="mb-6 flex flex-col gap-1.5"> */}
                 {/* <!-- Menu Item Chart --> */}
-                <li>
+                {/* <li>
                   <NavLink
                     to="/chart"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -757,11 +755,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     </svg>
                     Chart
                   </NavLink>
-                </li>
+                </li> */}
                 {/* <!-- Menu Item Chart --> */}
 
                 {/* <!-- Menu Item Auth Pages --> */}
-                <SidebarLinkGroup
+                {/* <SidebarLinkGroup
                   activeCondition={
                     pathname === '/auth' || pathname.includes('auth')
                   }
@@ -832,12 +830,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           </svg>
                         </NavLink>
                         {/* <!-- Dropdown Menu Start --> */}
-                        <div
+                        {/* <div
                           className={`translate transform overflow-hidden ${
                             !open && 'hidden'
                           }`}
-                        >
-                          <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                        > */}
+                          {/* <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                             <li>
                               <NavLink
                                 to="/auth/signin"
@@ -849,8 +847,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 Sign In
                               </NavLink>
                             </li>
-                            <li>
-                              <NavLink
+                            <li> */}
+                              {/* <NavLink
                                 to="/auth/signup"
                                 className={({ isActive }) =>
                                   'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
@@ -858,15 +856,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 }
                               >
                                 Sign Up
-                              </NavLink>
-                            </li>
-                          </ul>
-                        </div>
+                              </NavLink> */}
+                            {/* </li> */}
+                          {/* </ul> */}
+                        {/* </div> */}
                         {/* <!-- Dropdown Menu End --> */}
-                      </React.Fragment>
-                    );
-                  }}
-                </SidebarLinkGroup>
+                      {/* </React.Fragment> */}
+                    {/* ); */}
+                  {/* }} */}
+                {/* </SidebarLinkGroup> */} 
                 {/* <!-- Menu Item Auth Pages --> */}
 
                 {/* <!-- Menu Item Ui Elements --> */}
@@ -977,8 +975,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }}
                 </SidebarLinkGroup> */}
                 {/* <!-- Menu Item Ui Elements --> */}
-              </ul>
-            </div>
+              {/* </ul> */}
+            {/* </div> */}
           </nav>
           {/* <!-- Sidebar Menu --> */}
         </div>
