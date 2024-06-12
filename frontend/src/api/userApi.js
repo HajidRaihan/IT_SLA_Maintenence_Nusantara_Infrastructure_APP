@@ -42,4 +42,25 @@ const getUser = async (id) => {
     throw error;
   }
 };
-export { getAllUser, getUser };
+const deleteUser = async (id) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${Cookies.get('access_token')}`,
+  };
+
+  try {
+    const response = await RequestApi(
+      'DELETE',
+      `users/${id}`,
+      {},
+      headers,
+      'Mencoba mengambil user employee',
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat user', error);
+    throw error;
+  }
+};
+export { getAllUser, getUser, deleteUser };
