@@ -1,13 +1,11 @@
 import { ApexOptions } from 'apexcharts';
 import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { getJadwal } from '../../api/JadwalApi';
+import { getJadwal } from '../../api/JadwalApi'; // Ensure this import is correct
 
 interface ChartThreeState {
   series: number[];
 }
-
-
 
 const options: ApexOptions = {
   chart: {
@@ -32,24 +30,65 @@ const options: ApexOptions = {
   },
 };
 
+const generateYearRange = (startYear: number, endYear: number): number[] => {
+  const years = [];
+  for (let year = startYear; year <= endYear; year++) {
+    years.push(year);
+  }
+  return years;
+};
+
 const ChartFour: React.FC = () => {
   const [state, setState] = useState<ChartThreeState>({
     series: [0, 0, 0],
   });
-  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear()); // Tambahkan state tahun dan set ke tahun sekarang
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
+  const [years, setYears] = useState<number[]>(generateYearRange(1990, new Date().getFullYear()));
+  const [hasData, setHasData] = useState<boolean>(true);
 
   useEffect(() => {
-    getJadwal(selectedYear) // Gunakan tahun yang dipilih sebagai parameter
+    getJadwal()
       .then(res => {
-        const onTimeCount = res.filter(item => item.status === 'on time').length;
-        const lateCount = res.filter(item => item.status === 'late').length;
-        const notDoneCount = res.filter(item => item.status === 'not done').length;
-        setState({ series: [onTimeCount, lateCount, notDoneCount] });
+        const uniqueYears = Array.from(new Set(res.map((item: { updated_at: string }) => new Date(item.updated_at).getFullYear())));
+        uniqueYears.sort((a, b) => a - b); // Ensure the years are sorted
+        setYears(prevYears => Array.from(new Set([...prevYears, ...uniqueYears])).sort((a, b) => a - b));
       })
       .catch(error => {
-        console.error('Error fetching jadwal data:', error);
+        console.error('Error fetching years:', error);
       });
-  }, [selectedYear]); // Tambahkan selectedYear sebagai dependensi
+  }, []);
+
+  useEffect(() => {
+    const fetchData = (year: number) => {
+      getJadwal()
+        .then(res => {
+          const filteredData = res.filter(item => new Date(item.updated_at).getFullYear() === year);
+          const onTimeCount = filteredData.filter(item => item.status === 'on time').length;
+          const lateCount = filteredData.filter(item => item.status === 'late').length;
+          const notDoneCount = filteredData.filter(item => item.status === 'not done').length;
+          const hasDataForYear = onTimeCount + lateCount + notDoneCount > 0;
+          setHasData(hasDataForYear);
+          if (hasDataForYear) {
+            setState({ series: [onTimeCount, lateCount, notDoneCount] });
+          } else {
+            setState({ series: [0, 0, 0] });
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching jadwal data:', error);
+          setHasData(false);
+        });
+    };
+
+    fetchData(selectedYear);
+  }, [selectedYear]);
+
+  const handleYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const year = parseInt(event.target.value);
+    if (!isNaN(year)) {
+      setSelectedYear(year);
+    }
+  };
 
   const sumStatus = state.series.reduce((acc, curr) => acc + curr, 0);
 
@@ -57,24 +96,32 @@ const ChartFour: React.FC = () => {
     <div className="col-span-12 rounded-sm border border-stroke bg-white p-5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
       <div className="mb-3 flex justify-between items-center">
         <h5 className="text-xl font-semibold text-black dark:text-white">Jadwal Performance</h5>
-        <select value={selectedYear} onChange={(e) => setSelectedYear(parseInt(e.target.value))} className="border rounded px-2 py-1">
-          {/* Tambahkan opsi untuk memilih tahun */}
-          <option value={2024}>2024</option>
-          <option value={2025}>2025</option>
-          {/* Tambahkan opsi lain sesuai kebutuhan */}
-        </select>
+        <input
+          type="number"
+          value={selectedYear}
+          onChange={handleYearChange}
+          min="1990"
+          max={new Date().getFullYear()}
+          className="border rounded px-2 py-1"
+        />
       </div>
-      <div className="mb-2">
-        <div id="chartThree" className="mx-auto flex justify-center">
-          <ReactApexChart options={options} series={state.series} type="donut" />
-        </div>
-      </div>
-      <div className="flex flex-wrap items-center justify-center gap-y-2 gap-x-4">
-        <StatusItem color="#00008B" label="On Time" count={state.series[0]} total={sumStatus} />
-        <StatusItem color="#ADD8E6" label="Late" count={state.series[1]} total={sumStatus} />
-        <StatusItem color="#FF6347" label="Not Done" count={state.series[2]} total={sumStatus} />
-        <StatusItem color="#B0B0B0" label="All Status" count={sumStatus} total={sumStatus} />
-      </div>
+      {hasData && sumStatus > 0 ? (
+        <>
+          <div className="mb-2">
+            <div id="chartThree" className="mx-auto flex justify-center">
+              <ReactApexChart options={options} series={state.series} type="donut" />
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-y-2 gap-x-4">
+            <StatusItem color="#00008B" label="On Time" count={state.series[0]} total={sumStatus} />
+            <StatusItem color="#ADD8E6" label="Late" count={state.series[1]} total={sumStatus} />
+            <StatusItem color="#FF6347" label="Not Done" count={state.series[2]} total={sumStatus} />
+            <StatusItem color="#B0B0B0" label="All Status" count={sumStatus} total={sumStatus} />
+          </div>
+        </>
+      ) : (
+        <div className="text-center text-black dark:text-white">No data available for the selected year.</div>
+      )}
     </div>
   );
 };
