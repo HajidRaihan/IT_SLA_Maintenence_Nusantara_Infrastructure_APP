@@ -47,7 +47,9 @@ Route::middleware(['cors'])->group(function () {
         Route::post('/user', [AuthenticationController::class, 'user']);
         
         Route::get('/users', [UserController::class, 'index']);
+        Route::delete('/user/delete/{id}', [UserController::class, 'delete']);
         Route::post('/users/update/{id}', [UserController::class, 'updateProfile']);
+
     
         Route::post('/toll', [ActivityController::class, 'addactivity_toll']);
         Route::get('/toll', [ActivityController::class, 'getactivity_toll']);

@@ -100,4 +100,35 @@ class UserController extends Controller
             200,
         );
     }
+    public function delete($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(
+                [
+                    'message' => 'User not found',
+                ],
+                404,
+            );
+        }
+
+        // Optionally, you could delete associated files if necessary
+        if ($user->foto && Storage::exists('images/' . $user->foto)) {
+            Storage::delete('images/' . $user->foto);
+        }
+
+        if ($user->ttd && Storage::exists('images/' . $user->ttd)) {
+            Storage::delete('images/' . $user->ttd);
+        }
+
+        $user->delete();
+
+        return response()->json(
+            [
+                'message' => 'User deleted successfully',
+            ],
+            200,
+        );
+    }
 }
