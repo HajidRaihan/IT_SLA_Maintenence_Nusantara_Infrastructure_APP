@@ -28,7 +28,6 @@ const getAllActivity = async (lokasi, kategori, company, status, page) => {
     Authorization: `Bearer ${Cookies.get('access_token')}`,
   };
 
-  console.log(lokasi, kategori);
   let params = [];
   if (page) {
     params.push(`page=${page}`);
@@ -48,7 +47,6 @@ const getAllActivity = async (lokasi, kategori, company, status, page) => {
   if (params.length > 0) {
     params = '?' + params.join('&');
   }
-  console.log(params);
 
   try {
     const response = await RequestApi(
@@ -114,7 +112,6 @@ const editActivity = async (data, id) => {
     Authorization: `Bearer ${Cookies.get('access_token')}`,
   };
 
-  console.log('ini data edit', data);
   try {
     const response = await RequestApi(
       'PUT',

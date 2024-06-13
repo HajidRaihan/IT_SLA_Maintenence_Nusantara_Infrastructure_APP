@@ -11,26 +11,22 @@ const GrafikWaktuKerjaPage = () => {
   useEffect(() => {
     const getGrafik = async () => {
       const res = await getGrafikWorkDuration(selectedYear, 'false');
-      console.log('ini data dari api', res);
 
       setDataGrafikWork(res);
       const yearSet = new Set();
 
       for (let i = res.start_year; i <= res.end_year; i++) {
-        console.log(i);
         yearSet.add(i);
       }
 
       // Konversi Set menjadi Array
       setYear([...yearSet]);
-      console.log({ year });
     };
     getGrafik();
   }, [selectedYear]);
 
   const selectedYearHanlder = (e) => {
     setSelectedYear(e.target.value);
-    console.log(e.target.value);
   };
   return (
     <DefaultLayout>

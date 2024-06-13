@@ -57,7 +57,6 @@ const AddActivityModal = ({
   useEffect(() => {
     const fetchUser = async () => {
       const res = await getUserLogin();
-      console.log('ini user', res);
       setDataUser(res);
     };
     fetchUser();
@@ -66,7 +65,6 @@ const AddActivityModal = ({
   useEffect(() => {
     const fetchLokasi = async () => {
       const res = await getLokasi();
-      console.log(res);
       setLokasiData(res);
     };
     fetchLokasi();
@@ -75,7 +73,6 @@ const AddActivityModal = ({
   useEffect(() => {
     const fetchKategori = async () => {
       const res = await getKategori();
-      console.log(res);
       setKategoriData(res);
     };
     fetchKategori();
@@ -84,7 +81,6 @@ const AddActivityModal = ({
   useEffect(() => {
     const fetchHardware = async () => {
       const res = await getJenisHardware();
-      console.log({ res });
       // Menggunakan Set untuk menyaring nilai-nilai unik
       const uniqueHardwareNames = [
         ...new Set(res.map((item) => item.nama_hardware)),
@@ -97,7 +93,6 @@ const AddActivityModal = ({
   useEffect(() => {
     const fetchSoftware = async () => {
       const res = await getJenisSoftware();
-      console.log({ res });
       // Menggunakan Set untuk menyaring nilai-nilai unik
       const uniqueSoftwareNames = [
         ...new Set(res.map((item) => item.nama_software)),
@@ -110,7 +105,6 @@ const AddActivityModal = ({
   useEffect(() => {
     const fetchAplikasi = async () => {
       const res = await getAplikasiTol();
-      console.log({ res });
       // Menggunakan Set untuk menyaring nilai-nilai unik
       const uniqueAplikasiNames = [
         ...new Set(res.map((item) => item.nama_aplikasiTol)),
@@ -132,20 +126,12 @@ const AddActivityModal = ({
 
   const handleTanggalChange = (e) => {
     setTanggal(e.target.value);
-    console.log(e.target.value);
   };
 
-  // const handleJenisHardwareChange = (selected) => {
-  //   setJenisHardware(selected);
-  //   console.log(selected);
-  // };
   const handleJenisHardwareChange = (value) => {
-    console.log(value);
-    console.log(jenisHardware);
     // Cek apakah value sudah ada dalam array checkedValues
     if (jenisHardware.includes(value)) {
       // Jika sudah ada, hapus dari array
-      console.log(true);
       setJenisHardware(jenisHardware.filter((item) => item !== value));
     } else {
       // Jika belum ada, tambahkan ke array
@@ -154,12 +140,9 @@ const AddActivityModal = ({
   };
 
   const handleStandartAplikasiChange = (value) => {
-    console.log(value);
-    console.log(jenisHardware);
     // Cek apakah value sudah ada dalam array checkedValues
     if (standartAplikasi.includes(value)) {
       // Jika sudah ada, hapus dari array
-      console.log(true);
       setStandartAplikasi(standartAplikasi.filter((item) => item !== value));
     } else {
       // Jika belum ada, tambahkan ke array
@@ -258,7 +241,6 @@ const AddActivityModal = ({
       status: status,
     };
 
-    console.log(data);
     setIsLoading(true);
     try {
       const res = await addActivity(data);
@@ -268,7 +250,6 @@ const AddActivityModal = ({
         toastSuccess();
         close();
         setIsLoading(false);
-        console.log(res);
         setData((prev) => [...prev, res.data]);
 
         setCompany('');

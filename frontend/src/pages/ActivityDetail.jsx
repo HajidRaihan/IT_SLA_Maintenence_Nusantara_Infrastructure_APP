@@ -30,7 +30,6 @@ const ActivityDetail = () => {
   useEffect(() => {
     const fetchActivity = async () => {
       const res = await getDetailActivity(id);
-      console.log(res.data.data);
       setDetail(res.data.data[0]);
     };
     fetchActivity();
@@ -40,7 +39,6 @@ const ActivityDetail = () => {
     const fetchWorker = async () => {
       const res = await getActivityWorker(id);
 
-      console.log('acitivty worker', res.data);
       const workerPendingFilter = await res.data.filter(
         (worker) => worker.status === 'pending',
       );
@@ -53,7 +51,6 @@ const ActivityDetail = () => {
         (worker) => worker.status === 'process',
       );
 
-      console.log('worker done', workerDoneFilter);
       setWorkerProcess(workerProcessFilter);
     };
     fetchWorker();
@@ -67,7 +64,6 @@ const ActivityDetail = () => {
   //   };
   //   try {
   //     const res = await changeStatus(id, data);
-  //     console.log(res);
   //   } catch (error) {
   //     console.error(error);
   //   }
@@ -83,7 +79,6 @@ const ActivityDetail = () => {
     setDeskripsiPending(deskripsi);
     setUserId(id);
     setOpenPdfModal(true);
-    console.log(status, deskripsi, id);
   };
 
   return (

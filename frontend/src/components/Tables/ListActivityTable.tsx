@@ -198,7 +198,7 @@ const ListActivityTable = ({
                         />
                       </svg>
                     </button>
-                    <button
+                    {/* <button
                       className="hover:text-primary"
                       onClick={onOpenEditModal}
                     >
@@ -230,7 +230,7 @@ const ListActivityTable = ({
                           </clipPath>
                         </defs>
                       </svg>
-                    </button>
+                    </button> */}
                     <button
                       className="hover:text-primary"
                       onClick={() => openDeleteModal(item.id)}

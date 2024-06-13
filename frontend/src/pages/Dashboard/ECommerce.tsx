@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import CardDataStats from '../../components/CardDataStats';
 import ChartOne from '../../components/Charts/ChartOne';
 import ChartThree from '../../components/Charts/ChartThree';
 import ChartFour from '../../components/Charts/ChartFour';
 import ChartTwo from '../../components/Charts/ChartTwo';
-import ChatCard from '../../components/Chat/ChatCard';
-import MapOne from '../../components/Maps/MapOne';
-import TableOne from '../../components/Tables/TableOne';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { getGrafikWorkDuration } from '../../api/grafikApi';
 import WorkDurationChart from '../../components/Charts/WorkDurationChart';
@@ -25,45 +21,30 @@ const ECommerce: React.FC = () => {
   useEffect(() => {
     const getGrafik = async () => {
       const res = await getGrafikWorkDuration(selectedYear, 'true');
-      console.log('ini data dari api', res);
 
-      // console.log({ convertToHour });
-
-      // setDataGrafikWork({
-      //   series: [
-      //     {
-      //       name: 'waktu pengerjaan',
-      //       data: convertToHour,
-      //     },
-      //   ],
-      // });
       setDataGrafikWork(res);
       const yearSet = new Set();
 
       for (let i = res.start_year; i <= res.end_year; i++) {
-        console.log(i);
         yearSet.add(i);
       }
 
-      // Konversi Set menjadi Array
       setYear([...yearSet]);
-      console.log({ year });
     };
     getGrafik();
   }, [selectedYear]);
 
   const selectedYearHanlder = (e) => {
     setSelectedYear(e.target.value);
-    console.log(e.target.value);
   };
 
   return (
     <DefaultLayout>
-      <div className=" col-span-12 rounded-sm border border-stroke p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4 mb-5">
+      <div className="col-span-12 rounded-sm border border-stroke p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4 mb-5">
         <h4 className="text-xl font-bold text-black dark:text-white mb-5">
           Grafik Waktu Kerja
         </h4>
-        <div className="flex-1 w-32 lg:ml-3">
+        <div className="flex-1 w-32 mb-5 ">
           <select
             value={selectedYear}
             onChange={selectedYearHanlder}
@@ -86,9 +67,13 @@ const ECommerce: React.FC = () => {
           {dataGrafikWork ? (
             dataGrafikWork.data.map((data, index) => {
               return (
-                <div className="lg:w-1/2 w-full" key={index}>
-                  <WorkDurationChart data={data} />
-                </div>
+                <>
+                  <div className="lg:w-full w-full mb-4" key={index}>
+                    <div className="rounded-sm border border-stroke p-3 shadow-default dark:border-strokedark dark:bg-boxdark">
+                      <WorkDurationChart data={data} />
+                    </div>
+                  </div>
+                </>
               );
             })
           ) : (
@@ -109,11 +94,23 @@ const ECommerce: React.FC = () => {
         </div>
       </div>
 
-
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      {/* ChartOne */}
+      <div className="col-span-12 xl:col-span-6 mx-4 mb-5">
         <ChartOne />
+      </div>
+
+      {/* ChartTwo */}
+      <div className="col-span-12 xl:col-span-6 mx-4 mb-5">
         <ChartTwo />
+      </div>
+
+      {/* ChartThree */}
+      <div className="col-span-12 xl:col-span-6 mx-4 mb-5">
         <ChartThree />
+      </div>
+
+      {/* ChartFour */}
+      <div className="col-span-12 xl:col-span-6 mx-4 mb-5">
         <ChartFour />
       </div>
     </DefaultLayout>

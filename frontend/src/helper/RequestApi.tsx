@@ -5,7 +5,6 @@ const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const handleErrorResponse = (error: any, action: string) => {
   console.error(`Error: saat ${action}`, error);
-  console.log(error.response.data.message);
   if (error.response.data.message === 'Unauthenticated.') {
     Cookies.remove('access_token');
     Cookies.remove('role');
@@ -18,7 +17,7 @@ const handleErrorResponse = (error: any, action: string) => {
 const RequestApi = async (
   method: string,
   url: string,
-  data: any = {}, 
+  data: any = {},
   headers: any = {},
   action: string,
 ) => {

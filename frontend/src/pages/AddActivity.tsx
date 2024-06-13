@@ -35,7 +35,6 @@ const AddActivity = () => {
   useEffect(() => {
     const fetchLokasi = async () => {
       const res = await getLokasi();
-      console.log(res);
       setLokasiData(res);
     };
     fetchLokasi();
@@ -44,7 +43,6 @@ const AddActivity = () => {
   useEffect(() => {
     const fetchKategori = async () => {
       const res = await getKategori();
-      console.log(res);
       setKategoriData(res);
     };
     fetchKategori();
@@ -58,20 +56,15 @@ const AddActivity = () => {
 
   const handleTanggalChange = (e) => {
     setTanggal(e.target.value);
-    console.log(e.target.value);
   };
 
   // const handleJenisHardwareChange = (selected) => {
   //   setJenisHardware(selected);
-  //   console.log(selected);
   // };
   const handleJenisHardwareChange = (value) => {
-    console.log(value);
-    console.log(jenisHardware);
     // Cek apakah value sudah ada dalam array checkedValues
     if (jenisHardware.includes(value)) {
       // Jika sudah ada, hapus dari array
-      console.log(true);
       setJenisHardware(jenisHardware.filter((item) => item !== value));
     } else {
       // Jika belum ada, tambahkan ke array
@@ -80,12 +73,9 @@ const AddActivity = () => {
   };
 
   const handleStandartAplikasiChange = (value) => {
-    console.log(value);
-    console.log(jenisHardware);
     // Cek apakah value sudah ada dalam array checkedValues
     if (standartAplikasi.includes(value)) {
       // Jika sudah ada, hapus dari array
-      console.log(true);
       setStandartAplikasi(standartAplikasi.filter((item) => item !== value));
     } else {
       // Jika belum ada, tambahkan ke array
@@ -174,10 +164,8 @@ const AddActivity = () => {
       status: status,
     };
 
-    console.log(data);
     try {
       const res = await addActivity(data);
-      console.log(res);
     } catch (error) {
       console.error(error);
     }

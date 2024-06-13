@@ -1,65 +1,53 @@
-import BrandOne from '../../images/brand/brand-01.svg';
-import BrandTwo from '../../images/brand/brand-02.svg';
-import BrandThree from '../../images/brand/brand-03.svg';
-import BrandFour from '../../images/brand/brand-04.svg';
-import BrandFive from '../../images/brand/brand-05.svg';
-import React from 'react';
+import React, { useState } from 'react';
+import { deleteUser } from '../../api/userApi';
+import {
+  Button,
+  useDisclosure,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+} from '@nextui-org/react';
+import { toast, ToastContainer } from 'react-toastify';
 
-const brandData = [
-  {
-    logo: BrandOne,
-    name: 'Google',
-    visitors: 3.5,
-    revenues: '5,768',
-    sales: 590,
-    conversion: 4.8,
-  },
-  {
-    logo: BrandTwo,
-    name: 'Twitter',
-    visitors: 2.2,
-    revenues: '4,635',
-    sales: 467,
-    conversion: 4.3,
-  },
-  {
-    logo: BrandThree,
-    name: 'Github',
-    visitors: 2.1,
-    revenues: '4,290',
-    sales: 420,
-    conversion: 3.7,
-  },
-  {
-    logo: BrandFour,
-    name: 'Vimeo',
-    visitors: 1.5,
-    revenues: '3,580',
-    sales: 389,
-    conversion: 2.5,
-  },
-  {
-    logo: BrandFive,
-    name: 'Facebook',
-    visitors: 3.5,
-    revenues: '6,768',
-    sales: 390,
-    conversion: 4.2,
-  },
-];
+const TableUser = ({ data, setUserData }) => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [userId, setUserId] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
-const TableUser = ({ data }) => {
+  const deleteHandler = async () => {
+    // return console.log(id);
+    setIsLoading(true);
+    try {
+      const res = await deleteUser(userId);
+      console.log(res);
+      setIsLoading(false);
+      setUserData((prev) => {
+        return prev.filter((user) => user.id !== userId);
+      });
+      toast.success('Berhasil delete user');
+    } catch (error) {
+      setIsLoading(false);
+      console.error(error);
+      toast.error('Gagal hapus user');
+    }
+  };
+
+  const openModal = (id) => {
+    onOpen();
+    setUserId(id);
+    console.log(id);
+  };
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <ToastContainer />
+
       <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
         User
       </h4>
 
       <div className="flex flex-col">
-        <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
-          <div className="p-2.5 xl:p-5">
-            <h5 className="text-sm font-medium  xsm:text-base">No</h5>
-          </div>
+        <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-6">
           <div className="p-2.5 xl:p-5">
             <h5 className="text-sm font-medium  xsm:text-base">Foto</h5>
           </div>
@@ -70,55 +58,99 @@ const TableUser = ({ data }) => {
             <h5 className="text-sm font-medium  xsm:text-base">Email</h5>
           </div>
           <div className="hidden p-2.5 sm:block xl:p-5">
+            <h5 className="text-sm font-medium  xsm:text-base">Role</h5>
+          </div>
+          <div className="hidden p-2.5 sm:block xl:p-5">
             <h5 className="text-sm font-medium  xsm:text-base">Tanda Tangan</h5>
+          </div>
+          <div className="hidden p-2.5 sm:block xl:p-5">
+            <h5 className="text-sm font-medium  xsm:text-base">Action</h5>
           </div>
         </div>
 
         {data?.map((item, key) => (
           <div
-            className={`grid grid-cols-3 sm:grid-cols-5 ${
+            className={`grid grid-cols-3 sm:grid-cols-6 ${
               key === data.length - 1
                 ? ''
                 : 'border-b border-stroke dark:border-strokedark'
             }`}
             key={key}
           >
-            <div className="flex items-center p-2.5 xl:p-5">
-              <p className="text-black dark:text-white">{key + 1}</p>
-            </div>
             <div className="flex items-center gap-3 p-2.5 xl:p-5">
               <div className="flex-shrink-0">
                 <img
                   src={`${import.meta.env.VITE_IMAGE_URL}/${item.foto}`}
                   alt="profile"
-                  className="w-32 h-32 rounded-full object-cover object-center"
+                  className="w-20 h-20 rounded-full object-cover object-center"
                 />
               </div>
             </div>
-
             <div className="flex items-center p-2.5 xl:p-5">
               <p className="text-black dark:text-white">{item.username}</p>
             </div>
             <div className="flex items-center p-2.5 xl:p-5">
               <p className="text-black dark:text-white">{item.email}</p>
             </div>
-
+            <div className="flex items-center p-2.5 xl:p-5">
+              <p className="text-black dark:text-white">{item.role}</p>
+            </div>
             <div className="flex items-center gap-3 p-2.5 xl:p-5">
               <div className="flex-shrink-0">
                 <img
                   src={`${import.meta.env.VITE_IMAGE_URL}/${item.ttd}`}
                   alt="ttd"
-                  className="w-32 h-32 object-cover object-center"
+                  className="w-20 h-20 object-cover object-center"
                 />
               </div>
             </div>
-
+            <div className="flex items-center p-2.5 xl:p-5">
+              <Button
+                color="danger"
+                size="sm"
+                onClick={() => openModal(item.id)}
+              >
+                Delete
+              </Button>
+            </div>
             {/* <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
               <p className="text-meta-5">{brand.conversion}%</p>
             </div> */}
           </div>
         ))}
       </div>
+
+      <>
+        <Modal
+          className="dark:bg-black py-5 flex flex-col items-center"
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          size="sm"
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="dark:text-white flex flex-col gap-1">
+                  Apakah anda ingin menghapus activity ini?
+                </ModalHeader>
+
+                <ModalFooter>
+                  <Button color="primary" onPress={onClose}>
+                    Tutup
+                  </Button>
+                  <Button
+                    color="danger"
+                    onPress={deleteHandler}
+                    isLoading={isLoading}
+                  >
+                    Hapus
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      </>
     </div>
   );
 };

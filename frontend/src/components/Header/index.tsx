@@ -4,7 +4,7 @@ import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
 import LogoIcon from '../../images/logo/logo-icon.svg';
 import React from 'react';
-import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightArrowLeft, faArrowRightFromBracket,faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '@nextui-org/react';
 import Cookies from 'js-cookie';
@@ -72,18 +72,21 @@ const Header = (props: {
         </div>
 
         <div className="flex justify-end items-center absolute right-5">
-          <Button
-            onClick={logoutHandler}
-            className="border text-xs font-medium flex justify-center items-center border-stroke rounded-lg px-4 py-2 bg-blue-500 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
-          >
-            <p>Logout</p>
-            {/* <FontAwesomeIcon
-              icon={faArrowRight}
-              className="green-light-icon text-md"
-            /> */}
-            <FontAwesomeIcon icon={faArrowRightFromBracket} />
-          </Button>
+      <Button
+        onClick={logoutHandler}
+        className="border text-xs font-medium flex justify-center items-center border-stroke rounded-lg px-4 py-2 bg-indigo-800 dark:bg-boxdark shadow-default dark:border-strokedark text-white"
+      >
+        <div className="flex items-center relative">
+        <span className="absolute left-0 -top-0 bg-black text-white px-2 py-1 rounded opacity-0 transition-opacity duration-100 group-hover:opacity-100">
+            Log Out
+          </span>
+          <FontAwesomeIcon icon={faUser} className="ml-2 group" />
         </div>
+        <div className="flex items-center mt-2">
+          <FontAwesomeIcon icon={faArrowRightFromBracket} />
+        </div>
+      </Button>
+    </div>
 
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">

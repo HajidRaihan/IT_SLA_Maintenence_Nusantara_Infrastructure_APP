@@ -33,7 +33,6 @@ const ChangeStatusModal = ({
       const res = await changeStatus(data, id);
       toastSuccess();
       close();
-      console.log(res);
     } catch (error) {
       console.error(error);
       toastError(error.response.data.message);
@@ -42,11 +41,9 @@ const ChangeStatusModal = ({
 
   const statusOnChange = (e) => {
     setStatus(e.target.value);
-    console.log(e.target.value);
   };
 
   const fotoAkhirOnChange = (e) => {
-    console.log(e.target.files[0]);
     setFotoAkhir(e.target.files[0]);
   };
 

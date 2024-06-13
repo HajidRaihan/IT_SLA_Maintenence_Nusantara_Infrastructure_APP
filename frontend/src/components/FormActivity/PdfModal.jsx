@@ -72,18 +72,15 @@ const PdfModal = ({
 
   useEffect(() => {
     getEmployee().then((res) => {
-      console.log(res);
       setEmployee(res);
     });
   }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
-      console.log('ini id user', id);
       try {
         const res = await getUser(id);
         setUserData(res.data);
-        console.log('asldkjalk', res.data);
       } catch (error) {
         console.error('Error fetching user:', error);
       }
@@ -206,8 +203,6 @@ const PdfModal = ({
       (employee) => employee.nama == selected,
     );
     setEmployeeIndex(employeeIndex[0]);
-    console.log('iindex', employeeIndex[0].ttd);
-    console.log(e.target.value);
   };
 
   return (

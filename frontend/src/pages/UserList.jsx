@@ -8,7 +8,6 @@ const UserList = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await getAllUser();
-      console.table(res.data);
       setUserData(res.data);
     };
     fetchUser();
@@ -16,7 +15,7 @@ const UserList = () => {
 
   return (
     <DefaultLayout>
-      <TableUser data={userData} />
+      <TableUser data={userData} setUserData={setUserData} />
     </DefaultLayout>
   );
 };
