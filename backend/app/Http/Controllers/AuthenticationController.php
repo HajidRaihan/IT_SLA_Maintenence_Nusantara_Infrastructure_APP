@@ -46,7 +46,30 @@ class AuthenticationController extends Controller
             // 'ttd' => $request->ttd,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'user'
+        ]);
+
+        return response()->json([
+            'message' => 'Register success',
+            'user' => $user
+        ], 200);
+    }
+    public function register_admin(Request $request) {
+        $validate = $request->validate([
+            'username' => 'required',
+            // 'foto' => 'required',
+            // 'ttd' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'role' => 'required|in:admin,user'
+        ]);
+
+        $user = User::create([
+            'username' => $request->username,
+            // 'foto' => $request->foto,
+            // 'ttd' => $request->ttd,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role
         ]);
 
         return response()->json([

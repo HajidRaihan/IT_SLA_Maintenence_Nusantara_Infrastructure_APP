@@ -34,6 +34,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
+Route::post('/register/admin', [AuthenticationController::class, 'register_admin']);
 // Route::post('/taik', [AuthenticationController::class, 'login']);
 
 
@@ -45,6 +46,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::get('/users', [UserController::class, 'index']);
     Route::post('/users/update/{id}', [UserController::class, 'updateProfile']);
+    Route::delete('/user/{id}', [UserController::class, 'delete']);
+
 
     Route::post('/toll', [ActivityController::class, 'addactivity_toll']);
     Route::get('/toll', [ActivityController::class, 'getactivity_toll']);
