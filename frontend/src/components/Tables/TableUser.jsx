@@ -49,9 +49,6 @@ const TableUser = ({ data, setUserData }) => {
       <div className="flex flex-col">
         <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-6">
           <div className="p-2.5 xl:p-5">
-            <h5 className="text-sm font-medium  xsm:text-base">No</h5>
-          </div>
-          <div className="p-2.5 xl:p-5">
             <h5 className="text-sm font-medium  xsm:text-base">Foto</h5>
           </div>
           <div className="p-2.5 xl:p-5">
@@ -80,9 +77,6 @@ const TableUser = ({ data, setUserData }) => {
             }`}
             key={key}
           >
-            <div className="flex items-center p-2.5 xl:p-5">
-              <p className="text-black dark:text-white">{key + 1}</p>
-            </div>
             <div className="flex items-center gap-3 p-2.5 xl:p-5">
               <div className="flex-shrink-0">
                 <img
@@ -97,7 +91,7 @@ const TableUser = ({ data, setUserData }) => {
             </div>
             <div className="flex items-center p-2.5 xl:p-5">
               <p className="text-black dark:text-white">{item.email}</p>
-            </div>{' '}
+            </div>
             <div className="flex items-center p-2.5 xl:p-5">
               <p className="text-black dark:text-white">{item.role}</p>
             </div>
