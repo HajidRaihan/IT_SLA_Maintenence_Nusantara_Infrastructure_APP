@@ -758,6 +758,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Chart --> */}
 
               {/* <!-- Menu Item Auth Pages --> */}
+              <ul>
               <SidebarLinkGroup
                     activeCondition={
                       pathname === '/auth' || pathname.includes('auth')
@@ -768,7 +769,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         <React.Fragment>
                         <NavLink
                           to="#"
-                          className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                          className={` text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                             (pathname === '/auth' ||
                               pathname.includes('auth')) &&
                             'bg-graydark dark:bg-meta-4'
@@ -834,7 +835,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             !open && 'hidden'
                           }`}
                         > 
-                        <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                        <ul className="text-xs mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                             {/* <li>
                               <NavLink
                                 to="/auth/signin"
@@ -865,6 +866,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                    }
                   } 
             </SidebarLinkGroup> 
+            </ul>
             {/* </ul> */}
             {/* </div> */}
         </nav>
