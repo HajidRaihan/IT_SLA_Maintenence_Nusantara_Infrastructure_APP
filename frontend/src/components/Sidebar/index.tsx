@@ -574,6 +574,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </h3>
                 </ul>
                 </li>
+          
 
               {/* <!-- Menu Item kategori*/}
               <ul>
@@ -759,7 +760,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {/* <!-- Menu Item Chart --> */}
 
                 {/* <!-- Menu Item Auth Pages --> */}
-                {/* <SidebarLinkGroup
+                <SidebarLinkGroup
                   activeCondition={
                     pathname === '/auth' || pathname.includes('auth')
                   }
@@ -830,14 +831,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           </svg>
                         </NavLink>
                         {/* <!-- Dropdown Menu Start --> */}
-                        {/* <div
+                        <div
                           className={`translate transform overflow-hidden ${
                             !open && 'hidden'
                           }`}
-                        > */}
-                          {/* <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                            <li>
-                              <NavLink
+                        >
+                           <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                            {/* <li> */}
+                              {/* <NavLink
                                 to="/auth/signin"
                                 className={({ isActive }) =>
                                   'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
@@ -845,10 +846,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 }
                               >
                                 Sign In
-                              </NavLink>
-                            </li>
-                            <li> */}
-                              {/* <NavLink
+                              </NavLink> */}
+                            {/* </li> */}
+                            <li>
+                              <NavLink
                                 to="/auth/signup"
                                 className={({ isActive }) =>
                                   'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
@@ -856,15 +857,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 }
                               >
                                 Sign Up
-                              </NavLink> */}
-                            {/* </li> */}
-                          {/* </ul> */}
-                        {/* </div> */}
+                              </NavLink>
+                            </li> 
+                          </ul> 
+                        </div> 
                         {/* <!-- Dropdown Menu End --> */}
-                      {/* </React.Fragment> */}
-                    {/* ); */}
-                  {/* }} */}
-                {/* </SidebarLinkGroup> */} 
+                      </React.Fragment> 
+                    ); 
+                   }} 
+                </SidebarLinkGroup>
                 {/* <!-- Menu Item Auth Pages --> */}
 
                 {/* <!-- Menu Item Ui Elements --> */}
