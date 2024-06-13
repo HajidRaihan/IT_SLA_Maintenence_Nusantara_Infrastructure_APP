@@ -83,7 +83,6 @@ const PendingActivityTable = ({ data }) => {
   }
 
   const hasil = konversiDetik(200000);
-  console.log({ hasil });
 
   return (
     <div className="w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">

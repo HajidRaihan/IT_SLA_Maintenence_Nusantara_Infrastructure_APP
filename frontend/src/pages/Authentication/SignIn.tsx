@@ -37,6 +37,12 @@ const SignIn: React.FC = () => {
 
       const res = await loginUser(credential);
 
+      if (res.user.role !== 'admin') {
+        toast.error('anda bukan admin');
+        setIsLoading(false);
+        return;
+      }
+
       if (res) {
         navigate('/');
         setIsLoading(false);
@@ -44,7 +50,7 @@ const SignIn: React.FC = () => {
       }
     } catch (error) {
       console.error(error);
-      toast.error('email atau password');
+      toast.error('email atau password anda salah');
       setIsLoading(false);
     }
   };
@@ -135,7 +141,7 @@ const SignIn: React.FC = () => {
 
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Re-type Password
+                    Password
                   </label>
                   <div className="relative">
                     <input

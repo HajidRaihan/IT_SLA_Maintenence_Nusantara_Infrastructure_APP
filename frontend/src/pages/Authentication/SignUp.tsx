@@ -4,16 +4,21 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import ExampleImage from '../../images/logo/logo1.png';
 import { registerUser } from '../../api/authApi';
 import { ToastContainer, toast } from 'react-toastify';
+import { Button } from '@nextui-org/react';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp: React.FC = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const regisHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const data = {
       username: username,
@@ -26,9 +31,11 @@ const SignUp: React.FC = () => {
       toast.success('Registration successful!', {
         onClose: () => navigate('/auth/signin'),
       });
+      setIsLoading(false);
     } catch (error) {
       toast.error('Registration failed. Please try again.');
       console.error(error);
+      setIsLoading(false);
     }
   };
 
@@ -47,10 +54,22 @@ const SignUp: React.FC = () => {
             </div>
 
             <div className="2xl:px-20 text-center mt-20">
-              <h2 className="font-bold" style={{ color: '#28517D', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.25)' }}>
+              <h2
+                className="font-bold"
+                style={{
+                  color: '#28517D',
+                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.25)',
+                }}
+              >
                 WELCOME TO
               </h2>
-              <h3 className="font-bold" style={{ color: '#28517D', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.25)' }}>
+              <h3
+                className="font-bold"
+                style={{
+                  color: '#28517D',
+                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.25)',
+                }}
+              >
                 IT SLA MAINTENANCE
               </h3>
             </div>
@@ -169,18 +188,22 @@ const SignUp: React.FC = () => {
                 </div>
 
                 <div className="mb-6">
-                  <button
+                  <Button
                     type="submit"
                     className="inline-flex w-full items-center justify-center rounded-lg bg-indigo-800 py-2 px-3 text-center text-white font-medium hover:bg-primary-dark"
+                    isLoading={isLoading}
                   >
                     Sign Up
-                  </button>
+                  </Button>
                 </div>
 
                 <div className="text-center">
                   <p className="text-sm font-medium text-black dark:text-white">
                     Already have an account?{' '}
-                    <Link to="/auth/signin" className="text-primary hover:underline">
+                    <Link
+                      to="/auth/signin"
+                      className="text-primary hover:underline"
+                    >
                       Sign In
                     </Link>
                   </p>

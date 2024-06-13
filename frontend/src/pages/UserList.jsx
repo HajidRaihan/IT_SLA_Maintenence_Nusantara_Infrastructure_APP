@@ -15,7 +15,7 @@ const UserList = () => {
 
   return (
     <DefaultLayout>
-      <TableUser data={userData} />
+      <TableUser data={userData} setUserData={setUserData} />
     </DefaultLayout>
   );
 };
