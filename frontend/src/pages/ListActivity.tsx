@@ -67,7 +67,6 @@ const ListActivity = () => {
     const fetchActivities = async () => {
       try {
         const response = await getAllActivity();
-        console.log(response); // Log respons untuk melihat strukturnya
         if (response && response.data && Array.isArray(response.data.data)) {
           setData(response.data.data);
           setTotalPage(response.data.last_page); // Mengatur total halaman dari respons
@@ -85,7 +84,6 @@ const ListActivity = () => {
   }, [page]);
 
   const deleteHandler = async (id) => {
-    console.log('delete', id);
     setHapusLoading(true);
     try {
       const res = await deleteActivity(id);

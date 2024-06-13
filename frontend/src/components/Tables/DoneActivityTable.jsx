@@ -64,17 +64,13 @@ const DoneActivityTable = ({ data, user }) => {
       .replace('Z', '')
       .replace(/\.\d+/g, '');
 
-    console.log({ tanggalMulaiFormat });
     const tanggalSelesaiFormat = data.ended_at.replace(' ', 'T');
-    console.log({ tanggalSelesaiFormat });
 
     const selisihDetik = differenceInSeconds(
       tanggalSelesaiFormat,
       tanggalMulaiFormat,
     );
-    console.log({ selisihDetik });
     const lama = konversiDetik(selisihDetik);
-    console.log({ lama });
     setLamaHandle(lama);
     setTanggalSelesai(format(tanggalSelesaiFormat, 'd MMMM yyyy, HH:mm:ss'));
     setTanggalMulai(format(tanggalMulaiFormat, 'd MMMM yyyy, HH:mm:ss'));
@@ -92,7 +88,6 @@ const DoneActivityTable = ({ data, user }) => {
   }
 
   const hasil = konversiDetik(200000);
-  console.log({ hasil });
 
   return (
     <div className="w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -151,7 +146,6 @@ const DoneActivityTable = ({ data, user }) => {
               <p className="text-black dark:text-white">{data.kondisi_akhir}</p>
             </td>
           </tr>
-        
         </table>
       </div>
     </div>

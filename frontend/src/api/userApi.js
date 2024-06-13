@@ -51,15 +51,15 @@ const deleteUser = async (id) => {
   try {
     const response = await RequestApi(
       'DELETE',
-      `users/${id}`,
+      `user/${id}`,
       {},
       headers,
-      'Mencoba mengambil user employee',
+      'Mencoba delete user',
     );
 
     return response.data;
   } catch (error) {
-    console.error('Terjadi kesalahan saat user', error);
+    console.error('Terjadi kesalahan saat delete user', error);
     throw error;
   }
 };

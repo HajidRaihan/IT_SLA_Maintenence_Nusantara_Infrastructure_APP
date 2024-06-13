@@ -64,14 +64,8 @@ const PendingActivityTable = ({ data }) => {
       .replace('Z', '')
       .replace(/\.\d+/g, '');
 
-    console.log({ tanggalMulaiFormat });
-    // const tanggalSelesaiFormat = data.ended_at.replace(' ', 'T');
-    // console.log({ tanggalSelesaiFormat });
-
     const selisihDetik = differenceInSeconds(tanggalMulaiFormat);
-    console.log({ selisihDetik });
     const lama = konversiDetik(selisihDetik);
-    console.log({ lama });
     setLamaHandle(lama);
     // setTanggalSelesai(format(tanggalSelesaiFormat, 'd MMMM yyyy, HH:mm:ss'));
     setTanggalMulai(format(tanggalMulaiFormat, 'd MMMM yyyy, HH:mm:ss'));

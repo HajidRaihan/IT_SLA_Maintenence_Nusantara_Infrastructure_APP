@@ -28,7 +28,6 @@ const AddEmployeeModal = ({
     };
     try {
       const res = await addEmployee(data);
-      console.log(res);
       toastSuccess();
       close();
       setEmployeeData((prev) => [...prev, res.data]);
@@ -39,7 +38,6 @@ const AddEmployeeModal = ({
   };
 
   const ttdOnChange = (e) => {
-    console.log(e.target.files[0]);
     setTtd(e.target.files[0]);
   };
 

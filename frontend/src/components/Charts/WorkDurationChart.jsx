@@ -13,9 +13,9 @@ const TimeConverter = ({ totalSeconds }) => {
   const { hours, minutes, seconds } = convertSecondsToTime(totalSeconds);
 
   return (
-    <div>
+    <p className="font-bold">
       {hours} jam, {minutes} menit, and {seconds} detik.
-    </div>
+    </p>
   );
 };
 
@@ -105,7 +105,6 @@ const options = {
 };
 
 const WorkDurationChart = ({ data, yearOnChange }) => {
-  console.log('ini dlasdhalksdja ls', data);
   // const dataGafik = {
   //   series: [
   //     {
@@ -118,12 +117,10 @@ const WorkDurationChart = ({ data, yearOnChange }) => {
   const [state, setState] = useState();
 
   useEffect(() => {
-    // console.log('ini adalah data', data.durations);
     if (data) {
       const convertToHour = data?.durations.map((item) => {
         return item / 3600;
       });
-      console.log({ convertToHour });
       setState({
         series: [
           {
@@ -135,22 +132,10 @@ const WorkDurationChart = ({ data, yearOnChange }) => {
     }
   }, [data]);
 
-  useEffect(() => {
-    console.log({ state });
-  }, [state]);
-
-  // console.log({ dataGafik });
-  // const handleReset = () => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //   }));
-  // };
-  // handleReset;
-
   return (
     <>
-      <div className="lg:m-3 mt-3 col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
-        <div className="mb-4 justify-between gap-4 sm:flex">
+      <div className="mt-3 col-span-12 p-5 xl:col-span-4">
+        <div className=" justify-between gap-4 sm:flex">
           <div>
             {/* <h4 className="text-xl font-semibold text-black dark:text-white">
               Grafik Waktu Kerja
@@ -208,8 +193,8 @@ const WorkDurationChart = ({ data, yearOnChange }) => {
           </div>
         </div>
         {/* <p>Total jam kerja : {(data?.total / 3600).toFixed(2)} jam</p> */}
-        <p className="flex">
-          total jam kerja : <TimeConverter totalSeconds={data?.total} />
+        <p className="flex mt-8">
+          Total jam kerja : <TimeConverter totalSeconds={data?.total} />
         </p>
       </div>
     </>

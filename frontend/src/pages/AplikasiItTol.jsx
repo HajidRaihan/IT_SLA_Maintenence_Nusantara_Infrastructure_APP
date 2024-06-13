@@ -51,7 +51,6 @@ const AplikasiItTol = () => {
   useEffect(() => {
     getAplikasiTol().then((res) => {
       setAplikasiTol(res);
-      console.log(res);
     });
   }, []);
 
@@ -71,7 +70,6 @@ const AplikasiItTol = () => {
 
     try {
       const res = await addAplikasiTol(data);
-      console.log(res);
       setAplikasiTol((prevData) => [...prevData, res]);
       toast.success('aplikasi tol added successfully');
     } catch (error) {
@@ -91,7 +89,7 @@ const AplikasiItTol = () => {
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="py-6 px-4 md:px-6 xl:px-7.5 flex justify-between items-center">
           <h4 className="text-xl font-semibold text-black dark:text-white">
-          Aplikasi It Tol
+            Aplikasi It Tol
           </h4>
           <button
             onClick={onAddModalOpen}

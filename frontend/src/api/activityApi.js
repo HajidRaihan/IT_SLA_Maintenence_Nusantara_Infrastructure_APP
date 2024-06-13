@@ -28,7 +28,6 @@ const getAllActivity = async (lokasi, kategori, company, status, page) => {
     Authorization: `Bearer ${Cookies.get('access_token')}`,
   };
 
-  console.log(lokasi, kategori);
   let params = [];
   if (page) {
     params.push(`page=${page}`);

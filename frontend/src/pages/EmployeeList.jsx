@@ -15,7 +15,6 @@ const EmployeeList = () => {
     const fetchEmployee = async () => {
       try {
         const res = await getEmployee();
-        console.table(res);
         setEmployeeData(res);
       } catch (error) {
         console.error('Error fetching employee data:', error);
@@ -28,7 +27,6 @@ const EmployeeList = () => {
   const deleteHandler = async (id) => {
     try {
       const res = await deleteEmployee(id);
-      console.log(res);
       setEmployeeData((prevData) =>
         prevData.filter((employee) => employee.id !== id),
       );

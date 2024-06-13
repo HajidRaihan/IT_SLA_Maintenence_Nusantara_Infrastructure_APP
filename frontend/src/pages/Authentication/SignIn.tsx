@@ -18,14 +18,12 @@ const SignIn: React.FC = () => {
     target: { value: SetStateAction<string> };
   }) => {
     setEmail(event.target.value);
-    console.log(event.target.value);
   };
 
   const passwordOnChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
     setPassword(event.target.value);
-    console.log(event.target.value);
   };
 
   const loginHandler = async (e: { preventDefault: () => void }) => {
@@ -44,8 +42,6 @@ const SignIn: React.FC = () => {
         setIsLoading(false);
         toast.success('success login');
       }
-
-      console.log(res);
     } catch (error) {
       console.error(error);
       toast.error('email atau password');
@@ -66,13 +62,25 @@ const SignIn: React.FC = () => {
                 alt="Example"
                 className="max-w-xs rounded-lg "
               />
-              </div>
+            </div>
 
-              <div className="2xl:px-20 text-center mt-20">
-              <h2 className="font-bold" style={{ color: '#28517D', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.25)' }}>
+            <div className="2xl:px-20 text-center mt-20">
+              <h2
+                className="font-bold"
+                style={{
+                  color: '#28517D',
+                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.25)',
+                }}
+              >
                 WELCOME TO
               </h2>
-              <h3 className="font-bold" style={{ color: '#28517D', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.25)' }}>
+              <h3
+                className="font-bold"
+                style={{
+                  color: '#28517D',
+                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.25)',
+                }}
+              >
                 IT SLA MAINTENANCE
               </h3>
             </div>
@@ -80,10 +88,15 @@ const SignIn: React.FC = () => {
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-            <span className="mb-1.5 block font-medium" style={{ color: '#ffffff' }}>ss</span>
+              <span
+                className="mb-1.5 block font-medium"
+                style={{ color: '#ffffff' }}
+              >
+                ss
+              </span>
 
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign In to Website 
+                Sign In to Website
               </h2>
 
               <form>
@@ -165,12 +178,12 @@ const SignIn: React.FC = () => {
                     Submit
                   </button> */}
                   <Button
-                      className="flex w-full justify-center rounded bg-indigo-800 p-3 font-medium text-gray hover:bg-opacity-90"
-                      onClick={loginHandler}
-                      isLoading={isLoading}
-                    >
-                      Submit
-                    </Button>
+                    className="flex w-full justify-center rounded bg-indigo-800 p-3 font-medium text-gray hover:bg-opacity-90"
+                    onClick={loginHandler}
+                    isLoading={isLoading}
+                  >
+                    Submit
+                  </Button>
                 </div>
 
               </form>

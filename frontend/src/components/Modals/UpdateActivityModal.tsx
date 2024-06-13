@@ -44,7 +44,6 @@ const UpdateActivityModal = ({ id, isOpen, onOpen, onOpenChange }) => {
   useEffect(() => {
     const fetchUser = async () => {
       const res = await getUserLogin();
-      console.log('ini user', res);
       setDataUser(res);
     };
     fetchUser();
@@ -53,7 +52,6 @@ const UpdateActivityModal = ({ id, isOpen, onOpen, onOpenChange }) => {
   useEffect(() => {
     const fetchLokasi = async () => {
       const res = await getLokasi();
-      console.log(res);
       setLokasiData(res);
     };
     fetchLokasi();
@@ -62,7 +60,6 @@ const UpdateActivityModal = ({ id, isOpen, onOpen, onOpenChange }) => {
   useEffect(() => {
     const fetchKategori = async () => {
       const res = await getKategori();
-      console.log(res);
       setKategoriData(res);
     };
     fetchKategori();
@@ -76,20 +73,12 @@ const UpdateActivityModal = ({ id, isOpen, onOpen, onOpenChange }) => {
 
   const handleTanggalChange = (e) => {
     setTanggal(e.target.value);
-    console.log(e.target.value);
   };
 
-  // const handleJenisHardwareChange = (selected) => {
-  //   setJenisHardware(selected);
-  //   console.log(selected);
-  // };
   const handleJenisHardwareChange = (value) => {
-    console.log(value);
-    console.log(jenisHardware);
     // Cek apakah value sudah ada dalam array checkedValues
     if (jenisHardware.includes(value)) {
       // Jika sudah ada, hapus dari array
-      console.log(true);
       setJenisHardware(jenisHardware.filter((item) => item !== value));
     } else {
       // Jika belum ada, tambahkan ke array
@@ -98,12 +87,9 @@ const UpdateActivityModal = ({ id, isOpen, onOpen, onOpenChange }) => {
   };
 
   const handleStandartAplikasiChange = (value) => {
-    console.log(value);
-    console.log(jenisHardware);
     // Cek apakah value sudah ada dalam array checkedValues
     if (standartAplikasi.includes(value)) {
       // Jika sudah ada, hapus dari array
-      console.log(true);
       setStandartAplikasi(standartAplikasi.filter((item) => item !== value));
     } else {
       // Jika belum ada, tambahkan ke array
@@ -192,11 +178,8 @@ const UpdateActivityModal = ({ id, isOpen, onOpen, onOpenChange }) => {
       status: status,
     };
 
-    console.log({ data });
-    console.log({ id });
     try {
       const res = await editActivity(data, id);
-      console.log(res);
     } catch (error) {
       console.error(error);
     }

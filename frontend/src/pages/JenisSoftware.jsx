@@ -46,7 +46,6 @@ const JenisSoftware = () => {
   useEffect(() => {
     getJenisSoftware().then((res) => {
       setJenisSoftware(res);
-      console.log(res);
     });
   }, []);
 

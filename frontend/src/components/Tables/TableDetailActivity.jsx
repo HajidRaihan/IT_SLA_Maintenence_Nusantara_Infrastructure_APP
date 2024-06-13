@@ -177,7 +177,6 @@ const TableDetailActivity = ({ data }) => {
                     ? 'bg-success text-success'
                     : 'bg-warning text-warning'
                 }`}
-                onClick={onOpen}
               >
                 {data.status}
               </p>
@@ -185,7 +184,7 @@ const TableDetailActivity = ({ data }) => {
           </tr>
         </table>
       </div>
-      <ChangeStatusModal isOpen={isOpen} onOpenChange={onOpenChange} />
+      {/* <ChangeStatusModal isOpen={isOpen} onOpenChange={onOpenChange} /> */}
     </div>
   );
 };
