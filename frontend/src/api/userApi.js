@@ -51,7 +51,7 @@ const deleteUser = async (id) => {
   try {
     const response = await RequestApi(
       'DELETE',
-      `user/${id}`,
+      `user/delete/${id}`,
       {},
       headers,
       'Mencoba delete user',

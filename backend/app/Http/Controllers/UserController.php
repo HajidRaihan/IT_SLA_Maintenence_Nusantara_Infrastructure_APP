@@ -100,7 +100,6 @@ class UserController extends Controller
             200,
         );
     }
-
     public function delete($id)
     {
         $user = User::find($id);
@@ -114,7 +113,15 @@ class UserController extends Controller
             );
         }
 
-        // Delete the user
+        // Optionally, you could delete associated files if necessary
+        if ($user->foto && Storage::exists('images/' . $user->foto)) {
+            Storage::delete('images/' . $user->foto);
+        }
+
+        if ($user->ttd && Storage::exists('images/' . $user->ttd)) {
+            Storage::delete('images/' . $user->ttd);
+        }
+
         $user->delete();
 
         return response()->json(

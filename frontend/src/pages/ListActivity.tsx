@@ -92,7 +92,6 @@ const ListActivity = () => {
         setData(updatedData);
         toast.success('Successfully deleted activity');
       }
-      console.log(res);
     } catch (error) {
       toast.error('Error deleting activity: ' + error.message);
     } finally {

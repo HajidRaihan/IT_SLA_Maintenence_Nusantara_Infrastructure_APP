@@ -241,7 +241,6 @@ const AddActivityModal = ({
       status: status,
     };
 
-    console.log(data);
     setIsLoading(true);
     try {
       const res = await addActivity(data);
@@ -251,7 +250,6 @@ const AddActivityModal = ({
         toastSuccess();
         close();
         setIsLoading(false);
-        console.log(res);
         setData((prev) => [...prev, res.data]);
 
         setCompany('');
