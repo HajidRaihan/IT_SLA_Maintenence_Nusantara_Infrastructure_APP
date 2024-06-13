@@ -102,7 +102,7 @@ const SignIn: React.FC = () => {
               </span>
 
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign In to Website
+                Sign In
               </h2>
 
               <form>
