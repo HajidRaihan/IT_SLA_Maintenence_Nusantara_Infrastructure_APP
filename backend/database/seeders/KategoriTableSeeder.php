@@ -15,13 +15,46 @@ class KategoriTableSeeder extends Seeder
         DB::table('kategori')->insert([
             [
                 'nama_kategori' => 'Kerusakan Minor',
-                'deadline_duration'  => '3',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'nama_kategori' => 'Kerusakan Mayor',
-                'deadline_duration'  =>'6',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_kategori' => 'Kerusakan/Pergantian',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_kategori' => 'Pemasangan Baru',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_kategori' => 'Penambahan Tinta',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_kategori' => 'Perawatan rutin',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_kategori' => 'Perbaikan',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_kategori' => 'Remote Dekstop/LC',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_kategori' => 'Install Aplikasi',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

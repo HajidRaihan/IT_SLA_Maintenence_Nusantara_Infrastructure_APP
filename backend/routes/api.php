@@ -34,8 +34,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
+Route::post('/register/admin', [AuthenticationController::class, 'register_admin']);
 // Route::post('/taik', [AuthenticationController::class, 'login']);
-
 
 
 Route::get('/user/{id}', [UserController::class, 'getById']);

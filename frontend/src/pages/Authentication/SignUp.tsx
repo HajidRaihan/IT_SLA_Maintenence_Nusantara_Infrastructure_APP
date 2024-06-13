@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import ExampleImage from '../../images/logo/logo1.png';
-import { registerUser } from '../../api/authApi';
+import { registerUser, registerAdmin } from '../../api/authApi';
 import { ToastContainer, toast } from 'react-toastify';
 import { Button } from '@nextui-org/react';
 
@@ -12,11 +11,10 @@ const SignUp: React.FC = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
+  const [role, setRole] = useState('user'); // Default role
   const navigate = useNavigate();
 
-  const regisHandler = async (e) => {
+  const regisHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -24,10 +22,18 @@ const SignUp: React.FC = () => {
       username: username,
       email: email,
       password: password,
+      role: role, // Include role in data
     };
 
     try {
-      const res = await registerUser(data);
+      let res; // Declare res variable
+
+      if (role === 'user') {
+        res = await registerUser(data);
+      } else if (role === 'admin') {
+        res = await registerAdmin(data);
+      }
+
       toast.success('Registration successful!', {
         onClose: () => navigate('/auth/signin'),
       });
@@ -143,7 +149,7 @@ const SignUp: React.FC = () => {
                       >
                         <g opacity="0.5">
                           <path
-                            d="M19.2516 3.30005H2.75156C1.58281 3.30005 0.585938 4.26255 0.585938 5.46567V16.6032C0.585938 17.7719 1.54844 18.7688 2.75156 18.7688H19.2516C20.4203 18.7688 21.4172 17.8063 21.4172 16.6032V5.4313C21.4172 4.26255 20.4203 3.30005 19.2516 3.30005ZM19.2516 4.84692C19.2859 4.84692 19.3203 4.84692 19.3547 4.84692L11.0016 10.2094L2.64844 4.84692C2.68281 4.84692 2.71719 4.84692 2.75156 4.84692H19.2516ZM19.2516 17.1532H2.75156C2.40781 17.1532 2.13281 16.8782 2.13281 16.5344V6.35942L10.1766 11.5157C10.4172 11.6875 10.6922 11.7894 10.9672 11.7894C11.2422 11.7894 11.5172 11.6875 11.7234 11.5157L19.7672 6.35942V16.5344C19.7859 16.8782 19.5109 17.1532 19.2516 17.1532Z"
+                            d="M19.2516 3.30005H2.75156C1.58281 3.30005 0.585938 4.26255 0.585938 5.46567V16.6032C0.585938 17.7719 1.54844 18.7688 2.75156 18.7688H19.2516C20.4203 18.7688 21.4172 17.8063 21.4172 16.6032V5.4313C21.4172 4.26255 20.4203 3.30005 19.2516 3.30005ZM19.2516 4.84692C19.2859 4.84692 19.3203 4.84692 19.3547 4.84692L11.0016 10.2094L2.64844 4.84692C2.68281 4.84692 2.71719 4.84692 2.75156 4.84692H19.2516ZM19.2516 17.1532H2.75156C2.40781 17.1532 2.13281 16.8782 2.13281 16.5344V6.35942L10.1766 11.5157C10.4172 11.6875 10.6922 11.7894 10.9672 11.7894C11.2422 11.7894 11.4922 11.6875 11.7328 11.5157L19.782 6.35942V16.5344C19.782 16.8782 19.507 17.1532 19.2516 17.1532Z"
                             fill=""
                           />
                         </g>
@@ -152,7 +158,7 @@ const SignUp: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mb-6">
+                <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Password
                   </label>
@@ -176,9 +182,7 @@ const SignUp: React.FC = () => {
                       >
                         <g opacity="0.5">
                           <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M20.625 11C20.625 15.3963 16.9838 19.0375 11 19.0375C5.01625 19.0375 1.375 15.3963 1.375 11C1.375 6.60375 5.01625 2.9625 11 2.9625C16.9838 2.9625 20.625 6.60375 20.625 11ZM22 11C22 16.7547 17.431 21.375 11 21.375C4.569 21.375 0 16.7547 0 11C0 5.24531 4.569 0.625 11 0.625C17.431 0.625 22 5.24531 22 11ZM6.45 10.3625C6.12516 10.3625 5.8625 10.6252 5.8625 10.95V14.7953C5.8625 15.1202 6.12516 15.3828 6.45 15.3828H15.55C15.8748 15.3828 16.1375 15.1202 16.1375 14.7953V10.95C16.1375 10.6252 15.8748 10.3625 15.55 10.3625H6.45ZM7.9925 14.2078V11.5363H14.0075V14.2078H7.9925Z"
+                            d="M11 0.0832519C8.70312 0.0832519 6.78125 1.947 6.78125 4.244C6.78125 6.541 8.70312 8.40475 11 8.40475C13.297 8.40475 15.2188 6.541 15.2188 4.244C15.2188 1.947 13.297 0.0832519 11 0.0832519ZM11 6.888C9.58437 6.888 8.4375 5.741 8.4375 4.244C8.4375 2.747 9.58437 1.6 11 1.6C12.4156 1.6 13.5625 2.747 13.5625 4.244C13.5625 5.741 12.4156 6.888 11 6.888ZM11 9.9175C7.6125 9.9175 4.8125 12.6875 4.8125 16.055V20.3332C4.8125 21.0932 5.45875 21.6665 6.25 21.6665H15.75C16.5412 21.6665 17.1875 21.0932 17.1875 20.3332V16.055C17.1875 12.6875 14.3875 9.9175 11 9.9175ZM15.75 20.3332H6.25V16.055C6.25 13.4025 8.34125 11.3125 11 11.3125C13.6588 11.3125 15.75 13.4025 15.75 16.055V20.3332Z"
                             fill=""
                           />
                         </g>
@@ -187,28 +191,56 @@ const SignUp: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mb-6">
-                  <Button
+                <div className="mb-4">
+                  <label className="mb-2.5 block font-medium text-black dark:text-white">
+                    Role
+                  </label>
+                  <div className="relative">
+                    <select
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
+                    >
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                    </select>
+
+                    <span className="absolute right-4 top-4">
+                      <svg
+                        className="fill-current"
+                        width="22"
+                        height="22"
+                        viewBox="0 0 22 22"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g opacity="0.5">
+                          <path
+                            d="M11 0.0832519C8.70312 0.0832519 6.78125 1.947 6.78125 4.244C6.78125 6.541 8.70312 8.40475 11 8.40475C13.297 8.40475 15.2188 6.541 15.2188 4.244C15.2188 1.947 13.297 0.0832519 11 0.0832519ZM11 6.888C9.58437 6.888 8.4375 5.741 8.4375 4.244C8.4375 2.747 9.58437 1.6 11 1.6C12.4156 1.6 13.5625 2.747 13.5625 4.244C13.5625 5.741 12.4156 6.888 11 6.888ZM11 9.9175C7.6125 9.9175 4.8125 12.6875 4.8125 16.055V20.3332C4.8125 21.0932 5.45875 21.6665 6.25 21.6665H15.75C16.5412 21.6665 17.1875 21.0932 17.1875 20.3332V16.055C17.1875 12.6875 14.3875 9.9175 11 9.9175ZM15.75 20.3332H6.25V16.055C6.25 13.4025 8.34125 11.3125 11 11.3125C13.6588 11.3125 15.75 13.4025 15.75 16.055V20.3332Z"
+                            fill=""
+                          />
+                        </g>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+
+                <div className="mb-5">
+                  <button
                     type="submit"
-                    className="inline-flex w-full items-center justify-center rounded-lg bg-indigo-800 py-2 px-3 text-center text-white font-medium hover:bg-primary-dark"
-                    isLoading={isLoading}
+                    className="w-full rounded-lg border border-primary bg-indigo-800 py-2 px-4 text-white transition hover:bg-opacity-90"
                   >
                     Sign Up
                   </Button>
                 </div>
-
-                <div className="text-center">
-                  <p className="text-sm font-medium text-black dark:text-white">
-                    Already have an account?{' '}
-                    <Link
-                      to="/auth/signin"
-                      className="text-primary hover:underline"
-                    >
-                      Sign In
-                    </Link>
-                  </p>
-                </div>
               </form>
+
+              <p className="text-center text-base font-medium text-body-color">
+                Already have an account?{' '}
+                <Link to="/auth/signin" className="text-primary hover:underline">
+                  Sign In
+                </Link>
+              </p>
             </div>
           </div>
         </div>

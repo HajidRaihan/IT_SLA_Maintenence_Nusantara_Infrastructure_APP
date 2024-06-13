@@ -29,12 +29,29 @@ const registerUser = async (data) => {
       'register',
       data,
       {},
-      'Mencoba regis',
+      'Mencoba register user',
     );
 
     return responseLogin.data;
   } catch (error) {
     console.error('Terjadi kesalahan saat mencoba regist ', error);
+    throw error;
+  }
+};
+
+const registerAdmin = async (data) => {
+  try {
+    const responseRegisterAdmin = await RequestApi(
+      'POST',
+      'register/admin',
+      data,
+      {},
+      'Mencoba register admin',
+    );
+
+    return responseRegisterAdmin.data;
+  } catch (error) {
+    console.error('Terjadi kesalahan saat mencoba register admin ', error);
     throw error;
   }
 };
@@ -61,4 +78,4 @@ const getUserLogin = async () => {
   }
 };
 
-export { loginUser, registerUser, getUserLogin };
+export { loginUser, registerUser, registerAdmin, getUserLogin };
