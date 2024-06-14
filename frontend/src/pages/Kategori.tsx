@@ -60,8 +60,8 @@ const Kategori = () => {
   const handleDeleteForm = (id) => {
     setCategoryId(id);
     onDeleteModalOpen();
-    
   }
+  
   useEffect(() => {
     getKategori().then(res => {
       setData(res);
