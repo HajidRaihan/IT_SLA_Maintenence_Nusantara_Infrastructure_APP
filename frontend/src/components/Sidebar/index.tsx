@@ -101,7 +101,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           <nav className="mt-5 px-4 lg:px-6">
             {/* <!-- Menu Group --> */}
             <div>
-              <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+              <h3 className="mb-4 ml-4 text-xs font-semibold text-bodydark2">
                 MENU
               </h3>
 
@@ -109,7 +109,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {/* <!-- Menu Item Dashboard --> */}
                 <NavLink
                   to="/"
-                  className={`text-sm group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  className={`text-xs group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     (pathname === '/' || pathname.includes('dashboard')) &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
@@ -146,7 +146,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <ul>
                 <NavLink
                   to="/list-user"
-                  className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('list-user') &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
@@ -168,37 +168,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </ul>
 
-              <ul>
-                <NavLink
-                  to="/list-employee"
-                  className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('list-employee') &&
-                    'bg-graydark dark:bg-meta-4'
-                  }`}
-                >
-                  <svg
-                    className="fill-current"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.31 0-10 1.67-10 5v2h20v-2c0-3.33-6.69-5-10-5z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                  User (Teknisi / KSPT)
-                </NavLink>
-              </ul>
+
               {/* <!-- Menu Item user  --> */}
 
               {/* <!-- Menu Item list activity --> */}
               <ul>
                 <NavLink
                   to="/list-activity"
-                  className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('list-activity') &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
@@ -223,7 +200,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <ul>
                 <NavLink
                   to="/jadwal"
-                  className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('jadwal') && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
@@ -258,7 +235,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <React.Fragment>
                         <NavLink
                           to="#"
-                          className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                          className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                             (pathname === '/barang' ||
                               pathname.includes('barang')) &&
                             'bg-graydark dark:bg-meta-4'
@@ -310,7 +287,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               <NavLink
                                 to="/listbarang"
                                 className={({ isActive }) =>
-                                  'text-sm group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                  'text-xs group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                   (isActive && '!text-white')
                                 }
                               >
@@ -321,7 +298,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               <NavLink
                                 to="/logbarang"
                                 className={({ isActive }) =>
-                                  'text-sm group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                  'text-xs group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
                                   (isActive && '!text-white')
                                 }
                               >
@@ -384,7 +361,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <li>
                   <NavLink
                     to="/grafik-kerja"
-                    className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                       pathname.includes('grafik-kerja') &&
                       'bg-graydark dark:bg-meta-4'
                     }`}
@@ -568,17 +545,41 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <li>
                 <ul>
-                  <h3 className="mb-1 ml-4 text-sm font-semibold text-bodydark2">
+                  <h3 className="mb-1 ml-4 text-xs font-semibold text-bodydark2">
                     OTHERS
                   </h3>
                 </ul>
               </li>
 
+              <ul>
+                <NavLink
+                  to="/list-employee"
+                  className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('list-employee') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.31 0-10 1.67-10 5v2h20v-2c0-3.33-6.69-5-10-5z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  User (Teknisi / KSPT)
+                </NavLink>
+              </ul>
               {/* <!-- Menu Item kategori*/}
               <ul>
                 <NavLink
                   to="/kategori"
-                  className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('kategori') &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
@@ -605,7 +606,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <ul>
                 <NavLink
                   to="/jenis-hardware"
-                  className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('jenis-hardware') &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
@@ -632,7 +633,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <ul>
                 <NavLink
                   to="/jenis-software"
-                  className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('jenis-software') &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
@@ -659,7 +660,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <ul>
                 <NavLink
                   to="/aplikasi-tol"
-                  className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('aplikasi-tol') &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
@@ -686,7 +687,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <ul>
                 <NavLink
                   to="/lokasi"
-                  className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('lokasi') && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
@@ -710,7 +711,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
             {/* <!-- Others Group --> */}
             {/* <div>
-                <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+                <h3 className="mb-4 ml-4 text-xs font-semibold text-bodydark2">
                   OTHERS
                 </h3> */}
 
@@ -758,6 +759,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             {/* <!-- Menu Item Chart --> */}
 
             {/* <!-- Menu Item Auth Pages --> */}
+            <ul>
             <SidebarLinkGroup
               activeCondition={
                 pathname === '/auth' || pathname.includes('auth')
@@ -768,7 +770,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   <React.Fragment>
                     <NavLink
                       to="#"
-                      className={`text-sm group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                         (pathname === '/auth' || pathname.includes('auth')) &&
                         'bg-graydark dark:bg-meta-4'
                       }`}
@@ -826,36 +828,38 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           fill=""
                         />
                       </svg>
+                      
                     </NavLink>
                     {/* <!-- Dropdown Menu Start --> */}
                     <div
-                      className={`translate transform overflow-hidden ${
+                      className={` text-xs translate transform overflow-hidden ${
                         !open && 'hidden'
                       }`}
                     >
-                      <ul className="text-sm mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                      <ul className="z-sm mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                         {/* <li>
                               <NavLink
                                 to="/auth/signin"
                                 className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                                  (isActive && '!text-white')
+                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium z-bodydark2 duration-300 ease-in-out hover:z-white ' +
+                                  (isActive && '!z-white')
                                 }
                               >
                                 Sign In
                               </NavLink>
                             </li> */}
-                        <li>
-                          <NavLink
-                            to="/auth/signup"
-                            className={({ isActive }) =>
-                              'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
-                              (isActive && '!text-white')
-                            }
-                          >
-                            Sign Up
-                          </NavLink>
-                        </li>
+                       <li>
+                        <NavLink
+                          to="/auth/signup"
+                          className={({ isActive }) =>
+                            'group relative flex items-center gap-2.5 rounded-md px-4 font-medium z-bodydark2 duration-300 ease-in-out hover:z-white text-white ' +
+                            (isActive && '!z-white')
+                          }
+                        >
+                          Sign Up
+                        </NavLink>
+                      </li>
+
                       </ul>
                     </div>
                     {/* <!-- Dropdown Menu End --> */}
@@ -863,6 +867,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 );
               }}
             </SidebarLinkGroup>
+            </ul>
             {/* </ul> */}
             {/* </div> */}
           </nav>
