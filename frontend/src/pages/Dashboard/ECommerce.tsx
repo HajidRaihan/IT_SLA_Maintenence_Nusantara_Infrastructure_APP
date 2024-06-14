@@ -12,7 +12,7 @@ import { Button } from '@nextui-org/react';
 import { useNavigate } from 'react-router-dom';
 import GrafikSkeleton from '../../components/Skeleton/GrafikSkeleton';
 
-const ECommerce: React.FC = () => {
+const Dashboard: React.FC = () => {
   const [dataGrafikWork, setDataGrafikWork] = useState();
   const [year, setYear] = useState([]);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -117,4 +117,4 @@ const ECommerce: React.FC = () => {
   );
 };
 
-export default ECommerce;
+export default Dashboard;

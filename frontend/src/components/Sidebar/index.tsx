@@ -168,30 +168,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </ul>
 
-              <ul>
-                <NavLink
-                  to="/list-employee"
-                  className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('list-employee') &&
-                    'bg-graydark dark:bg-meta-4'
-                  }`}
-                >
-                  <svg
-                    className="fill-current"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.31 0-10 1.67-10 5v2h20v-2c0-3.33-6.69-5-10-5z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                  User (Teknisi / KSPT)
-                </NavLink>
-              </ul>
+
               {/* <!-- Menu Item user  --> */}
 
               {/* <!-- Menu Item list activity --> */}
@@ -574,6 +551,30 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </ul>
               </li>
 
+              <ul>
+                <NavLink
+                  to="/list-employee"
+                  className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('list-employee') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.31 0-10 1.67-10 5v2h20v-2c0-3.33-6.69-5-10-5z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  User (Teknisi / KSPT)
+                </NavLink>
+              </ul>
               {/* <!-- Menu Item kategori*/}
               <ul>
                 <NavLink
@@ -827,10 +828,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           fill=""
                         />
                       </svg>
+                      
                     </NavLink>
                     {/* <!-- Dropdown Menu Start --> */}
                     <div
-                      className={`translate transform overflow-hidden ${
+                      className={` text-xs translate transform overflow-hidden ${
                         !open && 'hidden'
                       }`}
                     >
@@ -846,17 +848,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 Sign In
                               </NavLink>
                             </li> */}
-                        <li>
-                          <NavLink
-                            to="/auth/signup"
-                            className={({ isActive }) =>
-                              'group relative flex items-center gap-2.5 rounded-md px-4 font-medium z-bodydark2 duration-300 ease-in-out hover:z-white ' +
-                              (isActive && '!z-white')
-                            }
-                          >
-                            Sign Up
-                          </NavLink>
-                        </li>
+                       <li>
+                        <NavLink
+                          to="/auth/signup"
+                          className={({ isActive }) =>
+                            'group relative flex items-center gap-2.5 rounded-md px-4 font-medium z-bodydark2 duration-300 ease-in-out hover:z-white text-white ' +
+                            (isActive && '!z-white')
+                          }
+                        >
+                          Sign Up
+                        </NavLink>
+                      </li>
+
                       </ul>
                     </div>
                     {/* <!-- Dropdown Menu End --> */}
