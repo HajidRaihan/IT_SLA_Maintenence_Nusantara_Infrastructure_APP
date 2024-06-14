@@ -102,7 +102,7 @@ const ChartFour: React.FC = () => {
           type="number"
           value={selectedYear}
           onChange={handleYearChange}
-          min="1990"
+          min="2020"
           max={new Date().getFullYear()}
           className="border rounded px-2 py-1"
         />
