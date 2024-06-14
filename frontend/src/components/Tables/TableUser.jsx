@@ -16,11 +16,9 @@ const TableUser = ({ data, setUserData }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const deleteHandler = async () => {
-    // return console.log(id);
     setIsLoading(true);
     try {
       const res = await deleteUser(userId);
-      console.log(res);
       setIsLoading(false);
       setUserData((prev) => {
         return prev.filter((user) => user.id !== userId);
@@ -36,7 +34,6 @@ const TableUser = ({ data, setUserData }) => {
   const openModal = (id) => {
     onOpen();
     setUserId(id);
-    console.log(id);
   };
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
