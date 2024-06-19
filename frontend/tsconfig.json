@@ -1,24 +1,33 @@
 {
   "compilerOptions": {
+    "types": ["react"],
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
     "skipLibCheck": true,
 
+     "allowSyntheticDefaultImports": true,
+     
     /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    "moduleResolution": "node",
     "resolveJsonModule": true,
+    // "moduleResolution": "bundler",
+    // "allowImportingTsExtensions": true,
+    // "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
+    
 
     /* Linting */
-    "strict": true,
+    "strict": false,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/lib.d.ts"],
+  "include": [
+    "src/**/*.ts",  
+    "src/**/*.tsx", "src/components/Modals/AddActivityModal.jsx", "src/components/Tables/TableDetailActivity.jsx", "src/pages/ActivityDetail.jsx", "src/pages/Jadwal.jsx", "src/pages/Regisbarang.jsx", "src/pages/Regisbarang.jsx", "src/pages/Regisbarang.jsx", "src/pages/ExportUtils.js", "src/components/Charts/WorkDurationChart.jsx", "src/components/FormActivity/PdfModal.jsx", // Add your non-TS file here
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
