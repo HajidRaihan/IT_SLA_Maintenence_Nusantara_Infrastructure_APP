@@ -90,7 +90,7 @@ class JadwalMaintenanceController extends Controller
     $jadwalMaintenance->lokasi = $validateData['lokasi'];
     $jadwalMaintenance->frekuensi = $validateData['frekuensi'];
     $jadwalMaintenance->waktu = $waktuArray;
-    $jadwalMaintenance->status = $validateData['status'];
+    // $jadwalMaintenance->status = $validateData['status'];
     $jadwalMaintenance->save();
     
     return response()->json([
