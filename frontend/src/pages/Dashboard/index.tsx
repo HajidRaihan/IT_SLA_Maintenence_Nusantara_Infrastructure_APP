@@ -40,7 +40,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <div className="col-span-12 rounded-sm border border-stroke p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4 mb-5">
+      <div className="bg-white col-span-12 rounded-sm border border-stroke p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4 mb-5">
         <h4 className="text-xl font-bold text-black dark:text-white mb-5">
           Grafik Waktu Kerja
         </h4>
@@ -67,13 +67,11 @@ const Dashboard: React.FC = () => {
           {dataGrafikWork ? (
             dataGrafikWork.data.map((data, index) => {
               return (
-                <>
-                  <div className="lg:w-full w-full mb-4" key={index}>
-                    <div className="rounded-sm border border-stroke p-3 shadow-default dark:border-strokedark dark:bg-boxdark">
-                      <WorkDurationChart data={data} />
-                    </div>
+                <div className="lg:w-full w-full mb-4" key={index}>
+                  <div className="rounded-sm border border-stroke p-3 bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <WorkDurationChart data={data} />
                   </div>
-                </>
+                </div>
               );
             })
           ) : (
