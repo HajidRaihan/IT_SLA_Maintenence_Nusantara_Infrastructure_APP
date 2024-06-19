@@ -101,10 +101,7 @@ return (
       >
         <ModalContent>
           <>
-            <ModalHeader className="flex flex-col gap-1">
-              Update Stock
-            </ModalHeader>
-            <ModalHeader className="flex flex-col gap-1">Update Barang</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">Tambah Stock</ModalHeader>
             <ModalBody>
                     <ModalHeader className="mb-2.5 block text-black dark:text-white">
                       Stock
@@ -153,7 +150,7 @@ function UpdateBarangModalMin({ isUpdateOpen, onUpdateClose,
         <ModalContent>
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Update Stock
+              Kurangi Stock
             </ModalHeader>
             <ModalBody>
               <Input
@@ -254,100 +251,116 @@ function UpdateJadwalModal({
   };
 
   return (
-    <Modal isOpen={isUpdateOpen} onClose={onUpdateClose} placement="top-center">
-      <ModalContent>
-      <ModalHeader className="flex flex-col gap-1">Update Jadwal</ModalHeader>
-      <ModalBody>
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="jenisPerusahaan" className="text-black">
-              Jenis Perusahaan
-            </label>
-            <select
-              id="jenisPerusahaan"
-              value={valueUpdateJenisPerusahaan}
-              onChange={onChangeUpdateJenisPerusahaan}
-              className="bg-transparent text-black transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-            >
-              <option value="">Select Perusahaan</option>
-              <option value="tol">Tol</option>
-              <option value="non tol">Non Tol</option>
-            </select>
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="uraianKegiatan" className="text-black">
-              Uraian Kegiatan
-            </label>
-            <textarea
-              id="uraianKegiatan"
-              value={valueUpdateUraianKegiatan}
-              onChange={onChangeUpdateUraianKegiatan}
-              className="bg-transparent text-black transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-              placeholder="Masukkan Uraian Kegiatan"
-              rows={3}
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="lokasi" className="text-black">
-              Lokasi
-            </label>
-            <select
-              value={valueUpdateLokasi}
-              onChange={onChangeUpdateLokasi}
-              className="w-full p-2 border rounded"
-            >
-              <option value="">Select Lokasi</option>
-              {JadwalOptions.map((option) => (
-                <option key={option.id} value={option.nama_lokasi}>
-                  {option.nama_lokasi}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="tahun" className="text-black">
-              Tahun
-            </label>
-            <input
-              id="tahun"
-              type="number"
-              value={valueUpdateTahun}
-              onChange={onChangeUpdateTahun}
-              className="bg-transparent text-black transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-              placeholder="Masukkan Tahun"
-              min="1"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="frekuensi" className="text-black">
-              Frekuensi
-            </label>
-            <select
-              id="frekuensi"
-              value={valueUpdateFrekuensi}
-              onChange={onChangeUpdateFrekuensi}
-              className="bg-transparent text-black transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-            >
-              <option value="">Pilih Frekuensi</option>
-              {[...Array(2).keys()].map((i) => (
-                <option key={i} value={`${i + 1}x pertahun`}>{`${
-                  i + 1
-                }x pertahun`}</option>
-              ))}
-            </select>
-          </div>
-          {renderTanggalInputs()}
-        </div>
-      </ModalBody>
-      <ModalFooter>
-        <Button color="danger" variant="flat" onClick={onUpdateClose}>
-          Close
-        </Button>
-        <Button color="primary" onClick={onAdd}>
-          Update
-        </Button>
-      </ModalFooter>
-      </ModalContent>
+    <Modal 
+    className="border-stroke bg-whiter shadow-default dark:border-strokedark dark:bg-black h-fit"
+    isOpen={isUpdateOpen} onClose={onUpdateClose}  size="2xl"
+    >
+     <ModalContent style={{ maxHeight: "80vh", overflowY: "auto" }}>
+          {(onClose) => (
+            <>
+            <ModalHeader className="dark:text-white flex flex-col gap-1">
+                Update Jadwal
+              </ModalHeader>
+              <ModalBody>
+                <form className="flex flex-col gap-5">
+                  <div className="w-full">
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Jenis Perusahaan
+                    </label>
+                    <select
+                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      value={valueUpdateJenisPerusahaan}
+                      onChange={onChangeUpdateJenisPerusahaan}
+                    >
+                      <option value="">Select Perusahaan</option>
+                      <option value="tol">Tol</option>
+                      <option value="non tol">Non Tol</option>
+                    </select>
+
+                  </div>
+
+                  <div className="w-full">
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Uraian Kegiatan 
+                    </label>
+                    <textarea
+                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      value={valueUpdateUraianKegiatan}
+                      onChange={onChangeUpdateUraianKegiatan}
+                      placeholder="Masukkan Uraian Kegiatan"
+                      rows={2}
+                    >
+                  </textarea>
+                  </div>
+
+                  <div className="w-full">
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Lokasi 
+                    </label>
+                    <select
+                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      value={valueUpdateLokasi}
+                      onChange={onChangeUpdateLokasi}
+                    >
+                       <option value="">Select Lokasi</option>
+                        {JadwalOptions.map((option) => (
+                          <option key={option.id} value={option.nama_lokasi}>
+                            {option.nama_lokasi}
+                          </option>
+                        ))}
+                  </select>
+                  </div>
+
+                  <div className="w-full">
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Tahun
+                    </label>
+                    <input
+                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"                     
+                      id="tahun"
+                      type="number"
+                      placeholder="Masukkan Tahun"
+                      min="2024" 
+                      value={valueUpdateTahun}
+                      onChange={onChangeUpdateTahun}
+                    >
+                  </input>
+                  </div>
+
+                  <div className="w-full">
+                    <label className="mb-2.5 block text-black dark:text-white">
+                      Frekuensi 
+                    </label>
+                    <select
+                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"                      
+                      value={valueUpdateFrekuensi}
+                      onChange={onChangeUpdateFrekuensi}
+                    >
+                      <option value="">Pilih Frekuensi</option>
+                        {[...Array(2).keys()].map((i) => (
+                          <option key={i} value={`${i + 1}x pertahun`}>{`${
+                            i + 1
+                          }x pertahun`}</option>
+                        ))}
+                  </select>
+                  </div>
+        {renderTanggalInputs()}
+                  
+
+                  </form>
+              </ModalBody>
+              <ModalFooter>
+              <Button color="danger" variant="flat" onClick={onClose}>
+                Close
+              </Button>
+              <Button color="primary" onClick={onAdd}>
+                Add
+              </Button>
+            </ModalFooter>
+            </>
+            )}
+        </ModalContent>
+
     </Modal>
   );
 }

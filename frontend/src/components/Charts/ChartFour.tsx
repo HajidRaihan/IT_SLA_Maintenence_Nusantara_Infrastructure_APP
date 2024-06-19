@@ -7,8 +7,6 @@ interface ChartThreeState {
   series: number[];
 }
 
-
-
 const options: ApexOptions = {
   chart: {
     fontFamily: 'Satoshi, sans-serif',
@@ -32,9 +30,10 @@ const options: ApexOptions = {
   },
 };
 
-const generateYearRange = (startYear: number, endYear: number): number[] => {
+const generateYearRange = (startYear: number): number[] => {
   const years = [];
-  for (let year = startYear; year <= endYear; year++) {
+  const currentYear = new Date().getFullYear();
+  for (let year = startYear; year <= currentYear; year++) {
     years.push(year);
   }
   return years;
@@ -45,7 +44,7 @@ const ChartFour: React.FC = () => {
     series: [0, 0, 0],
   });
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
-  const [years, setYears] = useState<number[]>(generateYearRange(1990, new Date().getFullYear()));
+  const [years, setYears] = useState<number[]>(generateYearRange(1990));
   const [hasData, setHasData] = useState<boolean>(true);
 
   useEffect(() => {
@@ -102,8 +101,7 @@ const ChartFour: React.FC = () => {
           type="number"
           value={selectedYear}
           onChange={handleYearChange}
-          min="2020"
-          max={new Date().getFullYear()}
+          min="1990"
           className="border rounded px-2 py-1"
         />
       </div>
