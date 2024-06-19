@@ -1,5 +1,4 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
-import { nextui } from '@nextui-org/react';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -255,10 +254,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    nextui({
-      addCommonColors: true,
-      themes: false,
-    }),
-  ],
+  plugins: [],
 };

@@ -1,33 +1,24 @@
 {
   "compilerOptions": {
-    "types": ["react"],
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
     "skipLibCheck": true,
 
-     "allowSyntheticDefaultImports": true,
-     
     /* Bundler mode */
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
-    // "moduleResolution": "bundler",
-    // "allowImportingTsExtensions": true,
-    // "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
-    
+    "jsx": "react-jsx",
 
     /* Linting */
-    "strict": false,
+    "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": false,
+    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "src/**/*.ts",  
-    "src/**/*.tsx", "src/components/Modals/AddActivityModal.jsx", "src/components/Tables/TableDetailActivity.jsx", "src/pages/ActivityDetail.jsx", "src/pages/Jadwal.jsx", "src/pages/Regisbarang.jsx", "src/pages/Regisbarang.jsx", "src/pages/Regisbarang.jsx", "src/pages/ExportUtils.js", "src/components/Charts/WorkDurationChart.jsx", "src/components/FormActivity/PdfModal.jsx", // Add your non-TS file here
-  ],
+  "include": ["src", "src/lib.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -24,7 +24,6 @@ import {
   getJenisHardware,
 } from '../api/jenisHardwareApi';
 
-
 const JenisHardware = () => {
   const [jenisHardware, setJenisHardware] = useState();
   const [newJenisHardware, setNewJenisHardware] = useState('');
@@ -174,13 +173,11 @@ const JenisHardware = () => {
               </p>
             </div>
             <div className="col-span-2 flex items-center">
-        
-
               <button
                 className="hover:text-primary"
                 onClick={() => handleDeleteForm(item.id)}
               >
-                  <FontAwesomeIcon icon={faTrash} />
+                <FontAwesomeIcon icon={faTrash} />
               </button>
             </div>
           </div>
@@ -213,8 +210,8 @@ const JenisHardware = () => {
         value={updatelokasi}
         onUpdateClose={onUpdateModalClose}
       />
-   
-   <DeleteModal
+
+      <DeleteModal
         isDeleteOpen={deleteModalOpen}
         onDelete={handleDelete}
         onDeleteClose={onDeleteModalClose}
