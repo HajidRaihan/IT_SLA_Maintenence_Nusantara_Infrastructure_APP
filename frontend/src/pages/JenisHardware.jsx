@@ -25,7 +25,7 @@ import {
 } from '../api/jenisHardwareApi';
 
 const JenisHardware = () => {
-  const [jenisHardware, setJenisHardware] = useState();
+  const [jenisHardware, setJenisHardware] = useState([]);
   const [newJenisHardware, setNewJenisHardware] = useState('');
   const [newlokasi, setNewlokasi] = useState('');
   const [JadwalId, setJadwalId] = useState('');
@@ -55,11 +55,11 @@ const JenisHardware = () => {
     });
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     try {
-      const res = await deleteJenisHardware(id);
+      const res = await deleteJenisHardware(jenisHardwareId);
       // Filter out the deleted location from the state
-      setJenisHardware(jenisHardware.filter((item) => item.id !== id));
+      setJenisHardware(jenisHardware.filter((item) => item.id !== jenisHardwareId));
       toast.success('Delete successfully ', res);
     } catch (error) {
       toast.error(`error deleting: ${error.response.data.message}`);
@@ -68,7 +68,7 @@ const JenisHardware = () => {
   };
 
   const handleDeleteForm = (id) => {
-    setJadwalId(id);
+    setJenisHardwareId(id);
     onDeleteModalOpen();
   };
 

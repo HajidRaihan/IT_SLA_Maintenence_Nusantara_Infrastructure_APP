@@ -51,10 +51,10 @@ const JenisSoftware = () => {
     });
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     try {
-      const res = await deleteJenisSoftware(id);
-      setJenisSoftware(jenisSoftware.filter((item) => item.id !== id));
+      const res = await deleteJenisSoftware(jenisSoftwareId);
+      setJenisSoftware(jenisSoftware.filter((item) => item.id !== jenisSoftwareId));
       toast.success('Delete successfully ', res);
     } catch (error) {
       toast.error(`error deleting: ${error.response.data.message}`);
@@ -100,7 +100,7 @@ const JenisSoftware = () => {
   };
 
   const handleDeleteForm = (id) => {
-    setJadwalId(id);
+    setJenisSoftwareId(id);
     onDeleteModalOpen();
   };
 
