@@ -56,10 +56,10 @@ const AplikasiItTol = () => {
     });
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     try {
-      const res = await deleteAplikasiTol(id);
-      setAplikasiTol(aplikasiTol?.filter((item) => item.id !== id));
+      const res = await deleteAplikasiTol(aplikasiId);
+      setAplikasiTol(aplikasiTol?.filter((item) => item.id !== aplikasiId));
       toast.success('Delete successfully ', res);
     } catch (error) {
       toast.error(`error deleting: ${error.response.data.message}`);
@@ -85,7 +85,7 @@ const AplikasiItTol = () => {
   };
 
   const handleDeleteForm = (id) => {
-    setJadwalId(id);
+    setAplikasiId(id);
     onDeleteModalOpen();
   };
 

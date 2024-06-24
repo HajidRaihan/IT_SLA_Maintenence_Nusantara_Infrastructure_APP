@@ -4,8 +4,9 @@ import { getAllActivityList } from '../../api/activityApi';
 
 interface ActivityData {
   jenis_hardware: string;
-  waktu_pengerjaan: string | null;
-  updated_at: string; // Assuming updated_at is a string, change to Date if it's a Date object
+  created_at: string;
+  updated_at: string;
+  status: string; // Add status property
 }
 
 interface ChartOneState {
@@ -35,12 +36,7 @@ const options = {
     },
   },
   dataLabels: {
-    enabled: true,
-    offsetY: -10,
-    style: {
-      fontSize: '12px',
-      colors: ['#000'],
-    },
+    enabled: false, // Disable data labels inside the chart
   },
   xaxis: {
     categories: [],
@@ -50,6 +46,9 @@ const options = {
       text: 'Total Waktu Pengerjaan (menit)',
     },
     min: 0, // Ensure y-axis starts from 0
+    labels: {
+      formatter: (value: number) => value.toFixed(0), // Format y-axis labels to show integer values
+    },
   },
   stroke: {
     curve: 'smooth',
@@ -79,10 +78,15 @@ const ChartOne: React.FC = () => {
       .then((res) => {
         const data: ActivityData[] = res.data;
 
-        // Filter out data that does not match the year range
+        // Filter out data that does not match the year range and has status "pending" or "process"
         const filteredData = data.filter((item) => {
           const updatedAtYear = new Date(item.updated_at).getFullYear();
-          return updatedAtYear >= startYear && updatedAtYear <= endYear;
+          return (
+            updatedAtYear >= startYear &&
+            updatedAtYear <= endYear &&
+            item.status !== 'pending' &&
+            item.status !== 'process'
+          );
         });
 
         if (filteredData.length === 0) {
@@ -107,24 +111,25 @@ const ChartOne: React.FC = () => {
         let totalWaktuPengerjaan = 0;
 
         filteredData.forEach((item) => {
-          if (item.waktu_pengerjaan !== null) {
-            const waktuPengerjaan = parseInt(item.waktu_pengerjaan, 10);
-            totalWaktuPengerjaan += waktuPengerjaan;
+          const createdAt = new Date(item.created_at);
+          const updatedAt = new Date(item.updated_at);
+          const waktuPengerjaan = Math.round((updatedAt.getTime() - createdAt.getTime()) / 60000); // converting to minutes and rounding to integer
+          
+          totalWaktuPengerjaan += waktuPengerjaan;
 
-            const categories = item.jenis_hardware
-              .split(',')
-              .map((cat) => cat.trim());
-            categories.forEach((cat) => {
-              if (categoryTimeMap.has(cat)) {
-                categoryTimeMap.set(
-                  cat,
-                  categoryTimeMap.get(cat)! + waktuPengerjaan,
-                );
-              } else {
-                categoryTimeMap.set(cat, waktuPengerjaan);
-              }
-            });
-          }
+          const categories = item.jenis_hardware
+            .split(',')
+            .map((cat) => cat.trim());
+          categories.forEach((cat) => {
+            if (categoryTimeMap.has(cat)) {
+              categoryTimeMap.set(
+                cat,
+                categoryTimeMap.get(cat)! + waktuPengerjaan,
+              );
+            } else {
+              categoryTimeMap.set(cat, waktuPengerjaan);
+            }
+          });
         });
 
         const uniqueCategories = Array.from(categoryTimeMap.keys());
@@ -224,14 +229,13 @@ const ChartOne: React.FC = () => {
                 Average Waktu Pengerjaan
               </h6>
               <p className="text-lg font-bold text-blue-600">
-                {state.averageWaktuPengerjaan.toFixed(2)} menit
+                {Math.round(state.averageWaktuPengerjaan)} menit
               </p>
             </div>
           </div>
           <div className="w-full md:w-1/3 ">
             <div className="bg-gray-100 dark:bg-gray-800 rounded-lg">
               <h6 className="text-md font-medium text-black dark:text-white">
-                {' '}
                 Max Waktu Pengerjaan
               </h6>
               <p className="text-lg font-bold text-blue-600">
