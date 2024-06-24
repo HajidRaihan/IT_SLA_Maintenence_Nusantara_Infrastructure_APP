@@ -5,6 +5,8 @@ import { getAllActivity, deleteActivity } from '../api/activityApi';
 import Loader from '../common/Loader';
 import { toast, ToastContainer } from 'react-toastify';
 import { Pagination, Select } from '@mui/material';
+import { getLokasi } from '../api/lokasiApi';
+import { getKategori } from '../api/kategoriApi';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 
 const getDefaultDate = () => {
@@ -23,52 +25,75 @@ const ListActivity = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [hapusLoading, setHapusLoading] = useState(false);
+  const [lokasiData, setLokasiData] = useState();
+  const [kategori, setKategori] = useState();
+  const [lokasi, setLokasi] = useState();
+  const [kategoriData, setKategoriData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [company, setCompany] = useState();
 
-  const handleFilter = () => {
-    if (!Array.isArray(data)) {
-      console.error('Data is not an array:', data);
-      return;
-    }
+  // const handleFilter = () => {
+  //   if (!Array.isArray(data)) {
+  //     console.error('Data is not an array:', data);
+  //     return;
+  //   }
 
-    const filtered = data.filter((item) => {
-      const lokasiFillter = lokasiFilter
-        ? (item.location_name || '')
-            .toLowerCase()
-            .includes(lokasiFilter.toLowerCase())
-        : true;
-      const kategoriFillter = kategoriFilter
-        ? (item.category_name || '')
-            .toLowerCase()
-            .includes(kategoriFilter.toLowerCase())
-        : true;
-      const statusFillter = statusFilter
-        ? (item.status || '').toLowerCase().includes(statusFilter.toLowerCase())
-        : true;
-      const perusahaanFillter = perusahaanFilter
-        ? (item.company || '')
-            .toLowerCase()
-            .includes(perusahaanFilter.toLowerCase())
-        : true;
-      // const tanggalFillter = tanggalFilter.match(/^\d{4}-\d{2}-\d{2}$/);
+  //   const filtered = data.filter((item) => {
+  //     const lokasiFillter = lokasiFilter
+  //       ? (item.location_name || '')
+  //           .toLowerCase()
+  //           .includes(lokasiFilter.toLowerCase())
+  //       : true;
+  //     const kategoriFillter = kategoriFilter
+  //       ? (item.category_name || '')
+  //           .toLowerCase()
+  //           .includes(kategoriFilter.toLowerCase())
+  //       : true;
+  //     const statusFillter = statusFilter
+  //       ? (item.status || '').toLowerCase().includes(statusFilter.toLowerCase())
+  //       : true;
+  //     const perusahaanFillter = perusahaanFilter
+  //       ? (item.company || '')
+  //           .toLowerCase()
+  //           .includes(perusahaanFilter.toLowerCase())
+  //       : true;
+  //     // const tanggalFillter = tanggalFilter.match(/^\d{4}-\d{2}-\d{2}$/);
 
-      return (
-        lokasiFillter && kategoriFillter && statusFillter && perusahaanFillter
-      );
-    });
+  //     return (
+  //       lokasiFillter && kategoriFillter && statusFillter && perusahaanFillter
+  //     );
+  //   });
 
-    setFilteredRecords(filtered);
-  };
+  //   setFilteredRecords(filtered);
+  // };
 
-  useEffect(() => {
-    handleFilter();
-  }, [lokasiFilter, kategoriFilter, statusFilter, perusahaanFilter, data]);
+  // useEffect(() => {
+  //   handleFilter();
+  // }, [lokasiFilter, kategoriFilter, statusFilter, perusahaanFilter, data]);
 
   useEffect(() => {
     const fetchActivities = async () => {
+      setIsLoading(true);
       try {
-        const response = await getAllActivity();
+        console.log('filter', {
+          page,
+          lokasiFilter,
+          kategoriFilter,
+          perusahaanFilter,
+          statusFilter,
+        });
+        const response = await getAllActivity(
+          page,
+          lokasiFilter,
+          kategoriFilter,
+          perusahaanFilter,
+          statusFilter,
+        );
         if (response && response.data && Array.isArray(response.data.data)) {
           setData(response.data.data);
+          console.log(response);
+
+          setIsLoading(false);
           setTotalPage(response.data.last_page); // Mengatur total halaman dari respons
         } else {
           console.error('Expected an array but got:', response);
@@ -77,11 +102,12 @@ const ListActivity = () => {
       } catch (error) {
         console.error('Error fetching activities:', error);
         setData([]);
+        setIsLoading(false);
       }
     };
 
     fetchActivities();
-  }, [page]);
+  }, [page, lokasiFilter, kategoriFilter, perusahaanFilter, statusFilter]);
 
   const deleteHandler = async (id) => {
     setHapusLoading(true);
@@ -99,6 +125,24 @@ const ListActivity = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchLokasi = async () => {
+      const res = await getLokasi();
+      console.log(res);
+      setLokasiData(res);
+    };
+    fetchLokasi();
+  }, []);
+
+  useEffect(() => {
+    const fetchKategori = async () => {
+      const category = await getKategori();
+      console.log({ category });
+      setKategoriData(category);
+    };
+    fetchKategori();
+  }, []);
+
   const clearFilter = () => {
     setLokasiFilter('');
     setKategoriFilter('');
@@ -106,16 +150,16 @@ const ListActivity = () => {
     // setTanggalFilter(getDefaultDate());
   };
 
-  const dropdownLokasi = Array.from(
-    new Set(data.map((item) => item.location_name)),
-  );
-  const dropdownKategori = Array.from(
-    new Set(data.map((item) => item.category_name)),
-  );
-  const dropdownStatus = Array.from(new Set(data.map((item) => item.status)));
-  const dropdownPerusahaan = Array.from(
-    new Set(data.map((item) => item.company)),
-  );
+  // const dropdownLokasi = Array.from(
+  //   new Set(data.map((item) => item.location_name)),
+  // );
+  // const dropdownKategori = Array.from(
+  //   new Set(data.map((item) => item.category_name)),
+  // );
+  // const dropdownStatus = Array.from(new Set(data.map((item) => item.status)));
+  // const dropdownPerusahaan = Array.from(
+  //   new Set(data.map((item) => item.company)),
+  // );
 
   return (
     <DefaultLayout>
@@ -142,11 +186,8 @@ const ListActivity = () => {
               }}
             >
               <option value="">Pilih Jenis Perusahaan</option>
-              {dropdownPerusahaan.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))}
+              <option value="mmn">MMN</option>
+              <option value="man">MAN</option>
             </select>
           </div>
 
@@ -162,15 +203,53 @@ const ListActivity = () => {
               }}
             >
               <option value="">Pilih status</option>
-              {dropdownStatus.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
+              <option value="process">Process</option>
+              <option value="pending">Pending</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+
+          <div className="flex-1">
+            <select
+              value={kategoriFilter}
+              onChange={(e) => setKategoriFilter(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '5px',
+                border: '2px solid #ccc',
+                borderRadius: '5px',
+              }}
+            >
+              <option value="">Pilih Kategori</option>
+              {kategoriData?.map((option, index) => (
+                <option key={index} value={option.id}>
+                  {option.nama_kategori}
                 </option>
               ))}
             </select>
           </div>
 
           <div className="flex-1">
+            <select
+              value={lokasiFilter}
+              onChange={(e) => setLokasiFilter(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '5px',
+                border: '2px solid #ccc',
+                borderRadius: '5px',
+              }}
+            >
+              <option value="">Pilih Lokasi</option>
+              {lokasiData?.map((option, index) => (
+                <option key={index} value={option.id}>
+                  {option.nama_lokasi}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* <div className="flex-1">
             <input
               type="text"
               value={kategoriFilter}
@@ -185,30 +264,15 @@ const ListActivity = () => {
               }}
             />
             <datalist id="KategoriList">
-              {dropdownKategori.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
+              {kategoriData?.map((option, index) => (
+                <option key={index} value={option.nama_kategori}>
+                  {option.nama_kategori}
                 </option>
               ))}
             </datalist>
-          </div>
-
-          {/* <div className="flex-1">
-            <input
-              type="text"
-              value={tanggalFilter}
-              onChange={(e) => setTanggalFilter(e.target.value)}
-              placeholder="YYYY-MM-DD"
-              style={{
-                width: '100%',
-                padding: '5px',
-                border: '2px solid #ccc',
-                borderRadius: '5px',
-              }}
-            />
           </div> */}
 
-          <div className="flex-1">
+          {/* <div className="flex-1">
             <input
               type="text"
               value={lokasiFilter}
@@ -223,21 +287,21 @@ const ListActivity = () => {
               }}
             />
             <datalist id="LokasiList">
-              {dropdownLokasi.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
+              {lokasiData?.map((option, index) => (
+                <option key={index} value={option.nama_lokasi}>
+                  {option.nama_lokasi}
                 </option>
               ))}
             </datalist>
-          </div>
+          </div> */}
         </div>
       </div>
       <div>
-        {filteredRecords.length > 0 ? (
+        {!isLoading ? (
           <>
             <ListActivityTable
-              data={filteredRecords}
-              setData={setFilteredRecords}
+              data={data}
+              setData={setData}
               deleteHandler={deleteHandler}
               hapusLoading={hapusLoading}
               toastSuccess={() =>

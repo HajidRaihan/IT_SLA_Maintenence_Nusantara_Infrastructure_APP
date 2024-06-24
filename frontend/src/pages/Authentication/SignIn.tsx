@@ -55,12 +55,12 @@ const SignIn: React.FC = () => {
     }
   };
   return (
-    <div className="mx-32 mt-5">
+    <div className="bg-white md:px-32 px-5 md:mt-10 mt-20">
       {/* <Breadcrumb pageName="Sign In" /> */}
       <ToastContainer />
 
-      <div className="rounded-sm border border-stroke bg-white shadow-default">
-        <div className="flex flex-wrap items-center">
+      <div className="rounded-sm border border-stroke bg-white shadow-default mt-10">
+        <div className="bg-white flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className=" flex justify-center">
               <img

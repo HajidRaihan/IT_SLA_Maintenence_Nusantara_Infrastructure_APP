@@ -140,33 +140,35 @@ class ActivityController extends Controller
     }
 
     public function getactivity_toll(Request $request)
-    {
-        $filters = $request->only(['company', 'status', 'lokasi_id', 'kategori_id', 'startYear', 'endYear']);
+{
+    $filters = $request->only(['company', 'status', 'lokasi_id', 'kategori_id', 'startYear', 'endYear']);
 
-        $activities = Activity::query()
-            ->select('activity.id', 'users.username as nama_user', 'activity.waktu_pengerjaan', 'activity.kategori_activity', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
-            ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
-            ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
-            ->leftJoin('users', 'activity.user_id', '=', 'users.id')
-            ->when(isset($filters['company']), function ($query) use ($filters) {
-                $query->where('activity.company', $filters['company']);
-            })
-            ->when(isset($filters['status']), function ($query) use ($filters) {
-                $query->where('activity.status', $filters['status']);
-            })
-            ->when(isset($filters['lokasi_id']), function ($query) use ($filters) {
-                $query->where('activity.lokasi_id', $filters['lokasi_id']);
-            })
-            ->when(isset($filters['kategori_id']), function ($query) use ($filters) {
-                $query->where('activity.kategori_id', $filters['kategori_id']);
-            })
-            ->when(isset($filters['startYear']) && isset($filters['endYear']), function ($query) use ($filters) {
-                $query->whereBetween(DB::raw('YEAR(activity.created_at)'), [$filters['startYear'], $filters['endYear']]);
-            })
-            ->paginate(10);
+    $activities = Activity::query()
+        ->select('activity.id', 'users.username as nama_user', 'activity.waktu_pengerjaan', 'activity.kategori_activity', 'activity.company', 'activity.jenis_hardware', 'activity.standart_aplikasi', 'activity.uraian_hardware', 'activity.uraian_aplikasi', 'activity.aplikasi_it_tol', 'activity.uraian_it_tol', 'activity.catatan', 'activity.shift', 'activity.kondisi_akhir', 'activity.biaya', 'activity.foto_awal', 'activity.foto_akhir', 'activity.status', 'activity.ended_at', 'activity.created_at', 'activity.updated_at', 'kategori.nama_kategori as category_name', 'lokasi.nama_lokasi as location_name')
+        ->leftJoin('kategori', 'activity.kategori_id', '=', 'kategori.id')
+        ->leftJoin('lokasi', 'activity.lokasi_id', '=', 'lokasi.id')
+        ->leftJoin('users', 'activity.user_id', '=', 'users.id')
+        ->when(isset($filters['company']), function ($query) use ($filters) {
+            $query->where('activity.company', $filters['company']);
+        })
+        ->when(isset($filters['status']), function ($query) use ($filters) {
+            $query->where('activity.status', $filters['status']);
+        })
+        ->when(isset($filters['lokasi_id']), function ($query) use ($filters) {
+            $query->where('activity.lokasi_id', $filters['lokasi_id']);
+        })
+        ->when(isset($filters['kategori_id']), function ($query) use ($filters) {
+            $query->where('activity.kategori_id', $filters['kategori_id']);
+        })
+        ->when(isset($filters['startYear']) && isset($filters['endYear']), function ($query) use ($filters) {
+            $query->whereBetween(DB::raw('YEAR(activity.created_at)'), [$filters['startYear'], $filters['endYear']]);
+        })
+        ->orderBy('activity.created_at', 'desc')  // Add this line to sort by created_at in descending order
+        ->paginate(10);
 
-        return response()->json(['data' => $activities]);
-    }
+    return response()->json(['data' => $activities]);
+}
+
 
     public function getAllActivityTol(Request $request)
     {

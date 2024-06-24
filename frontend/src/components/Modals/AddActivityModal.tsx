@@ -248,26 +248,26 @@ const AddActivityModal = ({
       if (res) {
         onOpenSuccessModal();
         toastSuccess();
-        close();
+        // close();
         setIsLoading(false);
-        setData((prev) => [...prev, res.data]);
+        setData((prev) => [res.data, ...prev]);
 
-        setCompany('');
-        setTanggal('');
-        setKategoriActivity('');
-        setJenisHardware([]);
-        setStandartAplikasi([]);
-        setUraianHardware('');
-        setUraianAplikasi('');
-        setAplikasiItTol([]);
-        setUraianItTol('');
-        setCatatan('');
-        setShift('');
-        setLokasi('');
-        setKategori('');
-        setKondisiAkhir('');
-        setFoto('');
-        setStatus('');
+        // setCompany('');
+        // setTanggal('');
+        // setKategoriActivity('');
+        // setJenisHardware([]);
+        // setStandartAplikasi([]);
+        // setUraianHardware('');
+        // setUraianAplikasi('');
+        // setAplikasiItTol([]);
+        // setUraianItTol('');
+        // setCatatan('');
+        // setShift('');
+        // setLokasi('');
+        // setKategori('');
+        // setKondisiAkhir('');
+        // setFoto('');
+        // setStatus('');
       }
     } catch (error) {
       console.error(error);

@@ -22,7 +22,7 @@ const addActivity = async (data) => {
   }
 };
 
-const getAllActivity = async (lokasi, kategori, company, status, page) => {
+const getAllActivity = async (page, lokasi, kategori, company, status) => {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${Cookies.get('access_token')}`,
